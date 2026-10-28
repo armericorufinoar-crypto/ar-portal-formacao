@@ -3,17 +3,17 @@
 -- comprovativos, facturas internas numeradas e auditoria.
 --
 -- Fluxo (dados de pagamento FIXOS, sem esperar por referência):
---   1. Admin gera as pró-formas (parcelas) de cada colaborador a partir de um plano.
---   2. Colaborador selecciona pró-formas "Por pagar" e escolhe o método:
+--   1. Admin gera as pró-formas (parcelas) de cada formando a partir de um plano.
+--   2. Formando selecciona pró-formas "Por pagar" e escolhe o método:
 --        Multicaixa Express  -> paga para o número de telemóvel fixo (av_pay_settings.express_phone)
 --        Transferência       -> paga para o IBAN fixo (av_pay_settings.iban)
 --        Numerário           -> paga no balcão
 --      O pedido fica logo "Aguarda pagamento", com o total calculado no servidor.
---   3. Colaborador paga fora do portal e anexa o comprovativo ("Comprovativo enviado").
+--   3. Formando paga fora do portal e anexa o comprovativo ("Comprovativo enviado").
 --   4. Admin confirma -> pró-formas "Paga" e é emitida a factura interna numerada (ou rejeita com motivo).
 --
 -- Segurança: todas as escritas passam por funções (security definer) que verificam o papel; as tabelas
--- só têm políticas de LEITURA (admin vê tudo; colaborador vê apenas o que é seu). Os valores não são
+-- só têm políticas de LEITURA (admin vê tudo; formando vê apenas o que é seu). Os valores não são
 -- aceites do cliente: o total é calculado no servidor a partir das pró-formas.
 -- Requer: 001 (av_profiles, av_staff, av_touch_updated_at). É seguro correr mais de uma vez.
 -- NOTA: a factura é um documento INTERNO do portal; não tem valor fiscal.
@@ -77,7 +77,7 @@ insert into public.av_pay_settings (id) values (1) on conflict (id) do nothing;
 create table if not exists public.av_fee_plans (
   id uuid primary key default gen_random_uuid(),
   name text not null check (length(trim(name)) between 1 and 200),
-  area text check (area is null or area in ('Marketing e Vendas','Gestão Estratégica','Liderança','Oratória','Finanças')),
+  area text check (area is null or area in ('Finanças e Investimentos','Marketing e Vendas','Negócios','Oratória','Liderança')),
   installments int not null check (installments between 1 and 60),
   installment_amount numeric(14,2) not null check (installment_amount > 0),
   active boolean not null default true,
@@ -232,7 +232,7 @@ as $$ insert into public.av_payment_audit (actor, action, entity, entity_id, det
       values (auth.uid(), p_action, p_entity, p_id, p_detail) $$;
 revoke all on function public.av_pay_audit(text,text,text,jsonb) from public, anon, authenticated;
 
--- Admin: gera as parcelas (pró-formas) de um plano para vários colaboradores. Ignora quem já as tem.
+-- Admin: gera as parcelas (pró-formas) de um plano para vários formandos. Ignora quem já as tem.
 create or replace function public.av_generate_proformas(p_staff uuid[], p_plan uuid, p_first_due date default current_date)
 returns int language plpgsql security definer set search_path = ''
 as $$
@@ -241,7 +241,7 @@ begin
   if not coalesce(public.av_is_admin(), false) then raise exception 'Apenas a administração pode gerar pró-formas.'; end if;
   select * into pl from public.av_fee_plans where id = p_plan and active;
   if not found then raise exception 'Plano inexistente ou inactivo.'; end if;
-  if p_staff is null or array_length(p_staff, 1) is null then raise exception 'Escolha pelo menos um colaborador.'; end if;
+  if p_staff is null or array_length(p_staff, 1) is null then raise exception 'Escolha pelo menos um formando.'; end if;
   foreach s in array p_staff loop
     if not exists (select 1 from public.av_staff where id = s) then continue; end if;
     if exists (select 1 from public.av_proformas where staff_id = s and plan_id = p_plan and status <> 'Anulada') then continue; end if;
@@ -253,7 +253,7 @@ begin
       made := made + 1;
     end loop;
   end loop;
-  perform public.av_pay_audit('gerar_proformas', 'plan', p_plan::text, jsonb_build_object('colaboradores', array_length(p_staff,1), 'parcelas', made));
+  perform public.av_pay_audit('gerar_proformas', 'plan', p_plan::text, jsonb_build_object('formandos', array_length(p_staff,1), 'parcelas', made));
   return made;
 end $$;
 
@@ -270,13 +270,13 @@ begin
   perform public.av_pay_audit('anular_proforma', 'proforma', p_id::text, jsonb_build_object('motivo', p_reason));
 end $$;
 
--- Colaborador: cria pedido de pagamento com as pró-formas escolhidas.
+-- Formando: cria pedido de pagamento com as pró-formas escolhidas.
 create or replace function public.av_create_payment_request(p_proformas uuid[], p_method text, p_notes text default null)
 returns uuid language plpgsql security definer set search_path = ''
 as $$
 declare me uuid := public.av_my_staff_id(); n int; tot numeric(14,2); rid uuid; st text;
 begin
-  if me is null then raise exception 'A sua conta não está ligada a uma ficha de colaborador.'; end if;
+  if me is null then raise exception 'A sua conta não está ligada a uma ficha de formando.'; end if;
   if p_proformas is null or array_length(p_proformas, 1) is null then raise exception 'Seleccione pelo menos uma pró-forma.'; end if;
   if array_position(p_proformas, null) is not null then raise exception 'Seleccione apenas pró-formas válidas.'; end if;
   if p_method not in ('Multicaixa Express','Transferência bancária','Numerário') then raise exception 'Método inválido.'; end if;
@@ -314,7 +314,7 @@ begin
   perform public.av_pay_audit('emitir_referencia', 'request', p_request::text, jsonb_build_object('entidade', p_entity, 'referencia', p_reference));
 end $$;
 
--- Colaborador: anexa o comprovativo (já carregado para o bucket av-comprovativos).
+-- Formando: anexa o comprovativo (já carregado para o bucket av-comprovativos).
 create or replace function public.av_attach_proof(p_request uuid, p_path text)
 returns void language plpgsql security definer set search_path = ''
 as $$
@@ -362,8 +362,8 @@ begin
   return public.av_do_confirm(p_request, p_note);
 end $$;
 
--- Admin: regista directamente um pagamento (ex.: numerário no balcão) sem pedido prévio do colaborador.
--- Todas as pró-formas têm de ser do mesmo colaborador e estar "Por pagar".
+-- Admin: regista directamente um pagamento (ex.: numerário no balcão) sem pedido prévio do formando.
+-- Todas as pró-formas têm de ser do mesmo formando e estar "Por pagar".
 create or replace function public.av_admin_register_payment(p_proformas uuid[], p_method text, p_reference text default null, p_note text default null)
 returns uuid language plpgsql security definer set search_path = ''
 as $$
@@ -379,7 +379,7 @@ begin
     from public.av_proformas where id = any (p_proformas) and status = 'Por pagar';
   select count(distinct x) into nd from unnest(p_proformas) x;
   if n = 0 or n <> nd then raise exception 'Uma ou mais pró-formas não estão disponíveis para pagamento.'; end if;
-  if ns <> 1 then raise exception 'As pró-formas têm de ser do mesmo colaborador.'; end if;
+  if ns <> 1 then raise exception 'As pró-formas têm de ser do mesmo formando.'; end if;
   insert into public.av_payment_requests (staff_id, requested_by, method, notes, total, reference_number, status)
   values (sid, auth.uid(), p_method, 'Registado pela administração', tot, nullif(trim(coalesce(p_reference,'')), ''), 'Aguarda pagamento')
   returning id into rid;
@@ -410,7 +410,7 @@ begin
   perform public.av_pay_audit('rejeitar_pagamento', 'request', p_request::text, jsonb_build_object('motivo', p_reason));
 end $$;
 
--- Colaborador (antes de pagar) ou admin: cancela um pedido; as pró-formas voltam a "Por pagar".
+-- Formando (antes de pagar) ou admin: cancela um pedido; as pró-formas voltam a "Por pagar".
 create or replace function public.av_cancel_payment_request(p_request uuid)
 returns void language plpgsql security definer set search_path = ''
 as $$
@@ -463,7 +463,7 @@ grant execute on function public.av_generate_proformas(uuid[], uuid, date), publ
 revoke all on function public.av_next_number(text) from authenticated;
 
 -- ---------------------------------------------------------------------------------------------
--- Resumo por colaborador (admin vê todos; colaborador vê só o seu, por RLS das tabelas)
+-- Resumo por formando (admin vê todos; formando vê só o seu, por RLS das tabelas)
 -- ---------------------------------------------------------------------------------------------
 create or replace view public.av_pay_summary with (security_invoker = true) as
 select
@@ -481,7 +481,7 @@ group by s.id, s.staff_number, s.full_name;
 grant select on public.av_pay_summary to authenticated;
 
 -- ---------------------------------------------------------------------------------------------
--- Storage: bucket privado para comprovativos (pasta = id da ficha do colaborador)
+-- Storage: bucket privado para comprovativos (pasta = id da ficha do formando)
 -- ---------------------------------------------------------------------------------------------
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('av-comprovativos', 'av-comprovativos', false, 5242880, array['application/pdf','image/jpeg','image/png'])

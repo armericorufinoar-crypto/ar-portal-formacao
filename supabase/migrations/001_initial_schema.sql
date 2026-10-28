@@ -37,7 +37,7 @@ alter table public.av_profiles
 create table public.av_sessions (
   id uuid primary key default gen_random_uuid(),
   title text not null,
-  area text not null check (area in ('Marketing e Vendas','Gestão Estratégica','Liderança','Oratória','Finanças')),
+  area text not null check (area in ('Finanças e Investimentos','Marketing e Vendas','Negócios','Oratória','Liderança')),
   session_date date not null,
   start_time time,
   trainer_name text not null,
@@ -79,7 +79,7 @@ create table public.av_forum_posts (
   id uuid primary key default gen_random_uuid(),
   author_user_id uuid not null references auth.users(id) on delete cascade,
   session_id uuid references public.av_sessions(id) on delete set null,
-  area text check (area is null or area in ('Marketing e Vendas','Gestão Estratégica','Liderança','Oratória','Finanças')),
+  area text check (area is null or area in ('Finanças e Investimentos','Marketing e Vendas','Negócios','Oratória','Liderança')),
   post_type text not null default 'Dúvida' check (post_type in ('Dúvida','Pergunta','Opinião','Partilha')),
   body text not null check (length(trim(body)) between 1 and 5000),
   created_at timestamptz not null default now(),
