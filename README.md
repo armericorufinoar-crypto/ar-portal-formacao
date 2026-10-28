@@ -31,3 +31,13 @@ O `index.html` aponta para o projecto `xpeeaekzomusoqjdpbxn`. A chave publishabl
 - Os limiares de diagnóstico no documento são propostas pedagógicas a validar, não regras de certificação.
 - A ponderação da pauta permanece 60% testes automáticos / 40% avaliações práticas.
 - Esta migração não foi executada no Supabase real. Aplicar primeiro em ambiente de teste e verificar RLS/permissões.
+
+
+## Fase 3 — Diagnóstico de competências (implementação no frontend)
+
+- O editor de perguntas apresenta um selector opcional de competência quando o catálogo da matriz está instalado. Perguntas sem associação continuam válidas.
+- A área do formando inclui uma secção «Diagnóstico», distinta da pauta oficial. Os resultados são calculados no servidor a partir das respostas e das chaves de correcção, não do conteúdo enviado pelo navegador.
+- A migração `supabase/migrations/014_diagnostico_competencias.sql` cria o registo por tentativa/competência e a função RPC de diagnóstico.
+- Aplicar em ambiente de teste, por esta ordem, `013_matriz_competencias.sql` e `014_diagnostico_competencias.sql`. Não executar sem autorização e sem validar RLS.
+- A ponderação oficial está bloqueada no frontend em 60% testes automáticos / 40% avaliação prática. A secção de diagnóstico não altera a classificação de certificação.
+- Limitação: não foi possível testar contra a instância Supabase real nesta execução.
