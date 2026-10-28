@@ -21,3 +21,13 @@ O `index.html` aponta para o projecto `xpeeaekzomusoqjdpbxn`. A chave publishabl
 - **Administrador:** separador «Pagamentos» (painel, a confirmar, parcelas, facturas, planos, definições, CSV).
 - **Formando:** separador «Facturação» (pró-formas, efectuar pagamento, comprovativo, facturas).
 - Requer as migrações `005` e `010`. Os dados de pagamento (telemóvel Express, IBAN, banco, titular) ficam na tabela `av_pay_settings` e editam-se em Pagamentos → Definições. Não os guarde em ficheiros do repositório.
+
+
+## Fase 2 — Matriz pedagógica
+
+- Consultar `MATRIZ_PEDAGOGICA_AV.md` para a matriz inicial de temáticas, competências, evidências e reforços.
+- A migração `supabase/migrations/013_matriz_competencias.sql` cria o catálogo de competências e a associação opcional das perguntas a uma competência.
+- A associação é opcional para preservar todos os testes existentes; perguntas antigas continuam a funcionar sem alteração.
+- Os limiares de diagnóstico no documento são propostas pedagógicas a validar, não regras de certificação.
+- A ponderação da pauta permanece 60% testes automáticos / 40% avaliações práticas.
+- Esta migração não foi executada no Supabase real. Aplicar primeiro em ambiente de teste e verificar RLS/permissões.
