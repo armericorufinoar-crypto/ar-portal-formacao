@@ -8,8 +8,8 @@ A fundação de dados e autorização está preparada em `supabase/migrations/00
 
 - Projecto Supabase separado de outros sistemas.
 - Papéis: `admin`, `trainer`, `collaborator`.
-- Cinco áreas formativas: Marketing e Vendas, Gestão Estratégica, Liderança, Oratória e Finanças.
-- O colaborador entra com conta autenticada; não usar token previsível em query string como autenticação.
+- Cinco áreas formativas: Finanças e Investimentos, Marketing e Vendas, Negócios, Oratória e Liderança.
+- O formando entra com conta autenticada; não usar token previsível em query string como autenticação.
 - A autorização é aplicada na base de dados através de RLS, não apenas escondendo botões na interface.
 - Não implementar emissão de certificados nesta fase.
 

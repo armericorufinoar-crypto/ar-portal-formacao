@@ -2,9 +2,9 @@
 
 ## Teste
 1. Extraia o ZIP.
-2. Abra `index.html` num navegador moderno. Para links de colaborador, é preferível servir a pasta por HTTP local.
-3. Registe colaboradores, crie sessões, registe presenças e avaliações e teste o fórum/feedback.
-4. O botão **Link** na tabela de colaboradores gera um link demonstrativo para a área individual. O link só encontra os dados no mesmo navegador/perfil e na mesma origem.
+2. Abra `index.html` num navegador moderno. Para links de formando, é preferível servir a pasta por HTTP local.
+3. Registe formandos, crie sessões, registe presenças e avaliações e teste o fórum/feedback.
+4. O botão **Link** na tabela de formandos gera um link demonstrativo para a área individual. O link só encontra os dados no mesmo navegador/perfil e na mesma origem.
 5. Em **Relatórios e certificação**, exporte CSV para conferir os registos.
 
 ## Aviso
@@ -16,3 +16,8 @@ A pasta `supabase/` contém o esquema SQL inicial e instruções de instalação
 
 ## AR Formação — ligação ao Supabase
 O `index.html` aponta para o projecto `xpeeaekzomusoqjdpbxn`. A chave publishable já está configurada. Nunca use a `service_role` no navegador. Se as tabelas já existirem com as áreas antigas, execute `supabase/migrations/009_novas_areas_ar_formacao.sql`. A função `admin-utilizadores` tem de ser publicada também neste projecto.
+
+## Módulo de Pagamentos
+- **Administrador:** separador «Pagamentos» (painel, a confirmar, parcelas, facturas, planos, definições, CSV).
+- **Formando:** separador «Facturação» (pró-formas, efectuar pagamento, comprovativo, facturas).
+- Requer as migrações `005` e `010`. Os dados de pagamento (telemóvel Express, IBAN, banco, titular) ficam na tabela `av_pay_settings` e editam-se em Pagamentos → Definições. Não os guarde em ficheiros do repositório.
