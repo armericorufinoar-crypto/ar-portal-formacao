@@ -986,20 +986,27 @@ function payStRender(){
  +'<div class="card"><div class="cardhead"><h2>Facturas</h2></div><div class="tablewrap"><table class="table"><thead><tr><th>Factura n.º</th><th>Data</th><th class="num">Total</th><th>Estado</th><th>Doc.</th></tr></thead><tbody>'
  +inv.map(i=>'<tr><td>'+esc(i.invoice_number)+'</td><td>'+payDate(i.issued_at)+'</td><td class="num">'+kz(i.total)+'</td><td>'+(i.status==='Emitida'?'<span class="tag good">Emitida</span>':'<span class="tag bad">Anulada</span>')+'</td><td><button class="btn secondary small" data-pa="iprint" data-id="'+i.id+'">Imprimir</button></td></tr>').join('')
  +'</tbody></table></div>'+(inv.length?'':'<div class="empty">Ainda não há facturas.</div>')+'</div>'}
+function payMethodInfo(m){
+ const s=PAY.set||{},row=(l,v)=>'<div class="row"><span class="muted">'+l+'</span><span><b>'+esc(v)+'</b> <button type="button" class="btn secondary small" data-copy="'+esc(String(v).replace(/\s+/g,''))+'">Copiar</button></span></div>';
+ if(m==='Multicaixa Express')return '<div class="paybox">'+(s.express_phone?row('Número Express',s.express_phone)+(s.issuer_name?'<div class="row"><span class="muted">Titular</span><span><b>'+esc(s.issuer_name)+'</b></span></div>':''):'<div class="notice">A administração ainda não definiu o número Express. Contacte-a.</div>')+'</div>';
+ if(m==='Transferência bancária')return '<div class="paybox">'+(s.iban?row('IBAN',s.iban)+(s.bank_name?'<div class="row"><span class="muted">Banco</span><span><b>'+esc(s.bank_name)+'</b></span></div>':'')+(s.issuer_name?'<div class="row"><span class="muted">Titular</span><span><b>'+esc(s.issuer_name)+'</b></span></div>':''):'<div class="notice">A administração ainda não definiu o IBAN. Contacte-a.</div>')+'</div>';
+ return '<p class="smalltext">Pague em numerário junto da administração'+(s.issuer_name?' ('+esc(s.issuer_name)+')':'')+' e peça que registem o pagamento.</p>'}
+function payMethodShow(){const b=$('pmInfo'),m=$('pmM');if(b&&m)b.innerHTML=payMethodInfo(m.value)}
 function payStGo(){
  const lines=PAY.pro.filter(p=>PAY.sel.has(p.id)&&p.staff_id===PROFILE.staff_id&&p.status==='Por pagar');if(!lines.length)return;
  const tot=lines.reduce((s,p)=>s+Number(p.amount),0);
- payOpen('Efectuar pagamento','<div class="paybox">'+lines.map(p=>'<div class="row"><span>'+esc(p.doc_number)+' · '+esc(p.description)+'</span><span>'+kz(p.amount)+'</span></div>').join('')+'<div class="row"><b>Total</b><b>'+kz(tot)+'</b></div></div><div class="field"><label for="pmM">Método de pagamento *</label><select id="pmM">'+opts(PAY_METHODS)+'</select></div><div class="field" style="margin-top:12px"><label for="pmN">Observações</label><textarea id="pmN" rows="2" maxlength="500"></textarea></div>',
+ payOpen('Efectuar pagamento','<div class="paybox">'+lines.map(p=>'<div class="row"><span>'+esc(p.doc_number)+' · '+esc(p.description)+'</span><span>'+kz(p.amount)+'</span></div>').join('')+'<div class="row"><b>Total</b><b>'+kz(tot)+'</b></div></div><div class="field"><label for="pmM">Método de pagamento *</label><select id="pmM">'+opts(PAY_METHODS)+'</select></div><div id="pmInfo" style="margin-top:12px"></div><div class="field" style="margin-top:12px"><label for="pmN">Observações</label><textarea id="pmN" rows="2" maxlength="500"></textarea></div>'+((PAY.set&&PAY.set.instructions)?'<p class="smalltext" style="margin-top:12px">'+esc(PAY.set.instructions)+'</p>':'')+((PAY.set&&PAY.set.invoice_footer)?'<p class="muted smalltext">'+esc(PAY.set.invoice_footer)+'</p>':''),
  [{label:'Cancelar',cls:'secondary'},{label:'Confirmar',fn:async()=>{
   const rid=await payRpc('av_create_payment_request',{p_proformas:lines.map(p=>p.id),p_method:$('pmM').value,p_notes:$('pmN').value.trim()||null});
-  if(rid===false)return false;PAY.sel.clear();payRender();setTimeout(()=>payHow(rid),0)}}])}
+  if(rid===false)return false;PAY.sel.clear();payRender();setTimeout(()=>payHow(rid),0)}}]);
+ payMethodShow();$('pmM').onchange=payMethodShow}
 function payHow(rid){
  const r=PAY.req.find(x=>x.id===rid);if(!r)return;
  const s=PAY.set||{},me=payStf(r.staff_id)||{},docs=payDocs(rid).map(p=>p.doc_number).join(', '),ref=(me.number||'')+' '+docs;
- const row=(l,v,c)=>'<div class="row"><span class="muted">'+l+'</span><span><b>'+esc(v)+'</b>'+(c?' <button type="button" class="btn secondary small" data-copy="'+esc(v)+'">Copiar</button>':'')+'</span></div>';
+ const row=(l,v,c)=>'<div class="row"><span class="muted">'+l+'</span><span><b>'+esc(v)+'</b>'+(c?' <button type="button" class="btn secondary small" data-copy="'+esc(c==='n'?String(v).replace(/\s+/g,''):v)+'">Copiar</button>':'')+'</span></div>';
  let box='';
- if(r.method==='Multicaixa Express'){box=s.express_phone?row('Número Express',s.express_phone,true)+(s.issuer_name?row('Titular',s.issuer_name):''):'<div class="notice">A administração ainda não definiu o número Express. Contacte-a.</div>'}
- else if(r.method==='Transferência bancária'){box=s.iban?row('IBAN',s.iban,true)+(s.bank_name?row('Banco',s.bank_name):'')+(s.issuer_name?row('Titular',s.issuer_name):''):'<div class="notice">A administração ainda não definiu o IBAN. Contacte-a.</div>'}
+ if(r.method==='Multicaixa Express'){box=s.express_phone?row('Número Express',s.express_phone,'n')+(s.issuer_name?row('Titular',s.issuer_name):''):'<div class="notice">A administração ainda não definiu o número Express. Contacte-a.</div>'}
+ else if(r.method==='Transferência bancária'){box=s.iban?row('IBAN',s.iban,'n')+(s.bank_name?row('Banco',s.bank_name):'')+(s.issuer_name?row('Titular',s.issuer_name):''):'<div class="notice">A administração ainda não definiu o IBAN. Contacte-a.</div>'}
  else{box='<p>Pague em numerário junto da administração'+(s.issuer_name?' ('+esc(s.issuer_name)+')':'')+' e peça que registem o pagamento.</p>'}
  const sent=r.status==='Comprovativo enviado';
  payOpen('Como pagar','<div class="paybox">'+row('Valor a pagar',kz(r.total))+row('Método',r.method)+box+(r.method==='Numerário'?'':row('Descritivo sugerido',ref.trim(),true))+'</div>'+(s.instructions?'<p class="smalltext">'+esc(s.instructions)+'</p>':'')
