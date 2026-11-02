@@ -137,6 +137,8 @@ html{scroll-behavior:smooth}body{-webkit-font-smoothing:antialiased;text-renderi
 .qrow.ok,.qrow.ko{border-radius:0 12px 12px 0}
 .diagarrow{transition:all .2s var(--ease)}.diagarrow:hover:not([disabled]){transform:scale(1.08)}
 @media(max-width:760px){.stnav{padding:8px 8px}.stnav button{padding:10px 16px}.card,.stat,.area-card{border-radius:18px}.modalbox{border-radius:22px 22px 14px 14px}.stat::after{height:64px;width:64px}.stat strong{font-size:25px}}
+/* barra de formatação na mesma linha do anexo e do botão Publicar */
+.composerbar .fmtbar{margin:0;flex:1 1 auto;min-width:0}.composerbar .attchip{flex:0 1 auto;max-width:34%}
 /* área do formando mais larga: menos vazio nas laterais, título alinhado com o conteúdo */
 .student{max-width:1280px}
 .student .pagehead{align-items:flex-end}
@@ -520,7 +522,7 @@ window.addEventListener('scroll',e=>{const p=document.getElementById('emojiPop')
 
 document.addEventListener('click',e=>{const b=e.target.closest('.fmtbar [data-fmt]');if(!b)return;const el=document.querySelector(b.closest('.fmtbar').dataset.target);if(el)applyFmt(el,b.dataset.fmt)});
 document.addEventListener('keydown',e=>{const el=e.target;if(!el||!el.matches||!el.matches('[data-rich]'))return;if((e.ctrlKey||e.metaKey)&&!e.altKey){const k=e.key.toLowerCase();if(k==='b'||k==='i'||k==='u'){e.preventDefault();applyFmt(el,k)}else if(k==='enter'&&el.dataset.einput!==undefined){e.preventDefault();el.closest('form').requestSubmit()}}else if(e.key==='Escape'&&el.dataset.einput!==undefined){EDIT=null;refreshChats()}});
-[['forumAdminText'],['stForumText']].forEach(([i])=>{const el=$(i);if(!el)return;el.setAttribute('data-rich','');el.insertAdjacentHTML('beforebegin',fmtBarHTML('#'+i))});
+[['forumAdminText'],['stForumText']].forEach(([i])=>{const el=$(i);if(!el)return;el.setAttribute('data-rich','');const bar=el.closest('form').querySelector('.composerbar .attbtn');bar.insertAdjacentHTML('afterend',fmtBarHTML('#'+i))});
 if($('msgText')){$('msgText').setAttribute('data-rich','');$('msgForm').insertAdjacentHTML('beforebegin',fmtBarHTML('#msgText'))}
 /* --- anexos: tipos, redimensionamento e envio --- */
 function kindOf(a){const t=String(a.type||'').toLowerCase(),e=String(a.name||a.path||'').toLowerCase().split('.').pop();if(t.startsWith('image/')||['jpg','jpeg','png','gif','webp','bmp','avif'].includes(e))return'image';if(t.startsWith('audio/')||['mp3','m4a','wav','ogg','oga','aac','opus','flac'].includes(e))return'audio';if(t.startsWith('video/')||['mp4','webm','mov','m4v','ogv'].includes(e))return'video';return'file'}
