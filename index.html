@@ -150,7 +150,7 @@ html{scroll-behavior:smooth}body{-webkit-font-smoothing:antialiased;text-renderi
 @media(min-width:1500px){.student{max-width:1360px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}.stat:hover,.area-card:hover,.tile:hover,.btn:hover{transform:none}}
 </style>
-</head><body>
+<style id="trCss">.tr-opts{display:grid;gap:8px}.tr-opt{display:flex;align-items:center;gap:10px;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;background:#fff;font-size:13px;font-weight:650;color:var(--ink);cursor:pointer}.tr-opt input{width:18px;height:18px;flex:none;accent-color:var(--red)}.tr-opt:has(input:checked){border-color:var(--red);background:#fff4f5}.tr-q{margin:0 0 16px}.tr-q h4{margin:0 0 8px;font-size:13px}.tr-lv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 14px}.tr-lv>.card{margin:0;padding:14px;display:grid;gap:4px}.tr-lv>.card strong{font-size:24px}@media(max-width:760px){.tr-lv{grid-template-columns:repeat(2,minmax(0,1fr))}}</style></head><body>
 <style>[data-invite]{display:none!important}#loginBox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fcfbf9;z-index:50}#loginBox form{background:#fff;padding:28px;border-radius:12px;width:min(92vw,360px);box-shadow:0 8px 30px #0002;display:grid;gap:12px}#loginMsg{color:#b42318;font-size:.9rem;min-height:1.2em}#logoutBtn{position:fixed;top:10px;right:12px;z-index:20}/* v12: formatação, anexos estilo Facebook, edição */
 .rt strong{font-weight:800}.rt u{text-decoration:underline;text-underline-offset:2px}.rt s{opacity:.7}.rt mark{background:#fff2a8;color:inherit;padding:0 2px;border-radius:3px}
 .rt code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:#0000000f;padding:1px 5px;border-radius:5px}
@@ -331,7 +331,7 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
 <div id="loginBox"><form id="loginForm" onsubmit="return false"><h2>Portal de Formação</h2><div class="field"><label for="lgEmail">E-mail</label><input id="lgEmail" type="email" required autocomplete="username"></div><div class="field"><label for="lgPass">Palavra-passe</label><input id="lgPass" type="password" required autocomplete="current-password"></div><div id="loginMsg"></div><button class="btn" type="submit">Entrar</button><button class="btn secondary small" type="button" id="lgForgot">Esqueci-me da palavra-passe</button></form></div>
 <button id="logoutBtn" class="btn secondary small hidden">Sair</button>
 <div id="appShell" class="shell hidden">
-<aside class="side" id="sidebar"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>O conhecimento que transforma.</small></span></div><div class="side-label">Gestão formativa</div><nav class="nav" id="mainNav"><button class="active" data-page="dashboard">◫ <span>Painel geral</span></button><button data-page="staff">♙ <span>Formandos</span></button><button data-page="sessions">▣ <span>Sessões e materiais</span></button><button data-page="attendance">☑ <span>Presenças</span></button><button data-page="performance">◈ <span>Exercícios e desempenho</span></button><button data-page="community">◎ <span>Dúvidas e feedback</span></button><button data-page="reports">▤ <span>Relatórios e certificação</span></button><button data-page="users" id="navUsers" class="hidden">⚿ <span>Utilizadores</span></button><button data-page="pay" id="navPay" class="hidden">₭ <span>Pagamentos</span></button></nav><div class="side-foot">Período Formativo<br><span id="sideYear"></span></div></aside>
+<aside class="side" id="sidebar"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>O conhecimento que transforma.</small></span></div><div class="side-label">Gestão formativa</div><nav class="nav" id="mainNav"><button class="active" data-page="dashboard">◫ <span>Painel geral</span></button><button data-page="staff">♙ <span>Formandos</span></button><button data-page="sessions">▣ <span>Sessões e materiais</span></button><button data-page="attendance">☑ <span>Presenças</span></button><button data-page="performance">◈ <span>Exercícios e desempenho</span></button><button data-page="community">◎ <span>Dúvidas e feedback</span></button><button data-page="reports">▤ <span>Relatórios e certificação</span></button><button data-page="users" id="navUsers" class="hidden">⚿ <span>Utilizadores</span></button><button data-page="pay" id="navPay" class="hidden">₭ <span>Pagamentos</span></button><button data-page="treino" id="navTreino" class="hidden">◐ <span>Treino e turmas</span></button></nav><div class="side-foot">Período Formativo<br><span id="sideYear"></span></div></aside>
 <div class="main"><header class="top"><div style="display:flex;align-items:center;gap:12px"><button class="btn secondary mobilemenu" id="mobileMenu">☰</button><div><div class="top-title">Formação</div><strong id="topPage">Painel geral</strong></div></div><div class="top-right"><div class="topicons" data-topicons></div></div></header>
 <main class="content" id="adminContent">
 <section class="page" id="page-dashboard"><div class="pagehead"><div><div class="eyebrow">Visão global</div><h1>Período Formativo</h1><p>Organização, assiduidade e evolução prática dos formandos.</p></div><button class="btn" data-open="staff">+ Registar formando</button></div>
@@ -345,6 +345,7 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
 <section class="page hidden" id="page-community"><div class="pagehead"><div><div class="eyebrow">Aprendizagem contínua</div><h1>Dúvidas, perguntas e feedback</h1><p>Acompanhe questões dos formandos, respostas e opiniões sobre cada sessão.</p></div></div><div class="grid feedgrid"><div class="card"><div class="cardhead"><h2>Publicações da formação</h2><span class="tag" id="forumCount">0 publicações</span></div><form id="forumAdminForm" class="composer"><textarea id="forumAdminText" maxlength="1500" rows="2" placeholder="Escreva uma publicação para todos…" aria-label="Nova publicação"></textarea><div class="composerbar"><label class="attbtn" title="Anexar ficheiro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2l-8.6 8.6a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/></svg><input type="file" id="forumAdminFile" hidden></label><span class="attchip hidden" id="forumAdminChip"></span><button class="btn small">Publicar</button></div></form><div class="feed" id="forumAdmin"></div></div><div class="card"><div class="cardhead"><h2>Feedback das sessões</h2><span class="tag" id="feedbackCount">0 respostas</span></div><div id="feedbackAdmin"></div></div></div></section>
 <section class="page hidden" id="page-reports"><div class="pagehead"><div><div class="eyebrow">Acompanhamento e conclusão</div><h1>Relatórios e certificação</h1><p>Prepare o registo de participação e desempenho necessário à futura emissão de certificados.</p></div><button class="btn" id="exportReport">Exportar relatório CSV</button></div><div class="notice">A plataforma não emite certificados nesta versão. O relatório serve para conferir os dados e identificar quem cumpre os requisitos definidos pela empresa. Os critérios de certificação devem ser aprovados pela empresa.</div><div class="card"><div class="toolbar"><select id="reportArea"><option value="">Todas as áreas</option></select><input id="reportSearch" placeholder="Pesquisar formando…"></div><div class="tablewrap"><table class="table"><thead><tr><th>N.º interno</th><th>Formando</th><th>Áreas frequentadas</th><th>Sessões frequentadas</th><th>Assiduidade</th><th>Média (exercícios e testes)</th><th>Estado do registo</th></tr></thead><tbody id="reportRows"></tbody></table></div></div></section>
 <section class="page hidden" id="page-users"><div class="pagehead"><div><div class="eyebrow">Acesso ao portal</div><h1>Utilizadores</h1><p>Crie contas, ligue-as às fichas de formandos e controle quem pode entrar.</p></div><button class="btn" id="addUserBtn">+ Nova conta</button></div><div class="notice">A palavra-passe provisória é mostrada uma única vez. Entregue-a por um canal seguro: o utilizador terá de a trocar no primeiro acesso.</div><div class="card"><div class="tablewrap"><table class="table"><thead><tr><th>Utilizador</th><th>Papel</th><th>Ficha</th><th>Estado</th><th>Último acesso</th><th>Acções</th></tr></thead><tbody id="userRows"></tbody></table></div><div class="empty hidden" id="usersEmpty">Ainda não existem contas.</div></div></section>
+<section class="page hidden" id="page-treino"><div class="pagehead"><div><div class="eyebrow">Treino e níveis</div><h1>Treino e turmas</h1><p>Níveis dos formandos por situação, turmas e reavaliação de fim de ciclo.</p></div></div><div id="trAdminBody"></div></section>
 <section class="page hidden" id="page-pay"><div class="pagehead"><div><div class="eyebrow">Controlo financeiro</div><h1>Pagamentos</h1><p>Parcelas, pedidos de pagamento, comprovativos e facturas internas dos formandos.</p></div><button class="btn" id="payGenBtn">+ Gerar parcelas</button></div><div id="payAdminMsg"></div><div class="paytabs" id="payTabs"><button type="button" data-pt="panel" class="active">Painel</button><button type="button" data-pt="confirm">A confirmar <span class="tag warn hidden" id="payCnt">0</span></button><button type="button" data-pt="pro">Parcelas</button><button type="button" data-pt="inv">Facturas</button><button type="button" data-pt="plans">Planos</button><button type="button" data-pt="set">Definições</button></div><div id="payBody"></div></section>
 </main></div></div>
 <div id="studentView" class="hidden"><header class="studenthead"><div class="student"><div class="studenttop"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>ESPAÇO DO FORMANDO</small></span></div><div class="topicons" data-topicons></div></div></div></header><nav class="stnav" id="stNav"><button type="button" class="active" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button><button type="button" data-st-tab="billing">Facturação</button><button type="button" data-st-tab="profile">Perfil</button></nav><main class="student"><div class="pagehead" style="margin-top:25px"><div><div class="eyebrow">Área reservada</div><h1 id="studentName">Bem-vindo</h1><p id="studentMeta"></p></div></div>
@@ -352,10 +353,11 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
 <section data-st-page="diagnosis" class="hidden"><div class="card"><div class="cardhead"><h2>Diagnóstico de competências</h2><span class="muted smalltext">Separado da classificação oficial</span></div><p class="muted smalltext">O diagnóstico mostra evidências das respostas nos testes. Não altera a nota de certificação, calculada com 60% de testes automáticos e 40% de avaliação prática do formador.</p><div id="stDiagnosis"><div class="empty">O diagnóstico será apresentado quando existirem tentativas com perguntas associadas a competências e a migração estiver instalada.</div></div></div></section><section data-st-page="pauta" class="hidden"><div class="card"><div class="cardhead"><h2>Pauta</h2><span class="muted smalltext" id="studentPautaWeights">Escala 0–20 · Testes 60% / Prática 40%</span></div><div id="stPauta"></div></div></section>
 <section data-st-page="forum" class="hidden"><div class="grid feedgrid"><div class="card"><div class="cardhead"><h2>Publicações da formação</h2></div><form id="stForumForm" class="composer"><textarea id="stForumText" maxlength="1500" rows="2" placeholder="Escreva a sua dúvida, pergunta, contribuição ou anotação…" aria-label="Nova publicação"></textarea><div class="composerbar"><label class="attbtn" title="Anexar ficheiro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2l-8.6 8.6a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/></svg><input type="file" id="stForumFile" hidden></label><span class="attchip hidden" id="stForumChip"></span><button class="btn small">Publicar</button></div></form><div class="feed" id="stForumPosts"></div></div><div class="card"><div class="cardhead"><h2>Feedback da sessão</h2></div><form id="stFeedbackForm"><div class="field"><label>Sessão</label><select id="stFeedbackSession" required></select></div><div class="field" style="margin-top:12px"><label>Como avalia esta sessão?</label><select id="stFeedbackRating" required><option value="">Seleccione</option><option value="5">5 — Excelente</option><option value="4">4 — Muito boa</option><option value="3">3 — Boa</option><option value="2">2 — Precisa de melhorar</option><option value="1">1 — Insatisfatória</option></select></div><div class="field" style="margin-top:12px"><label>Comentário / sugestão</label><textarea id="stFeedbackText" maxlength="1200" placeholder="O que foi útil? O que poderia melhorar?"></textarea></div><button class="btn" style="margin-top:12px">Enviar feedback</button></form><div id="stFeedbackHistory" style="margin-top:15px"></div></div></div></section>
 <section data-st-page="billing" class="hidden"><div id="payStMsg"></div><div id="payStBody"></div></section>
-<section data-st-page="profile" class="hidden"><div class="profgrid"><div class="card"><div class="cardhead"><h2>Os meus dados</h2></div><div class="kv" id="stProfile"></div></div><div class="card"><div class="cardhead"><h2>Participação</h2></div><div class="kv" id="stProfile2"></div></div></div></section>
+<section data-st-page="profile" class="hidden"><div class="profgrid"><div class="card"><div class="cardhead"><h2>Os meus dados</h2></div><div class="kv" id="stProfile"></div></div><div class="card"><div class="cardhead"><h2>Participação</h2></div><div class="kv" id="stProfile2"></div></div><div class="card" id="trProfileCard" style="grid-column:1/-1;display:none"></div></div></section>
 <p class="footer-note">Formação · Área do formando</p></main></div>
 <div id="msgPanel" class="dropdown hidden" role="dialog" aria-label="Mensagens privadas"><div class="ph"><button type="button" id="msgBack" class="hidden" aria-label="Voltar">←</button><strong id="msgTitle">Mensagens privadas</strong><button type="button" data-close-panels aria-label="Fechar">✕</button></div><div class="msgbody"><div class="chatlist" id="msgList"></div><div id="msgThread" class="hidden"><div class="chatmsgs" id="msgMsgs"></div><form id="msgForm" class="chatform"><input id="msgText" required maxlength="1200" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem privada"><button class="btn small">Enviar</button></form></div></div></div>
 <div id="bellPanel" class="dropdown hidden" role="dialog" aria-label="Notificações"><div class="ph"><strong>Notificações</strong><button type="button" id="bellRead" class="btn secondary small">Marcar como lidas</button><button type="button" data-close-panels aria-label="Fechar">✕</button></div><div class="notifbody" id="bellList"></div></div>
+<div id="trModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="trMTitle"><div class="modalbox"><h2 id="trMTitle"></h2><div id="trMBody"></div><div class="modalactions" id="trMActs"></div></div></div>
 <div id="payModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="payMTitle"><div class="modalbox"><h2 id="payMTitle"></h2><div id="payMBody"></div><div class="modalactions" id="payMActs"></div></div></div>
 <div id="dlgModal" class="modal dlg" role="alertdialog" aria-modal="true" aria-labelledby="dlgTitle" aria-describedby="dlgMsg"><div class="modalbox dlgbox"><div class="dlgicon" id="dlgIcon" aria-hidden="true"></div><h2 id="dlgTitle"></h2><p id="dlgMsg"></p><p id="dlgDetail" class="muted smalltext"></p><div class="modalactions"><button type="button" class="btn secondary" id="dlgCancel">Cancelar</button><button type="button" class="btn" id="dlgOk">OK</button></div></div></div>
 <div id="matModal" class="modal" role="dialog" aria-modal="true"><div class="modalbox"><h2 id="matTitle">Materiais</h2><div id="matList"></div><div id="matResults"></div><form id="matForm" style="margin-top:16px;border-top:1px solid var(--line);padding-top:14px"><div class="notice hidden" id="matFull">Esta sessão já tem um ficheiro, uma ligação e um teste. Remova um deles para poder adicionar outro.</div><div class="formgrid"><div class="field"><label for="matKind">Tipo</label><select id="matKind"><option value="ficheiro">Ficheiro (carregar)</option><option value="ligacao">Ligação externa</option><option value="teste">Teste (V/F e escolha múltipla)</option></select></div><div class="field"><label for="matName">Título *</label><input id="matName" required maxlength="160" placeholder="Ex.: PPT Sessão 3"></div><div class="field full" id="matFileWrap"><label for="matFile">Ficheiro</label><input id="matFile" type="file"><span class="hint">PDF, PowerPoint, Word, Excel, imagens… até 25 MB.</span></div><div class="field full hidden" id="matUrlWrap"><label for="matUrl">Ligação</label><input id="matUrl" type="url" placeholder="https://…"></div><div class="field full hidden" id="matTestWrap"><label for="matTestPurpose">Finalidade do teste</label><select id="matTestPurpose"><option value="tematico">Teste temático — com nota</option><option value="diagnostico">Diagnóstico inicial — sem nota</option></select><span class="hint">Perguntas autodeclaradas só são permitidas no diagnóstico inicial.</span><label style="margin-top:10px">Perguntas *</label><div id="qList"></div><div class="actions" style="margin-top:8px"><button type="button" class="btn secondary small" id="qAdd">+ Adicionar pergunta</button><button type="button" class="btn secondary small" id="qBulkToggle">Colar várias</button></div><div id="qBulk" class="hidden" style="margin-top:8px"><textarea id="qBulkText" aria-label="Perguntas em lote" placeholder="Uma pergunta por linha.&#10;V/F: O IVA em Angola é de 14% | V&#10;Escolha múltipla (marque a certa com *): Capital de Angola? | Luanda* | Benguela | Huambo"></textarea><button type="button" class="btn small" id="qBulkAdd" style="margin-top:6px">Adicionar à lista</button></div><span class="hint">A correcção é automática, no servidor: nota de 0 a 20 (certas ÷ total × 20). Cada formando faz o teste uma só vez.</span></div><div class="field hidden" id="matOpensWrap"><label for="matOpens">Abre em (opcional)</label><input id="matOpens" type="datetime-local"></div><div class="field hidden" id="matClosesWrap"><label for="matCloses">Fecha em (opcional)</label><input id="matCloses" type="datetime-local"><span class="hint">Fora desta janela não é possível fazer o teste. A correcção aparece ao formando logo que submete.</span></div></div><div class="modalactions"><button type="button" class="btn secondary hidden" id="matCancelEdit">Cancelar edição</button><button type="button" class="btn secondary" id="matClose">Fechar</button><button class="btn" id="matSave">Adicionar</button></div></form></div></div>
@@ -410,8 +412,8 @@ const{data:p,error}=await SB.from('av_profiles').select('role,staff_id,display_n
 if(p.role==='collaborator'&&!p.staff_id){await hardSignOut();showLogin('A sua conta ainda não está ligada a uma ficha de formando. Contacte a administração.');return}
 try{await loadAll();await loadAssessmentWeights();await loadExtra();await loadMaterials();await loadSeen()}catch(e){showLogin('Erro ao carregar dados: '+(e.message||e));return}
 if(p.role==='collaborator'&&!read(KEYS.staff).some(x=>x.id===p.staff_id&&x.status==='Activo')){await hardSignOut();showLogin('A sua conta está inactiva ou sem ficha de formando activa. Contacte a equipa de formação.');return}
-$('loginBox').classList.add('hidden');if(p.role==='admin'){$('navUsers').classList.remove('hidden');$('navPay').classList.remove('hidden')}if(p.role==='trainer')document.body.classList.add('role-trainer');
-if(p.role==='collaborator'){initStudent(p.staff_id)}else{$('appShell').classList.remove('hidden');renderAll()}renderTopIcons();sessWatch()}
+$('loginBox').classList.add('hidden');if(p.role==='admin'){$('navUsers').classList.remove('hidden');$('navPay').classList.remove('hidden')}if(p.role!=='collaborator')$('navTreino').classList.remove('hidden');if(p.role==='trainer')document.body.classList.add('role-trainer');
+if(p.role==='collaborator'){initStudent(p.staff_id);trStudentInit()}else{$('appShell').classList.remove('hidden');renderAll()}renderTopIcons();sessWatch()}
 $('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginMsg').style.color='';$('loginMsg').textContent='A entrar…';const{error}=await SB.auth.signInWithPassword({email:$('lgEmail').value.trim(),password:$('lgPass').value});if(error){$('loginMsg').textContent='E-mail ou palavra-passe incorrectos.';return}$('lgPass').value='';sessMark(true);boot()});
 function opts(items,selected=''){return items.map(x=>`<option value="${esc(x)}" ${x===selected?'selected':''}>${esc(x)}</option>`).join('')}
 function field(name,label,type='text',value='',required=false,placeholder='',items=[]){let idn='f_'+name;let body=type==='select'?`<select id="${idn}" name="${name}" ${required?'required':''}>${opts(items,value)}</select>`:type==='textarea'?`<textarea id="${idn}" name="${name}" ${required?'required':''} placeholder="${esc(placeholder)}">${esc(value)}</textarea>`:`<input id="${idn}" name="${name}" type="${type}" ${type==='number'?'step="any"':''} value="${esc(value)}" ${required?'required':''} placeholder="${esc(placeholder)}">`;return `<div class="field ${['notes','description','criteria','comment','objectives'].includes(name)?'full':''}"><label for="${idn}">${label}${required?' *':''}</label>${body}</div>`}
@@ -424,7 +426,7 @@ function openScore(rec=null){const x=rec||{},staff=activeStaff(),sessions=read(K
 function staffById(idv){return read(KEYS.staff).find(s=>s.id===idv)}function sessionById(idv){return read(KEYS.sessions).find(s=>s.id===idv)}function attendanceFor(sessionId){return read(KEYS.attendance).find(x=>x.sessionId===sessionId)}function heldSessions(){const a=read(KEYS.attendance);return read(KEYS.sessions).filter(s=>!s.date||s.date<=today()||a.some(r=>r.sessionId===s.id&&Object.values(r.records||{}).some(Boolean)))}function attendancePercent(staffId){const st=staffById(staffId),ss=heldSessions().filter(x=>((st&&st.areas)||[]).includes(x.area));if(!ss.length)return null;const a=read(KEYS.attendance);let attended=0,eligible=0;ss.forEach(s=>{const record=a.find(r=>r.sessionId===s.id);if(record&&record.records&&record.records[staffId]){eligible++;if(record.records[staffId]==='Presente')attended++}});return eligible?Math.round(attended/eligible*100):null}
 function averageScore(staffId=null,area=null){const list=read(KEYS.scores).concat(testItems()).filter(x=>(!staffId||x.staffId===staffId)&&(!area||x.area===area));return list.length?Math.round(list.reduce((n,x)=>n+Number(x.score||0),0)/list.length*100)/100:null}
 function populateSelect(idn,areas=false,includeAll=true){const el=$(idn);if(!el)return;const old=el.value;let list=areas?AREAS:read(KEYS.sessions).map(s=>s.id);let html=includeAll?'<option value="">'+(areas?'Todas as áreas':'Seleccione uma sessão')+'</option>':'';html+=areas?opts(list):opts(read(KEYS.sessions).map(s=>s.id+'::'+s.title+' — '+s.area));el.innerHTML=html;if([...el.options].some(o=>o.value===old))el.value=old}
-function navTo(page){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));$('page-'+page)?.classList.remove('hidden');document.querySelectorAll('#mainNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('topPage').textContent=({dashboard:'Painel geral',staff:'Formandos',sessions:'Sessões e materiais',attendance:'Presenças',performance:'Exercícios e desempenho',community:'Dúvidas e feedback',reports:'Relatórios e certificação',users:'Utilizadores',pay:'Pagamentos'})[page]||'Formação';$('sidebar').classList.remove('mobile-open');if(page==='users')renderUsers();if(page==='pay')payAdminOpen();if(page==='attendance')renderAttendance();if(page==='reports')renderReports();if(['performance','reports','dashboard'].includes(page)&&PROFILE&&PROFILE.role!=='collaborator')loadTests().then(()=>{renderScores();renderReports();renderDashboard()});if(page==='community'){const f=$('forumAdmin');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}}
+function navTo(page){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));$('page-'+page)?.classList.remove('hidden');document.querySelectorAll('#mainNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('topPage').textContent=({dashboard:'Painel geral',staff:'Formandos',sessions:'Sessões e materiais',attendance:'Presenças',performance:'Exercícios e desempenho',community:'Dúvidas e feedback',reports:'Relatórios e certificação',users:'Utilizadores',pay:'Pagamentos',treino:'Treino e turmas'})[page]||'Formação';$('sidebar').classList.remove('mobile-open');if(page==='users')renderUsers();if(page==='pay')payAdminOpen();if(page==='treino')trAdminOpen();if(page==='attendance')renderAttendance();if(page==='reports')renderReports();if(['performance','reports','dashboard'].includes(page)&&PROFILE&&PROFILE.role!=='collaborator')loadTests().then(()=>{renderScores();renderReports();renderDashboard()});if(page==='community'){const f=$('forumAdmin');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}}
 document.querySelectorAll('#mainNav button').forEach(b=>b.onclick=()=>navTo(b.dataset.page));document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>navTo(b.dataset.page)));$('mobileMenu').onclick=()=>$('sidebar').classList.toggle('mobile-open');$('addStaffBtn').onclick=()=>openStaff();$('addSessionBtn').onclick=()=>openSession();$('addScoreBtn').onclick=()=>openScore();$('page-dashboard').querySelector('[data-open="staff"]').onclick=()=>{navTo('staff');openStaff()};$('addSessionBtn').onclick=()=>openSession();
 async function adminFn(body,retry=true){const r=await SB.functions.invoke('admin-utilizadores',{body});if(r.error){let m=r.error.message,st=0,det='';try{st=r.error.context.status;const j=await r.error.context.json();m=j.error||m;if(j.detalhe)det=' ['+j.detalhe+'; chave '+(j.chave_publica||'?')+']'}catch(e){}if(st===401||/Sessão inválida|Sem sessão/.test(m)){if(retry){try{const x=await SB.auth.refreshSession();if(!x.error&&x.data&&x.data.session)return await adminFn(body,false)}catch(e){}}throw new Error('A sua sessão expirou ou não é reconhecida pelo servidor. Saia do portal e entre de novo.'+det)}throw new Error(m)}return r.data}
 let USERS=[];const ROLE_LABEL={admin:'Administrador',trainer:'Formador',collaborator:'Formando'};
@@ -1174,6 +1176,180 @@ async function sessEnd(msg){if(ENDING)return;ENDING=true;try{sessionStorage.setI
 function sessLoginMsg(){try{const m=sessionStorage.getItem('av_logout_msg');sessionStorage.removeItem('av_logout_msg');return m||''}catch{return ''}}
 function sessWatch(){if(SESS_T)return;['pointerdown','mousemove','keydown','scroll','touchstart'].forEach(ev=>window.addEventListener(ev,sessMark,{passive:true,capture:true}));sessMark(true);const chk=()=>{const m=sessExpiredMsg();if(m)sessEnd(m)};SESS_T=setInterval(chk,30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});setInterval(()=>{if(document.hidden||!PROFILE||PROFILE.role==='collaborator')return;loadTests().then(()=>{renderScores();renderReports();renderDashboard()}).catch(()=>{})},60000)}
 (function(){const L=tb=>{const t=tb.closest('table');if(!t)return;t.classList.add('stack');const h=[...t.querySelectorAll('thead th')].map(x=>x.textContent.trim());tb.querySelectorAll('tr').forEach(tr=>{if(tr.children.length!==h.length)return;[...tr.children].forEach((td,i)=>{if(td.dataset.label===undefined&&h[i])td.setAttribute('data-label',h[i])})})};['staffRows','scoreRows','reportRows','userRows'].forEach(i=>{const tb=$(i);if(!tb)return;new MutationObserver(()=>L(tb)).observe(tb,{childList:true});L(tb)})})();
+/* ===== TR · Treino e níveis (fase 1: perfil de entrada, níveis e turmas) =====
+   Módulo isolado. Não toca nos testes, na pauta nem no diagnóstico de competências.
+   Depende da migração 015_treino_niveis.sql. Sem ela, o formando não vê nada e a página
+   de administração mostra um aviso. */
+var TR={prof:null,cohortName:'',missing:false,ready:false,profs:[],cohorts:[],staffCoh:{},cfg:{cohort_min_size:5},busy:false};
+const TR_LV=[['estudante','Estudante'],['empreendedor','Empreendedor'],['empreendedor_plus','Empreendedor+'],['empresario','Empresário']];
+const TR_PAIR={estudante:'empreendedor',empreendedor:'estudante',empreendedor_plus:'empresario',empresario:'empreendedor_plus'};
+const TR_Q=[
+ {k:'q1',t:'Tem um negócio ou actividade que gera rendimento?',o:[['nao','Não'],['preparacao','Em preparação'],['sim','Sim']]},
+ {k:'q2',t:'Há quanto tempo?',o:[['lt1','Menos de 1 ano'],['1a3','1 a 3 anos'],['gt3','Mais de 3 anos']],only:true},
+ {k:'q3',t:'Separa o dinheiro pessoal do dinheiro do negócio?',o:[['nunca','Nunca'],['as_vezes','Às vezes'],['sempre','Sempre']]},
+ {k:'q4',t:'Que registos mantém?',o:[['nenhum','Nenhum'],['so_vendas','Só vendas'],['vendas_despesas','Vendas e despesas'],['leads_vendas_despesas','Leads, vendas e despesas']]},
+ {k:'q5',t:'Quantas pessoas trabalham consigo?',o:[['nenhuma','Nenhuma'],['1a3','1 a 3'],['4mais','4 ou mais']]},
+ {k:'q6',t:'Quem toma as decisões do dia a dia?',o:[['so_eu','Só eu'],['com_ajuda','Eu com ajuda'],['delego','Delego e acompanho números']]}];
+const trLv=c=>(TR_LV.find(x=>x[0]===c)||[0,'—'])[1];
+const trMiss=e=>/does not exist|PGRST20[45]|42P01|42883|schema cache|Could not find/i.test(String((e&&(e.message||e.code||e.details))||e||''));
+const trKv=(k,v)=>'<div><span>'+k+'</span><strong>'+esc(v||'—')+'</strong></div>';
+const trDate=d=>d?new Date(d).toLocaleDateString('pt-PT'):'—';
+const TR_ERR={sem_permissao:'Não tem permissão para esta acção.',respostas_invalidas:'Responda a todas as perguntas.',perfil_ja_preenchido:'O perfil já foi preenchido. Peça ao formador para abrir a reavaliação.',nota_obrigatoria:'Escreva uma nota curta (mínimo 3 caracteres).',sem_perfil:'Este formando ainda não preencheu o perfil de entrada.',turma_invalida:'A turma escolhida não existe ou está inactiva.',nivel_invalido:'Nível inválido.',apenas_formando:'Só o formando pode preencher o seu perfil.'};
+const trErr=e=>{const m=String((e&&e.message)||e||'');const k=Object.keys(TR_ERR).find(x=>m.includes(x));return k?TR_ERR[k]:m};
+/* --- janela --- */
+function trOpen(title,body,acts){
+ $('trMTitle').textContent=title;$('trMBody').innerHTML=body;const a=$('trMActs');a.innerHTML='';
+ acts.forEach(x=>{const b=document.createElement('button');b.type='button';b.className='btn '+(x.cls||'');b.textContent=x.label;
+  b.onclick=async()=>{if(!x.fn){trClose();return}b.disabled=true;try{const r=await x.fn();if(r!==false)trClose()}finally{b.disabled=false}};a.appendChild(b)});
+ $('trModal').classList.add('open')}
+function trClose(){$('trModal').classList.remove('open')}
+$('trModal').addEventListener('click',e=>{if(e.target===$('trModal'))trClose()});
+/* --- formando: perfil de entrada --- */
+async function trStudentInit(){
+ if(!PROFILE||PROFILE.role!=='collaborator')return;
+ try{
+  const r=await SB.from('av_student_profile').select('level_final,reassess_open').eq('staff_id',PROFILE.staff_id).maybeSingle();
+  if(r.error)throw r.error;
+  TR.prof=r.data||null;TR.cohortName='';
+  const c=await SB.from('av_staff').select('cohort_id').eq('id',PROFILE.staff_id).maybeSingle();
+  if(c.data&&c.data.cohort_id){const h=await SB.from('av_cohorts').select('name').eq('id',c.data.cohort_id).maybeSingle();TR.cohortName=(h.data&&h.data.name)||''}
+  TR.ready=true;TR.missing=false;
+ }catch(e){TR.ready=false;TR.missing=trMiss(e);trProfileDraw();return}
+ trProfileDraw();
+ if(!TR.prof||TR.prof.reassess_open)trProfileOpen();
+}
+function trProfileDraw(){
+ const box=$('trProfileCard');if(!box)return;
+ if(!TR.ready){box.style.display='none';box.innerHTML='';return}
+ box.style.display='';
+ const need=!TR.prof||TR.prof.reassess_open;
+ box.innerHTML='<div class="cardhead"><h2>Nível e turma</h2>'+(need?'<button type="button" class="btn small" data-tr-profile>'+(TR.prof?'Reavaliar o meu nível':'Responder às 6 perguntas')+'</button>':'')+'</div>'
+  +'<div class="kv">'+trKv('O meu nível',TR.prof?trLv(TR.prof.level_final):'Ainda sem nível')+trKv('Turma',TR.cohortName||'Ainda sem turma')+'</div>'
+  +'<p class="muted smalltext" style="margin:12px 0 0">O nível descreve a tua situação actual e serve para organizar as turmas e o treino. Não altera a nota nem a pauta.</p>';
+}
+function trProfileOpen(){
+ const reass=!!(TR.prof&&TR.prof.reassess_open);
+ const html='<p class="muted smalltext" style="margin:0 0 14px">'+(reass?'O formador abriu a reavaliação do fim de ciclo. ':'')+'Seis perguntas rápidas sobre a tua situação. Servem para te colocar na turma certa; não há respostas certas nem notas.</p>'
+  +TR_Q.map(q=>'<div class="tr-q" data-trq="'+q.k+'"'+(q.only?' style="display:none"':'')+'><h4>'+esc(q.t)+'</h4><div class="tr-opts">'
+   +q.o.map(o=>'<label class="tr-opt"><input type="radio" name="trq_'+q.k+'" value="'+o[0]+'"><span>'+esc(o[1])+'</span></label>').join('')+'</div></div>').join('')
+  +'<div class="muted smalltext" id="trPMsg" style="min-height:16px"></div>';
+ trOpen(reass?'Reavaliação do nível':'O teu perfil de entrada',html,[
+  {label:'Mais tarde',cls:'secondary'},
+  {label:'Guardar',fn:async()=>{
+    const a={};for(const q of TR_Q){const v=document.querySelector('input[name="trq_'+q.k+'"]:checked');if(q.only&&a.q1!=='sim')continue;if(!v){$('trPMsg').style.color='var(--red)';$('trPMsg').textContent='Responda a todas as perguntas.';return false}a[q.k]=v.value}
+    try{const r=await SB.rpc('av_save_profile',{p_answers:a});if(r.error)throw r.error;toast('Perfil guardado.');await trStudentInit();return true}
+    catch(e){$('trPMsg').style.color='var(--red)';$('trPMsg').textContent='Não foi possível guardar: '+trErr(e);return false}}}]);
+}
+document.addEventListener('change',e=>{
+ if(e.target&&e.target.name==='trq_q1'){const q2=document.querySelector('[data-trq="q2"]');if(q2)q2.style.display=e.target.value==='sim'?'':'none'}});
+/* --- administração e formador: Níveis e turmas --- */
+async function trLoad(){
+ const R=await Promise.all([SB.from('av_student_profile').select('*').limit(5000),SB.from('av_cohorts').select('*').order('created_at'),SB.from('av_staff').select('id,cohort_id').limit(5000),SB.from('av_train_settings').select('*').eq('id',1).maybeSingle()]);
+ R.forEach(r=>{if(r.error)throw r.error});
+ TR.profs=R[0].data||[];TR.cohorts=R[1].data||[];TR.staffCoh={};(R[2].data||[]).forEach(x=>{TR.staffCoh[x.id]=x.cohort_id});TR.cfg=R[3].data||{cohort_min_size:5};
+}
+async function trAdminOpen(){
+ const box=$('trAdminBody');if(!box)return;box.innerHTML='<div class="empty">A carregar…</div>';
+ try{await trLoad();TR.missing=false;trAdminRender()}
+ catch(e){box.innerHTML=trMiss(e)?'<div class="notice">O módulo de Treino ainda não está instalado no servidor. Execute a migração <b>015_treino_niveis.sql</b> no Supabase.</div>':'<div class="notice">Não foi possível carregar: '+esc(e.message||e)+'</div>'}
+}
+const trStaffList=()=>read(KEYS.staff).filter(s=>s.status==='Activo').sort((a,b)=>String(a.name).localeCompare(String(b.name),'pt'));
+const trProfOf=id=>TR.profs.find(p=>p.staff_id===id);
+function trAdminRender(){
+ const box=$('trAdminBody');if(!box)return;
+ const staff=trStaffList(),min=Number(TR.cfg.cohort_min_size)||5,cnt={};TR_LV.forEach(l=>cnt[l[0]]=0);let none=0,leads=0;
+ staff.forEach(s=>{const p=trProfOf(s.id);if(!p){none++;return}cnt[p.level_final]=(cnt[p.level_final]||0)+1;if(p.lead_flag)leads++});
+ const sug=TR_LV.filter(l=>cnt[l[0]]>0&&cnt[l[0]]<min).map(l=>{const o=TR_PAIR[l[0]];return '<li><strong>'+esc(l[1])+'</strong> tem '+cnt[l[0]]+' formando(s), abaixo do mínimo de '+min+'. Sugestão: juntar com <strong>'+esc(trLv(o))+'</strong> ('+cnt[o]+').</li>'});
+ const admin=PROFILE&&PROFILE.role==='admin';
+ box.innerHTML=
+  '<div class="tr-lv">'+TR_LV.map(l=>'<div class="card"><span class="muted smalltext">'+esc(l[1])+'</span><strong>'+cnt[l[0]]+'</strong></div>').join('')+'<div class="card"><span class="muted smalltext">Sem perfil</span><strong>'+none+'</strong></div></div>'
+  +(leads?'<p class="muted smalltext" style="margin:-4px 0 14px">'+leads+' formando(s) com a marca «sem registo de leads»: reforçar prospecção e CRM.</p>':'')
+  +(sug.length?'<div class="notice"><strong>Sugestão de junção de turmas</strong><ul style="margin:6px 0 0 18px">'+sug.join('')+'</ul><div style="margin-top:6px">A administração confirma a junção ao editar os níveis da turma.</div></div>':'')
+  +'<div class="card"><div class="cardhead"><h2>Turmas</h2><button type="button" class="btn small" data-tr-newcoh>+ Nova turma</button></div>'+trCohortsHTML(staff)+'</div>'
+  +'<div class="card"><div class="cardhead"><h2>Formandos e níveis</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn secondary small" data-tr-reass>Reavaliar níveis</button></div></div>'
+  +'<div class="toolbar"><input id="trSearch" placeholder="Pesquisar formando…"><select id="trLvFilter"><option value="">Todos os níveis</option>'+TR_LV.map(l=>'<option value="'+l[0]+'">'+esc(l[1])+'</option>').join('')+'<option value="_none">Sem perfil</option></select></div>'
+  +'<div class="tablewrap"><table class="table"><thead><tr><th>Formando</th><th>Nível</th><th>Turma</th><th>Marca</th><th></th></tr></thead><tbody id="trRows"></tbody></table></div></div>';
+ trRows();
+}
+function trCohortsHTML(staff){
+ if(!TR.cohorts.length)return '<div class="empty">Ainda não existem turmas. Crie a primeira com «+ Nova turma».</div>';
+ const min=Number(TR.cfg.cohort_min_size)||5;
+ return '<div class="tablewrap"><table class="table"><thead><tr><th>Turma</th><th>Níveis</th><th>Formandos</th><th>Estado</th><th></th></tr></thead><tbody>'+TR.cohorts.map(c=>{
+  const n=staff.filter(s=>TR.staffCoh[s.id]===c.id).length;
+  return '<tr><td data-label="Turma">'+esc(c.name)+'</td><td data-label="Níveis">'+((c.levels||[]).map(trLv).map(esc).join(', ')||'—')+'</td><td data-label="Formandos">'+n+(c.active&&n<min?' <span class="tag warn">abaixo de '+min+'</span>':'')+'</td><td data-label="Estado"><span class="tag '+(c.active?'good':'')+'">'+(c.active?'Activa':'Inactiva')+'</span></td><td><button type="button" class="btn secondary small" data-tr-editcoh="'+c.id+'">Editar</button></td></tr>'}).join('')+'</tbody></table></div>';
+}
+function trRows(){
+ const tb=$('trRows');if(!tb)return;
+ const q=($('trSearch').value||'').toLowerCase().trim(),lf=$('trLvFilter').value;
+ const act=TR.cohorts.filter(c=>c.active);
+ const rows=trStaffList().filter(s=>{const p=trProfOf(s.id);if(q&&!(String(s.name)+' '+String(s.number)).toLowerCase().includes(q))return false;if(lf==='_none')return !p;if(lf)return p&&p.level_final===lf;return true});
+ tb.innerHTML=rows.length?rows.map(s=>{
+  const p=trProfOf(s.id),cur=TR.staffCoh[s.id]||'';
+  const lv=p?esc(trLv(p.level_final))+(p.level_final!==p.level_auto?' <span class="muted smalltext">· automático: '+esc(trLv(p.level_auto))+'</span>':''):'<span class="tag">Sem perfil</span>';
+  const opt='<option value="">— sem turma —</option>'+act.map(c=>'<option value="'+c.id+'"'+(c.id===cur?' selected':'')+'>'+esc(c.name)+'</option>').join('')+(cur&&!act.some(c=>c.id===cur)?'<option value="'+cur+'" selected>(turma inactiva)</option>':'');
+  return '<tr><td data-label="Formando">'+esc(s.name)+'<div class="muted smalltext">'+esc(s.number||'')+'</div></td><td data-label="Nível">'+lv+'</td><td data-label="Turma"><select data-tr-coh="'+s.id+'">'+opt+'</select></td><td data-label="Marca">'+(p&&p.lead_flag?'<span class="tag warn">sem registo de leads</span>':'—')+'</td><td><button type="button" class="btn secondary small" data-tr-lvl="'+s.id+'"'+(p?'':' disabled')+'>Corrigir nível</button> <button type="button" class="btn secondary small" data-tr-hist="'+s.id+'"'+(p?'':' disabled')+'>Histórico</button></td></tr>'}).join(''):'<tr><td colspan="5"><div class="empty">Nenhum formando encontrado.</div></td></tr>';
+}
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='trSearch')trRows()});
+document.addEventListener('change',async e=>{
+ const t=e.target;if(!t)return;
+ if(t.id==='trLvFilter')trRows();
+ if(t.dataset&&t.dataset.trCoh){
+  try{const r=await SB.rpc('av_assign_cohort',{p_staff:t.dataset.trCoh,p_cohort:t.value||null});if(r.error)throw r.error;TR.staffCoh[t.dataset.trCoh]=t.value||null;toast('Turma actualizada.');trAdminRender()}
+  catch(er){alert('Não foi possível atribuir a turma: '+trErr(er));trAdminRender()}}});
+document.addEventListener('click',async e=>{
+ const b=e.target.closest&&e.target.closest('[data-tr-profile],[data-tr-newcoh],[data-tr-editcoh],[data-tr-lvl],[data-tr-hist],[data-tr-reass]');if(!b)return;
+ if(b.hasAttribute('data-tr-profile'))return trProfileOpen();
+ if(b.hasAttribute('data-tr-newcoh'))return trCohortForm(null);
+ if(b.dataset.trEditcoh)return trCohortForm(TR.cohorts.find(c=>c.id===b.dataset.trEditcoh));
+ if(b.dataset.trLvl)return trLevelForm(b.dataset.trLvl);
+ if(b.dataset.trHist)return trHistory(b.dataset.trHist);
+ if(b.hasAttribute('data-tr-reass'))return trReassess();
+});
+function trCohortForm(c){
+ const lv=(c&&c.levels)||[];
+ trOpen(c?'Editar turma':'Nova turma',
+  '<div class="field"><label for="trCName">Nome da turma *</label><input id="trCName" maxlength="80" value="'+esc(c?c.name:'')+'"></div>'
+  +'<div class="field"><label>Níveis da turma</label><div class="tr-opts">'+TR_LV.map(l=>'<label class="tr-opt"><input type="checkbox" data-tr-clv value="'+l[0]+'"'+(lv.includes(l[0])?' checked':'')+'><span>'+esc(l[1])+'</span></label>').join('')+'</div><div class="muted smalltext" style="margin-top:6px">Uma turma tem um só nível. Marque dois níveis vizinhos apenas se confirmar a junção.</div></div>'
+  +'<label class="tr-opt" style="margin-top:8px"><input type="checkbox" id="trCAct"'+(!c||c.active?' checked':'')+'><span>Turma activa</span></label>',
+  [{label:'Cancelar',cls:'secondary'},{label:'Guardar',fn:async()=>{
+   const name=$('trCName').value.trim(),levels=[...document.querySelectorAll('[data-tr-clv]:checked')].map(x=>x.value),active=$('trCAct').checked;
+   if(!name){alert('Indique o nome da turma.');return false}
+   if(!levels.length){alert('Escolha pelo menos um nível.');return false}
+   try{
+    const r=c?await SB.from('av_cohorts').update({name,levels,active}).eq('id',c.id):await SB.from('av_cohorts').insert({name,levels,active,trainer_user_id:PROFILE.role==='trainer'?USER.id:null});
+    if(r.error)throw r.error;toast('Turma guardada.');await trLoad();trAdminRender();return true}
+   catch(er){alert('Não foi possível guardar a turma: '+trErr(er));return false}}}]);
+ setTimeout(()=>{const i=$('trCName');if(i)i.focus()},50);
+}
+function trLevelForm(staffId){
+ const s=read(KEYS.staff).find(x=>x.id===staffId),p=trProfOf(staffId);if(!s||!p)return;
+ trOpen('Corrigir nível · '+s.name,
+  '<p class="muted smalltext" style="margin:0 0 12px">Nível automático: <strong>'+esc(trLv(p.level_auto))+'</strong>. A correcção fica no histórico com a sua nota.</p>'
+  +'<div class="field"><label for="trLvSel">Novo nível</label><select id="trLvSel">'+TR_LV.map(l=>'<option value="'+l[0]+'"'+(l[0]===p.level_final?' selected':'')+'>'+esc(l[1])+'</option>').join('')+'</select></div>'
+  +'<div class="field"><label for="trLvNote">Nota (obrigatória) *</label><textarea id="trLvNote" rows="3" maxlength="300"></textarea></div>',
+  [{label:'Cancelar',cls:'secondary'},{label:'Guardar correcção',fn:async()=>{
+   const lvl=$('trLvSel').value,note=$('trLvNote').value.trim();
+   if(note.length<3){alert(TR_ERR.nota_obrigatoria);return false}
+   try{const r=await SB.rpc('av_set_level',{p_staff:staffId,p_level:lvl,p_reason:note});if(r.error)throw r.error;toast('Nível actualizado.');await trLoad();trAdminRender();return true}
+   catch(er){alert('Não foi possível corrigir o nível: '+trErr(er));return false}}}]);
+}
+async function trHistory(staffId){
+ const s=read(KEYS.staff).find(x=>x.id===staffId);
+ trOpen('Histórico de níveis · '+(s?s.name:''),'<div class="empty">A carregar…</div>',[{label:'Fechar',cls:'secondary'}]);
+ try{const r=await SB.from('av_level_history').select('*').eq('staff_id',staffId).order('created_at',{ascending:false});if(r.error)throw r.error;
+  const h=r.data||[];$('trMBody').innerHTML=h.length?'<div class="tablewrap"><table class="table" style="min-width:0"><thead><tr><th>Data</th><th>Nível</th><th>Origem</th><th>Motivo</th><th>Ciclo</th></tr></thead><tbody>'+h.map(x=>'<tr><td>'+trDate(x.created_at)+'</td><td>'+esc(trLv(x.level))+'</td><td>'+(x.source==='formador'?'Formador':'Automático')+'</td><td>'+esc(x.reason||'—')+'</td><td>'+esc(x.cycle)+'</td></tr>').join('')+'</tbody></table></div>':'<div class="empty">Sem registos.</div>'}
+ catch(er){$('trMBody').innerHTML='<div class="notice">Não foi possível carregar o histórico: '+esc(trErr(er))+'</div>'}
+}
+function trReassess(){
+ const act=TR.cohorts.filter(c=>c.active);
+ trOpen('Reavaliar níveis',
+  '<p class="muted smalltext" style="margin:0 0 12px">Abre a reavaliação do fim de ciclo: o formando responde de novo às 6 perguntas na próxima entrada. O histórico mantém-se.</p>'
+  +'<div class="field"><label for="trRCoh">Quem reavaliar</label><select id="trRCoh"><option value="">Todos os formandos com perfil</option>'+act.map(c=>'<option value="'+c.id+'">'+esc(c.name)+'</option>').join('')+'</select></div>',
+  [{label:'Cancelar',cls:'secondary'},{label:'Abrir reavaliação',fn:async()=>{
+   try{const r=await SB.rpc('av_open_reassessment',{p_cohort:$('trRCoh').value||null});if(r.error)throw r.error;toast((r.data||0)+' formando(s) vão reavaliar o nível.');return true}
+   catch(er){alert('Não foi possível abrir a reavaliação: '+trErr(er));return false}}}]);
+}
+
 boot();
 })();
 </script></body></html>
