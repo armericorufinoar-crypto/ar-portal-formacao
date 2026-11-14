@@ -150,7 +150,7 @@ html{scroll-behavior:smooth}body{-webkit-font-smoothing:antialiased;text-renderi
 @media(min-width:1500px){.student{max-width:1360px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}.stat:hover,.area-card:hover,.tile:hover,.btn:hover{transform:none}}
 </style>
-<style id="trCss">.tr-opts{display:grid;gap:8px}.tr-opt{display:flex;align-items:center;gap:10px;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;background:#fff;font-size:13px;font-weight:650;color:var(--ink);cursor:pointer}.tr-opt input{width:18px;height:18px;flex:none;accent-color:var(--red)}.tr-opt:has(input:checked){border-color:var(--red);background:#fff4f5}.tr-q{margin:0 0 16px}.tr-q h4{margin:0 0 8px;font-size:13px}.tr-lv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 14px}.tr-lv>.card{margin:0;padding:14px;display:grid;gap:4px}.tr-lv>.card strong{font-size:24px}@media(max-width:760px){.tr-lv{grid-template-columns:repeat(2,minmax(0,1fr))}}</style></head><body>
+<style id="trCss">.tr-opts{display:grid;gap:8px}.tr-opt{display:flex;align-items:center;gap:10px;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;background:#fff;font-size:13px;font-weight:650;color:var(--ink);cursor:pointer}.tr-opt input{width:18px;height:18px;flex:none;accent-color:var(--red)}.tr-opt:has(input:checked){border-color:var(--red);background:#fff4f5}.tr-q{margin:0 0 16px}.tr-q h4{margin:0 0 8px;font-size:13px}.tr-lv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 14px}.tr-lv>.card{margin:0;padding:14px;display:grid;gap:4px}.tr-lv>.card strong{font-size:24px}@media(max-width:760px){.tr-lv{grid-template-columns:repeat(2,minmax(0,1fr))}}.tr-tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}.tr-tabs button{border:1px solid #d9dce1;background:#fff;border-radius:99px;padding:9px 16px;font-weight:700;font-size:13px;color:var(--ink);cursor:pointer;min-height:40px;font-family:inherit}.tr-tabs button.active{background:var(--red);border-color:var(--red);color:#fff}.tr-stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.tr-sv{display:block;font-size:22px;margin:2px 0}.tr-big{font-size:20px;font-weight:800;margin:0 0 6px}.tr-bar{position:relative;height:10px;border-radius:99px;background:#eceef1;overflow:hidden;margin-top:10px}.tr-bar i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .3s}.tr-bar b{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.45}.tr-stmt{font-size:16px;line-height:1.5;margin:14px 0;white-space:pre-line;font-weight:650}.tr-ctx{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px;line-height:1.5;margin:12px 0 0;white-space:pre-line}.tr-ans{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;text-align:left;border:1px solid #d9dce1;border-radius:12px;background:#fff;padding:10px 14px;font-size:14px;font-weight:650;color:var(--ink);cursor:pointer;margin:0 0 8px;font-family:inherit}.tr-ans b{flex:0 0 24px;height:24px;border-radius:50%;background:#eceef1;display:grid;place-items:center;font-size:12px}.tr-ans:hover:not(:disabled){border-color:var(--red)}.tr-ans:disabled{cursor:default}.tr-ans.ok{border-color:var(--green);background:#eef8f2}.tr-ans.bad{border-color:var(--red);background:#fff4f5}.tr-fb{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px;line-height:1.5}.tr-fb.ok{background:#eef8f2;border:1px solid #b9e0c9}.tr-fb.bad{background:#fff4f5;border:1px solid #f3c1c6}.tr-fb p{margin:6px 0 0}.tr-ord{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:8px}.tr-ord li{display:flex;align-items:center;gap:8px;border:1px solid #d9dce1;border-radius:12px;padding:6px 8px 6px 14px;background:#fff;font-size:14px;font-weight:650;min-height:46px}.tr-ord li span{flex:1}.tr-ord button{width:40px;height:40px;border:1px solid #d9dce1;border-radius:10px;background:#fff;font-size:16px;cursor:pointer;color:var(--ink)}.tr-ord button:disabled{opacity:.35;cursor:default}.tr-num{display:flex;gap:8px}.tr-num input{flex:1;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:0 12px;font-size:16px;font-family:inherit}.tr-aula{display:grid;grid-template-columns:70px 1fr 150px;gap:8px;align-items:center;margin:0 0 8px}.tr-oprow{display:grid;grid-template-columns:24px 1fr 40px;gap:8px;align-items:center;margin:0 0 6px}.tr-oprow input[type=radio]{width:18px;height:18px}.tr-tools{display:flex;gap:8px;flex-wrap:wrap}.tr-filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:8px}.tr-filters input,.tr-filters select{min-height:40px;border:1px solid #d9dce1;border-radius:10px;padding:0 10px;font-family:inherit;font-size:13px;background:#fff;min-width:0}@media(max-width:760px){.tr-aula{grid-template-columns:1fr}.tr-filters{grid-template-columns:1fr 1fr}.tr-filters input{grid-column:1/-1}}</style></head><body>
 <style>[data-invite]{display:none!important}#loginBox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fcfbf9;z-index:50}#loginBox form{background:#fff;padding:28px;border-radius:12px;width:min(92vw,360px);box-shadow:0 8px 30px #0002;display:grid;gap:12px}#loginMsg{color:#b42318;font-size:.9rem;min-height:1.2em}#logoutBtn{position:fixed;top:10px;right:12px;z-index:20}/* v12: formatação, anexos estilo Facebook, edição */
 .rt strong{font-weight:800}.rt u{text-decoration:underline;text-underline-offset:2px}.rt s{opacity:.7}.rt mark{background:#fff2a8;color:inherit;padding:0 2px;border-radius:3px}
 .rt code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:#0000000f;padding:1px 5px;border-radius:5px}
@@ -345,15 +345,15 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
 <section class="page hidden" id="page-community"><div class="pagehead"><div><div class="eyebrow">Aprendizagem contínua</div><h1>Dúvidas, perguntas e feedback</h1><p>Acompanhe questões dos formandos, respostas e opiniões sobre cada sessão.</p></div></div><div class="grid feedgrid"><div class="card"><div class="cardhead"><h2>Publicações da formação</h2><span class="tag" id="forumCount">0 publicações</span></div><form id="forumAdminForm" class="composer"><textarea id="forumAdminText" maxlength="1500" rows="2" placeholder="Escreva uma publicação para todos…" aria-label="Nova publicação"></textarea><div class="composerbar"><label class="attbtn" title="Anexar ficheiro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2l-8.6 8.6a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/></svg><input type="file" id="forumAdminFile" hidden></label><span class="attchip hidden" id="forumAdminChip"></span><button class="btn small">Publicar</button></div></form><div class="feed" id="forumAdmin"></div></div><div class="card"><div class="cardhead"><h2>Feedback das sessões</h2><span class="tag" id="feedbackCount">0 respostas</span></div><div id="feedbackAdmin"></div></div></div></section>
 <section class="page hidden" id="page-reports"><div class="pagehead"><div><div class="eyebrow">Acompanhamento e conclusão</div><h1>Relatórios e certificação</h1><p>Prepare o registo de participação e desempenho necessário à futura emissão de certificados.</p></div><button class="btn" id="exportReport">Exportar relatório CSV</button></div><div class="notice">A plataforma não emite certificados nesta versão. O relatório serve para conferir os dados e identificar quem cumpre os requisitos definidos pela empresa. Os critérios de certificação devem ser aprovados pela empresa.</div><div class="card"><div class="toolbar"><select id="reportArea"><option value="">Todas as áreas</option></select><input id="reportSearch" placeholder="Pesquisar formando…"></div><div class="tablewrap"><table class="table"><thead><tr><th>N.º interno</th><th>Formando</th><th>Áreas frequentadas</th><th>Sessões frequentadas</th><th>Assiduidade</th><th>Média (exercícios e testes)</th><th>Estado do registo</th></tr></thead><tbody id="reportRows"></tbody></table></div></div></section>
 <section class="page hidden" id="page-users"><div class="pagehead"><div><div class="eyebrow">Acesso ao portal</div><h1>Utilizadores</h1><p>Crie contas, ligue-as às fichas de formandos e controle quem pode entrar.</p></div><button class="btn" id="addUserBtn">+ Nova conta</button></div><div class="notice">A palavra-passe provisória é mostrada uma única vez. Entregue-a por um canal seguro: o utilizador terá de a trocar no primeiro acesso.</div><div class="card"><div class="tablewrap"><table class="table"><thead><tr><th>Utilizador</th><th>Papel</th><th>Ficha</th><th>Estado</th><th>Último acesso</th><th>Acções</th></tr></thead><tbody id="userRows"></tbody></table></div><div class="empty hidden" id="usersEmpty">Ainda não existem contas.</div></div></section>
-<section class="page hidden" id="page-treino"><div class="pagehead"><div><div class="eyebrow">Treino e níveis</div><h1>Treino e turmas</h1><p>Níveis dos formandos por situação, turmas e reavaliação de fim de ciclo.</p></div></div><div id="trAdminBody"></div></section>
+<section class="page hidden" id="page-treino"><div class="pagehead"><div><div class="eyebrow">Treino e níveis</div><h1>Treino e turmas</h1><p>Níveis dos formandos por situação, turmas e reavaliação de fim de ciclo.</p></div></div><div class="tr-tabs" id="trTabs"><button type="button" class="active" data-tr-tab="levels">Níveis e turmas</button><button type="button" data-tr-tab="bank">Banco de treino</button></div><div id="trAdminBody"></div><div id="trBankBody" class="hidden"></div></section>
 <section class="page hidden" id="page-pay"><div class="pagehead"><div><div class="eyebrow">Controlo financeiro</div><h1>Pagamentos</h1><p>Parcelas, pedidos de pagamento, comprovativos e facturas internas dos formandos.</p></div><button class="btn" id="payGenBtn">+ Gerar parcelas</button></div><div id="payAdminMsg"></div><div class="paytabs" id="payTabs"><button type="button" data-pt="panel" class="active">Painel</button><button type="button" data-pt="confirm">A confirmar <span class="tag warn hidden" id="payCnt">0</span></button><button type="button" data-pt="pro">Parcelas</button><button type="button" data-pt="inv">Facturas</button><button type="button" data-pt="plans">Planos</button><button type="button" data-pt="set">Definições</button></div><div id="payBody"></div></section>
 </main></div></div>
-<div id="studentView" class="hidden"><header class="studenthead"><div class="student"><div class="studenttop"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>ESPAÇO DO FORMANDO</small></span></div><div class="topicons" data-topicons></div></div></div></header><nav class="stnav" id="stNav"><button type="button" class="active" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button><button type="button" data-st-tab="billing">Facturação</button><button type="button" data-st-tab="profile">Perfil</button></nav><main class="student"><div class="pagehead" style="margin-top:25px"><div><div class="eyebrow">Área reservada</div><h1 id="studentName">Bem-vindo</h1><p id="studentMeta"></p></div></div>
+<div id="studentView" class="hidden"><header class="studenthead"><div class="student"><div class="studenttop"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>ESPAÇO DO FORMANDO</small></span></div><div class="topicons" data-topicons></div></div></div></header><nav class="stnav" id="stNav"><button type="button" class="active" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button><button type="button" data-st-tab="billing">Facturação</button><button type="button" data-st-tab="profile">Perfil</button></nav><main class="student"><div class="pagehead" style="margin-top:25px"><div><div class="eyebrow">Área reservada</div><h1 id="studentName">Bem-vindo</h1><p id="studentMeta"></p></div></div>
 <section data-st-page="materials"><div class="grid stats"><div class="stat"><div class="label">Sessões</div><strong id="stSessionCount">0</strong></div><div class="stat"><div class="label">Presenças</div><strong id="stAttendance">0%</strong></div><div class="stat"><div class="label">Média prática (0–20)</div><strong id="stScore">—</strong></div><div class="stat"><div class="label">Materiais</div><strong id="stMaterials">0</strong></div></div><div class="card"><div class="cardhead"><h2>Materiais por área</h2><span class="muted smalltext" id="stMatHint">Abra uma pasta</span></div><div class="tilegrid" id="stTiles"></div><div class="matpanel hidden" id="stMatPanel"></div></div></section>
 <section data-st-page="diagnosis" class="hidden"><div class="card"><div class="cardhead"><h2>Diagnóstico de competências</h2><span class="muted smalltext">Separado da classificação oficial</span></div><p class="muted smalltext">O diagnóstico mostra evidências das respostas nos testes. Não altera a nota de certificação, calculada com 60% de testes automáticos e 40% de avaliação prática do formador.</p><div id="stDiagnosis"><div class="empty">O diagnóstico será apresentado quando existirem tentativas com perguntas associadas a competências e a migração estiver instalada.</div></div></div></section><section data-st-page="pauta" class="hidden"><div class="card"><div class="cardhead"><h2>Pauta</h2><span class="muted smalltext" id="studentPautaWeights">Escala 0–20 · Testes 60% / Prática 40%</span></div><div id="stPauta"></div></div></section>
 <section data-st-page="forum" class="hidden"><div class="grid feedgrid"><div class="card"><div class="cardhead"><h2>Publicações da formação</h2></div><form id="stForumForm" class="composer"><textarea id="stForumText" maxlength="1500" rows="2" placeholder="Escreva a sua dúvida, pergunta, contribuição ou anotação…" aria-label="Nova publicação"></textarea><div class="composerbar"><label class="attbtn" title="Anexar ficheiro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2l-8.6 8.6a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/></svg><input type="file" id="stForumFile" hidden></label><span class="attchip hidden" id="stForumChip"></span><button class="btn small">Publicar</button></div></form><div class="feed" id="stForumPosts"></div></div><div class="card"><div class="cardhead"><h2>Feedback da sessão</h2></div><form id="stFeedbackForm"><div class="field"><label>Sessão</label><select id="stFeedbackSession" required></select></div><div class="field" style="margin-top:12px"><label>Como avalia esta sessão?</label><select id="stFeedbackRating" required><option value="">Seleccione</option><option value="5">5 — Excelente</option><option value="4">4 — Muito boa</option><option value="3">3 — Boa</option><option value="2">2 — Precisa de melhorar</option><option value="1">1 — Insatisfatória</option></select></div><div class="field" style="margin-top:12px"><label>Comentário / sugestão</label><textarea id="stFeedbackText" maxlength="1200" placeholder="O que foi útil? O que poderia melhorar?"></textarea></div><button class="btn" style="margin-top:12px">Enviar feedback</button></form><div id="stFeedbackHistory" style="margin-top:15px"></div></div></div></section>
 <section data-st-page="billing" class="hidden"><div id="payStMsg"></div><div id="payStBody"></div></section>
-<section data-st-page="profile" class="hidden"><div class="profgrid"><div class="card"><div class="cardhead"><h2>Os meus dados</h2></div><div class="kv" id="stProfile"></div></div><div class="card"><div class="cardhead"><h2>Participação</h2></div><div class="kv" id="stProfile2"></div></div><div class="card" id="trProfileCard" style="grid-column:1/-1;display:none"></div></div></section>
+<section data-st-page="train" class="hidden"><div id="trStBody"></div></section><section data-st-page="profile" class="hidden"><div class="profgrid"><div class="card"><div class="cardhead"><h2>Os meus dados</h2></div><div class="kv" id="stProfile"></div></div><div class="card"><div class="cardhead"><h2>Participação</h2></div><div class="kv" id="stProfile2"></div></div><div class="card" id="trProfileCard" style="grid-column:1/-1;display:none"></div></div></section>
 <p class="footer-note">Formação · Área do formando</p></main></div>
 <div id="msgPanel" class="dropdown hidden" role="dialog" aria-label="Mensagens privadas"><div class="ph"><button type="button" id="msgBack" class="hidden" aria-label="Voltar">←</button><strong id="msgTitle">Mensagens privadas</strong><button type="button" data-close-panels aria-label="Fechar">✕</button></div><div class="msgbody"><div class="chatlist" id="msgList"></div><div id="msgThread" class="hidden"><div class="chatmsgs" id="msgMsgs"></div><form id="msgForm" class="chatform"><input id="msgText" required maxlength="1200" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem privada"><button class="btn small">Enviar</button></form></div></div></div>
 <div id="bellPanel" class="dropdown hidden" role="dialog" aria-label="Notificações"><div class="ph"><strong>Notificações</strong><button type="button" id="bellRead" class="btn secondary small">Marcar como lidas</button><button type="button" data-close-panels aria-label="Fechar">✕</button></div><div class="notifbody" id="bellList"></div></div>
@@ -774,7 +774,7 @@ function renderBell(){const ev=notifEvents().slice(0,25),seen=ts(SEEN.notif);$('
 function updateBadges(){const set=(k,n)=>document.querySelectorAll('[data-badge="'+k+'"]').forEach(el=>{el.textContent=n>9?'9+':String(n);el.classList.toggle('hidden',!n)});set('msg',unreadMsgs());set('bell',unreadNotifs())}
 
 /* --- topo: ícones, painéis e menu do utilizador --- */
-function renderTopIcons(){if(!PROFILE||!USER)return;const staff=isStaffUser(),me=staff?null:staffById(PROFILE.staff_id),name=staff?(PROFILE.display_name||USER.email||'Equipa'):(me?.name||PROFILE.display_name||USER.email||'Formando'),menu=staff?'':'<button type="button" data-st-tab="profile">Perfil</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button>';
+function renderTopIcons(){if(!PROFILE||!USER)return;const staff=isStaffUser(),me=staff?null:staffById(PROFILE.staff_id),name=staff?(PROFILE.display_name||USER.email||'Equipa'):(me?.name||PROFILE.display_name||USER.email||'Formando'),menu=staff?'':'<button type="button" data-st-tab="profile">Perfil</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button>';
 const html=`<button type="button" class="iconbtn" data-act="msg" aria-label="Mensagens privadas">${ICO_MSG}<span class="badge hidden" data-badge="msg"></span></button><button type="button" class="iconbtn" data-act="bell" aria-label="Notificações">${ICO_BELL}<span class="badge hidden" data-badge="bell"></span></button><div class="avwrap"><button type="button" class="avbtn" data-act="av" aria-label="Menu do utilizador">${esc(initials(name))}</button><div class="avmenu hidden"><div class="who"><strong>${esc(name)}</strong><br>${esc(USER.email||'')}<br>${esc(ROLE_LABEL[PROFILE.role]||'')}</div>${menu}<button type="button" data-act="logout">Sair</button></div></div>`;document.querySelectorAll('[data-topicons]').forEach(el=>{el.innerHTML=html});updateBadges()}
 function closePanels(){const wasBell=!$('bellPanel').classList.contains('hidden');$('msgPanel').classList.add('hidden');$('bellPanel').classList.add('hidden');document.querySelectorAll('.avmenu').forEach(m=>m.classList.add('hidden'));if(wasBell)markNotifSeen()}
 function toggleMsg(){const open=$('msgPanel').classList.contains('hidden');closePanels();if(open){$('msgPanel').classList.remove('hidden');if(isStaffUser())MSG_VIEW='list';renderMsgPanel()}}
@@ -831,7 +831,7 @@ function drawDiagNav(box){box=box||$('stDiagnosis');if(!box)return;const n=DIAG_
 document.addEventListener('click',e=>{const b=e.target.closest('[data-diag-nav]'),g=e.target.closest('[data-diag-go]');if(!b&&!g)return;DIAG_I=b?DIAG_I+Number(b.dataset.diagNav):Number(g.dataset.diagGo);drawDiagNav();$('stDiagnosis').scrollIntoView({block:'nearest'})});
 document.addEventListener('keydown',e=>{if(ST_TAB!=='diagnosis'||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;const t=e.target&&e.target.tagName;if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT'||document.querySelector('.modal.open'))return;if(DIAG_PANELS.length<2)return;DIAG_I+=e.key==='ArrowRight'?1:-1;drawDiagNav()});
 async function drawStudentDiagnosis(){const box=$('stDiagnosis');if(!box)return;const mine=ATT.filter(a=>a.staffId===PROFILE.staff_id).sort((a,b)=>ts(b.at)-ts(a.at));if(!mine.length){box.innerHTML='<div class="empty">Ainda não existem testes submetidos para gerar o diagnóstico.</div>';return}let out=[];for(const a of mine){const m=MAT.find(x=>x.id===a.materialId);if(!m)continue;if(m.testPurpose==='diagnostico'){try{const p=await fetchInitialProfile(a.materialId);if(p){out.push({label:(m.title||'Diagnóstico')+' · '+fmtDT(a.at),html:initialProfileHTML(p)});continue}}catch(e){out.push({label:(m.title||'Diagnóstico')+' · '+fmtDT(a.at),html:'<div class="notice">O diagnóstico inicial foi submetido, mas não foi possível reconstruir agora o perfil individual. Abra «Ver a minha resposta» e consulte o separador Diagnóstico.</div>'});continue}}if(!COMP_OK)continue;try{const comps=await fetchStudentDiagnosis(a.materialId);if(comps.length){DIAG_CACHE=comps;let items=[];try{const g=await SB.rpc('av_get_test',{p_material:a.materialId});if(!g.error&&g.data&&Array.isArray(g.data.review))items=g.data.review}catch(_){}const title=m.title||'Teste',when=fmtDT(a.at);out.push({label:title+' · '+when,html:`<div class="matpanel"><h3>${esc(title)} · ${esc(when)}</h3>${diagActionsHTML(a.id,comps,title,when,items)}${diagnosisRowsHTML(comps,items)}<h4>Recomendações</h4>${recommendationRowsHTML(comps,items)}</div>`})}}catch(e){}}out.reverse();const keep=DIAG_PANELS[DIAG_I]&&DIAG_PANELS[DIAG_I].key;DIAG_PANELS=out;const k=out.findIndex(x=>x.label===keep);DIAG_I=k>=0?k:out.length-1;drawDiagNav(box)}
- async function stTab(t){ST_TAB=t;document.querySelectorAll('[data-st-page]').forEach(p=>p.classList.toggle('hidden',p.dataset.stPage!==t));document.querySelectorAll('#stNav [data-st-tab]').forEach(b=>b.classList.toggle('active',b.dataset.stTab===t));if(t==='diagnosis')await drawStudentDiagnosis();if(t==='billing')payStudentOpen();if(t==='forum'){const f=$('stForumPosts');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}window.scrollTo({top:0})}
+ async function stTab(t){ST_TAB=t;document.querySelectorAll('[data-st-page]').forEach(p=>p.classList.toggle('hidden',p.dataset.stPage!==t));document.querySelectorAll('#stNav [data-st-tab]').forEach(b=>b.classList.toggle('active',b.dataset.stTab===t));if(t==='diagnosis')await drawStudentDiagnosis();if(t==='billing')payStudentOpen();if(t==='train')trStudentOpen();if(t==='forum'){const f=$('stForumPosts');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}window.scrollTo({top:0})}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act]');if(a){const k=a.dataset.act;if(k==='msg')toggleMsg();else if(k==='bell')toggleBell();else if(k==='av'){const m=a.parentElement.querySelector('.avmenu'),open=m.classList.contains('hidden');closePanels();if(open)m.classList.remove('hidden')}else if(k==='logout')logout();return}
 if(e.target.closest('[data-close-panels]')){closePanels();return}
 const mo=e.target.closest('[data-msg-open]');if(mo){PRIV_ACTIVE=mo.dataset.msgOpen;MSG_VIEW='thread';renderMsgPanel();$('msgText').focus();return}
@@ -1305,22 +1305,6 @@ document.addEventListener('click',async e=>{
  if(b.dataset.trHist)return trHistory(b.dataset.trHist);
  if(b.hasAttribute('data-tr-reass'))return trReassess();
 });
-function trCohortForm(c){
- const lv=(c&&c.levels)||[];
- trOpen(c?'Editar turma':'Nova turma',
-  '<div class="field"><label for="trCName">Nome da turma *</label><input id="trCName" maxlength="80" value="'+esc(c?c.name:'')+'"></div>'
-  +'<div class="field"><label>Níveis da turma</label><div class="tr-opts">'+TR_LV.map(l=>'<label class="tr-opt"><input type="checkbox" data-tr-clv value="'+l[0]+'"'+(lv.includes(l[0])?' checked':'')+'><span>'+esc(l[1])+'</span></label>').join('')+'</div><div class="muted smalltext" style="margin-top:6px">Uma turma tem um só nível. Marque dois níveis vizinhos apenas se confirmar a junção.</div></div>'
-  +'<label class="tr-opt" style="margin-top:8px"><input type="checkbox" id="trCAct"'+(!c||c.active?' checked':'')+'><span>Turma activa</span></label>',
-  [{label:'Cancelar',cls:'secondary'},{label:'Guardar',fn:async()=>{
-   const name=$('trCName').value.trim(),levels=[...document.querySelectorAll('[data-tr-clv]:checked')].map(x=>x.value),active=$('trCAct').checked;
-   if(!name){alert('Indique o nome da turma.');return false}
-   if(!levels.length){alert('Escolha pelo menos um nível.');return false}
-   try{
-    const r=c?await SB.from('av_cohorts').update({name,levels,active}).eq('id',c.id):await SB.from('av_cohorts').insert({name,levels,active,trainer_user_id:PROFILE.role==='trainer'?USER.id:null});
-    if(r.error)throw r.error;toast('Turma guardada.');await trLoad();trAdminRender();return true}
-   catch(er){alert('Não foi possível guardar a turma: '+trErr(er));return false}}}]);
- setTimeout(()=>{const i=$('trCName');if(i)i.focus()},50);
-}
 function trLevelForm(staffId){
  const s=read(KEYS.staff).find(x=>x.id===staffId),p=trProfOf(staffId);if(!s||!p)return;
  trOpen('Corrigir nível · '+s.name,
@@ -1349,6 +1333,372 @@ function trReassess(){
    try{const r=await SB.rpc('av_open_reassessment',{p_cohort:$('trRCoh').value||null});if(r.error)throw r.error;toast((r.data||0)+' formando(s) vão reavaliar o nível.');return true}
    catch(er){alert('Não foi possível abrir a reavaliação: '+trErr(er));return false}}}]);
 }
+
+/* ===== TR · Fase 2: Treino diário do formando, banco de erros, banco de treino ===== */
+Object.assign(TR_ERR,{sem_perfil_treino:'Responda primeiro às 6 perguntas do perfil.',pergunta_nao_servida:'Esta pergunta não faz parte da sessão de hoje.',resposta_invalida:'Resposta inválida. Tente de novo.',tipo_nao_suportado:'Este tipo de pergunta ainda não é suportado.',formando_inactivo:'A sua ficha de formando está inactiva.'});
+const TR_KIND={vf:'Verdadeiro ou falso',mc:'Escolha múltipla',num:'Cálculo',order:'Ordenar',case:'Caso'};
+const TRS={state:null,sess:null,idx:0,fb:null,ord:null,busy:false};
+const TRB={rows:[],f:{q:'',lv:'',th:'',kd:'',st:''},ed:null,csv:null};
+const trLetter=i=>String.fromCharCode(65+i);
+const trFmt=n=>Number(n).toLocaleString('pt-PT',{maximumFractionDigits:4});
+const trNorm=s=>String(s==null?'':s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+function trNum(s){let t=String(s==null?'':s).replace(/[\s\u00a0]/g,'');if(!t)return NaN;
+ if(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(t))t=t.replace(/\./g,'').replace(',','.');else t=t.replace(',','.');
+ return /^-?\d+(\.\d+)?$/.test(t)?Number(t):NaN}
+const trStBox=()=>$('trStBody');
+
+/* --- formando: ecrã Treino --- */
+function trStDenied(){return '<div class="card"><div class="cardhead"><h2>Treino</h2></div><p class="muted smalltext">Antes de começar, responda às 6 perguntas do perfil. Servem para o colocar na turma e no treino certos.</p><button type="button" class="btn" data-tr-profile>Responder às 6 perguntas</button></div>'}
+async function trStudentOpen(){
+ const box=trStBox();if(!box)return;
+ if(TR.missing){box.innerHTML='<div class="notice">O módulo de Treino ainda não está instalado no servidor.</div>';return}
+ if(TR.ready&&!TR.prof){box.innerHTML=trStDenied();return}
+ box.innerHTML='<div class="empty">A carregar…</div>';
+ try{const r=await SB.rpc('av_train_state');if(r.error)throw r.error;TRS.state=r.data||{};
+  if(TRS.state.needs_profile){box.innerHTML=trStDenied();return}
+  TRS.sess=null;TRS.fb=null;TRS.ord=null;trStRender()}
+ catch(e){box.innerHTML=trMiss(e)?'<div class="notice">As funções do Treino ainda não estão instaladas no servidor (falta a migração 017_treino_sessao.sql).</div>':'<div class="notice">Não foi possível carregar o Treino: '+esc(trErr(e))+'</div>'}}
+function trStatTiles(s){const er=s.errors||{},wk=s.week||{};
+ return '<div class="tr-lv tr-stats"><div class="card"><div class="muted smalltext">Sequência</div><strong class="tr-sv">'+(s.streak||0)+' dia(s)</strong></div>'
+ +'<div class="card"><div class="muted smalltext">Erros por rever</div><strong class="tr-sv">'+(er.due||0)+'</strong>'+(er.total>er.due?'<div class="muted smalltext">'+(er.total-er.due)+' agendado(s)</div>':'')+'</div>'
+ +'<div class="card"><div class="muted smalltext">Esta semana</div><strong class="tr-sv">'+(wk.days_done||0)+' de '+(wk.needed||3)+' dias</strong></div></div>'}
+function trGoalCard(s){const cw=s.cohort_week;
+ if(!s.cohort)return '<div class="card"><p class="muted smalltext" style="margin:0">Ainda sem turma: treina só com o seu nível. A meta de turma aparece quando o formador o colocar numa turma.</p></div>';
+ if(!cw)return '';
+ const p=cw.total>0?Math.round(100*cw.active/cw.total):0,need=(s.week&&s.week.needed)||3;
+ return '<div class="card"><div class="cardhead"><h2>Meta da turma</h2><span class="muted smalltext">'+esc(s.cohort.name||'')+'</span></div>'
+ +'<p style="margin:0 0 8px"><strong>'+cw.active+' de '+cw.total+' activos</strong> esta semana <span class="muted smalltext">(activo = '+need+' dias com sessão concluída · meta '+cw.goal_pct+'%)</span></p>'
+ +'<div class="tr-bar"><i style="width:'+Math.min(100,p)+'%"></i><b style="left:'+cw.goal_pct+'%"></b></div>'
+ +(cw.goal_met?'<p class="muted smalltext" style="margin:8px 0 0">Meta atingida. Bom trabalho!</p>':'')+'</div>'}
+function trStRender(){
+ const box=trStBox(),s=TRS.state||{},se=s.session||{},er=s.errors||{};let main;
+ if(s.rest)main='<p class="tr-big">Hoje é sábado: aula presencial.</p><p class="muted smalltext">Ao sábado não há sessão de treino. Volte amanhã.</p>';
+ else if(se.completed)main='<p class="tr-big">Sessão de hoje concluída ✓</p><p class="muted smalltext">Acertou '+se.correct+' de '+se.total+'. Volte amanhã para manter a sequência.</p>';
+ else main='<p class="tr-big">'+(se.started?'Continue a sessão de hoje':'Sessão de hoje')+'</p><p class="muted smalltext">Cerca de '+(se.minutes||3)+' minutos · '+(se.total||5)+' perguntas'+(er.due?' · tem '+er.due+' erro(s) por rever':'')+'.</p><button type="button" class="btn" data-tr-start>'+(se.started?'Continuar':'Começar')+'</button>';
+ box.innerHTML='<div class="card"><div class="cardhead"><h2>Treino de hoje</h2><span class="tag">'+esc(trLv(s.level))+'</span></div>'+main
+  +(s.theme?'<p class="muted smalltext" style="margin:10px 0 0">Tema da semana: <strong>'+esc(s.theme)+'</strong></p>':'')+'</div>'
+  +trStatTiles(s)+trGoalCard(s)
+  +'<p class="muted smalltext">O Treino não tem nota e não altera a pauta nem os testes.</p>'}
+async function trSessionStart(){
+ if(TRS.busy)return;TRS.busy=true;
+ try{const r=await SB.rpc('av_train_session');if(r.error)throw r.error;const d=r.data||{};
+  if(d.rest){toast('Hoje é sábado: não há sessão.');await trStudentOpen();return}
+  if(d.empty||!(d.items||[]).length){alert('Ainda não há perguntas para o seu nível. Fale com o formador.');return}
+  TRS.sess=d;TRS.fb=null;TRS.ord=null;TRS.idx=d.items.findIndex(x=>!x.answered);
+  if(TRS.idx<0){await trStudentOpen();return}
+  trSessionDraw()}
+ catch(e){alert('Não foi possível iniciar a sessão: '+trErr(e))}finally{TRS.busy=false}}
+function trAnsHTML(it,fb){
+ const sol=fb?(fb.res.solution||{}):null,done=!!fb;let h='';
+ if(it.kind==='vf'){
+  [[true,'Verdadeiro'],[false,'Falso']].forEach(o=>{let c='tr-ans';
+   if(done){if(sol.answer===o[0])c+=' ok';else if(fb.val===o[0])c+=' bad'}
+   h+='<button type="button" class="'+c+'" data-tr-ans="'+o[0]+'"'+(done||TRS.busy?' disabled':'')+'><span>'+o[1]+'</span></button>'})}
+ else if(it.kind==='mc'||it.kind==='case'){
+  (it.options||[]).forEach((o,j)=>{let c='tr-ans';
+   if(done){if(sol.index===j)c+=' ok';else if(fb.val===j)c+=' bad'}
+   h+='<button type="button" class="'+c+'" data-tr-ans="'+j+'"'+(done||TRS.busy?' disabled':'')+'><b>'+trLetter(j)+'</b><span>'+esc(String(o))+'</span></button>'})}
+ else if(it.kind==='num'){
+  h+='<div class="tr-num"><input id="trNum" inputmode="decimal" autocomplete="off" placeholder="Escreva o valor" value="'+(done?esc(String(fb.val)):'')+'"'+(done?' disabled':'')+'>'
+   +(done?'':'<button type="button" class="btn" data-tr-numgo'+(TRS.busy?' disabled':'')+'>Responder</button>')+'</div>'}
+ else if(it.kind==='order'){
+  h+='<p class="muted smalltext" style="margin:0 0 8px">Use as setas para pôr os passos pela ordem certa.</p><ol class="tr-ord">'
+   +(TRS.ord||[]).map((o,j)=>'<li><span>'+esc(o.t)+'</span>'+(done?'':'<button type="button" aria-label="Subir" data-tr-ordmv="'+j+':-1"'+(j===0?' disabled':'')+'>↑</button><button type="button" aria-label="Descer" data-tr-ordmv="'+j+':1"'+(j===TRS.ord.length-1?' disabled':'')+'>↓</button>')+'</li>').join('')+'</ol>'
+   +(done?'':'<button type="button" class="btn" data-tr-ordgo'+(TRS.busy?' disabled':'')+'>Confirmar ordem</button>')}
+ return h}
+function trFbHTML(it,fb){
+ const r=fb.res,sol=r.solution||{};let t='';
+ if(!r.correct){
+  if(it.kind==='vf')t=' A resposta certa é '+(sol.answer?'Verdadeiro':'Falso')+'.';
+  else if(it.kind==='mc'||it.kind==='case')t=' A resposta certa é '+trLetter(sol.index)+') '+esc(String(sol.text==null?'':sol.text))+'.';
+  else if(it.kind==='num')t=' O valor certo é '+trFmt(sol.value)+(Number(sol.tolerance)>0?' (± '+trFmt(sol.tolerance)+')':'')+'.';
+  else if(it.kind==='order')t=' A ordem certa é: '+(sol.texts||[]).map((x,i)=>(i+1)+'. '+esc(String(x))).join(' → ')+'.'}
+ return '<div class="tr-fb '+(r.correct?'ok':'bad')+'"><strong>'+(r.correct?'Certo':'Errado')+'</strong>'+t+(r.explanation?'<p>'+esc(r.explanation)+'</p>':'')+'</div>'
+  +'<button type="button" class="btn" data-tr-next>'+(r.completed?'Ver resumo':'Seguinte')+'</button>'}
+function trSessionDraw(){
+ const box=trStBox(),S=TRS.sess,it=S.items[TRS.idx],n=S.items.length,fb=TRS.fb;
+ if(it.kind==='order'&&!TRS.ord)TRS.ord=(it.options||[]).map(o=>({i:o.i,t:o.t}));
+ let h='<div class="card"><div class="cardhead"><h2>Pergunta '+(TRS.idx+1)+' de '+n+'</h2><span class="tag">'+esc(TR_KIND[it.kind]||it.kind)+'</span></div>'
+  +'<div class="tr-bar"><i style="width:'+Math.round(100*(S.answered||0)/n)+'%"></i></div>'
+  +(it.source==='erro'?'<p class="muted smalltext" style="margin:8px 0 0">Revisão de um erro anterior.</p>':'');
+ if(it.kind==='case'&&it.context)h+='<div class="tr-ctx">'+esc(it.context)+'</div>';
+ h+='<p class="tr-stmt">'+esc(it.statement)+'</p>'+trAnsHTML(it,fb)+(fb?trFbHTML(it,fb):'')+'</div>';
+ box.innerHTML=h}
+async function trAnswer(val){
+ if(TRS.busy||TRS.fb)return;const it=TRS.sess.items[TRS.idx];TRS.busy=true;trSessionDraw();
+ try{const r=await SB.rpc('av_train_answer',{p_question:it.id,p_answer:val});if(r.error)throw r.error;const d=r.data||{};
+  it.answered=true;it.correct=d.correct;TRS.fb={val:val,res:d};TRS.sess.answered=d.answered;TRS.sess.correct=d.correct_total;TRS.sess.completed=d.completed}
+ catch(e){alert('Não foi possível registar a resposta: '+trErr(e))}
+ finally{TRS.busy=false;trSessionDraw()}}
+function trNext(){const S=TRS.sess,j=S.items.findIndex(x=>!x.answered);TRS.fb=null;TRS.ord=null;if(j<0)return trSessionClose();TRS.idx=j;trSessionDraw()}
+async function trSessionClose(){
+ const box=trStBox();box.innerHTML='<div class="empty">A fechar a sessão…</div>';
+ try{const r=await SB.rpc('av_train_state');if(!r.error&&r.data)TRS.state=r.data}catch(_){}
+ const S=TRS.sess,s=TRS.state||{};
+ box.innerHTML='<div class="card"><div class="cardhead"><h2>Sessão concluída ✓</h2></div><p class="tr-big">'+S.correct+' de '+S.items.length+' certas</p><p class="muted smalltext">Os erros voltam amanhã e depois ao fim de 3 dias, até acertar duas vezes seguidas.</p><button type="button" class="btn" data-tr-end>Fechar</button></div>'
+  +trStatTiles(s)+trGoalCard(s)}
+
+/* --- admin/formador: banco de treino --- */
+function trTab(t){
+ document.querySelectorAll('#trTabs [data-tr-tab]').forEach(b=>b.classList.toggle('active',b.dataset.trTab===t));
+ $('trAdminBody').classList.toggle('hidden',t!=='levels');$('trBankBody').classList.toggle('hidden',t!=='bank');
+ if(t==='bank')trBankOpen()}
+async function trBankOpen(){
+ const box=$('trBankBody');if(!box)return;box.innerHTML='<div class="empty">A carregar…</div>';
+ try{const r=await SB.from('av_train_questions').select('*').order('created_at',{ascending:false}).limit(5000);if(r.error)throw r.error;TRB.rows=r.data||[];trBankRender()}
+ catch(e){box.innerHTML=trMiss(e)?'<div class="notice">O banco de treino ainda não está instalado no servidor (migração 015).</div>':'<div class="notice">Não foi possível carregar o banco de treino: '+esc(e.message||e)+'</div>'}}
+function trBankRender(){
+ const box=$('trBankBody');if(!box)return;const rows=TRB.rows,f=TRB.f;
+ const themes=[...new Set(rows.map(r=>r.theme).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt'));
+ const tiles=TR_LV.map(l=>{const x=rows.filter(r=>(r.levels||[]).includes(l[0])),on=x.filter(r=>r.active).length,off=x.length-on;
+  return '<div class="card"><div class="muted smalltext">'+esc(l[1])+'</div><strong class="tr-sv">'+on+'</strong><div class="muted smalltext">activas'+(off?' · '+off+' rascunho(s)':'')+'</div></div>'}).join('')
+  +'<div class="card"><div class="muted smalltext">Total</div><strong class="tr-sv">'+rows.filter(r=>r.active).length+'</strong><div class="muted smalltext">activas · '+rows.length+' no banco</div></div>';
+ const sel=(id,cur,opts)=>'<select id="'+id+'">'+opts.map(o=>'<option value="'+esc(o[0])+'"'+(o[0]===cur?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>';
+ box.innerHTML='<div class="tr-lv">'+tiles+'</div>'
+  +'<div class="card"><div class="cardhead"><h2>Banco de treino</h2><div class="tr-tools"><button type="button" class="btn" data-tr-bnew>+ Nova pergunta</button><button type="button" class="btn secondary" data-tr-bimp>Importar de um teste</button><button type="button" class="btn secondary" data-tr-bcsv>Importar CSV</button><button type="button" class="btn secondary" data-tr-bact>Activar as filtradas</button></div></div>'
+  +'<div class="tr-filters"><input id="trbSearch" type="search" placeholder="Pesquisar enunciado ou tema" value="'+esc(f.q)+'">'
+  +sel('trbLv',f.lv,[['','Todos os níveis']].concat(TR_LV))
+  +sel('trbTh',f.th,[['','Todos os temas']].concat(themes.map(t=>[t,t])))
+  +sel('trbKind',f.kd,[['','Todos os tipos']].concat(Object.keys(TR_KIND).map(k=>[k,TR_KIND[k]])))
+  +sel('trbSt',f.st,[['','Activas e rascunhos'],['on','Só activas'],['off','Só rascunhos']])+'</div>'
+  +'<div class="muted smalltext" id="trbCount" style="margin:8px 0"></div>'
+  +'<div class="tablewrap"><table><thead><tr><th>Pergunta</th><th>Tema</th><th>Níveis</th><th>Estado</th><th></th></tr></thead><tbody id="trbRows"></tbody></table></div></div>';
+ trBankRows()}
+function trBankFiltered(){const f=TRB.f,q=f.q.toLowerCase().trim();
+ return TRB.rows.filter(r=>{if(q&&!(String(r.statement)+' '+String(r.theme||'')).toLowerCase().includes(q))return false;
+  if(f.lv&&!(r.levels||[]).includes(f.lv))return false;if(f.th&&(r.theme||'')!==f.th)return false;if(f.kd&&r.kind!==f.kd)return false;
+  if(f.st==='on'&&!r.active)return false;if(f.st==='off'&&r.active)return false;return true})}
+function trBankRows(){
+ const tb=$('trbRows');if(!tb)return;const list=trBankFiltered(),shown=list.slice(0,200);
+ $('trbCount').textContent=list.length+' pergunta(s)'+(list.length>shown.length?' · a mostrar as primeiras '+shown.length+'; use os filtros':'');
+ tb.innerHTML=shown.length?shown.map(r=>'<tr><td><span class="tag">'+esc(TR_KIND[r.kind]||r.kind)+'</span> '+esc(String(r.statement).slice(0,110)+(String(r.statement).length>110?'…':''))+'</td><td>'+esc(r.theme||'—')+'</td><td>'+esc((r.levels||[]).map(trLv).join(', ')||'—')+'</td><td>'+(r.active?'Activa':'<span class="muted">Rascunho</span>')+'</td><td><button type="button" class="btn secondary" data-tr-bedit="'+r.id+'">Editar</button></td></tr>').join(''):'<tr><td colspan="5" class="muted">Sem perguntas para estes filtros.</td></tr>'}
+async function trBankReload(){const r=await SB.from('av_train_questions').select('*').order('created_at',{ascending:false}).limit(5000);if(r.error)throw r.error;TRB.rows=r.data||[];trBankRender()}
+
+/* editor de pergunta */
+function trEdNew(){return{id:null,kind:'vf',st:'',ctx:'',area:'',theme:'',levels:[],exp:'',act:true,vf:true,opts:['',''],cor:0,val:'',tol:'0'}}
+function trEdFrom(r){const e=trEdNew();e.id=r.id;e.kind=r.kind;e.st=r.statement||'';e.ctx=r.case_context||'';e.area=r.area||'';e.theme=r.theme||'';e.levels=(r.levels||[]).slice();e.exp=r.explanation||'';e.act=!!r.active;
+ e.vf=r.answer_bool!==false;const o=Array.isArray(r.options)?r.options.map(String):[];
+ if(r.kind==='order'&&Array.isArray(r.correct_order)&&r.correct_order.length===o.length)e.opts=r.correct_order.map(i=>o[i]);else if(o.length)e.opts=o;
+ e.cor=Number.isInteger(r.correct_index)?r.correct_index:0;e.val=r.expected_value==null?'':String(r.expected_value).replace('.',',');e.tol=r.tolerance==null?'0':String(r.tolerance).replace('.',',');return e}
+function trEdHTML(){
+ const e=TRB.ed,k=e.kind,themes=[...new Set(TRB.rows.map(r=>r.theme).filter(Boolean))];let h='';
+ h+='<div class="field"><label for="trqKind">Tipo *</label><select id="trqKind"'+(e.id?' disabled':'')+'>'+Object.keys(TR_KIND).map(x=>'<option value="'+x+'"'+(x===k?' selected':'')+'>'+esc(TR_KIND[x])+'</option>').join('')+'</select></div>';
+ if(k==='case')h+='<div class="field"><label for="trqCtx">Contexto do caso</label><textarea id="trqCtx" rows="3" maxlength="1500">'+esc(e.ctx)+'</textarea></div>';
+ h+='<div class="field"><label for="trqSt">Enunciado *</label><textarea id="trqSt" rows="3" maxlength="1000">'+esc(e.st)+'</textarea></div>';
+ if(k==='vf')h+='<div class="field"><label>Resposta certa *</label><div class="tr-opts"><label class="tr-opt"><input type="radio" name="trqVf" value="1"'+(e.vf?' checked':'')+'><span>Verdadeiro</span></label><label class="tr-opt"><input type="radio" name="trqVf" value="0"'+(!e.vf?' checked':'')+'><span>Falso</span></label></div></div>';
+ else if(k==='mc'||k==='case'){
+  h+='<div class="field"><label>Opções (marque a certa) *</label>'+e.opts.map((o,i)=>'<div class="tr-oprow"><input type="radio" name="trqCor" value="'+i+'"'+(e.cor===i?' checked':'')+' aria-label="Opção certa"><input data-trq-opt maxlength="300" value="'+esc(o)+'" placeholder="Opção '+trLetter(i)+'"><button type="button" class="btn secondary" data-trq-orm="'+i+'" aria-label="Remover"'+(e.opts.length<=2?' disabled':'')+'>×</button></div>').join('')
+   +(e.opts.length<6?'<button type="button" class="btn secondary" data-trq-oadd>+ Opção</button>':'')+'</div>'}
+ else if(k==='order'){
+  h+='<div class="field"><label>Passos pela ordem CERTA * <span class="muted smalltext">(o formando vê-os baralhados)</span></label>'+e.opts.map((o,i)=>'<div class="tr-oprow"><span class="muted">'+(i+1)+'.</span><input data-trq-opt maxlength="300" value="'+esc(o)+'" placeholder="Passo '+(i+1)+'"><button type="button" class="btn secondary" data-trq-orm="'+i+'" aria-label="Remover"'+(e.opts.length<=2?' disabled':'')+'>×</button></div>').join('')
+   +(e.opts.length<8?'<button type="button" class="btn secondary" data-trq-oadd>+ Passo</button>':'')+'</div>'}
+ else if(k==='num')h+='<div class="field"><label for="trqVal">Valor certo *</label><input id="trqVal" inputmode="decimal" value="'+esc(e.val)+'"></div><div class="field"><label for="trqTol">Tolerância (± absoluta)</label><input id="trqTol" inputmode="decimal" value="'+esc(e.tol)+'"></div>';
+ h+='<div class="field"><label for="trqArea">Área</label><input id="trqArea" maxlength="80" value="'+esc(e.area)+'"></div>'
+  +'<div class="field"><label for="trqTheme">Tema (igual ao da aula) *</label><input id="trqTheme" list="trqThemes" maxlength="120" value="'+esc(e.theme)+'"><datalist id="trqThemes">'+themes.map(t=>'<option value="'+esc(t)+'">').join('')+'</datalist></div>'
+  +'<div class="field"><label>Níveis *</label><div class="tr-opts">'+TR_LV.map(l=>'<label class="tr-opt"><input type="checkbox" data-trq-lv value="'+l[0]+'"'+(e.levels.includes(l[0])?' checked':'')+'><span>'+esc(l[1])+'</span></label>').join('')+'</div></div>'
+  +'<div class="field"><label for="trqExp">Explicação (uma frase, aparece depois de responder)</label><textarea id="trqExp" rows="2" maxlength="400">'+esc(e.exp)+'</textarea></div>'
+  +'<label class="tr-opt"><input type="checkbox" id="trqAct"'+(e.act?' checked':'')+'><span>Activa (aparece nas sessões; desmarque para rascunho)</span></label>';
+ return h}
+function trEdSync(){
+ const e=TRB.ed,v=i=>{const x=$(i);return x?x.value:null};
+ let x=v('trqSt');if(x!=null)e.st=x;x=v('trqCtx');if(x!=null)e.ctx=x;x=v('trqArea');if(x!=null)e.area=x;x=v('trqTheme');if(x!=null)e.theme=x;x=v('trqExp');if(x!=null)e.exp=x;
+ if($('trqAct'))e.act=$('trqAct').checked;
+ if(document.querySelector('[data-trq-lv]'))e.levels=[...document.querySelectorAll('[data-trq-lv]:checked')].map(i=>i.value);
+ const vf=document.querySelector('input[name="trqVf"]:checked');if(vf)e.vf=vf.value==='1';
+ const os=[...document.querySelectorAll('[data-trq-opt]')];if(os.length)e.opts=os.map(i=>i.value);
+ const co=document.querySelector('input[name="trqCor"]:checked');if(co)e.cor=Number(co.value);
+ x=v('trqVal');if(x!=null)e.val=x;x=v('trqTol');if(x!=null)e.tol=x}
+function trEdRedraw(){$('trMBody').innerHTML=trEdHTML()}
+function trQuestionOpen(r){
+ TRB.ed=r?trEdFrom(r):trEdNew();
+ trOpen(r?'Editar pergunta':'Nova pergunta',trEdHTML(),[{label:'Cancelar',cls:'secondary'},{label:'Guardar',fn:trQuestionSave}])}
+async function trQuestionSave(){
+ trEdSync();const e=TRB.ed,k=e.kind,st=e.st.trim(),th=e.theme.trim(),ex=e.exp.trim();
+ const p={area:e.area.trim()||null,theme:th||null,levels:e.levels,kind:k,statement:st,case_context:null,options:null,correct_index:null,answer_bool:null,expected_value:null,tolerance:null,correct_order:null,explanation:ex||null,active:e.act};
+ if(!st){alert('Escreva o enunciado.');return false}
+ if(!e.levels.length){alert('Escolha pelo menos um nível.');return false}
+ if(e.act&&!th){alert('Para activar, indique o tema (igual ao da aula).');return false}
+ if(e.act&&!ex){alert('Para activar, escreva a explicação de uma frase.');return false}
+ if(k==='vf')p.answer_bool=e.vf;
+ else if(k==='mc'||k==='case'){const o=e.opts.map(x=>x.trim());
+  if(o.length<2||o.some(x=>!x)){alert('Preencha todas as opções (mínimo 2).');return false}
+  if(e.cor<0||e.cor>=o.length){alert('Marque a opção certa.');return false}
+  p.options=o;p.correct_index=e.cor;if(k==='case')p.case_context=e.ctx.trim()||null}
+ else if(k==='order'){const o=e.opts.map(x=>x.trim());
+  if(o.length<2||o.some(x=>!x)){alert('Preencha todos os passos (mínimo 2).');return false}
+  p.options=o;p.correct_order=o.map((_,i)=>i)}
+ else if(k==='num'){const v=trNum(e.val),t=e.tol===''?0:trNum(e.tol);
+  if(!Number.isFinite(v)){alert('Indique o valor certo (ex.: 1250,50).');return false}
+  if(!Number.isFinite(t)||t<0){alert('A tolerância tem de ser um número igual ou maior que 0.');return false}
+  p.expected_value=v;p.tolerance=t}
+ try{const r=e.id?await SB.from('av_train_questions').update(p).eq('id',e.id):await SB.from('av_train_questions').insert(p);
+  if(r.error)throw r.error;toast('Pergunta guardada.');await trBankReload();return true}
+ catch(er){alert('Não foi possível guardar a pergunta: '+(er.message||er));return false}}
+
+/* activar rascunhos filtrados */
+function trBankActivate(){
+ const todo=trBankFiltered().filter(r=>!r.active);
+ if(!todo.length){alert('Não há rascunhos nos filtros actuais.');return}
+ const bad=todo.filter(r=>!r.theme||!String(r.explanation||'').trim()).length;
+ trOpen('Activar rascunhos','<p>Vai activar <strong>'+todo.length+'</strong> pergunta(s) que estão em rascunho nos filtros actuais. Só deve fazê-lo depois de as rever.</p>'+(bad?'<p class="notice">'+bad+' delas não têm tema ou explicação e vão ficar de fora.</p>':''),
+  [{label:'Cancelar',cls:'secondary'},{label:'Activar',fn:async()=>{
+   const ids=todo.filter(r=>r.theme&&String(r.explanation||'').trim()).map(r=>r.id);
+   if(!ids.length){alert('Nenhuma tem tema e explicação.');return false}
+   try{for(let i=0;i<ids.length;i+=100){const r=await SB.from('av_train_questions').update({active:true}).in('id',ids.slice(i,i+100));if(r.error)throw r.error}
+    toast(ids.length+' pergunta(s) activadas.');await trBankReload();return true}
+   catch(er){alert('Não foi possível activar: '+(er.message||er));await trBankReload();return false}}}])}
+
+/* importar de testes existentes (cópia; entra como rascunho) */
+function trImportOpen(){
+ const tests=(typeof MAT!=='undefined'?MAT:[]).filter(m=>m.kind==='teste').map(m=>{
+  const qs=QS.filter(q=>q.materialId===m.id&&q.kind!=='sd'),done=qs.filter(q=>TRB.rows.some(r=>r.source_question_id===q.id)).length,s=sessionById(m.sessionId);
+  return{m:m,qs:qs,done:done,area:(s&&s.area)||''}}).filter(x=>x.qs.length);
+ if(!tests.length){alert('Não há testes com perguntas de verdadeiro/falso ou escolha múltipla para importar.');return}
+ trOpen('Importar de um teste',
+  '<p class="muted smalltext">As perguntas são copiadas para o banco de treino como <strong>rascunho</strong>. O teste original não muda. Perguntas de resposta aberta ficam de fora.</p>'
+  +'<div class="field"><label>Testes</label>'+tests.map(x=>{const dis=x.done>=x.qs.length;return '<label class="tr-opt"><input type="checkbox" data-tri-m="'+x.m.id+'"'+(dis?' disabled':'')+'><span>'+esc(x.m.title||'Teste')+' <span class="muted smalltext">· '+esc(x.area||'sem área')+' · '+x.qs.length+' pergunta(s)'+(x.done?' · '+x.done+' já importada(s)':'')+'</span></span></label>'}).join('')+'</div>'
+  +'<div class="field"><label for="triTheme">Tema (igual ao da aula) *</label><input id="triTheme" maxlength="120"></div>'
+  +'<div class="field"><label>Níveis *</label><div class="tr-opts">'+TR_LV.map(l=>'<label class="tr-opt"><input type="checkbox" data-tri-lv value="'+l[0]+'"><span>'+esc(l[1])+'</span></label>').join('')+'</div></div>',
+  [{label:'Cancelar',cls:'secondary'},{label:'Importar',fn:async()=>{
+   const ms=[...document.querySelectorAll('[data-tri-m]:checked')].map(x=>x.dataset.triM),lv=[...document.querySelectorAll('[data-tri-lv]:checked')].map(x=>x.value),th=$('triTheme').value.trim();
+   if(!ms.length){alert('Escolha pelo menos um teste.');return false}
+   if(!th){alert('Indique o tema.');return false}
+   if(!lv.length){alert('Escolha pelo menos um nível.');return false}
+   const out=[];tests.filter(x=>ms.includes(x.m.id)).forEach(x=>x.qs.forEach(q=>{
+    if(TRB.rows.some(r=>r.source_question_id===q.id))return;
+    const b={area:x.area||null,theme:th,levels:lv,statement:q.text,competency_id:q.competencyId||null,source_question_id:q.id,active:false,kind:q.kind};
+    if(q.kind==='mc'){if(!Array.isArray(q.options)||q.options.length<2)return;b.options=q.options;b.correct_index=q.correct}else b.answer_bool=q.answer===true;
+    out.push(b)}));
+   if(!out.length){alert('Não há perguntas novas para importar.');return false}
+   try{for(let i=0;i<out.length;i+=100){const r=await SB.from('av_train_questions').insert(out.slice(i,i+100));if(r.error)throw r.error}
+    toast(out.length+' pergunta(s) importadas como rascunho.');await trBankReload();return true}
+   catch(er){alert('Não foi possível importar: '+(er.message||er));await trBankReload();return false}}}])}
+
+/* importar CSV (entra como rascunho) */
+function trCsvParse(text){
+ text=String(text||'').replace(/^\uFEFF/,'');
+ const first=text.split(/\r?\n/)[0]||'',sep=[';','\t',','].map(c=>[c,first.split(c).length]).sort((a,b)=>b[1]-a[1])[0][0];
+ const rows=[];let row=[],cur='',q=false;
+ for(let i=0;i<text.length;i++){const ch=text[i];
+  if(q){if(ch==='"'){if(text[i+1]==='"'){cur+='"';i++}else q=false}else cur+=ch}
+  else if(ch==='"')q=true;
+  else if(ch===sep){row.push(cur);cur=''}
+  else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cur);cur='';if(row.some(x=>x.trim()!==''))rows.push(row);row=[]}
+  else cur+=ch}
+ row.push(cur);if(row.some(x=>x.trim()!==''))rows.push(row);return rows}
+function trCsvLevels(s){
+ const out=new Set();String(s||'').split(/[|\/,]/).forEach(x=>{const t=trNorm(x).replace(/\s+/g,'_').replace('+','_plus');
+  if(t==='todos')TR_LV.forEach(l=>out.add(l[0]));else if(TR_LV.some(l=>l[0]===t))out.add(t)});return[...out]}
+function trCsvRow(o){
+ const kind=trNorm(o.tipo);if(!TR_KIND[kind])return{err:'tipo inválido ("'+(o.tipo||'')+'")'};
+ const lv=trCsvLevels(o.nivel);if(!lv.length)return{err:'nível em falta ou inválido'};
+ const st=String(o.enunciado||'').trim();if(!st)return{err:'enunciado em falta'};
+ const r={area:String(o.area||'').trim()||null,theme:String(o.tema||'').trim()||null,levels:lv,kind:kind,statement:st,case_context:null,options:null,correct_index:null,answer_bool:null,expected_value:null,tolerance:null,correct_order:null,explanation:String(o.explicacao||'').trim()||null,active:false};
+ const opts=String(o.opcoes||'').split('|').map(x=>x.trim()).filter(Boolean),cor=String(o.correta||'').trim();
+ if(kind==='vf'){const c=trNorm(cor);if(['v','verdadeiro','true','1','sim'].includes(c))r.answer_bool=true;else if(['f','falso','false','0','nao'].includes(c))r.answer_bool=false;else return{err:'«correta» deve ser verdadeiro ou falso'}}
+ else if(kind==='mc'||kind==='case'){if(opts.length<2||opts.length>6)return{err:'são precisas 2 a 6 opções separadas por |'};
+  let i=/^[A-Fa-f]$/.test(cor)?cor.toUpperCase().charCodeAt(0)-65:(/^\d+$/.test(cor)?Number(cor)-1:-1);
+  if(i<0||i>=opts.length)return{err:'«correta» deve ser uma letra (A..) ou número dentro das opções'};
+  r.options=opts;r.correct_index=i;if(kind==='case')r.case_context=String(o.contexto||'').trim()||null}
+ else if(kind==='order'){if(opts.length<2||opts.length>8)return{err:'são precisos 2 a 8 passos separados por | (pela ordem certa)'};r.options=opts;r.correct_order=opts.map((_,i)=>i)}
+ else if(kind==='num'){const v=trNum(cor),t=String(o.tolerancia||'').trim()===''?0:trNum(o.tolerancia);
+  if(!Number.isFinite(v))return{err:'«correta» deve ser um número'};if(!Number.isFinite(t)||t<0)return{err:'tolerância inválida'};r.expected_value=v;r.tolerance=t}
+ return{row:r}}
+function trCsvAnalyse(text){
+ const rows=trCsvParse(text);if(rows.length<2)return{err:'O ficheiro precisa de uma linha de cabeçalho e pelo menos uma pergunta.'};
+ const alias={pergunta:'enunciado',niveis:'nivel',resposta:'correta','opções':'opcoes',opcoes:'opcoes'},head=rows[0].map(h=>{const t=trNorm(h);return alias[t]||t});
+ for(const c of['tipo','nivel','enunciado'])if(!head.includes(c))return{err:'Falta a coluna «'+c+'» no cabeçalho.'};
+ const seen=new Set(TRB.rows.map(r=>r.kind+'|'+trNorm(r.statement))),ok=[],errs=[];let dup=0;
+ rows.slice(1).forEach((cells,i)=>{const o={};head.forEach((h,j)=>{o[h]=cells[j]});const x=trCsvRow(o);
+  if(x.err){errs.push('Linha '+(i+2)+': '+x.err);return}
+  const key=x.row.kind+'|'+trNorm(x.row.statement);if(seen.has(key)){dup++;return}seen.add(key);ok.push(x.row)});
+ return{ok:ok,errs:errs,dup:dup}}
+function trCsvOpen(prev){
+ trOpen('Importar CSV',
+  '<p class="muted smalltext">Colunas: <strong>tipo; nivel; area; tema; enunciado; contexto; opcoes; correta; tolerancia; explicacao</strong>. Opções separadas por <strong>|</strong>; em «ordenar», os passos pela ordem certa. Todas entram como <strong>rascunho</strong>.</p>'
+  +'<p><button type="button" class="btn secondary" data-tr-bcsvtpl>Descarregar modelo</button></p>'
+  +'<div class="field"><label for="trCsvFile">Ficheiro CSV</label><input type="file" id="trCsvFile" accept=".csv,.txt,text/csv"></div>'
+  +'<div class="field"><label for="trCsvText">… ou cole aqui o conteúdo</label><textarea id="trCsvText" rows="8" placeholder="tipo;nivel;area;tema;enunciado;…">'+esc(prev||'')+'</textarea></div>',
+  [{label:'Cancelar',cls:'secondary'},{label:'Analisar',fn:()=>{
+   const txt=$('trCsvText').value,a=trCsvAnalyse(txt);if(a.err){alert(a.err);return false}
+   TRB.csv=a;trCsvPreview(txt);return false}}])}
+function trCsvPreview(txt){
+ const a=TRB.csv;
+ trOpen('Importar CSV · pré-visualização',
+  '<p><strong>'+a.ok.length+'</strong> pergunta(s) válida(s) · <strong>'+a.dup+'</strong> repetida(s) ignorada(s) · <strong>'+a.errs.length+'</strong> com erro.</p>'
+  +(a.errs.length?'<div class="notice"><strong>Erros</strong> (estas linhas não serão importadas):<br>'+a.errs.slice(0,10).map(esc).join('<br>')+(a.errs.length>10?'<br>… e mais '+(a.errs.length-10):'')+'</div>':''),
+  [{label:'Voltar',cls:'secondary',fn:()=>{trCsvOpen(txt);return false}},
+   {label:a.ok.length?'Importar '+a.ok.length:'Nada a importar',fn:async()=>{
+    if(!a.ok.length)return true;
+    try{for(let i=0;i<a.ok.length;i+=100){const r=await SB.from('av_train_questions').insert(a.ok.slice(i,i+100));if(r.error)throw r.error}
+     toast(a.ok.length+' pergunta(s) importadas como rascunho.');await trBankReload();return true}
+    catch(er){alert('Não foi possível importar: '+(er.message||er));await trBankReload();return false}}}])}
+function trCsvTemplate(){
+ const t=['tipo;nivel;area;tema;enunciado;contexto;opcoes;correta;tolerancia;explicacao',
+  'vf;estudante;Exemplo;Tema de exemplo;Exemplo de afirmação verdadeira ou falsa.;;;verdadeiro;;Uma frase a explicar a resposta.',
+  'mc;estudante|empreendedor;Exemplo;Tema de exemplo;Exemplo de pergunta de escolha múltipla?;;Opção A|Opção B|Opção C;B;;Uma frase a explicar a resposta.',
+  'num;empreendedor;Exemplo;Tema de exemplo;Exemplo de cálculo: quanto é 1000 + 300?;;;1300;0;Uma frase a explicar o cálculo.',
+  'order;empreendedor_plus;Exemplo;Tema de exemplo;Ordene os passos de exemplo.;;Primeiro passo|Segundo passo|Terceiro passo;;;Uma frase a explicar a ordem.',
+  'case;empresario;Exemplo;Tema de exemplo;Qual é a melhor decisão?;Descrição curta da situação.;Decisão 1|Decisão 2|Decisão 3;C;;Uma frase a explicar a decisão.'].join('\r\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+t],{type:'text/csv;charset=utf-8'}));a.download='modelo_banco_treino.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
+
+/* --- eventos da fase 2 --- */
+document.addEventListener('click',async e=>{
+ const b=e.target.closest&&e.target.closest('[data-tr-start],[data-tr-ans],[data-tr-numgo],[data-tr-ordmv],[data-tr-ordgo],[data-tr-next],[data-tr-end],[data-tr-tab],[data-tr-bnew],[data-tr-bedit],[data-tr-bimp],[data-tr-bcsv],[data-tr-bcsvtpl],[data-tr-bact],[data-trq-oadd],[data-trq-orm]');
+ if(!b)return;
+ if(b.hasAttribute('data-tr-start'))return trSessionStart();
+ if(b.hasAttribute('data-tr-ans')){const it=TRS.sess&&TRS.sess.items[TRS.idx];if(!it)return;const v=b.dataset.trAns;return trAnswer(it.kind==='vf'?v==='true':Number(v))}
+ if(b.hasAttribute('data-tr-numgo')){const n=trNum($('trNum').value);if(!Number.isFinite(n)){alert('Escreva um número (ex.: 1250,50).');return}return trAnswer(n)}
+ if(b.dataset.trOrdmv){const p=b.dataset.trOrdmv.split(':'),j=Number(p[0]),d=Number(p[1]),k=j+d,o=TRS.ord;if(!o||k<0||k>=o.length)return;const t=o[j];o[j]=o[k];o[k]=t;return trSessionDraw()}
+ if(b.hasAttribute('data-tr-ordgo'))return trAnswer((TRS.ord||[]).map(x=>x.i));
+ if(b.hasAttribute('data-tr-next'))return trNext();
+ if(b.hasAttribute('data-tr-end'))return trStudentOpen();
+ if(b.dataset.trTab)return trTab(b.dataset.trTab);
+ if(b.hasAttribute('data-tr-bnew'))return trQuestionOpen(null);
+ if(b.dataset.trBedit)return trQuestionOpen(TRB.rows.find(r=>r.id===b.dataset.trBedit));
+ if(b.hasAttribute('data-tr-bimp'))return trImportOpen();
+ if(b.hasAttribute('data-tr-bcsv'))return trCsvOpen('');
+ if(b.hasAttribute('data-tr-bcsvtpl'))return trCsvTemplate();
+ if(b.hasAttribute('data-tr-bact'))return trBankActivate();
+ if(b.hasAttribute('data-trq-oadd')){trEdSync();TRB.ed.opts.push('');return trEdRedraw()}
+ if(b.dataset.trqOrm!==undefined){trEdSync();const i=Number(b.dataset.trqOrm),ed=TRB.ed;if(ed.opts.length<=2)return;ed.opts.splice(i,1);if(ed.cor===i)ed.cor=0;else if(ed.cor>i)ed.cor--;return trEdRedraw()}
+});
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='trbSearch'){TRB.f.q=e.target.value;trBankRows()}});
+document.addEventListener('change',e=>{const t=e.target;if(!t||!t.id)return;
+ const m={trbLv:'lv',trbTh:'th',trbKind:'kd',trbSt:'st'};if(m[t.id]){TRB.f[m[t.id]]=t.value;trBankRows();return}
+ if(t.id==='trqKind'){trEdSync();TRB.ed.kind=t.value;trEdRedraw();return}
+ if(t.id==='trCsvFile'&&t.files&&t.files[0]){const fr=new FileReader();fr.onload=()=>{$('trCsvText').value=String(fr.result||'')};fr.readAsText(t.files[0])}});
+
+/* --- turma: aulas (tema e data) --- */
+async function trCohortForm(c){
+ let au=[];
+ if(c){try{const r=await SB.from('av_cohort_aulas').select('*').eq('cohort_id',c.id);if(r.error)throw r.error;au=r.data||[]}
+  catch(er){alert('Não foi possível carregar as aulas da turma: '+trErr(er));return}}
+ const lv=(c&&c.levels)||[],A=n=>au.find(x=>x.lesson_no===n)||{},themes=[...new Set(TRB.rows.map(r=>r.theme).filter(Boolean))];
+ trOpen(c?'Editar turma':'Nova turma',
+  '<div class="field"><label for="trCName">Nome da turma *</label><input id="trCName" maxlength="80" value="'+esc(c?c.name:'')+'"></div>'
+  +'<div class="field"><label>Níveis da turma</label><div class="tr-opts">'+TR_LV.map(l=>'<label class="tr-opt"><input type="checkbox" data-tr-clv value="'+l[0]+'"'+(lv.includes(l[0])?' checked':'')+'><span>'+esc(l[1])+'</span></label>').join('')+'</div><div class="muted smalltext" style="margin-top:6px">Uma turma tem um só nível. Marque dois níveis vizinhos apenas se confirmar a junção.</div></div>'
+  +'<div class="field"><label>Aulas presenciais (4 sábados)</label><datalist id="trThemes">'+themes.map(t=>'<option value="'+esc(t)+'">').join('')+'</datalist>'
+  +[1,2,3,4].map(n=>'<div class="tr-aula"><span class="muted">Aula '+n+'</span><input list="trThemes" data-trc-th="'+n+'" maxlength="120" placeholder="Tema" value="'+esc(A(n).theme||'')+'"><input type="date" data-trc-dt="'+n+'" value="'+esc(A(n).lesson_date||'')+'"></div>').join('')
+  +'<div class="muted smalltext">O tema da semana é o da aula mais recente com data até hoje. Escreva o tema exactamente como no Banco de treino.</div></div>'
+  +'<div class="field"><label for="trCTheme">Tema actual (usado só se as aulas não tiverem data)</label><input id="trCTheme" list="trThemes" maxlength="120" value="'+esc((c&&c.current_theme)||'')+'"></div>'
+  +'<label class="tr-opt" style="margin-top:8px"><input type="checkbox" id="trCAct"'+(!c||c.active?' checked':'')+'><span>Turma activa</span></label>',
+  [{label:'Cancelar',cls:'secondary'},{label:'Guardar',fn:async()=>{
+   const name=$('trCName').value.trim(),levels=[...document.querySelectorAll('[data-tr-clv]:checked')].map(x=>x.value),active=$('trCAct').checked,cth=$('trCTheme').value.trim()||null;
+   if(!name){alert('Indique o nome da turma.');return false}
+   if(!levels.length){alert('Escolha pelo menos um nível.');return false}
+   try{
+    let cid=c?c.id:null;
+    if(c){const r=await SB.from('av_cohorts').update({name,levels,active,current_theme:cth}).eq('id',c.id);if(r.error)throw r.error}
+    else{const r=await SB.from('av_cohorts').insert({name,levels,active,current_theme:cth,trainer_user_id:PROFILE.role==='trainer'?USER.id:null}).select('id').single();if(r.error)throw r.error;cid=r.data.id}
+    const up=[],del=[];
+    [1,2,3,4].forEach(n=>{const th=document.querySelector('[data-trc-th="'+n+'"]').value.trim(),dt=document.querySelector('[data-trc-dt="'+n+'"]').value;
+     if(th||dt)up.push({cohort_id:cid,lesson_no:n,theme:th||null,lesson_date:dt||null});else if(A(n).id)del.push(n)});
+    if(up.length){const r=await SB.from('av_cohort_aulas').upsert(up,{onConflict:'cohort_id,lesson_no'});if(r.error)throw r.error}
+    if(del.length){const r=await SB.from('av_cohort_aulas').delete().eq('cohort_id',cid).in('lesson_no',del);if(r.error)throw r.error}
+    toast('Turma guardada.');await trLoad();trAdminRender();return true}
+   catch(er){alert('Não foi possível guardar a turma: '+trErr(er));return false}}}]);
+ setTimeout(()=>{const i=$('trCName');if(i)i.focus()},50)}
 
 boot();
 })();
