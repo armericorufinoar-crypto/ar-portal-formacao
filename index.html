@@ -1518,7 +1518,7 @@ async function trQuestionSave(){
  if(!st){alert('Escreva o enunciado.');return false}
  if(!e.levels.length){alert('Escolha pelo menos um nível.');return false}
  if(e.act&&!th){alert('Para activar, indique o tema (igual ao da aula).');return false}
- if(e.act&&!ex){alert('Para activar, escreva a explicação de uma frase.');return false}
+ if(e.act&&!ex&&!confirm('Esta pergunta fica activa sem explicação (o formando vê só Certo/Errado e a solução). Guardar mesmo assim?'))return false
  if(k==='vf')p.answer_bool=e.vf;
  else if(k==='mc'||k==='case'){const o=e.opts.map(x=>x.trim());
   if(o.length<2||o.some(x=>!x)){alert('Preencha todas as opções (mínimo 2).');return false}
@@ -1539,11 +1539,11 @@ async function trQuestionSave(){
 function trBankActivate(){
  const todo=trBankFiltered().filter(r=>!r.active);
  if(!todo.length){alert('Não há rascunhos nos filtros actuais.');return}
- const bad=todo.filter(r=>!r.theme||!String(r.explanation||'').trim()).length;
- trOpen('Activar rascunhos','<p>Vai activar <strong>'+todo.length+'</strong> pergunta(s) que estão em rascunho nos filtros actuais. Só deve fazê-lo depois de as rever.</p>'+(bad?'<p class="notice">'+bad+' delas não têm tema ou explicação e vão ficar de fora.</p>':''),
+ const bad=todo.filter(r=>!r.theme).length,noExp=todo.filter(r=>r.theme&&!String(r.explanation||'').trim()).length;
+ trOpen('Activar rascunhos','<p>Vai activar <strong>'+todo.length+'</strong> pergunta(s) que estão em rascunho nos filtros actuais. Só deve fazê-lo depois de as rever.</p>'+(bad?'<p class="notice">'+bad+' delas não têm tema e vão ficar de fora.</p>':'')+(noExp?'<p class="muted smalltext">'+noExp+' ficam activas sem explicação: o formando vê só «Certo» ou «Errado» e a solução. Pode acrescentá-la depois no editor.</p>':''),
   [{label:'Cancelar',cls:'secondary'},{label:'Activar',fn:async()=>{
-   const ids=todo.filter(r=>r.theme&&String(r.explanation||'').trim()).map(r=>r.id);
-   if(!ids.length){alert('Nenhuma tem tema e explicação.');return false}
+   const ids=todo.filter(r=>r.theme).map(r=>r.id);
+   if(!ids.length){alert('Nenhuma tem tema.');return false}
    try{for(let i=0;i<ids.length;i+=100){const r=await SB.from('av_train_questions').update({active:true}).in('id',ids.slice(i,i+100));if(r.error)throw r.error}
     toast(ids.length+' pergunta(s) activadas.');await trBankReload();return true}
    catch(er){alert('Não foi possível activar: '+(er.message||er));await trBankReload();return false}}}])}
