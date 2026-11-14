@@ -587,21 +587,21 @@ const CRM_LEAD_STAGES=[
  {key:'PROPOSTA',label:'Proposta'},{key:'GANHO',label:'Ganho'},{key:'PERDIDO',label:'Perdido'}
 ];
 const CRM_OPP_STAGES=[
- {key:'QUALIFICACAO',label:'Qualificação',prob:15,color:'#8fc1ff'},{key:'CONTACTO',label:'Contacto',prob:30,color:'#3478ff'},
- {key:'PROPOSTA',label:'Proposta',prob:50,color:'#f59e0b'},{key:'NEGOCIACAO',label:'Negociação',prob:75,color:'#8b5cf6'},
- {key:'GANHA',label:'Ganho',prob:100,color:'#10b981'},{key:'PERDIDA',label:'Perdido',prob:0,color:'#ff454f'}
+ {key:'QUALIFICACAO',label:'Qualificação',prob:15,color:'#a9aeb8'},{key:'CONTACTO',label:'Contacto',prob:30,color:'#7c8594'},
+ {key:'PROPOSTA',label:'Proposta',prob:50,color:'#d9962b'},{key:'NEGOCIACAO',label:'Negociação',prob:75,color:'#c8101e'},
+ {key:'GANHA',label:'Ganho',prob:100,color:'#1f9d63'},{key:'PERDIDA',label:'Perdido',prob:0,color:'#3f4450'}
 ];
-const CRM_ORIGINS=['Indicação','Facebook','Instagram','Telemóvel'];
+const CRM_ORIGINS=['Indicação','WhatsApp','Facebook','Instagram','Telefone','Presencial / Evento','Outro'];
 let CRM_LEADS=[],CRM_OPPS=[],CRM_EDIT={type:null,id:null};
 const crmRead=k=>{try{const x=JSON.parse(localStorage.getItem(k)||'[]');return Array.isArray(x)?x:[]}catch{return[]}};
-const crmSave=()=>{try{localStorage.setItem(CRM_KEYS.leads,JSON.stringify(CRM_LEADS));localStorage.setItem(CRM_KEYS.opps,JSON.stringify(CRM_OPPS));return true}catch(e){toast('Não foi possível guardar os dados CRM neste dispositivo.');return false}};
+const crmSave=()=>{if(CRM_SYNC.remote===true){crmSync();return true}try{localStorage.setItem(CRM_KEYS.leads,JSON.stringify(CRM_LEADS));localStorage.setItem(CRM_KEYS.opps,JSON.stringify(CRM_OPPS));return true}catch(e){toast('Não foi possível guardar os dados CRM neste dispositivo.');return false}};
 const crmId=prefix=>prefix+'-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
 const crmMoney=v=>new Intl.NumberFormat('pt-AO',{maximumFractionDigits:0}).format(Number(v)||0)+' Kz';
 const crmDate=v=>v?new Date(v+'T12:00:00').toLocaleDateString('pt-PT'):'—';
 const crmLeadLabel=k=>CRM_LEAD_STAGES.find(x=>x.key===k)?.label||k;
 const crmOppLabel=k=>CRM_OPP_STAGES.find(x=>x.key===k)?.label||k;
 const crmEscape=esc;
-function crmInit(){CRM_LEADS=crmRead(CRM_KEYS.leads);CRM_OPPS=crmRead(CRM_KEYS.opps).map(x=>({...x,etapa:({'ABERTA':'QUALIFICACAO','EM NEGOCIAÇÃO':'NEGOCIACAO','PROPOSTA ENVIADA':'PROPOSTA','GANHA':'GANHA','PERDIDA':'PERDIDA'}[x.etapa]||x.etapa||'QUALIFICACAO')}));crmSave();}
+function crmInit(){CRM_LEADS=crmRead(CRM_KEYS.leads).map(x=>x.origem==='Telemóvel'?{...x,origem:'Telefone'}:x);CRM_OPPS=crmRead(CRM_KEYS.opps).map(x=>({...x,etapa:({'ABERTA':'QUALIFICACAO','EM NEGOCIAÇÃO':'NEGOCIACAO','PROPOSTA ENVIADA':'PROPOSTA','GANHA':'GANHA','PERDIDA':'PERDIDA'}[x.etapa]||x.etapa||'QUALIFICACAO')}));crmSave();}
 function crmOpenModal(type,item){CRM_EDIT={type,id:item?.id||null};const lead=type==='lead',x=item||{};const content=$('crmModalContent');
  const fields=lead?[
   ['codigo','Código','text',x.codigo||crmId('LEAD'),true],['nome','Nome / Empresa','text',x.nome||'',true],['telefone','Telefone','tel',x.telefone||''],['email','E-mail','email',x.email||''],
@@ -620,7 +620,7 @@ function crmOpenModal(type,item){CRM_EDIT={type,id:item?.id||null};const lead=ty
 function crmCloseModal(){$('crmModal').classList.remove('open');$('crmModal').setAttribute('aria-hidden','true');CRM_EDIT={type:null,id:null}}
 function crmDelete(type,id){const isLead=type==='lead',item=(isLead?CRM_LEADS:CRM_OPPS).find(x=>x.id===id);if(!item)return;if(isLead&&CRM_OPPS.some(o=>o.leadId===id)){toast('Este lead já tem uma oportunidade associada.');return}if(!confirm(`Eliminar ${isLead?'o lead':'a oportunidade'} «${item.nome||item.cliente||item.codigo}»?`))return;if(isLead)CRM_LEADS=CRM_LEADS.filter(x=>x.id!==id);else CRM_OPPS=CRM_OPPS.filter(x=>x.id!==id);crmSave();crmRenderAll();toast('Registo eliminado.')}
 function crmMove(type,id,stage){if(type==='lead'){CRM_LEADS=CRM_LEADS.map(x=>x.id===id?{...x,etapa:stage,datasEtapas:{...(x.datasEtapas||{}),[stage]:today()}}:x)}else{const st=CRM_OPP_STAGES.find(x=>x.key===stage);CRM_OPPS=CRM_OPPS.map(x=>x.id===id?{...x,etapa:stage,probabilidade:st?.prob??x.probabilidade}:x)}crmSave();crmRenderAll()}
-function crmConvertLead(id){const l=CRM_LEADS.find(x=>x.id===id);if(!l||CRM_OPPS.some(o=>o.leadId===id))return;const o={id:crmId('O'),codigo:crmId('OPP'),cliente:l.nome,telefone:l.telefone||'',email:l.email||'',vendedorResponsavel:l.vendedorResponsavel||'',etapa:'ABERTA',valorEstimado:Number(l.valorEstimado)||0,probabilidade:20,dataPrevistaFecho:today(),dataCriacao:today(),observacoes:l.interesse?'Interesse original: '+l.interesse:'',leadId:l.id};CRM_OPPS.push(o);CRM_LEADS=CRM_LEADS.map(x=>x.id===id?{...x,etapa:'PROPOSTA',datasEtapas:{...(x.datasEtapas||{}),PROPOSTA:today()}}:x);crmSave();crmRenderAll();toast('Lead convertido em oportunidade.')}
+function crmConvertLead(id){const l=CRM_LEADS.find(x=>x.id===id);if(!l||CRM_OPPS.some(o=>o.leadId===id))return;const o={id:crmId('O'),codigo:crmId('OPP'),cliente:l.nome,telefone:l.telefone||'',email:l.email||'',vendedorResponsavel:l.vendedorResponsavel||'',etapa:'QUALIFICACAO',valorEstimado:Number(l.valorEstimado)||0,probabilidade:20,dataPrevistaFecho:today(),dataCriacao:today(),observacoes:l.interesse?'Interesse original: '+l.interesse:'',leadId:l.id};CRM_OPPS.push(o);CRM_LEADS=CRM_LEADS.map(x=>x.id===id?(st=>({...x,etapa:st,datasEtapas:{...(x.datasEtapas||{}),[st]:(x.datasEtapas||{})[st]||today()}}))(['NOVO','CONTACTADO'].includes(x.etapa)?'QUALIFICADO':x.etapa):x);crmSave();crmRenderAll();toast('Lead convertido em oportunidade.')}
 function crmExport(type){const rows=type==='lead'?CRM_LEADS:CRM_OPPS;if(!rows.length){toast('Não existem registos para exportar.');return}const keys=type==='lead'?['codigo','nome','telefone','email','origem','interesse','vendedorResponsavel','etapa','valorEstimado','dataCriacao','observacoes']:['codigo','cliente','telefone','email','vendedorResponsavel','etapa','valorEstimado','probabilidade','dataPrevistaFecho','dataCriacao','observacoes'];const csv=[keys.join(';'),...rows.map(r=>keys.map(k=>'"'+String(r[k]??'').replace(/"/g,'""')+'"').join(';'))].join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=type==='lead'?'crm-leads.csv':'crm-pipeline.csv';a.click();URL.revokeObjectURL(url)}
 function crmBars(elId,items,max){const el=$(elId);if(!el)return;el.innerHTML=items.length?items.map(it=>`<div class="crm-bar-row"><span>${crmEscape(it.label)}</span><div class="crm-bar-track"><div class="crm-bar-fill" style="width:${max>0?Math.max(0,Math.min(100,it.value/max*100)):0}%"></div></div><span class="crm-bar-value">${it.display??it.value}</span></div>`).join(''):'<div class="crm-empty">Sem dados disponíveis.</div>'}
 function crmRenderCharts(){const funnel=CRM_LEAD_STAGES.map(st=>({label:st.label,value:CRM_LEADS.filter(x=>x.etapa===st.key).length}));crmBars('crmLeadFunnel',funnel,Math.max(1,...funnel.map(x=>x.value)));const sourceMap={};CRM_LEADS.forEach(x=>{const k=x.origem||'Outro';sourceMap[k]=(sourceMap[k]||0)+1});const sources=Object.entries(sourceMap).map(([label,value])=>({label,value,display:value+' · '+(CRM_LEADS.length?(value/CRM_LEADS.length*100).toFixed(0):0)+'%'}));crmBars('crmLeadSources',sources,Math.max(1,...sources.map(x=>x.value)));const amounts=CRM_OPP_STAGES.map(st=>({label:st.label,value:CRM_OPPS.filter(x=>x.etapa===st.key).reduce((a,x)=>a+(Number(x.valorEstimado)||0),0),display:crmMoney(CRM_OPPS.filter(x=>x.etapa===st.key).reduce((a,x)=>a+(Number(x.valorEstimado)||0),0))}));crmBars('crmOppStagesChart',amounts,Math.max(1,...amounts.map(x=>x.value)))}
@@ -631,8 +631,78 @@ function crmRenderOpps(){const q=($('crmOppSearch')?.value||'').toLowerCase(),ow
  $('crmOppBoard').innerHTML=CRM_OPP_STAGES.map(st=>{const items=rows.filter(x=>x.etapa===st.key);return `<div class="crm-column" style="--crm-stage-color:${st.color}"><div class="crm-column-head"><span>${st.label}</span><span class="crm-count">${items.length}</span></div>${items.length?items.map(x=>`<article class="crm-item"><h3>${crmEscape(x.cliente)}</h3><p>${crmEscape(x.codigo)} · ${crmEscape(x.vendedorResponsavel||'Sem responsável')}</p><p>Fecho previsto: ${crmDate(x.dataPrevistaFecho)}</p><div class="crm-meta"><span>${Number(x.probabilidade)||0}% probabilidade</span><strong>${crmMoney(x.valorEstimado)}</strong></div><div class="crm-actions"><button class="crm-mini" data-crm-edit-opp="${crmEscape(x.id)}">Editar</button>${!['GANHA','PERDIDA'].includes(st.key)?`<select class="crm-mini" data-crm-stage-opp="${crmEscape(x.id)}" aria-label="Alterar etapa">${CRM_OPP_STAGES.map(y=>`<option value="${y.key}" ${y.key===st.key?'selected':''}>${y.label}</option>`).join('')}</select>`:''}<button class="crm-mini danger" data-crm-del-opp="${crmEscape(x.id)}">Eliminar</button></div></article>`).join(''):'<div class="crm-empty">Sem oportunidades</div>'}</div>`}).join('')}
 function crmRenderAll(){crmRenderCharts();if($('page-crm-leads')&&!$('page-crm-leads').classList.contains('hidden'))crmRenderLeads();if($('page-crm-pipeline')&&!$('page-crm-pipeline').classList.contains('hidden'))crmRenderOpps();else{if($('page-crm-leads'))crmRenderLeads();if($('page-crm-pipeline'))crmRenderOpps()}}
 function crmWire(){ $('crmLeadAdd').onclick=()=>crmOpenModal('lead');$('crmOppAdd').onclick=()=>crmOpenModal('opp');$('crmLeadExport').onclick=()=>crmExport('lead');$('crmOppExport').onclick=()=>crmExport('opp');['crmLeadSearch','crmLeadOwnerFilter','crmLeadOriginFilter'].forEach(id=>$(id).addEventListener('input',crmRenderLeads));['crmOppSearch','crmOppOwnerFilter','crmOppStageFilter'].forEach(id=>$(id).addEventListener('input',crmRenderOpps));$('crmModal').addEventListener('click',e=>{if(e.target===$('crmModal'))crmCloseModal()});document.addEventListener('click',e=>{const b=e.target.closest('[data-crm-edit-lead],[data-crm-edit-opp],[data-crm-del-lead],[data-crm-del-opp],[data-crm-convert]');if(!b)return;if(b.dataset.crmEditLead)crmOpenModal('lead',CRM_LEADS.find(x=>x.id===b.dataset.crmEditLead));if(b.dataset.crmEditOpp)crmOpenModal('opp',CRM_OPPS.find(x=>x.id===b.dataset.crmEditOpp));if(b.dataset.crmDelLead)crmDelete('lead',b.dataset.crmDelLead);if(b.dataset.crmDelOpp)crmDelete('opp',b.dataset.crmDelOpp);if(b.dataset.crmConvert)crmConvertLead(b.dataset.crmConvert)});document.addEventListener('change',e=>{const t=e.target;if(t.matches('[data-crm-stage-lead]'))crmMove('lead',t.dataset.crmStageLead,t.value);if(t.matches('[data-crm-stage-opp]'))crmMove('opp',t.dataset.crmStageOpp,t.value)})}
+/* ===== CRM · sincronização com o Supabase (migração 019) =====
+   Se as tabelas existirem, os dados passam a viver no servidor, visíveis à administração e ao formador.
+   Se não existirem, o CRM continua a funcionar só neste navegador, como antes. */
+const CRM_SYNC={remote:null,snapL:{},snapO:{},busy:false,again:false,dirty:false};
+const crmNull=v=>(v===''||v==null)?null:v;
+const crmLeadRow=x=>({id:x.id,code:x.codigo||x.id,name:x.nome||'',phone:crmNull(x.telefone),email:crmNull(x.email),origin:crmNull(x.origem),interest:crmNull(x.interesse),owner:crmNull(x.vendedorResponsavel),stage:x.etapa||'NOVO',est_value:Number(x.valorEstimado)||0,entered_on:crmNull(x.dataCriacao),notes:crmNull(x.observacoes),stage_dates:x.datasEtapas||{}});
+const crmLeadObj=r=>({id:r.id,codigo:r.code,nome:r.name,telefone:r.phone||'',email:r.email||'',origem:r.origin||'',interesse:r.interest||'',vendedorResponsavel:r.owner||'',etapa:r.stage,valorEstimado:Number(r.est_value)||0,dataCriacao:r.entered_on||'',observacoes:r.notes||'',datasEtapas:r.stage_dates||{}});
+const crmOppRow=x=>({id:x.id,code:x.codigo||x.id,lead_id:crmNull(x.leadId),client:x.cliente||'',phone:crmNull(x.telefone),email:crmNull(x.email),owner:crmNull(x.vendedorResponsavel),stage:x.etapa||'QUALIFICACAO',est_value:Number(x.valorEstimado)||0,probability:Math.max(0,Math.min(100,Math.round(Number(x.probabilidade)||0))),expected_close:crmNull(x.dataPrevistaFecho),created_on:crmNull(x.dataCriacao),notes:crmNull(x.observacoes)});
+const crmOppObj=r=>({id:r.id,codigo:r.code,leadId:r.lead_id||null,cliente:r.client,telefone:r.phone||'',email:r.email||'',vendedorResponsavel:r.owner||'',etapa:r.stage,valorEstimado:Number(r.est_value)||0,probabilidade:Number(r.probability)||0,dataPrevistaFecho:r.expected_close||'',dataCriacao:r.created_on||'',observacoes:r.notes||''});
+const crmLegacyLeads=()=>crmRead(CRM_KEYS.leads).map(x=>x.origem==='Telemóvel'?{...x,origem:'Telefone'}:x);
+const crmLegacyOpps=()=>crmRead(CRM_KEYS.opps).map(x=>({...x,etapa:({'ABERTA':'QUALIFICACAO','EM NEGOCIAÇÃO':'NEGOCIACAO','PROPOSTA ENVIADA':'PROPOSTA'}[x.etapa]||x.etapa||'QUALIFICACAO')}));
+const crmImported=()=>{try{return localStorage.getItem('av_crm_imported_v1')==='1'}catch{return true}};
+function crmNote(){
+ let h;
+ if(CRM_SYNC.remote===true){
+  const nl=crmImported()?0:crmLegacyLeads().filter(l=>!CRM_LEADS.some(x=>x.id===l.id)).length,no=crmImported()?0:crmLegacyOpps().filter(o=>!CRM_OPPS.some(x=>x.id===o.id)).length;
+  h='Os registos CRM estão guardados no servidor e visíveis à administração e aos formadores.'+((nl+no)?' <button type="button" class="btn secondary small" data-crm-import style="margin-left:8px">Importar '+nl+' lead(s) e '+no+' oportunidade(s) guardados neste navegador</button>':'');
+ }else if(CRM_SYNC.remote===false){
+  h='Os registos CRM desta versão ficam guardados neste navegador. Para os guardar no servidor e partilhar com a equipa, execute a migração <b>019_crm_interessados.sql</b> no Supabase.';
+ }else h='A verificar a ligação ao servidor…';
+ document.querySelectorAll('.crm-note-box').forEach(n=>{n.innerHTML=h});
+}
+async function crmSync(){
+ if(CRM_SYNC.remote!==true)return;
+ if(CRM_SYNC.busy){CRM_SYNC.again=true;return}
+ CRM_SYNC.busy=true;
+ try{
+  do{
+   CRM_SYNC.again=false;
+   const L=CRM_LEADS.map(crmLeadRow),O=CRM_OPPS.map(crmOppRow);
+   const upL=L.filter(r=>JSON.stringify(r)!==CRM_SYNC.snapL[r.id]),upO=O.filter(r=>JSON.stringify(r)!==CRM_SYNC.snapO[r.id]);
+   const delL=Object.keys(CRM_SYNC.snapL).filter(id=>!L.some(r=>r.id===id)),delO=Object.keys(CRM_SYNC.snapO).filter(id=>!O.some(r=>r.id===id));
+   let r;
+   if(upL.length){r=await SB.from('av_crm_leads').upsert(upL);if(r.error)throw r.error}
+   if(upO.length){r=await SB.from('av_crm_opps').upsert(upO);if(r.error)throw r.error}
+   if(delO.length){r=await SB.from('av_crm_opps').delete().in('id',delO);if(r.error)throw r.error}
+   if(delL.length){r=await SB.from('av_crm_leads').delete().in('id',delL);if(r.error)throw r.error}
+   upL.forEach(x=>{CRM_SYNC.snapL[x.id]=JSON.stringify(x)});upO.forEach(x=>{CRM_SYNC.snapO[x.id]=JSON.stringify(x)});
+   delL.forEach(id=>{delete CRM_SYNC.snapL[id]});delO.forEach(id=>{delete CRM_SYNC.snapO[id]});
+   CRM_SYNC.dirty=false;
+  }while(CRM_SYNC.again);
+ }catch(e){CRM_SYNC.dirty=true;toast('Não foi possível sincronizar o CRM: '+((e&&e.message)||e))}
+ finally{CRM_SYNC.busy=false}
+}
+async function crmLoad(){
+ if(CRM_SYNC.remote===true&&CRM_SYNC.dirty){await crmSync();if(CRM_SYNC.dirty){crmRenderAll();return}}
+ try{
+  const R=await Promise.all([SB.from('av_crm_leads').select('*').order('created_at').limit(5000),SB.from('av_crm_opps').select('*').order('created_at').limit(5000)]);
+  R.forEach(r=>{if(r.error)throw r.error});
+  CRM_LEADS=(R[0].data||[]).map(crmLeadObj);CRM_OPPS=(R[1].data||[]).map(crmOppObj);
+  CRM_SYNC.snapL={};CRM_SYNC.snapO={};
+  CRM_LEADS.forEach(x=>{CRM_SYNC.snapL[x.id]=JSON.stringify(crmLeadRow(x))});CRM_OPPS.forEach(x=>{CRM_SYNC.snapO[x.id]=JSON.stringify(crmOppRow(x))});
+  CRM_SYNC.remote=true;CRM_SYNC.dirty=false;
+ }catch(e){
+  if(CRM_SYNC.remote!==true)CRM_SYNC.remote=false;
+  if(CRM_SYNC.remote===true)toast('Não foi possível actualizar o CRM a partir do servidor.');
+ }
+ crmNote();crmRenderAll();
+}
+function crmOpen(){crmNote();crmRenderAll();crmLoad()}
+document.addEventListener('click',async e=>{
+ const b=e.target.closest&&e.target.closest('[data-crm-import]');if(!b||CRM_SYNC.remote!==true)return;
+ const L=crmLegacyLeads().filter(l=>!CRM_LEADS.some(x=>x.id===l.id)),O=crmLegacyOpps().filter(o=>!CRM_OPPS.some(x=>x.id===o.id));
+ if(!confirm('Importar '+L.length+' lead(s) e '+O.length+' oportunidade(s) deste navegador para o servidor? Os dados deste navegador ficam como cópia de segurança.'))return;
+ CRM_LEADS=CRM_LEADS.concat(L);CRM_OPPS=CRM_OPPS.concat(O);
+ await crmSync();
+ if(!CRM_SYNC.dirty){try{localStorage.setItem('av_crm_imported_v1','1')}catch{}toast('Registos importados para o servidor.')}
+ crmNote();crmRenderAll();
+});
+
 crmInit();
-function navTo(page){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));$('page-'+page)?.classList.remove('hidden');document.querySelectorAll('#mainNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('topPage').textContent=({dashboard:'Painel geral',staff:'Formandos',sessions:'Sessões e materiais',attendance:'Presenças',performance:'Exercícios e desempenho',community:'Dúvidas e feedback',reports:'Relatórios e certificação',users:'Utilizadores',pay:'Pagamentos',treino:'Treino e turmas','crm-leads':'Leads · CRM','crm-pipeline':'Pipeline · CRM'})[page]||'Formação';$('sidebar').classList.remove('mobile-open');if(page==='crm-leads'||page==='crm-pipeline')crmRenderAll();if(page==='users')renderUsers();if(page==='pay')payAdminOpen();if(page==='treino')trAdminOpen();if(page==='attendance')renderAttendance();if(page==='reports')renderReports();if(['performance','reports','dashboard'].includes(page)&&PROFILE&&PROFILE.role!=='collaborator')loadTests().then(()=>{renderScores();renderReports();renderDashboard()});if(page==='community'){const f=$('forumAdmin');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}}
+function navTo(page){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));$('page-'+page)?.classList.remove('hidden');document.querySelectorAll('#mainNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('topPage').textContent=({dashboard:'Painel geral',staff:'Formandos',sessions:'Sessões e materiais',attendance:'Presenças',performance:'Exercícios e desempenho',community:'Dúvidas e feedback',reports:'Relatórios e certificação',users:'Utilizadores',pay:'Pagamentos',treino:'Treino e turmas','crm-leads':'Leads · CRM','crm-pipeline':'Pipeline · CRM'})[page]||'Formação';$('sidebar').classList.remove('mobile-open');if(page==='crm-leads'||page==='crm-pipeline')crmOpen();if(page==='users')renderUsers();if(page==='pay')payAdminOpen();if(page==='treino')trAdminOpen();if(page==='attendance')renderAttendance();if(page==='reports')renderReports();if(['performance','reports','dashboard'].includes(page)&&PROFILE&&PROFILE.role!=='collaborator')loadTests().then(()=>{renderScores();renderReports();renderDashboard()});if(page==='community'){const f=$('forumAdmin');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}}
 document.querySelectorAll('#mainNav button').forEach(b=>b.onclick=()=>navTo(b.dataset.page));document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>navTo(b.dataset.page)));crmWire();$('mobileMenu').onclick=()=>$('sidebar').classList.toggle('mobile-open');$('addStaffBtn').onclick=()=>openStaff();$('addSessionBtn').onclick=()=>openSession();$('addScoreBtn').onclick=()=>openScore();$('page-dashboard').querySelector('[data-open="staff"]').onclick=()=>{navTo('staff');openStaff()};$('addSessionBtn').onclick=()=>openSession();
 async function adminFn(body,retry=true){const r=await SB.functions.invoke('admin-utilizadores',{body});if(r.error){let m=r.error.message,st=0,det='';try{st=r.error.context.status;const j=await r.error.context.json();m=j.error||m;if(j.detalhe)det=' ['+j.detalhe+'; chave '+(j.chave_publica||'?')+']'}catch(e){}if(st===401||/Sessão inválida|Sem sessão/.test(m)){if(retry){try{const x=await SB.auth.refreshSession();if(!x.error&&x.data&&x.data.session)return await adminFn(body,false)}catch(e){}}throw new Error('A sua sessão expirou ou não é reconhecida pelo servidor. Saia do portal e entre de novo.'+det)}throw new Error(m)}return r.data}
 let USERS=[];const ROLE_LABEL={admin:'Administrador',trainer:'Formador',collaborator:'Formando'};
