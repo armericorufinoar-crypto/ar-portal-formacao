@@ -1462,7 +1462,7 @@ function trBankRender(){
   +sel('trbKind',f.kd,[['','Todos os tipos']].concat(Object.keys(TR_KIND).map(k=>[k,TR_KIND[k]])))
   +sel('trbSt',f.st,[['','Activas e rascunhos'],['on','Só activas'],['off','Só rascunhos']])+'</div>'
   +'<div class="muted smalltext" id="trbCount" style="margin:8px 0"></div>'
-  +'<div class="tablewrap"><table><thead><tr><th>Pergunta</th><th>Tema</th><th>Níveis</th><th>Estado</th><th></th></tr></thead><tbody id="trbRows"></tbody></table></div></div>';
+  +'<div class="tablewrap"><table class="table"><thead><tr><th>Pergunta</th><th>Tema</th><th>Níveis</th><th>Estado</th><th></th></tr></thead><tbody id="trbRows"></tbody></table></div></div>';
  trBankRows()}
 function trBankFiltered(){const f=TRB.f,q=f.q.toLowerCase().trim();
  return TRB.rows.filter(r=>{if(q&&!(String(r.statement)+' '+String(r.theme||'')).toLowerCase().includes(q))return false;
