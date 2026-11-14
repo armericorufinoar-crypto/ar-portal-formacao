@@ -150,7 +150,119 @@ html{scroll-behavior:smooth}body{-webkit-font-smoothing:antialiased;text-renderi
 @media(min-width:1500px){.student{max-width:1360px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}.stat:hover,.area-card:hover,.tile:hover,.btn:hover{transform:none}}
 </style>
-<style id="trCss">.tr-opts{display:grid;gap:8px}.tr-opt{display:flex;align-items:center;gap:10px;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;background:#fff;font-size:13px;font-weight:650;color:var(--ink);cursor:pointer}.tr-opt input{width:18px;height:18px;flex:none;accent-color:var(--red)}.tr-opt:has(input:checked){border-color:var(--red);background:#fff4f5}.tr-q{margin:0 0 16px}.tr-q h4{margin:0 0 8px;font-size:13px}.tr-lv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 14px}.tr-lv>.card{margin:0;padding:14px;display:grid;gap:4px}.tr-lv>.card strong{font-size:24px}@media(max-width:760px){.tr-lv{grid-template-columns:repeat(2,minmax(0,1fr))}}.tr-tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}.tr-tabs button{border:1px solid #d9dce1;background:#fff;border-radius:99px;padding:9px 16px;font-weight:700;font-size:13px;color:var(--ink);cursor:pointer;min-height:40px;font-family:inherit}.tr-tabs button.active{background:var(--red);border-color:var(--red);color:#fff}.tr-stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.tr-sv{display:block;font-size:22px;margin:2px 0}.tr-big{font-size:20px;font-weight:800;margin:0 0 6px}.tr-bar{position:relative;height:10px;border-radius:99px;background:#eceef1;overflow:hidden;margin-top:10px}.tr-bar i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .3s}.tr-bar b{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.45}.tr-stmt{font-size:16px;line-height:1.5;margin:14px 0;white-space:pre-line;font-weight:650}.tr-ctx{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px;line-height:1.5;margin:12px 0 0;white-space:pre-line}.tr-ans{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;text-align:left;border:1px solid #d9dce1;border-radius:12px;background:#fff;padding:10px 14px;font-size:14px;font-weight:650;color:var(--ink);cursor:pointer;margin:0 0 8px;font-family:inherit}.tr-ans b{flex:0 0 24px;height:24px;border-radius:50%;background:#eceef1;display:grid;place-items:center;font-size:12px}.tr-ans:hover:not(:disabled){border-color:var(--red)}.tr-ans:disabled{cursor:default}.tr-ans.ok{border-color:var(--green);background:#eef8f2}.tr-ans.bad{border-color:var(--red);background:#fff4f5}.tr-fb{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px;line-height:1.5}.tr-fb.ok{background:#eef8f2;border:1px solid #b9e0c9}.tr-fb.bad{background:#fff4f5;border:1px solid #f3c1c6}.tr-fb p{margin:6px 0 0}.tr-ord{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:8px}.tr-ord li{display:flex;align-items:center;gap:8px;border:1px solid #d9dce1;border-radius:12px;padding:6px 8px 6px 14px;background:#fff;font-size:14px;font-weight:650;min-height:46px}.tr-ord li span{flex:1}.tr-ord button{width:40px;height:40px;border:1px solid #d9dce1;border-radius:10px;background:#fff;font-size:16px;cursor:pointer;color:var(--ink)}.tr-ord button:disabled{opacity:.35;cursor:default}.tr-num{display:flex;gap:8px}.tr-num input{flex:1;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:0 12px;font-size:16px;font-family:inherit}.tr-aula{display:grid;grid-template-columns:70px 1fr 150px;gap:8px;align-items:center;margin:0 0 8px}.tr-oprow{display:grid;grid-template-columns:24px 1fr 40px;gap:8px;align-items:center;margin:0 0 6px}.tr-oprow input[type=radio]{width:18px;height:18px}.tr-tools{display:flex;gap:8px;flex-wrap:wrap}.tr-filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:8px}.tr-filters input,.tr-filters select{min-height:40px;border:1px solid #d9dce1;border-radius:10px;padding:0 10px;font-family:inherit;font-size:13px;background:#fff;min-width:0}@media(max-width:760px){.tr-aula{grid-template-columns:1fr}.tr-filters{grid-template-columns:1fr 1fr}.tr-filters input{grid-column:1/-1}}</style></head><body>
+<style id="trCss">.tr-opts{display:grid;gap:8px}.tr-opt{display:flex;align-items:center;gap:10px;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;background:#fff;font-size:13px;font-weight:650;color:var(--ink);cursor:pointer}.tr-opt input{width:18px;height:18px;flex:none;accent-color:var(--red)}.tr-opt:has(input:checked){border-color:var(--red);background:#fff4f5}.tr-q{margin:0 0 16px}.tr-q h4{margin:0 0 8px;font-size:13px}.tr-lv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 14px}.tr-lv>.card{margin:0;padding:14px;display:grid;gap:4px}.tr-lv>.card strong{font-size:24px}@media(max-width:760px){.tr-lv{grid-template-columns:repeat(2,minmax(0,1fr))}}.tr-tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}.tr-tabs button{border:1px solid #d9dce1;background:#fff;border-radius:99px;padding:9px 16px;font-weight:700;font-size:13px;color:var(--ink);cursor:pointer;min-height:40px;font-family:inherit}.tr-tabs button.active{background:var(--red);border-color:var(--red);color:#fff}.tr-stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.tr-sv{display:block;font-size:22px;margin:2px 0}.tr-big{font-size:20px;font-weight:800;margin:0 0 6px}.tr-bar{position:relative;height:10px;border-radius:99px;background:#eceef1;overflow:hidden;margin-top:10px}.tr-bar i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .3s}.tr-bar b{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.45}.tr-stmt{font-size:16px;line-height:1.5;margin:14px 0;white-space:pre-line;font-weight:650}.tr-ctx{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px;line-height:1.5;margin:12px 0 0;white-space:pre-line}.tr-ans{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;text-align:left;border:1px solid #d9dce1;border-radius:12px;background:#fff;padding:10px 14px;font-size:14px;font-weight:650;color:var(--ink);cursor:pointer;margin:0 0 8px;font-family:inherit}.tr-ans b{flex:0 0 24px;height:24px;border-radius:50%;background:#eceef1;display:grid;place-items:center;font-size:12px}.tr-ans:hover:not(:disabled){border-color:var(--red)}.tr-ans:disabled{cursor:default}.tr-ans.ok{border-color:var(--green);background:#eef8f2}.tr-ans.bad{border-color:var(--red);background:#fff4f5}.tr-fb{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px;line-height:1.5}.tr-fb.ok{background:#eef8f2;border:1px solid #b9e0c9}.tr-fb.bad{background:#fff4f5;border:1px solid #f3c1c6}.tr-fb p{margin:6px 0 0}.tr-ord{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:8px}.tr-ord li{display:flex;align-items:center;gap:8px;border:1px solid #d9dce1;border-radius:12px;padding:6px 8px 6px 14px;background:#fff;font-size:14px;font-weight:650;min-height:46px}.tr-ord li span{flex:1}.tr-ord button{width:40px;height:40px;border:1px solid #d9dce1;border-radius:10px;background:#fff;font-size:16px;cursor:pointer;color:var(--ink)}.tr-ord button:disabled{opacity:.35;cursor:default}.tr-num{display:flex;gap:8px}.tr-num input{flex:1;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:0 12px;font-size:16px;font-family:inherit}.tr-aula{display:grid;grid-template-columns:70px 1fr 150px;gap:8px;align-items:center;margin:0 0 8px}.tr-oprow{display:grid;grid-template-columns:24px 1fr 40px;gap:8px;align-items:center;margin:0 0 6px}.tr-oprow input[type=radio]{width:18px;height:18px}.tr-tools{display:flex;gap:8px;flex-wrap:wrap}.tr-filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:8px}.tr-filters input,.tr-filters select{min-height:40px;border:1px solid #d9dce1;border-radius:10px;padding:0 10px;font-family:inherit;font-size:13px;background:#fff;min-width:0}@media(max-width:760px){.tr-aula{grid-template-columns:1fr}.tr-filters{grid-template-columns:1fr 1fr}.tr-filters input{grid-column:1/-1}}</style><style id="trDuoCss">
+/* evolução */
+.tr-evo-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0 0 8px}
+.tr-pbar{flex:1;height:16px;border-radius:99px;background:#e5e7eb;overflow:hidden;position:relative}
+.tr-pbar i{display:block;height:100%;border-radius:99px;background:var(--green);transition:width .35s var(--ease,ease);position:relative;min-width:0}
+.tr-pbar i::after{content:"";position:absolute;left:8px;right:8px;top:4px;height:4px;border-radius:4px;background:#ffffff40}
+.tr-pbar-s{height:12px;margin:0 0 14px}
+.tr-evo-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.tr-evo-grid>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff}
+.tr-evo-grid span{display:block;font-size:12px;color:var(--muted)}
+.tr-evo-grid strong{font-size:18px}
+@media(max-width:760px){.tr-evo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* trilha */
+.tr-trail{max-width:520px;margin:0 auto 18px;padding:0 4px}
+.tr-unit{margin:0 0 10px}
+.tr-uhead{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;color:#fff;background:#9aa0a8;box-shadow:0 4px 0 #7c828a}
+.tr-unit.now .tr-uhead{background:var(--red);box-shadow:0 4px 0 var(--red2)}
+.tr-unit.past .tr-uhead{background:var(--green);box-shadow:0 4px 0 #0f5a3a}
+.tr-uhead small{display:block;font-size:11px;letter-spacing:.06em;opacity:.9;font-weight:700}
+.tr-uhead b{font-size:17px;line-height:1.25}
+.tr-upct{font-weight:800;font-size:13px;background:#ffffff2e;border-radius:99px;padding:4px 10px;white-space:nowrap}
+.tr-path{display:flex;flex-direction:column;align-items:center;padding:14px 0 6px}
+.tr-wrap{position:relative;display:flex;flex-direction:column;align-items:center;margin:0 0 14px;transform:translateX(var(--x,0))}
+.tr-wrap:has(.tr-bubble){margin-top:40px}
+.tr-dl{font-size:11px;color:var(--muted);margin-top:6px;font-weight:600}
+.tr-node{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;border:0;padding:0;color:#fff;background:#d5d8dd;box-shadow:0 6px 0 #b9bdc4;position:relative;cursor:default}
+.tr-node svg{width:30px;height:30px}
+.tr-node.done{background:var(--green);box-shadow:0 6px 0 #0f5a3a}
+.tr-node.cur{background:var(--red);box-shadow:0 6px 0 var(--red2);cursor:pointer;animation:trPulse 1.8s ease-in-out infinite}
+.tr-node.cur:active{transform:translateY(4px);box-shadow:0 2px 0 var(--red2)}
+.tr-node.cur:focus-visible{outline:3px solid #17191d;outline-offset:4px}
+.tr-node.lock{color:#9aa0a8}
+.tr-node.miss{background:#fff;border:3px dashed #cfd3d9;box-shadow:none;margin-bottom:6px}
+.tr-node.aula{background:#d28d00;box-shadow:0 6px 0 #9a6700}
+.tr-node.aula.lock{background:#d5d8dd;box-shadow:0 6px 0 #b9bdc4;color:#9aa0a8}
+.tr-node.aula.done{background:#9a6700;box-shadow:0 6px 0 #6f4a00}
+.tr-node.trophy{width:84px;height:84px}
+.tr-node.trophy svg{width:40px;height:40px}
+.tr-node.trophy.done{background:#d28d00;box-shadow:0 6px 0 #9a6700}
+.tr-bubble{position:absolute;top:-38px;left:50%;transform:translateX(-50%);background:#fff;color:var(--red);border:2px solid var(--line);border-radius:12px;padding:5px 12px;font-weight:800;font-size:12px;letter-spacing:.05em;white-space:nowrap;animation:trBob 1.6s ease-in-out infinite}
+.tr-bubble::after{content:"";position:absolute;left:50%;bottom:-8px;width:12px;height:12px;background:#fff;border-right:2px solid var(--line);border-bottom:2px solid var(--line);transform:translateX(-50%) rotate(45deg)}
+.tr-bubble.amber{color:var(--amber)}
+.tr-end{display:flex;flex-direction:column;align-items:center;padding:12px 0 6px}
+@keyframes trPulse{0%,100%{box-shadow:0 6px 0 var(--red2),0 0 0 0 #c8101e44}50%{box-shadow:0 6px 0 var(--red2),0 0 0 12px #c8101e00}}
+@keyframes trBob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-5px)}}
+@media(prefers-reduced-motion:reduce){.tr-node.cur,.tr-bubble{animation:none}.tr-pbar i{transition:none}}
+/* lição em ecrã inteiro */
+body.tr-noscroll{overflow:hidden}
+.tr-lesson{position:fixed;inset:0;z-index:9000;background:#fff;display:none;flex-direction:column}
+.tr-lesson.open{display:flex}
+.tr-lhead{display:flex;align-items:center;gap:14px;max-width:760px;width:100%;margin:0 auto;padding:18px 16px 8px}
+.tr-x{background:none;border:0;color:#9aa0a8;width:34px;height:34px;padding:4px;border-radius:10px;flex:0 0 auto}
+.tr-x:hover{color:var(--ink);background:#f1f2f4}
+.tr-x svg{width:100%;height:100%}
+.tr-lcount{font-weight:800;color:var(--muted);font-size:13px;min-width:34px;text-align:right}
+.tr-lbody{flex:1;overflow:auto;padding:10px 16px 24px}
+.tr-lin{max-width:640px;margin:0 auto}
+.tr-chip{display:inline-block;background:#fff4e0;color:var(--amber);border-radius:99px;padding:3px 12px;font-size:12px;font-weight:700;margin:6px 0 4px}
+.tr-lq{font-size:26px;line-height:1.2;margin:14px 0 14px;font-weight:800}
+.tr-stmt2{font-size:18px;line-height:1.45;margin:0 0 20px;font-weight:600}
+.tr-ch{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:14px 16px;margin:0 0 12px;font-size:16px;color:var(--ink);font-family:inherit;min-height:56px}
+.tr-ch b{flex:0 0 30px;height:30px;border:2px solid var(--line);border-radius:9px;display:grid;place-items:center;font-size:13px;color:var(--muted)}
+.tr-ch:hover:not(:disabled){background:#f6f7f9}
+.tr-ch.sel{border-color:var(--blue);background:#eef3fc;color:var(--blue)}
+.tr-ch.sel b{border-color:var(--blue);color:var(--blue)}
+.tr-ch.ok{border-color:#7bc99e;background:#e9f7ef;color:var(--green)}
+.tr-ch.bad{border-color:#f0a3a8;background:#fff1f2;color:var(--red)}
+.tr-ch:disabled{cursor:default}
+.tr-num2 input{width:100%;font-size:22px;padding:14px 16px;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;background:#fff;color:var(--ink);font-family:inherit}
+.tr-num2 input:focus{outline:0;border-color:var(--blue)}
+.tr-ord2 li{border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:10px 12px;gap:10px;background:#fff}
+.tr-ord2 .tr-on{flex:0 0 28px;height:28px;border-radius:9px;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--muted)}
+.tr-ord2 .tr-ot{flex:1;font-size:16px}
+.tr-lfoot{border-top:2px solid var(--line);background:#fff;padding:16px;padding-bottom:max(16px,env(safe-area-inset-bottom))}
+.tr-lfoot.ok{background:#e9f7ef;border-color:#cdeed9}
+.tr-lfoot.bad{background:#fff1f2;border-color:#f6d3d6}
+.tr-lfin{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.tr-fbmsg{display:flex;gap:12px;align-items:flex-start;flex:1;min-width:0}
+.tr-fbic{flex:0 0 40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.tr-fbic svg{width:22px;height:22px}
+.tr-lfoot.ok .tr-fbic{color:var(--green)}
+.tr-lfoot.bad .tr-fbic{color:var(--red)}
+.tr-lfoot.ok strong{color:var(--green);font-size:19px}
+.tr-lfoot.bad strong{color:var(--red);font-size:19px}
+.tr-sol{color:var(--red);font-weight:600;margin-top:2px}
+.tr-exp{color:var(--ink);opacity:.8;margin-top:4px;font-size:14px;line-height:1.45}
+.tr-btn{border:0;border-bottom:4px solid transparent;border-radius:14px;padding:13px 26px;min-width:150px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:14px;font-family:inherit;color:#fff}
+.tr-btn:active:not(:disabled){transform:translateY(3px);border-bottom-width:1px}
+.tr-btn.go,.tr-btn.ok{background:var(--green);border-bottom-color:#0f5a3a}
+.tr-btn.bad{background:var(--red);border-bottom-color:var(--red2)}
+.tr-btn.ghost{background:#fff;color:var(--muted);border:2px solid var(--line);border-bottom-width:4px}
+.tr-btn.link{background:none;color:var(--red);border:0;min-width:0}
+.tr-btn:disabled{background:#e5e7eb;color:#a0a5ad;border-bottom-color:#d5d8dd;cursor:default}
+.tr-btn.ghost:disabled{background:#fff;color:#c4c8ce;border-color:var(--line)}
+.tr-btn:focus-visible,.tr-ch:focus-visible,.tr-x:focus-visible{outline:3px solid #17191d;outline-offset:2px}
+.tr-exitbk{position:absolute;inset:0;background:#17191d99;display:grid;place-items:center;padding:16px;z-index:2}
+.tr-exit{background:#fff;border-radius:20px;padding:24px;max-width:360px;width:100%;text-align:center;display:grid;gap:10px}
+.tr-exit h3{margin:0;font-size:20px}
+.tr-exit p{margin:0 0 6px;color:var(--muted)}
+.tr-res{text-align:center;padding-top:40px}
+.tr-trophy{width:96px;height:96px;margin:0 auto 12px;border-radius:50%;background:#d28d00;box-shadow:0 6px 0 #9a6700;color:#fff;display:grid;place-items:center}
+.tr-trophy svg{width:48px;height:48px}
+.tr-res h2{font-size:28px;margin:10px 0 18px}
+.tr-rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 18px}
+.tr-rgrid>div{border:2px solid;border-radius:16px;overflow:hidden;background:#fff}
+.tr-rgrid small{display:block;color:#fff;font-weight:800;letter-spacing:.06em;font-size:11px;padding:6px 4px}
+.tr-rgrid b{display:block;font-size:22px;padding:14px 4px}
+.tr-rgrid .a{border-color:#d28d00}.tr-rgrid .a small{background:#d28d00}.tr-rgrid .a b{color:#9a6700}
+.tr-rgrid .b{border-color:var(--green)}.tr-rgrid .b small{background:var(--green)}.tr-rgrid .b b{color:var(--green)}
+.tr-rgrid .c{border-color:var(--blue)}.tr-rgrid .c small{background:var(--blue)}.tr-rgrid .c b{color:var(--blue)}
+@media(max-width:560px){.tr-lq{font-size:22px}.tr-lfin{flex-wrap:wrap}.tr-lfin .tr-btn{flex:1;min-width:0}.tr-lfoot.ok .tr-lfin,.tr-lfoot.bad .tr-lfin{flex-direction:column;align-items:stretch}.tr-lfoot .tr-btn{width:100%}.tr-rgrid b{font-size:18px}}
+</style>
+</head><body>
 <style>[data-invite]{display:none!important}#loginBox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fcfbf9;z-index:50}#loginBox form{background:#fff;padding:28px;border-radius:12px;width:min(92vw,360px);box-shadow:0 8px 30px #0002;display:grid;gap:12px}#loginMsg{color:#b42318;font-size:.9rem;min-height:1.2em}#logoutBtn{position:fixed;top:10px;right:12px;z-index:20}/* v12: formatação, anexos estilo Facebook, edição */
 .rt strong{font-weight:800}.rt u{text-decoration:underline;text-underline-offset:2px}.rt s{opacity:.7}.rt mark{background:#fff2a8;color:inherit;padding:0 2px;border-radius:3px}
 .rt code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:#0000000f;padding:1px 5px;border-radius:5px}
@@ -1347,21 +1459,51 @@ function trNum(s){let t=String(s==null?'':s).replace(/[\s\u00a0]/g,'');if(!t)ret
  return /^-?\d+(\.\d+)?$/.test(t)?Number(t):NaN}
 const trStBox=()=>$('trStBody');
 
-/* --- formando: ecrã Treino --- */
+/* --- formando: ecrã Treino (trilha de evolução + lição ao estilo Duolingo) --- */
 function trStDenied(){return '<div class="card"><div class="cardhead"><h2>Treino</h2></div><p class="muted smalltext">Antes de começar, responda às 6 perguntas do perfil. Servem para o colocar na turma e no treino certos.</p><button type="button" class="btn" data-tr-profile>Responder às 6 perguntas</button></div>'}
+const TRT={units:[],days:{},today:''};
+const trToday=()=>{try{return new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Luanda'}).format(new Date())}catch(_){return new Date().toISOString().slice(0,10)}};
+const trAdd=(iso,n)=>{const d=new Date(iso+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
+const TR_DOW=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const trDowN=iso=>new Date(iso+'T00:00:00Z').getUTCDay();
+const trDow=iso=>TR_DOW[trDowN(iso)];
+const trDm=iso=>iso.slice(8,10)+'/'+iso.slice(5,7);
+const TR_IC={
+ check:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ lock:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.2" fill="currentColor"/><path d="M8 10.5V8a4 4 0 018 0v2.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>',
+ star:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.6 6.8 19.4l1-5.9L3.5 9.4l5.9-.8z" fill="currentColor"/></svg>',
+ book:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="11.5" rx="2" fill="currentColor"/><path d="M12 15.5V20M8 20h8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M7 9h6M7 12h10" fill="none" stroke="#ffffff99" stroke-width="1.8" stroke-linecap="round"/></svg>',
+ trophy:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 01-10 0zM7 6H4v1.5A3.5 3.5 0 007.5 11M17 6h3v1.5A3.5 3.5 0 0116.5 11M12 14v3.5M8.5 20h7M10 17.5h4" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ x:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>'};
+
+/* dados da trilha: aulas da turma (4 sábados) e dias de treino já concluídos */
+async function trTrailLoad(){
+ TRT.today=trToday();TRT.units=[];TRT.days={};let d=null;
+ try{const r=await SB.rpc('av_train_trail');if(r.error)throw r.error;d=r.data||{}}
+ catch(_){
+  /* sem a migração 018: tenta ler as tabelas directamente (depende das permissões) */
+  try{
+   const c=await SB.from('av_staff').select('cohort_id').eq('id',PROFILE.staff_id).maybeSingle();
+   const ch=c.data&&c.data.cohort_id;
+   const a=ch?await SB.from('av_cohort_aulas').select('lesson_no,theme,lesson_date').eq('cohort_id',ch):{data:[]};
+   const y=await SB.from('av_train_days').select('day,answered,correct,completed').eq('staff_id',PROFILE.staff_id);
+   d={aulas:(a&&a.data)||[],days:(y&&y.data)||[]}
+  }catch(__){d={aulas:[],days:[]}}}
+ TRT.units=(d.aulas||[]).filter(a=>a.lesson_date).map(a=>({no:a.lesson_no,theme:a.theme||'',date:String(a.lesson_date).slice(0,10)})).sort((a,b)=>a.no-b.no);
+ (d.days||[]).forEach(x=>{TRT.days[String(x.day).slice(0,10)]=x})}
+
 async function trStudentOpen(){
+ trLessonClose();
  const box=trStBox();if(!box)return;
  if(TR.missing){box.innerHTML='<div class="notice">O módulo de Treino ainda não está instalado no servidor.</div>';return}
  if(TR.ready&&!TR.prof){box.innerHTML=trStDenied();return}
  box.innerHTML='<div class="empty">A carregar…</div>';
  try{const r=await SB.rpc('av_train_state');if(r.error)throw r.error;TRS.state=r.data||{};
   if(TRS.state.needs_profile){box.innerHTML=trStDenied();return}
-  TRS.sess=null;TRS.fb=null;TRS.ord=null;trStRender()}
+  TRS.sess=null;TRS.fb=null;TRS.ord=null;TRS.sel=null;TRS.defer=[];
+  await trTrailLoad();trStRender()}
  catch(e){box.innerHTML=trMiss(e)?'<div class="notice">As funções do Treino ainda não estão instaladas no servidor (falta a migração 017_treino_sessao.sql).</div>':'<div class="notice">Não foi possível carregar o Treino: '+esc(trErr(e))+'</div>'}}
-function trStatTiles(s){const er=s.errors||{},wk=s.week||{};
- return '<div class="tr-lv tr-stats"><div class="card"><div class="muted smalltext">Sequência</div><strong class="tr-sv">'+(s.streak||0)+' dia(s)</strong></div>'
- +'<div class="card"><div class="muted smalltext">Erros por rever</div><strong class="tr-sv">'+(er.due||0)+'</strong>'+(er.total>er.due?'<div class="muted smalltext">'+(er.total-er.due)+' agendado(s)</div>':'')+'</div>'
- +'<div class="card"><div class="muted smalltext">Esta semana</div><strong class="tr-sv">'+(wk.days_done||0)+' de '+(wk.needed||3)+' dias</strong></div></div>'}
+
 function trGoalCard(s){const cw=s.cohort_week;
  if(!s.cohort)return '<div class="card"><p class="muted smalltext" style="margin:0">Ainda sem turma: treina só com o seu nível. A meta de turma aparece quando o formador o colocar numa turma.</p></div>';
  if(!cw)return '';
@@ -1370,73 +1512,154 @@ function trGoalCard(s){const cw=s.cohort_week;
  +'<p style="margin:0 0 8px"><strong>'+cw.active+' de '+cw.total+' activos</strong> esta semana <span class="muted smalltext">(activo = '+need+' dias com sessão concluída · meta '+cw.goal_pct+'%)</span></p>'
  +'<div class="tr-bar"><i style="width:'+Math.min(100,p)+'%"></i><b style="left:'+cw.goal_pct+'%"></b></div>'
  +(cw.goal_met?'<p class="muted smalltext" style="margin:8px 0 0">Meta atingida. Bom trabalho!</p>':'')+'</div>'}
-function trStRender(){
- const box=trStBox(),s=TRS.state||{},se=s.session||{},er=s.errors||{};let main;
+
+/* cartão "A minha evolução": progresso do ciclo, precisão, sequência e erros */
+function trEvoHTML(s){
+ const us=TRT.units,td=TRT.today,er=s.errors||{},wk=s.week||{},total=us.length*6;
+ let done=0,ans=0,cor=0;
+ us.forEach(u=>{for(let k=1;k<=6;k++){const r=TRT.days[trAdd(u.date,k)];if(r&&r.completed){done++;ans+=Number(r.answered)||0;cor+=Number(r.correct)||0}}});
+ const pct=total?Math.round(100*done/total):0,acc=ans?Math.round(100*cor/ans)+'%':'—',aulaNo=Math.min(us.length,us.filter(u=>td>=u.date).length);
+ return '<div class="card tr-evo"><div class="cardhead"><h2>A minha evolução</h2><span class="tag">'+esc(trLv(s.level))+'</span></div>'
+ +(total?'<div class="tr-evo-top"><strong>'+done+' de '+total+' sessões</strong><span class="muted smalltext">'+(aulaNo?'Aula '+aulaNo+' de '+us.length:'O ciclo começa na aula 1')+'</span></div><div class="tr-pbar tr-pbar-s"><i style="width:'+pct+'%"></i></div>':'<p class="muted smalltext" style="margin:0 0 10px">A trilha completa aparece quando o formador definir as datas das 4 aulas da sua turma.</p>')
+ +'<div class="tr-evo-grid"><div><span>Sequência</span><strong>'+(s.streak||0)+' dia(s)</strong></div><div><span>Precisão</span><strong>'+acc+'</strong></div><div><span>Erros por rever</span><strong>'+(er.due||0)+'</strong></div><div><span>Esta semana</span><strong>'+(wk.days_done||0)+' de '+(wk.needed||3)+'</strong></div></div></div>'}
+
+function trTodayHTML(s){
+ const se=s.session||{},er=s.errors||{};let main;
  if(s.rest)main='<p class="tr-big">Hoje é sábado: aula presencial.</p><p class="muted smalltext">Ao sábado não há sessão de treino. Volte amanhã.</p>';
  else if(se.completed)main='<p class="tr-big">Sessão de hoje concluída ✓</p><p class="muted smalltext">Acertou '+se.correct+' de '+se.total+'. Volte amanhã para manter a sequência.</p>';
  else main='<p class="tr-big">'+(se.started?'Continue a sessão de hoje':'Sessão de hoje')+'</p><p class="muted smalltext">Cerca de '+(se.minutes||3)+' minutos · '+(se.total||5)+' perguntas'+(er.due?' · tem '+er.due+' erro(s) por rever':'')+'.</p><button type="button" class="btn" data-tr-start>'+(se.started?'Continuar':'Começar')+'</button>';
- box.innerHTML='<div class="card"><div class="cardhead"><h2>Treino de hoje</h2><span class="tag">'+esc(trLv(s.level))+'</span></div>'+main
-  +(s.theme?'<p class="muted smalltext" style="margin:10px 0 0">Tema da semana: <strong>'+esc(s.theme)+'</strong></p>':'')+'</div>'
-  +trStatTiles(s)+trGoalCard(s)
-  +'<p class="muted smalltext">O Treino não tem nota e não altera a pauta nem os testes.</p>'}
+ return '<div class="card"><div class="cardhead"><h2>Treino de hoje</h2></div>'+main
+  +(s.theme?'<p class="muted smalltext" style="margin:10px 0 0">Tema da semana: <strong>'+esc(s.theme)+'</strong></p>':'')+'</div>'}
+
+/* trilha: uma unidade por aula (sábado) com a aula presencial e 6 sessões (dom a sex) */
+function trNodes(u,td){
+ const n=[{t:'aula',iso:u.date,st:u.date<td?'done':(u.date===td?'now':'lock'),label:'Aula presencial · '+trDow(u.date)+' '+trDm(u.date)}];
+ for(let k=1;k<=6;k++){const iso=trAdd(u.date,k),r=TRT.days[iso],ok=!!(r&&r.completed);
+  if(trDowN(iso)===6&&!ok){n.push({t:'aula',iso,st:iso<td?'done':(iso===td?'now':'lock'),label:'Sábado · sem sessão de treino'});continue}
+  n.push({t:'day',iso,st:ok?'done':(iso===td?'cur':(iso<td?'miss':'lock')),rec:r,label:trDow(iso)+' '+trDm(iso)})}
+ return n}
+function trNodeHTML(nd,i,s){
+ const off=[0,34,52,34,0,-34,-52,-34][i%8],se=(s&&s.session)||{};
+ let ic=TR_IC.lock,tip=nd.label,extra='';
+ if(nd.t==='aula')ic=TR_IC.book;
+ else if(nd.st==='done'){ic=TR_IC.check;if(nd.rec)tip+=' · acertou '+(nd.rec.correct||0)+' de '+(nd.rec.answered||0)}
+ else if(nd.st==='cur'){ic=TR_IC.star;tip+=' · hoje'}
+ else if(nd.st==='miss'){ic='';tip+=' · sem sessão'}
+ const cls='tr-node '+nd.t+' '+nd.st;
+ let core;
+ if(nd.st==='cur')core='<button type="button" class="'+cls+'" data-tr-start aria-label="'+esc(se.started?'Continuar a sessão de hoje':'Começar a sessão de hoje')+'">'+ic+'</button>';
+ else core='<div class="'+cls+'" role="img" aria-label="'+esc(tip)+'" title="'+esc(tip)+'">'+ic+'</div>';
+ if(nd.st==='cur')extra='<div class="tr-bubble">'+(se.started?'CONTINUAR':'COMEÇAR')+'</div>';
+ else if(nd.t==='aula'&&nd.st==='now')extra='<div class="tr-bubble amber">AULA HOJE</div>';
+ return '<div class="tr-wrap" style="--x:'+off+'px">'+extra+core+'<span class="tr-dl">'+esc(nd.t==='aula'?'Aula':trDow(nd.iso))+'</span></div>'}
+function trTrailHTML(s){
+ const us=TRT.units,td=TRT.today;
+ if(!us.length)return '';
+ let h='<div class="tr-trail">',i=0;
+ us.forEach(u=>{const nodes=trNodes(u,td),days=nodes.filter(x=>x.t==='day'),done=days.filter(x=>x.st==='done').length,
+   state=td>trAdd(u.date,6)?'past':(td>=u.date?'now':'next');
+  h+='<section class="tr-unit '+state+'"><div class="tr-uhead"><div><small>AULA '+u.no+' DE '+us.length+' · '+trDow(u.date)+' '+trDm(u.date)+'</small><b>'+esc(u.theme||'Tema por definir')+'</b></div><span class="tr-upct">'+done+'/'+days.length+'</span></div><div class="tr-path">';
+  nodes.forEach(nd=>{h+=trNodeHTML(nd,i++,s)});
+  h+='</div></section>'});
+ const last=us[us.length-1],fin=td>trAdd(last.date,6);
+ h+='<div class="tr-end"><div class="tr-node trophy '+(fin?'done':'lock')+'" role="img" aria-label="Fim do ciclo">'+TR_IC.trophy+'</div><span class="tr-dl">Fim do ciclo</span></div></div>';
+ return h}
+function trStRender(){
+ const box=trStBox(),s=TRS.state||{};
+ box.innerHTML=trEvoHTML(s)+(TRT.units.length?'':trTodayHTML(s))+trTrailHTML(s)+trGoalCard(s)
+  +'<p class="muted smalltext">O Treino não tem nota e não altera a pauta nem os testes.</p>';
+ const c=box.querySelector('.tr-node.cur');if(c)setTimeout(()=>{try{c.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}},120)}
+
+/* --- lição em ecrã inteiro --- */
+function trLessonEl(){let e=$('trLesson');if(!e){e=document.createElement('div');e.id='trLesson';e.className='tr-lesson';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');e.setAttribute('aria-label','Sessão de treino');document.body.appendChild(e)}return e}
+function trLessonClose(){const e=$('trLesson');if(e)e.classList.remove('open');document.body.classList.remove('tr-noscroll');TRS.sel=null;TRS.exit=false;TRS.result=false}
 async function trSessionStart(){
  if(TRS.busy)return;TRS.busy=true;
  try{const r=await SB.rpc('av_train_session');if(r.error)throw r.error;const d=r.data||{};
   if(d.rest){toast('Hoje é sábado: não há sessão.');await trStudentOpen();return}
   if(d.empty||!(d.items||[]).length){alert('Ainda não há perguntas para o seu nível. Fale com o formador.');return}
-  TRS.sess=d;TRS.fb=null;TRS.ord=null;TRS.idx=d.items.findIndex(x=>!x.answered);
+  TRS.sess=d;TRS.fb=null;TRS.ord=null;TRS.sel=null;TRS.defer=[];TRS.exit=false;TRS.result=false;TRS.idx=trPick();
   if(TRS.idx<0){await trStudentOpen();return}
-  trSessionDraw()}
+  TRS.busy=false;trLessonEl().classList.add('open');document.body.classList.add('tr-noscroll');trSessionDraw()}
  catch(e){alert('Não foi possível iniciar a sessão: '+trErr(e))}finally{TRS.busy=false}}
+function trPick(){const it=TRS.sess.items,df=TRS.defer||[];let j=it.findIndex(x=>!x.answered&&!df.includes(x.id));if(j<0){TRS.defer=[];j=it.findIndex(x=>!x.answered)}return j}
+const trPrompt=it=>({vf:'Verdadeiro ou falso?',mc:'Escolha a resposta certa',case:'Decida a melhor opção',num:'Calcule o valor',order:'Ponha os passos pela ordem certa'})[it.kind]||'Responda';
+function trSolText(it,sol){
+ if(it.kind==='vf')return sol.answer?'Verdadeiro':'Falso';
+ if(it.kind==='mc'||it.kind==='case')return trLetter(sol.index)+') '+String(sol.text==null?'':sol.text);
+ if(it.kind==='num')return trFmt(sol.value)+(Number(sol.tolerance)>0?' (± '+trFmt(sol.tolerance)+')':'');
+ if(it.kind==='order')return (sol.texts||[]).map((x,i)=>(i+1)+'. '+x).join(' → ');
+ return ''}
 function trAnsHTML(it,fb){
- const sol=fb?(fb.res.solution||{}):null,done=!!fb;let h='';
- if(it.kind==='vf'){
-  [[true,'Verdadeiro'],[false,'Falso']].forEach(o=>{let c='tr-ans';
-   if(done){if(sol.answer===o[0])c+=' ok';else if(fb.val===o[0])c+=' bad'}
-   h+='<button type="button" class="'+c+'" data-tr-ans="'+o[0]+'"'+(done||TRS.busy?' disabled':'')+'><span>'+o[1]+'</span></button>'})}
- else if(it.kind==='mc'||it.kind==='case'){
-  (it.options||[]).forEach((o,j)=>{let c='tr-ans';
-   if(done){if(sol.index===j)c+=' ok';else if(fb.val===j)c+=' bad'}
-   h+='<button type="button" class="'+c+'" data-tr-ans="'+j+'"'+(done||TRS.busy?' disabled':'')+'><b>'+trLetter(j)+'</b><span>'+esc(String(o))+'</span></button>'})}
+ const sol=fb?(fb.res.solution||{}):null,done=!!fb,sel=TRS.sel,lock=done||TRS.busy;let h='';
+ const ch=(val,key,label,isOk,isBad,isSel)=>'<button type="button" class="tr-ch'+(done?(isOk?' ok':(isBad?' bad':'')):(isSel?' sel':''))+'" data-tr-sel="'+val+'" aria-pressed="'+(isSel?'true':'false')+'"'+(lock?' disabled':'')+'><b>'+key+'</b><span>'+esc(label)+'</span></button>';
+ if(it.kind==='vf'){[[true,'Verdadeiro'],[false,'Falso']].forEach((o,j)=>{h+=ch(String(o[0]),j+1,o[1],done&&sol.answer===o[0],done&&fb.val===o[0]&&sol.answer!==o[0],sel===o[0])})}
+ else if(it.kind==='mc'||it.kind==='case'){(it.options||[]).forEach((o,j)=>{h+=ch(String(j),j+1,String(o),done&&sol.index===j,done&&fb.val===j&&sol.index!==j,sel===j)})}
  else if(it.kind==='num'){
-  h+='<div class="tr-num"><input id="trNum" inputmode="decimal" autocomplete="off" placeholder="Escreva o valor" value="'+(done?esc(String(fb.val)):'')+'"'+(done?' disabled':'')+'>'
-   +(done?'':'<button type="button" class="btn" data-tr-numgo'+(TRS.busy?' disabled':'')+'>Responder</button>')+'</div>'}
+  h+='<div class="tr-num2"><input id="trNum" inputmode="decimal" autocomplete="off" placeholder="Escreva o valor" aria-label="Valor"'+(done?' disabled value="'+esc(String(fb.val))+'"':(sel!=null&&sel!==''?' value="'+esc(String(TRS.numRaw||''))+'"':''))+'></div>'}
  else if(it.kind==='order'){
-  h+='<p class="muted smalltext" style="margin:0 0 8px">Use as setas para pôr os passos pela ordem certa.</p><ol class="tr-ord">'
-   +(TRS.ord||[]).map((o,j)=>'<li><span>'+esc(o.t)+'</span>'+(done?'':'<button type="button" aria-label="Subir" data-tr-ordmv="'+j+':-1"'+(j===0?' disabled':'')+'>↑</button><button type="button" aria-label="Descer" data-tr-ordmv="'+j+':1"'+(j===TRS.ord.length-1?' disabled':'')+'>↓</button>')+'</li>').join('')+'</ol>'
-   +(done?'':'<button type="button" class="btn" data-tr-ordgo'+(TRS.busy?' disabled':'')+'>Confirmar ordem</button>')}
+  h+='<ol class="tr-ord tr-ord2">'+(TRS.ord||[]).map((o,j)=>'<li><span class="tr-on">'+(j+1)+'</span><span class="tr-ot">'+esc(o.t)+'</span>'+(done?'':'<button type="button" aria-label="Subir" data-tr-ordmv="'+j+':-1"'+(j===0?' disabled':'')+'>↑</button><button type="button" aria-label="Descer" data-tr-ordmv="'+j+':1"'+(j===TRS.ord.length-1?' disabled':'')+'>↓</button>')+'</li>').join('')+'</ol>'}
  return h}
-function trFbHTML(it,fb){
- const r=fb.res,sol=r.solution||{};let t='';
- if(!r.correct){
-  if(it.kind==='vf')t=' A resposta certa é '+(sol.answer?'Verdadeiro':'Falso')+'.';
-  else if(it.kind==='mc'||it.kind==='case')t=' A resposta certa é '+trLetter(sol.index)+') '+esc(String(sol.text==null?'':sol.text))+'.';
-  else if(it.kind==='num')t=' O valor certo é '+trFmt(sol.value)+(Number(sol.tolerance)>0?' (± '+trFmt(sol.tolerance)+')':'')+'.';
-  else if(it.kind==='order')t=' A ordem certa é: '+(sol.texts||[]).map((x,i)=>(i+1)+'. '+esc(String(x))).join(' → ')+'.'}
- return '<div class="tr-fb '+(r.correct?'ok':'bad')+'"><strong>'+(r.correct?'Certo':'Errado')+'</strong>'+t+(r.explanation?'<p>'+esc(r.explanation)+'</p>':'')+'</div>'
-  +'<button type="button" class="btn" data-tr-next>'+(r.completed?'Ver resumo':'Seguinte')+'</button>'}
+function trCanCheck(it){if(TRS.busy||TRS.fb)return false;if(it.kind==='order')return true;if(it.kind==='num')return Number.isFinite(TRS.sel);return TRS.sel!=null&&TRS.sel!==''}
 function trSessionDraw(){
- const box=trStBox(),S=TRS.sess,it=S.items[TRS.idx],n=S.items.length,fb=TRS.fb;
+ const e=trLessonEl(),S=TRS.sess,it=S.items[TRS.idx],n=S.items.length,fb=TRS.fb;
  if(it.kind==='order'&&!TRS.ord)TRS.ord=(it.options||[]).map(o=>({i:o.i,t:o.t}));
- let h='<div class="card"><div class="cardhead"><h2>Pergunta '+(TRS.idx+1)+' de '+n+'</h2><span class="tag">'+esc(TR_KIND[it.kind]||it.kind)+'</span></div>'
-  +'<div class="tr-bar"><i style="width:'+Math.round(100*(S.answered||0)/n)+'%"></i></div>'
-  +(it.source==='erro'?'<p class="muted smalltext" style="margin:8px 0 0">Revisão de um erro anterior.</p>':'');
- if(it.kind==='case'&&it.context)h+='<div class="tr-ctx">'+esc(it.context)+'</div>';
- h+='<p class="tr-stmt">'+esc(it.statement)+'</p>'+trAnsHTML(it,fb)+(fb?trFbHTML(it,fb):'')+'</div>';
- box.innerHTML=h}
+ const pct=Math.round(100*(S.answered||0)/n),left=S.items.filter(x=>!x.answered).length;
+ let h='<div class="tr-lhead"><button type="button" class="tr-x" data-tr-exit aria-label="Sair da sessão">'+TR_IC.x+'</button><div class="tr-pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div><span class="tr-lcount">'+Math.min(n,(S.answered||0)+(fb?0:1))+'/'+n+'</span></div>'
+  +'<div class="tr-lbody"><div class="tr-lin">'+(it.source==='erro'?'<div class="tr-chip">Revisão de um erro anterior</div>':'')
+  +'<h2 class="tr-lq">'+esc(trPrompt(it))+'</h2>'+(it.kind==='case'&&it.context?'<div class="tr-ctx">'+esc(it.context)+'</div>':'')
+  +'<p class="tr-stmt2">'+esc(it.statement)+'</p>'+trAnsHTML(it,fb)+'</div></div>';
+ if(fb){const r=fb.res,ok=!!r.correct;
+  h+='<div class="tr-lfoot '+(ok?'ok':'bad')+'"><div class="tr-lfin"><div class="tr-fbmsg"><span class="tr-fbic">'+(ok?TR_IC.check:TR_IC.x)+'</span><div><strong>'+(ok?'Certo!':'Resposta correcta:')+'</strong>'
+   +(ok?'':'<div class="tr-sol">'+esc(trSolText(it,r.solution||{}))+'</div>')+(r.explanation?'<div class="tr-exp">'+esc(r.explanation)+'</div>':'')+'</div></div>'
+   +'<button type="button" class="tr-btn '+(ok?'ok':'bad')+'" data-tr-next>'+(r.completed?'Ver resumo':'Continuar')+'</button></div></div>'}
+ else h+='<div class="tr-lfoot"><div class="tr-lfin"><button type="button" class="tr-btn ghost" data-tr-skip'+(left<2||TRS.busy?' disabled':'')+'>Pular</button><button type="button" class="tr-btn go" data-tr-check'+(trCanCheck(it)?'':' disabled')+'>'+(TRS.busy?'A verificar…':'Verificar')+'</button></div></div>';
+ if(TRS.exit)h+='<div class="tr-exitbk"><div class="tr-exit" role="alertdialog" aria-label="Sair da sessão"><h3>Quer mesmo sair?</h3><p>As respostas que já deu ficam guardadas e pode continuar a sessão hoje.</p><button type="button" class="tr-btn go" data-tr-exitno>Continuar a sessão</button><button type="button" class="tr-btn link" data-tr-exityes>Sair da sessão</button></div></div>';
+ e.innerHTML=h;
+ const inp=$('trNum');if(inp&&!fb){inp.focus()}}
+function trSelect(v){if(TRS.busy||TRS.fb)return;TRS.sel=v;trSessionDraw()}
+function trCheck(){const it=TRS.sess&&TRS.sess.items[TRS.idx];if(!it||!trCanCheck(it))return;return trAnswer(it.kind==='order'?(TRS.ord||[]).map(x=>x.i):TRS.sel)}
+function trSkip(){const S=TRS.sess;if(!S||TRS.fb||TRS.busy)return;if(S.items.filter(x=>!x.answered).length<2)return;(TRS.defer=TRS.defer||[]).push(S.items[TRS.idx].id);TRS.ord=null;TRS.sel=null;TRS.numRaw='';TRS.idx=trPick();trSessionDraw()}
 async function trAnswer(val){
  if(TRS.busy||TRS.fb)return;const it=TRS.sess.items[TRS.idx];TRS.busy=true;trSessionDraw();
  try{const r=await SB.rpc('av_train_answer',{p_question:it.id,p_answer:val});if(r.error)throw r.error;const d=r.data||{};
   it.answered=true;it.correct=d.correct;TRS.fb={val:val,res:d};TRS.sess.answered=d.answered;TRS.sess.correct=d.correct_total;TRS.sess.completed=d.completed}
  catch(e){alert('Não foi possível registar a resposta: '+trErr(e))}
  finally{TRS.busy=false;trSessionDraw()}}
-function trNext(){const S=TRS.sess,j=S.items.findIndex(x=>!x.answered);TRS.fb=null;TRS.ord=null;if(j<0)return trSessionClose();TRS.idx=j;trSessionDraw()}
+function trNext(){const j=trPick();TRS.fb=null;TRS.ord=null;TRS.sel=null;TRS.numRaw='';if(j<0)return trSessionClose();TRS.idx=j;trSessionDraw()}
 async function trSessionClose(){
- const box=trStBox();box.innerHTML='<div class="empty">A fechar a sessão…</div>';
+ const e=trLessonEl();TRS.result=true;e.innerHTML='<div class="tr-lbody"><div class="tr-lin"><div class="empty">A fechar a sessão…</div></div></div>';
  try{const r=await SB.rpc('av_train_state');if(!r.error&&r.data)TRS.state=r.data}catch(_){}
- const S=TRS.sess,s=TRS.state||{};
- box.innerHTML='<div class="card"><div class="cardhead"><h2>Sessão concluída ✓</h2></div><p class="tr-big">'+S.correct+' de '+S.items.length+' certas</p><p class="muted smalltext">Os erros voltam amanhã e depois ao fim de 3 dias, até acertar duas vezes seguidas.</p><button type="button" class="btn" data-tr-end>Fechar</button></div>'
-  +trStatTiles(s)+trGoalCard(s)}
+ const S=TRS.sess,s=TRS.state||{},n=S.items.length,c=S.correct==null?S.items.filter(x=>x.correct).length:S.correct,p=n?Math.round(100*c/n):0;
+ e.innerHTML='<div class="tr-lbody"><div class="tr-lin tr-res"><div class="tr-trophy">'+TR_IC.trophy+'</div><h2>Sessão concluída!</h2>'
+  +'<div class="tr-rgrid"><div class="a"><small>CERTAS</small><b>'+c+'/'+n+'</b></div><div class="b"><small>PRECISÃO</small><b>'+p+'%</b></div><div class="c"><small>SEQUÊNCIA</small><b>'+(s.streak||0)+' dia(s)</b></div></div>'
+  +'<p class="muted">Os erros voltam amanhã e depois ao fim de 3 dias, até acertar duas vezes seguidas.</p></div></div>'
+  +'<div class="tr-lfoot ok"><div class="tr-lfin"><span></span><button type="button" class="tr-btn ok" data-tr-end>Continuar</button></div></div>'}
+
+/* eventos da trilha e da lição (o clique em Continuar/Ver resumo/Fechar usa os atributos já existentes) */
+document.addEventListener('click',e=>{
+ const b=e.target.closest&&e.target.closest('[data-tr-sel],[data-tr-check],[data-tr-skip],[data-tr-exit],[data-tr-exitno],[data-tr-exityes]');
+ if(!b||b.disabled)return;
+ if(b.hasAttribute('data-tr-sel')){const it=TRS.sess&&TRS.sess.items[TRS.idx];if(!it)return;const v=b.dataset.trSel;return trSelect(it.kind==='vf'?v==='true':Number(v))}
+ if(b.hasAttribute('data-tr-check'))return trCheck();
+ if(b.hasAttribute('data-tr-skip'))return trSkip();
+ if(b.hasAttribute('data-tr-exit')){TRS.exit=true;return trSessionDraw()}
+ if(b.hasAttribute('data-tr-exitno')){TRS.exit=false;return trSessionDraw()}
+ if(b.hasAttribute('data-tr-exityes'))return trStudentOpen()});
+document.addEventListener('input',e=>{
+ const t=e.target;if(!t||t.id!=='trNum'||!TRS.sess)return;
+ TRS.numRaw=t.value;TRS.sel=trNum(t.value);
+ const g=document.querySelector('#trLesson [data-tr-check]'),it=TRS.sess.items[TRS.idx];if(g&&it)g.disabled=!trCanCheck(it)});
+document.addEventListener('keydown',e=>{
+ const L=$('trLesson');if(!L||!L.classList.contains('open')||!TRS.sess)return;
+ if(TRS.result){if(e.key==='Enter'){e.preventDefault();trStudentOpen()}return}
+ if(TRS.exit){if(e.key==='Escape'){TRS.exit=false;trSessionDraw()}return}
+ if(e.key==='Escape'){TRS.exit=true;trSessionDraw();return}
+ const it=TRS.sess.items[TRS.idx];if(!it)return;
+ if(e.key==='Enter'){e.preventDefault();if(TRS.fb)trNext();else trCheck();return}
+ const typing=e.target&&e.target.tagName==='INPUT';
+ if(!TRS.fb&&!typing&&/^[1-9]$/.test(e.key)){const k=Number(e.key)-1;
+  if(it.kind==='vf'&&k<2)trSelect(k===0);else if((it.kind==='mc'||it.kind==='case')&&k<(it.options||[]).length)trSelect(k)}});
 
 /* --- admin/formador: banco de treino --- */
 function trTab(t){
