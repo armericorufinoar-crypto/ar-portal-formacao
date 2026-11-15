@@ -177,7 +177,8 @@ html{scroll-behavior:smooth}body{-webkit-font-smoothing:antialiased;text-renderi
 @media(min-width:1500px){.student{max-width:1360px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}.stat:hover,.area-card:hover,.tile:hover,.btn:hover{transform:none}}
 </style>
-<style id="trCss">.tr-opts{display:grid;gap:8px}.tr-opt{display:flex;align-items:center;gap:10px;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;background:#fff;font-size:13px;font-weight:650;color:var(--ink);cursor:pointer}.tr-opt input{width:18px;height:18px;flex:none;accent-color:var(--red)}.tr-opt:has(input:checked){border-color:var(--red);background:#fff4f5}.tr-q{margin:0 0 16px}.tr-q h4{margin:0 0 8px;font-size:13px}.tr-lv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 14px}.tr-lv>.card{margin:0;padding:14px;display:grid;gap:4px}.tr-lv>.card strong{font-size:24px}@media(max-width:760px){.tr-lv{grid-template-columns:repeat(2,minmax(0,1fr))}}.tr-tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}.tr-tabs button{border:1px solid #d9dce1;background:#fff;border-radius:99px;padding:9px 16px;font-weight:700;font-size:13px;color:var(--ink);cursor:pointer;min-height:40px;font-family:inherit}.tr-tabs button.active{background:var(--red);border-color:var(--red);color:#fff}.tr-stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.tr-sv{display:block;font-size:22px;margin:2px 0}.tr-big{font-size:20px;font-weight:800;margin:0 0 6px}.tr-bar{position:relative;height:10px;border-radius:99px;background:#eceef1;overflow:hidden;margin-top:10px}.tr-bar i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .3s}.tr-bar b{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.45}.tr-stmt{font-size:16px;line-height:1.5;margin:14px 0;white-space:pre-line;font-weight:650}.tr-ctx{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px;line-height:1.5;margin:12px 0 0;white-space:pre-line}.tr-ans{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;text-align:left;border:1px solid #d9dce1;border-radius:12px;background:#fff;padding:10px 14px;font-size:14px;font-weight:650;color:var(--ink);cursor:pointer;margin:0 0 8px;font-family:inherit}.tr-ans b{flex:0 0 24px;height:24px;border-radius:50%;background:#eceef1;display:grid;place-items:center;font-size:12px}.tr-ans:hover:not(:disabled){border-color:var(--red)}.tr-ans:disabled{cursor:default}.tr-ans.ok{border-color:var(--green);background:#eef8f2}.tr-ans.bad{border-color:var(--red);background:#fff4f5}.tr-fb{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px;line-height:1.5}.tr-fb.ok{background:#eef8f2;border:1px solid #b9e0c9}.tr-fb.bad{background:#fff4f5;border:1px solid #f3c1c6}.tr-fb p{margin:6px 0 0}.tr-ord{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:8px}.tr-ord li{display:flex;align-items:center;gap:8px;border:1px solid #d9dce1;border-radius:12px;padding:6px 8px 6px 14px;background:#fff;font-size:14px;font-weight:650;min-height:46px}.tr-ord li span{flex:1}.tr-ord button{width:40px;height:40px;border:1px solid #d9dce1;border-radius:10px;background:#fff;font-size:16px;cursor:pointer;color:var(--ink)}.tr-ord button:disabled{opacity:.35;cursor:default}.tr-num{display:flex;gap:8px}.tr-num input{flex:1;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:0 12px;font-size:16px;font-family:inherit}.tr-aula{display:grid;grid-template-columns:70px 1fr 150px;gap:8px;align-items:center;margin:0 0 8px}.tr-oprow{display:grid;grid-template-columns:24px 1fr 40px;gap:8px;align-items:center;margin:0 0 6px}.tr-oprow input[type=radio]{width:18px;height:18px}.tr-tools{display:flex;gap:8px;flex-wrap:wrap}.tr-filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:8px}.tr-filters input,.tr-filters select{min-height:40px;border:1px solid #d9dce1;border-radius:10px;padding:0 10px;font-family:inherit;font-size:13px;background:#fff;min-width:0}@media(max-width:760px){.tr-aula{grid-template-columns:1fr}.tr-filters{grid-template-columns:1fr 1fr}.tr-filters input{grid-column:1/-1}}.clnote{border:1px solid #f0c6ca;background:#fff7f8;border-radius:12px;padding:12px 14px;margin:0 0 12px;font-size:13px;line-height:1.5}.clnote ol{margin:6px 0 8px 18px;padding:0}.clnote .clrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}.clnote .clrow input,.clnote .clrow select{min-height:38px;border:1px solid #d9dce1;border-radius:10px;padding:0 10px;font-family:inherit;font-size:13px;background:#fff;min-width:0}.clnote textarea{width:100%;min-height:150px;margin-top:8px;font-size:12px}.clnote-d{margin:0 0 12px}.clnote-d>summary{cursor:pointer;font-weight:700;font-size:13px;padding:6px 0}.wizsteps{display:flex;gap:12px;margin:10px 0 6px;flex-wrap:wrap}.wizstep{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--muted)}.wizstep b{width:24px;height:24px;border-radius:50%;background:#eceef1;display:grid;place-items:center;font-size:12px}.wizstep.on{color:var(--ink)}.wizstep.on b{background:var(--red);color:#fff}.wizstep.done b{background:var(--green);color:#fff}.wiztitle{font-weight:800;font-size:16px;margin:8px 0 2px}.wizhint{margin:0 0 10px;font-size:13px}</style><style id="trDuoCss">
+<style id="trCss">.tr-opts{display:grid;gap:8px}.tr-opt{display:flex;align-items:center;gap:10px;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;background:#fff;font-size:13px;font-weight:650;color:var(--ink);cursor:pointer}.tr-opt input{width:18px;height:18px;flex:none;accent-color:var(--red)}.tr-opt:has(input:checked){border-color:var(--red);background:#fff4f5}.tr-q{margin:0 0 16px}.tr-q h4{margin:0 0 8px;font-size:13px}.tr-lv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 14px}.tr-lv>.card{margin:0;padding:14px;display:grid;gap:4px}.tr-lv>.card strong{font-size:24px}@media(max-width:760px){.tr-lv{grid-template-columns:repeat(2,minmax(0,1fr))}}.tr-tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}.tr-tabs button{border:1px solid #d9dce1;background:#fff;border-radius:99px;padding:9px 16px;font-weight:700;font-size:13px;color:var(--ink);cursor:pointer;min-height:40px;font-family:inherit}.tr-tabs button.active{background:var(--red);border-color:var(--red);color:#fff}.tr-stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.tr-sv{display:block;font-size:22px;margin:2px 0}.tr-big{font-size:20px;font-weight:800;margin:0 0 6px}.tr-bar{position:relative;height:10px;border-radius:99px;background:#eceef1;overflow:hidden;margin-top:10px}.tr-bar i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .3s}.tr-bar b{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.45}.tr-stmt{font-size:16px;line-height:1.5;margin:14px 0;white-space:pre-line;font-weight:650}.tr-ctx{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px;line-height:1.5;margin:12px 0 0;white-space:pre-line}.tr-ans{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;text-align:left;border:1px solid #d9dce1;border-radius:12px;background:#fff;padding:10px 14px;font-size:14px;font-weight:650;color:var(--ink);cursor:pointer;margin:0 0 8px;font-family:inherit}.tr-ans b{flex:0 0 24px;height:24px;border-radius:50%;background:#eceef1;display:grid;place-items:center;font-size:12px}.tr-ans:hover:not(:disabled){border-color:var(--red)}.tr-ans:disabled{cursor:default}.tr-ans.ok{border-color:var(--green);background:#eef8f2}.tr-ans.bad{border-color:var(--red);background:#fff4f5}.tr-fb{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px;line-height:1.5}.tr-fb.ok{background:#eef8f2;border:1px solid #b9e0c9}.tr-fb.bad{background:#fff4f5;border:1px solid #f3c1c6}.tr-fb p{margin:6px 0 0}.tr-ord{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:8px}.tr-ord li{display:flex;align-items:center;gap:8px;border:1px solid #d9dce1;border-radius:12px;padding:6px 8px 6px 14px;background:#fff;font-size:14px;font-weight:650;min-height:46px}.tr-ord li span{flex:1}.tr-ord button{width:40px;height:40px;border:1px solid #d9dce1;border-radius:10px;background:#fff;font-size:16px;cursor:pointer;color:var(--ink)}.tr-ord button:disabled{opacity:.35;cursor:default}.tr-num{display:flex;gap:8px}.tr-num input{flex:1;min-height:46px;border:1px solid #d9dce1;border-radius:10px;padding:0 12px;font-size:16px;font-family:inherit}.tr-aula{display:grid;grid-template-columns:70px 1fr 150px;gap:8px;align-items:center;margin:0 0 8px}.tr-oprow{display:grid;grid-template-columns:24px 1fr 40px;gap:8px;align-items:center;margin:0 0 6px}.tr-oprow input[type=radio]{width:18px;height:18px}.tr-tools{display:flex;gap:8px;flex-wrap:wrap}.tr-filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:8px}.tr-filters input,.tr-filters select{min-height:40px;border:1px solid #d9dce1;border-radius:10px;padding:0 10px;font-family:inherit;font-size:13px;background:#fff;min-width:0}@media(max-width:760px){.tr-aula{grid-template-columns:1fr}.tr-filters{grid-template-columns:1fr 1fr}.tr-filters input{grid-column:1/-1}}.clnote{border:1px solid #f0c6ca;background:#fff7f8;border-radius:12px;padding:12px 14px;margin:0 0 12px;font-size:13px;line-height:1.5}.clnote ol{margin:6px 0 8px 18px;padding:0}.clnote .clrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}.clnote .clrow input,.clnote .clrow select{min-height:38px;border:1px solid #d9dce1;border-radius:10px;padding:0 10px;font-family:inherit;font-size:13px;background:#fff;min-width:0}.clnote textarea{width:100%;min-height:150px;margin-top:8px;font-size:12px}.clnote-d{margin:0 0 12px}.clnote-d>summary{cursor:pointer;font-weight:700;font-size:13px;padding:6px 0}.wizsteps{display:flex;gap:12px;margin:10px 0 6px;flex-wrap:wrap}.wizstep{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--muted)}.wizstep b{width:24px;height:24px;border-radius:50%;background:#eceef1;display:grid;place-items:center;font-size:12px}.wizstep.on{color:var(--ink)}.wizstep.on b{background:var(--red);color:#fff}.wizstep.done b{background:var(--green);color:#fff}.wiztitle{font-weight:800;font-size:16px;margin:8px 0 2px}
+.tr-thw{font-size:12px;margin:2px 0 8px;min-height:0}.tr-thok{color:var(--green);font-weight:700}.tr-thbad{color:#a35a00;font-weight:700}.wizhint{margin:0 0 10px;font-size:13px}</style><style id="trDuoCss">
 /* evolução */
 .tr-evo-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0 0 8px}
 .tr-pbar{flex:1;height:16px;border-radius:99px;background:#e5e7eb;overflow:hidden;position:relative}
@@ -1019,7 +1020,7 @@ let QS=[],ATT=[],STARTS=[],COMPETENCIES=[],COMP_OK=false,TEST_OK=true,EDIT_MAT=n
 const vf=b=>b===true?'Verdadeiro':b===false?'Falso':'—',toLocalInput=iso=>{if(!iso)return '';const d=new Date(iso),p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes())};
 async function loadMaterials(){try{const r=await SB.from('av_session_materials').select('*').order('created_at').limit(5000);if(r.error)throw r.error;MAT_OK=true;MAT=r.data.map(x=>({id:x.id,sessionId:x.session_id,kind:x.kind,title:x.title,filePath:x.file_path||'',fileName:x.file_name||'',url:x.url||'',opensAt:x.opens_at||'',closesAt:x.closes_at||'',testPurpose:x.test_purpose||'tematico',createdAt:x.created_at}))}catch(e){MAT_OK=false;MAT=[]}await loadCompetencies();await loadTests()}
 async function loadCompetencies(){try{const r=await SB.from('av_competencies').select('id,code,theme,name,evidence,reinforcement,position,active').eq('active',true).order('position');if(r.error)throw r.error;COMPETENCIES=r.data||[];COMP_OK=true}catch(e){COMPETENCIES=[];COMP_OK=false}}
-async function loadTests(){try{const a=await SB.from('av_test_attempts').select('*').limit(5000);if(a.error)throw a.error;try{const st=await SB.from('av_test_starts').select('material_id,staff_id,abandoned_at').limit(5000);STARTS=st.error?[]:(st.data||[])}catch(_){STARTS=[]}ATT=a.data.map(x=>({id:x.id,materialId:x.material_id,userId:x.user_id,staffId:x.staff_id,correct:Number(x.correct),total:Number(x.total),score:x.score==null?null:Number(x.score),at:x.submitted_at,answers:x.answers||{}}));if(PROFILE&&PROFILE.role!=='collaborator'){let q=await SB.from('av_test_questions').select('*').order('position').limit(5000);if(q.error&&/competency_id|column .* does not exist/i.test(q.error.message||'')){q=await SB.from('av_test_questions').select('*').order('position').limit(5000)}if(q.error)throw q.error;QS=q.data.map(x=>({id:x.id,materialId:x.material_id,pos:x.position,kind:['mc','sd'].includes(x.kind)?x.kind:'vf',text:x.statement,answer:x.answer===true,options:Array.isArray(x.options)?x.options:null,correct:Number.isInteger(x.correct_index)?x.correct_index:0,competencyId:x.competency_id||null}))}else QS=[];TEST_OK=true}catch(e){TEST_OK=false;ATT=[];QS=[]}}
+async function loadTests(){try{const a=await SB.from('av_test_attempts').select('*').limit(5000);if(a.error)throw a.error;try{const st=await SB.from('av_test_starts').select('material_id,staff_id,abandoned_at').limit(5000);STARTS=st.error?[]:(st.data||[])}catch(_){STARTS=[]}ATT=a.data.map(x=>({id:x.id,materialId:x.material_id,userId:x.user_id,staffId:x.staff_id,correct:Number(x.correct),total:Number(x.total),score:x.score==null?null:Number(x.score),at:x.submitted_at,answers:x.answers||{}}));if(PROFILE&&PROFILE.role!=='collaborator'){let q=await SB.from('av_test_questions').select('*').order('position').limit(5000);if(q.error&&/competency_id|column .* does not exist/i.test(q.error.message||'')){q=await SB.from('av_test_questions').select('*').order('position').limit(5000)}if(q.error)throw q.error;QS=q.data.map(x=>({id:x.id,materialId:x.material_id,pos:x.position,kind:['mc','sd'].includes(x.kind)?x.kind:'vf',text:x.statement,answer:x.answer===true,options:Array.isArray(x.options)?x.options:null,correct:Number.isInteger(x.correct_index)?x.correct_index:0,competencyId:x.competency_id||null}))}else QS=[];TEST_OK=true;if(PROFILE&&PROFILE.role!=='collaborator')await bankLoad()}catch(e){TEST_OK=false;ATT=[];QS=[]}}
 function testTypeOf(a){const v=a&&a.answers?Object.values(a.answers):[];if(!v.length)return '';const b=v.some(x=>typeof x==='boolean'),n=v.some(x=>typeof x==='number');return b&&n?'Verdadeiro / Falso e escolha múltipla':b?'Verdadeiro / Falso':'Escolha múltipla'}
 function testItems(staffId){return ATT.filter(a=>!staffId||a.staffId===staffId).filter(a=>a.score!=null).map(a=>{const m=MAT.find(x=>x.id===a.materialId),s=m?sessionById(m.sessionId):null;return{id:a.id,staffId:a.staffId,score:a.score,area:s?s.area:'',title:m?m.title:'Teste',sessionId:m?m.sessionId:'',correct:a.correct,total:a.total,date:a.at,type:testTypeOf(a)}})}
 function matsFor(s){const l=MAT.filter(m=>m.sessionId===s.id);if(s.materialUrl)l.unshift({id:'legacy-'+s.id,sessionId:s.id,kind:'ligacao',title:s.materialTitle||'Material',url:s.materialUrl||'',filePath:'',fileName:'',opensAt:'',closesAt:''});return l}
@@ -1110,16 +1111,19 @@ $('qCsvAdd').onclick=()=>{
  const n=QCSV.ok.length;QROWS=QROWS.concat(QCSV.ok);qCsvReset();qRowsDraw();toast(n+' pergunta(s) adicionadas à lista. Reveja e carregue em «Adicionar teste» para guardar.')};
 /* ===== Assistente «Nova sessão»: 1 Material → 2 Ligação → 3 Teste; e pedido de perguntas ao Claude (testes e Treino) ===== */
 var WIZ=null,NEWSID=null;
+let BANKQ=[],BANKOK=false;
+async function bankLoad(){try{const r=await SB.from('av_train_questions').select('theme,kind,statement,case_context,active,source_question_id').limit(5000);if(r.error)throw r.error;BANKQ=r.data||[];BANKOK=true}catch(e){BANKQ=[];BANKOK=false}}
+const bankCount=t=>BANKQ.filter(r=>r.theme&&trNorm(r.theme)===trNorm(t)).length;
 const WIZ_SINCE='2026-11-16T00:00:00';
-const WIZ_STEPS=[['Material','Carregue o material desta sessão (PDF ou PowerPoint).'],['Ligação','Tem uma ligação para esta sessão (vídeo, artigo, pasta partilhada)? Indique-a ou carregue em «Esta sessão não tem ligação».'],['Teste','Crie o teste desta sessão. O teste é obrigatório para concluir.']];
+const WIZ_STEPS=[['Material','Carregue o material desta sessão (PDF ou PowerPoint).'],['Ligação','Tem uma ligação para esta sessão (vídeo, artigo, pasta partilhada)? Indique-a ou carregue em «Esta sessão não tem ligação».'],['Teste','Crie o teste desta sessão. O teste é obrigatório para concluir.'],['Treino','Crie as perguntas de treino desta sessão. O tema é o título da sessão.']];
 const WIZ_KINDS=['ficheiro','ligacao','teste'],WIZ_KL={ficheiro:'Material',ligacao:'Ligação',teste:'Teste'};
 const WIZ_ACCEPT='.pdf,.ppt,.pptx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation';
 const wizHas=(sid,k)=>MAT.some(m=>m.sessionId===sid&&m.kind===k);
-function wizStart(sid){return !wizHas(sid,'ficheiro')?1:(wizHas(sid,'ligacao')?3:2)}
-function wizMissing(s){const o=[];if(!wizHas(s.id,'ficheiro'))o.push('material');if(!wizHas(s.id,'teste'))o.push('teste');return o}
+function wizStart(sid){if(!wizHas(sid,'ficheiro'))return 1;if(wizHas(sid,'teste'))return 4;return wizHas(sid,'ligacao')?3:2}
+function wizMissing(s){const o=[];if(!wizHas(s.id,'ficheiro'))o.push('material');if(!wizHas(s.id,'teste'))o.push('teste');if(BANKOK&&!bankCount(s.title))o.push('treino');return o}
 function wizIncomplete(s){return !!s&&MAT_OK&&(s.createdAt||'')>=WIZ_SINCE&&wizMissing(s).length>0}
 function wizBadge(s){return wizIncomplete(s)?' <span class="tag warn">Em construção · falta: '+wizMissing(s).join(', ')+'</span>':''}
-function wizOpen(sid,step){if(!sessionById(sid))return;openMatModal(sid);WIZ={sid:sid,step:step||wizStart(sid)};wizApply()}
+function wizOpen(sid,step){if(!sessionById(sid))return;if((step||wizStart(sid))===4)return sbOpen(sid);openMatModal(sid);WIZ={sid:sid,step:step||wizStart(sid)};wizApply()}
 function wizApply(){
  const s=sessionById(WIZ.sid),st=WIZ.step,t=s?s.title:'';
  $('matTitle').textContent='Nova sessão · '+t;
@@ -1136,15 +1140,43 @@ function wizSync(){
  if(!on){$('wizClaudeT').innerHTML='';return}
  const st=WIZ.step,done=MAT.filter(m=>m.sessionId===WIZ.sid&&WIZ_KINDS.indexOf(m.kind)>=0);
  w.innerHTML='<div class="wizsteps">'+WIZ_STEPS.map((x,i)=>'<span class="wizstep'+(i+1===st?' on':i+1<st?' done':'')+'"><b>'+(i+1<st?'✓':i+1)+'</b>'+x[0]+'</span>').join('')+'</div>'
-  +'<p class="wiztitle">Passo '+st+' de 3 · '+WIZ_STEPS[st-1][0]+'</p><p class="muted wizhint">'+esc(WIZ_STEPS[st-1][1])+'</p>'
+  +'<p class="wiztitle">Passo '+st+' de '+WIZ_STEPS.length+' · '+WIZ_STEPS[st-1][0]+'</p><p class="muted wizhint">'+esc(WIZ_STEPS[st-1][1])+'</p>'
   +(done.length?'<p class="muted smalltext" style="margin:0 0 8px">Já adicionado: '+done.map(m=>'<strong>'+esc(WIZ_KL[m.kind])+'</strong> '+esc(m.title)).join(' · ')+'</p>':'');
  if(st===3&&!$('wizClaudeT').innerHTML)$('wizClaudeT').innerHTML=claudeBlock('teste','wz');
- $('matSave').textContent=st===3?'Adicionar teste e concluir':'Guardar e continuar'}
+ $('matSave').textContent=st===3?'Adicionar teste e continuar':'Guardar e continuar'}
 function wizAfterSave(){
  if(!WIZ)return;const sid=WIZ.sid;
- if(WIZ.step>=3){WIZ=null;$('matModal').classList.remove('open');wizSync();renderSessions();toast('Sessão pronta: material e teste criados.');return}
+ if(WIZ.step>=3){WIZ=null;$('matModal').classList.remove('open');wizSync();renderSessions();sbOpen(sid);return}
  WIZ.step=WIZ.step===1&&wizHas(sid,'ligacao')?3:WIZ.step+1;wizApply()}
 $('wizSkip').onclick=()=>{if(WIZ&&WIZ.step===2){WIZ.step=3;wizApply()}};
+
+/* --- passo 4: banco de treino da sessão (tema = título da sessão) --- */
+let SBX=null;
+async function sbOpen(sid){
+ const se=sessionById(sid);if(!se)return;await bankLoad();SBX={sid:sid,title:se.title,a:null,txt:''};sbDraw()}
+function sbHead(){return '<div class="wizsteps">'+WIZ_STEPS.map((x,i)=>'<span class="wizstep'+(i===3?' on':' done')+'"><b>'+(i===3?4:'✓')+'</b>'+x[0]+'</span>').join('')+'</div>'}
+function sbDraw(){
+ const n=bankCount(SBX.title);
+ trOpen('Nova sessão · '+SBX.title,sbHead()+'<p class="wiztitle">Passo 4 de 4 · Treino</p><p class="muted wizhint">Cria o banco de perguntas de treino desta sessão. O tema é sempre o título da sessão, e também o tema da aula. As perguntas não podem ser iguais às do teste.</p>'
+  +'<div class="field"><label>Tema</label><input value="'+esc(SBX.title)+'" readonly></div>'
+  +(n?'<p class="muted smalltext">Já existem <strong>'+n+'</strong> pergunta(s) deste tema no banco.</p>':'')
+  +claudeBlock('treino','sb')
+  +'<div class="field"><label for="sbFile">Ficheiro CSV</label><input type="file" id="sbFile" accept=".csv,.txt,text/csv"></div>'
+  +'<div class="field"><label for="sbText">… ou cole aqui o conteúdo</label><textarea id="sbText" rows="6">'+esc(SBX.txt||'')+'</textarea></div>',
+  [{label:'Saltar por agora',cls:'secondary',fn:()=>{renderSessions();toast('Sessão criada. Falta o treino: retome-o na lista de sessões.');return true}},
+   {label:'Analisar',fn:()=>{SBX.txt=$('sbText').value;const a=trCsvAnalyse(SBX.txt,SBX.title);if(a.err){alert(a.err);return false}SBX.a=a;sbPreview();return false}}]);
+ const th=$('sbTh');if(th){th.value=SBX.title;th.readOnly=true}
+ const f=$('sbFile');if(f)f.onchange=()=>{if(f.files&&f.files[0]){const fr=new FileReader();fr.onload=()=>{$('sbText').value=String(fr.result||'')};fr.readAsText(f.files[0])}}}
+function sbPreview(){
+ const a=SBX.a;
+ trOpen('Nova sessão · '+SBX.title,sbHead()+'<p><strong>'+a.ok.length+'</strong> pergunta(s) válida(s) · <strong>'+a.dup+'</strong> repetida(s) · <strong>'+(a.dupT||0)+'</strong> igual(is) a perguntas de teste (ignoradas) · <strong>'+a.errs.length+'</strong> com erro.</p>'
+  +(a.errs.length?'<div class="notice">'+a.errs.slice(0,8).map(esc).join('<br>')+'</div>':''),
+  [{label:'Voltar',cls:'secondary',fn:()=>{sbDraw();return false}},
+   {label:a.ok.length?'Importar '+a.ok.length+' e concluir':'Nada a importar',fn:async()=>{
+    if(!a.ok.length)return true;
+    try{for(let i=0;i<a.ok.length;i+=100){const r=await SB.from('av_train_questions').insert(a.ok.slice(i,i+100));if(r.error)throw r.error}
+     await bankLoad();renderSessions();toast('Sessão pronta: '+a.ok.length+' pergunta(s) de treino guardadas como rascunho. Active-as no Banco de treino.');return true}
+    catch(er){alert('Não foi possível importar: '+(er.message||er));return false}}}])}
 
 /* --- pedido ao Claude --- */
 function claudePrompt(kind,o){
@@ -1194,6 +1226,7 @@ function startEditTest(mid){const m=MAT.find(x=>x.id===mid);if(!m)return;if(ATT.
 $('matKind').onchange=syncMatKind;$('matCancelEdit').onclick=resetMatForm;$('matClose').onclick=()=>$('matModal').classList.remove('open');$('matModal').addEventListener('click',e=>{if(e.target===$('matModal'))$('matModal').classList.remove('open')});
 async function saveTest(title,opens,closes){if(!TEST_OK){alert('Os testes ainda não estão activos. Execute primeiro a migração 004 (testes) no Supabase.');return}
 const purpose=$('matTestPurpose').value||'tematico';if(purpose==='tematico'&&QROWS.some(q=>q.kind==='sd')){alert('Perguntas autodeclaradas só podem existir num Diagnóstico inicial — sem nota.');return}if(!QROWS.length){alert('Adicione pelo menos uma pergunta.');return}if(QROWS.some(q=>!q.text.trim())){alert('Há perguntas em branco. Preencha-as ou remova-as.');return}const badMc=QROWS.findIndex(q=>q.kind==='mc'&&(!q.options||q.options.length<2||q.options.length>6||q.options.some(o=>!o.trim())||new Set(q.options.map(o=>o.trim().toLowerCase())).size!==q.options.length));if(badMc>=0){alert('A pergunta '+(badMc+1)+' tem opções em branco ou repetidas (são precisas 2 a 6 opções).');return}const noOk=QROWS.findIndex(q=>q.kind==='mc'&&!(Number.isInteger(q.correct)&&q.correct>=0&&q.correct<q.options.length));if(noOk>=0){alert('Na pergunta '+(noOk+1)+' falta marcar a opção correcta (botão redondo à esquerda da opção).');return}const badSd=QROWS.findIndex(q=>q.kind==='sd'&&(!q.options||q.options.length<2||q.options.length>10||q.options.some(o=>!o.trim())||new Set(q.options.map(o=>o.trim().toLowerCase())).size!==q.options.length));if(badSd>=0){alert('A pergunta autodeclarada '+(badSd+1)+' precisa de 2 a 10 opções preenchidas e distintas.');return}if(opens&&closes&&ts(closes)<=ts(opens)){alert('A data de fecho tem de ser posterior à de abertura.');return}
+await bankLoad();{const bs=new Set(BANKQ.filter(r=>!r.source_question_id).map(r=>trNorm(r.statement))),d=purpose==='tematico'?QROWS.filter(q=>bs.has(trNorm(q.text))):[];if(d.length){alert('Estas perguntas já existem no banco de treino e não podem repetir-se no teste ('+d.length+'):\n- '+d.slice(0,5).map(q=>q.text.slice(0,80)).join('\n- ')+'\nAltere-as ou remova-as.');return}}
 const btn=$('matSave'),wasEdit=!!EDIT_MAT;btn.disabled=true;btn.textContent='A guardar…';
 try{let mid=EDIT_MAT;const oldQ=wasEdit?QS.filter(q=>q.materialId===mid).map(q=>q.id):[];
 if(wasEdit){const u=await SB.from('av_session_materials').update({title,opens_at:opens,closes_at:closes,test_purpose:purpose}).eq('id',mid);if(u.error)throw u.error}
@@ -1810,6 +1843,8 @@ document.addEventListener('change',e=>{
 async function trLoad(){
  const R=await Promise.all([SB.from('av_student_profile').select('*').limit(5000),SB.from('av_cohorts').select('*').order('created_at'),SB.from('av_staff').select('id,cohort_id').limit(5000),SB.from('av_train_settings').select('*').eq('id',1).maybeSingle()]);
  R.forEach(r=>{if(r.error)throw r.error});
+ try{const b=await SB.from('av_train_questions').select('theme,levels,active').limit(5000);TR.bank=b.error?[]:(b.data||[])}catch(e){TR.bank=[]}
+ try{const a=await SB.from('av_cohort_aulas').select('cohort_id,lesson_no,theme,lesson_date').limit(2000);TR.aulas=a.error?[]:(a.data||[])}catch(e){TR.aulas=[]}
  TR.profs=R[0].data||[];TR.cohorts=R[1].data||[];TR.staffCoh={};(R[2].data||[]).forEach(x=>{TR.staffCoh[x.id]=x.cohort_id});TR.cfg=R[3].data||{cohort_min_size:5};
 }
 async function trAdminOpen(){
@@ -1829,7 +1864,7 @@ function trAdminRender(){
   '<div class="tr-lv">'+TR_LV.map(l=>'<div class="card"><span class="muted smalltext">'+esc(l[1])+'</span><strong>'+cnt[l[0]]+'</strong></div>').join('')+'<div class="card"><span class="muted smalltext">Sem perfil</span><strong>'+none+'</strong></div></div>'
   +(leads?'<p class="muted smalltext" style="margin:-4px 0 14px">'+leads+' formando(s) com a marca «sem registo de leads»: reforçar prospecção e CRM.</p>':'')
   +(sug.length?'<div class="notice"><strong>Sugestão de junção de turmas</strong><ul style="margin:6px 0 0 18px">'+sug.join('')+'</ul><div style="margin-top:6px">A administração confirma a junção ao editar os níveis da turma.</div></div>':'')
-  +'<div class="card"><div class="cardhead"><h2>Turmas</h2><button type="button" class="btn small" data-tr-newcoh>+ Nova turma</button></div>'+trCohortsHTML(staff)+'</div>'
+  +'<div class="card"><div class="cardhead"><h2>Turmas</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn small" data-tr-wz="">Preparar o treino</button><button type="button" class="btn secondary small" data-tr-newcoh>+ Nova turma</button></div></div>'+trCohortsHTML(staff)+'</div>'
   +'<div class="card"><div class="cardhead"><h2>Formandos e níveis</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn secondary small" data-tr-reass>Reavaliar níveis</button></div></div>'
   +'<div class="toolbar"><input id="trSearch" placeholder="Pesquisar formando…"><select id="trLvFilter"><option value="">Todos os níveis</option>'+TR_LV.map(l=>'<option value="'+l[0]+'">'+esc(l[1])+'</option>').join('')+'<option value="_none">Sem perfil</option></select></div>'
   +'<div class="tablewrap"><table class="table"><thead><tr><th>Formando</th><th>Nível</th><th>Turma</th><th>Marca</th><th></th></tr></thead><tbody id="trRows"></tbody></table></div></div>';
@@ -1840,7 +1875,7 @@ function trCohortsHTML(staff){
  const min=Number(TR.cfg.cohort_min_size)||5;
  return '<div class="tablewrap"><table class="table"><thead><tr><th>Turma</th><th>Níveis</th><th>Formandos</th><th>Estado</th><th></th></tr></thead><tbody>'+TR.cohorts.map(c=>{
   const n=staff.filter(s=>TR.staffCoh[s.id]===c.id).length;
-  return '<tr><td data-label="Turma">'+esc(c.name)+'</td><td data-label="Níveis">'+((c.levels||[]).map(trLv).map(esc).join(', ')||'—')+'</td><td data-label="Formandos">'+n+(c.active&&n<min?' <span class="tag warn">abaixo de '+min+'</span>':'')+'</td><td data-label="Estado"><span class="tag '+(c.active?'good':'')+'">'+(c.active?'Activa':'Inactiva')+'</span></td><td><button type="button" class="btn secondary small" data-tr-editcoh="'+c.id+'">Editar</button></td></tr>'}).join('')+'</tbody></table></div>';
+  return '<tr><td data-label="Turma">'+esc(c.name)+'</td><td data-label="Níveis">'+((c.levels||[]).map(trLv).map(esc).join(', ')||'—')+'</td><td data-label="Formandos">'+n+(c.active&&n<min?' <span class="tag warn">abaixo de '+min+'</span>':'')+'</td><td data-label="Estado"><span class="tag '+(c.active?'good':'')+'">'+(c.active?'Activa':'Inactiva')+'</span>'+trCohWarn(c)+'</td><td><button type="button" class="btn secondary small" data-tr-wz="'+c.id+'">Preparar</button> <button type="button" class="btn secondary small" data-tr-editcoh="'+c.id+'">Editar</button></td></tr>'}).join('')+'</tbody></table></div>';
 }
 function trRows(){
  const tb=$('trRows');if(!tb)return;
@@ -1861,7 +1896,8 @@ document.addEventListener('change',async e=>{
   try{const r=await SB.rpc('av_assign_cohort',{p_staff:t.dataset.trCoh,p_cohort:t.value||null});if(r.error)throw r.error;TR.staffCoh[t.dataset.trCoh]=t.value||null;toast('Turma actualizada.');trAdminRender()}
   catch(er){alert('Não foi possível atribuir a turma: '+trErr(er));trAdminRender()}}});
 document.addEventListener('click',async e=>{
- const b=e.target.closest&&e.target.closest('[data-tr-profile],[data-tr-newcoh],[data-tr-editcoh],[data-tr-lvl],[data-tr-hist],[data-tr-reass]');if(!b)return;
+ const b=e.target.closest&&e.target.closest('[data-tr-profile],[data-tr-newcoh],[data-tr-editcoh],[data-tr-lvl],[data-tr-hist],[data-tr-reass],[data-tr-wz]');if(!b)return;
+ if(b.hasAttribute('data-tr-wz'))return trWzOpen(b.dataset.trWz||null);
  if(b.hasAttribute('data-tr-profile'))return trProfileOpen();
  if(b.hasAttribute('data-tr-newcoh'))return trCohortForm(null);
  if(b.dataset.trEditcoh)return trCohortForm(TR.cohorts.find(c=>c.id===b.dataset.trEditcoh));
@@ -1925,6 +1961,7 @@ const TR_IC={
  lock:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.2" fill="currentColor"/><path d="M8 10.5V8a4 4 0 018 0v2.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>',
  star:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.6 6.8 19.4l1-5.9L3.5 9.4l5.9-.8z" fill="currentColor"/></svg>',
  book:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="11.5" rx="2" fill="currentColor"/><path d="M12 15.5V20M8 20h8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M7 9h6M7 12h10" fill="none" stroke="#ffffff99" stroke-width="1.8" stroke-linecap="round"/></svg>',
+ flag:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 4h11l-2.5 4L17 12H6" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
  trophy:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 01-10 0zM7 6H4v1.5A3.5 3.5 0 007.5 11M17 6h3v1.5A3.5 3.5 0 0116.5 11M12 14v3.5M8.5 20h7M10 17.5h4" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
  x:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>'};
 
@@ -2014,7 +2051,7 @@ function trTrailHTML(s){
   nodes.forEach(nd=>{h+=trNodeHTML(nd,i++,s)});
   h+='</div></section>'});
  const last=us[us.length-1],fin=td>trAdd(last.date,6);
- h+='<div class="tr-end"><div class="tr-node trophy '+(fin?'done':'lock')+'" role="img" aria-label="Fim do ciclo">'+TR_IC.trophy+'</div><span class="tr-dl">Fim do ciclo</span></div></div>';
+ h+='<div class="tr-end"><div class="tr-node trophy '+(fin?'done':'lock')+'" role="img" aria-label="Fim do ciclo">'+TR_IC.flag+'</div><span class="tr-dl">Fim do ciclo</span></div></div>';
  return h}
 function trStRender(){
  const box=trStBox(),s=TRS.state||{};
@@ -2083,7 +2120,7 @@ async function trSessionClose(){
  const e=trLessonEl();TRS.result=true;e.innerHTML='<div class="tr-lbody"><div class="tr-lin"><div class="empty">A fechar a sessão…</div></div></div>';
  try{const r=await SB.rpc('av_train_state');if(!r.error&&r.data)TRS.state=r.data}catch(_){}
  const S=TRS.sess,s=TRS.state||{},n=S.items.length,c=S.correct==null?S.items.filter(x=>x.correct).length:S.correct,p=n?Math.round(100*c/n):0;
- e.innerHTML='<div class="tr-lbody"><div class="tr-lin tr-res"><div class="tr-trophy">'+TR_IC.trophy+'</div><h2>Sessão concluída!</h2>'
+ e.innerHTML='<div class="tr-lbody"><div class="tr-lin tr-res"><h2>Sessão concluída!</h2>'
   +'<div class="tr-rgrid"><div class="a"><small>CERTAS</small><b>'+c+'/'+n+'</b></div><div class="b"><small>PRECISÃO</small><b>'+p+'%</b></div><div class="c"><small>SEQUÊNCIA</small><b>'+(s.streak||0)+' dia(s)</b></div></div>'
   +'<p class="muted">Os erros voltam amanhã e depois ao fim de 3 dias, até acertar duas vezes seguidas.</p></div></div>'
   +'<div class="tr-lfoot ok"><div class="tr-lfin"><span></span><button type="button" class="tr-btn ok" data-tr-end>Continuar</button></div></div>'}
@@ -2130,7 +2167,7 @@ function trBankRender(){
   +'<div class="card"><div class="muted smalltext">Total</div><strong class="tr-sv">'+rows.filter(r=>r.active).length+'</strong><div class="muted smalltext">activas · '+rows.length+' no banco</div></div>';
  const sel=(id,cur,opts)=>'<select id="'+id+'">'+opts.map(o=>'<option value="'+esc(o[0])+'"'+(o[0]===cur?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>';
  box.innerHTML='<div class="tr-lv">'+tiles+'</div>'
-  +'<div class="card"><div class="cardhead"><h2>Banco de treino</h2><div class="tr-tools"><button type="button" class="btn" data-tr-bnew>+ Nova pergunta</button><button type="button" class="btn secondary" data-tr-bimp>Importar de um teste</button><button type="button" class="btn secondary" data-tr-bcsv>Importar CSV</button><button type="button" class="btn secondary" data-tr-bact>Activar as filtradas</button></div></div>'
+  +'<div class="card"><div class="cardhead"><h2>Banco de treino</h2><div class="tr-tools"><button type="button" class="btn" data-tr-bnew>+ Nova pergunta</button><button type="button" class="btn secondary" data-tr-bcsv>Importar CSV</button><button type="button" class="btn secondary" data-tr-bact>Activar as filtradas</button></div></div>'
   +'<details class="clnote-d"><summary>Como obter um lote de perguntas com o Claude</summary>'+claudeBlock('treino','trb')+'</details>'+'<div class="tr-filters"><input id="trbSearch" type="search" placeholder="Pesquisar enunciado ou tema" value="'+esc(f.q)+'">'
   +sel('trbLv',f.lv,[['','Todos os níveis']].concat(TR_LV))
   +sel('trbTh',f.th,[['','Todos os temas']].concat(themes.map(t=>[t,t])))
@@ -2279,15 +2316,17 @@ function trCsvRow(o){
  else if(kind==='num'){const v=trNum(cor),t=String(o.tolerancia||'').trim()===''?0:trNum(o.tolerancia);
   if(!Number.isFinite(v))return{err:'«correta» deve ser um número'};if(!Number.isFinite(t)||t<0)return{err:'tolerância inválida'};r.expected_value=v;r.tolerance=t}
  return{row:r}}
-function trCsvAnalyse(text){
+function trCsvAnalyse(text,forceTheme){
  const rows=trCsvParse(text);if(rows.length<2)return{err:'O ficheiro precisa de uma linha de cabeçalho e pelo menos uma pergunta.'};
  const alias={pergunta:'enunciado',niveis:'nivel',resposta:'correta','opções':'opcoes',opcoes:'opcoes'},head=rows[0].map(h=>{const t=trNorm(h);return alias[t]||t});
  for(const c of['tipo','nivel','enunciado'])if(!head.includes(c))return{err:'Falta a coluna «'+c+'» no cabeçalho.'};
- const seen=new Set(TRB.rows.map(r=>r.kind+'|'+trNorm(r.statement)+'|'+trNorm(r.case_context||''))),ok=[],errs=[];let dup=0;
+ const seen=new Set(TRB.rows.concat(BANKQ).map(r=>r.kind+'|'+trNorm(r.statement)+'|'+trNorm(r.case_context||''))),tst=new Set(QS.filter(q=>q.kind!=='sd').map(q=>trNorm(q.text))),ok=[],errs=[];let dup=0,dupT=0;
  rows.slice(1).forEach((cells,i)=>{const o={};head.forEach((h,j)=>{o[h]=cells[j]});const x=trCsvRow(o);
   if(x.err){errs.push('Linha '+(i+2)+': '+x.err);return}
+  if(forceTheme)x.row.theme=forceTheme;
+  if(tst.has(trNorm(x.row.statement))){dupT++;return}
   const key=x.row.kind+'|'+trNorm(x.row.statement)+'|'+trNorm(x.row.case_context||'');if(seen.has(key)){dup++;return}seen.add(key);ok.push(x.row)});
- return{ok:ok,errs:errs,dup:dup}}
+ return{ok:ok,errs:errs,dup:dup,dupT:dupT}}
 function trCsvOpen(prev){
  trOpen('Importar CSV',
   claudeBlock('treino','trm')+'<p class="muted smalltext">Colunas: <strong>tipo; nivel; area; tema; enunciado; contexto; opcoes; correta; tolerancia; explicacao</strong>. Opções separadas por <strong>|</strong>; em «ordenar», os passos pela ordem certa. Todas entram como <strong>rascunho</strong>.</p>'
@@ -2300,7 +2339,7 @@ function trCsvOpen(prev){
 function trCsvPreview(txt){
  const a=TRB.csv;
  trOpen('Importar CSV · pré-visualização',
-  '<p><strong>'+a.ok.length+'</strong> pergunta(s) válida(s) · <strong>'+a.dup+'</strong> repetida(s) ignorada(s) · <strong>'+a.errs.length+'</strong> com erro.</p>'
+  '<p><strong>'+a.ok.length+'</strong> pergunta(s) válida(s) · <strong>'+(a.dupT||0)+'</strong> igual(is) a perguntas de teste (ignoradas) · <strong>'+a.dup+'</strong> repetida(s) ignorada(s) · <strong>'+a.errs.length+'</strong> com erro.</p>'
   +(a.errs.length?'<div class="notice"><strong>Erros</strong> (estas linhas não serão importadas):<br>'+a.errs.slice(0,10).map(esc).join('<br>')+(a.errs.length>10?'<br>… e mais '+(a.errs.length-10):'')+'</div>':''),
   [{label:'Voltar',cls:'secondary',fn:()=>{trCsvOpen(txt);return false}},
    {label:a.ok.length?'Importar '+a.ok.length:'Nada a importar',fn:async()=>{
@@ -2354,7 +2393,7 @@ async function trCohortForm(c){
   '<div class="field"><label for="trCName">Nome da turma *</label><input id="trCName" maxlength="80" value="'+esc(c?c.name:'')+'"></div>'
   +'<div class="field"><label>Níveis da turma</label><div class="tr-opts">'+TR_LV.map(l=>'<label class="tr-opt"><input type="checkbox" data-tr-clv value="'+l[0]+'"'+(lv.includes(l[0])?' checked':'')+'><span>'+esc(l[1])+'</span></label>').join('')+'</div><div class="muted smalltext" style="margin-top:6px">Uma turma tem um só nível. Marque dois níveis vizinhos apenas se confirmar a junção.</div></div>'
   +'<div class="field"><label>Aulas presenciais (4 sábados)</label><datalist id="trThemes">'+themes.map(t=>'<option value="'+esc(t)+'">').join('')+'</datalist>'
-  +[1,2,3,4].map(n=>'<div class="tr-aula"><span class="muted">Aula '+n+'</span><input list="trThemes" data-trc-th="'+n+'" maxlength="120" placeholder="Tema" value="'+esc(A(n).theme||'')+'"><input type="date" data-trc-dt="'+n+'" value="'+esc(A(n).lesson_date||'')+'"></div>').join('')
+  +[1,2,3,4].map(n=>'<div class="tr-aula"><span class="muted">Aula '+n+'</span><input list="trThemes" data-trc-th="'+n+'" maxlength="120" placeholder="Tema" value="'+esc(A(n).theme||'')+'"><input type="date" data-trc-dt="'+n+'" value="'+esc(A(n).lesson_date||'')+'"></div><div class="tr-thw" data-trc-w="'+n+'"></div>').join('')
   +'<div class="muted smalltext">O tema da semana é o da aula mais recente com data até hoje. Escreva o tema exactamente como no Banco de treino.</div></div>'
   +'<div class="field"><label for="trCTheme">Tema actual (usado só se as aulas não tiverem data)</label><input id="trCTheme" list="trThemes" maxlength="120" value="'+esc((c&&c.current_theme)||'')+'"></div>'
   +'<label class="tr-opt" style="margin-top:8px"><input type="checkbox" id="trCAct"'+(!c||c.active?' checked':'')+'><span>Turma activa</span></label>',
@@ -2373,7 +2412,116 @@ async function trCohortForm(c){
     if(del.length){const r=await SB.from('av_cohort_aulas').delete().eq('cohort_id',cid).in('lesson_no',del);if(r.error)throw r.error}
     toast('Turma guardada.');await trLoad();trAdminRender();return true}
    catch(er){alert('Não foi possível guardar a turma: '+trErr(er));return false}}}]);
+ const upd=()=>{const lv=[...document.querySelectorAll('[data-tr-clv]:checked')].map(x=>x.value);[1,2,3,4].forEach(n=>{const el=document.querySelector('[data-trc-w="'+n+'"]');if(el)el.innerHTML=trThemeNote(document.querySelector('[data-trc-th="'+n+'"]').value,lv)})};
+ $('trMBody').oninput=upd;$('trMBody').onchange=upd;upd();
  setTimeout(()=>{const i=$('trCName');if(i)i.focus()},50)}
+
+/* --- aviso: tema da aula vs. banco --- */
+function trBankThemes(){const m={};(TR.bank||[]).forEach(r=>{if(!r.theme)return;const t=m[r.theme]||(m[r.theme]={n:0,lv:{}});if(r.active){t.n++;(r.levels||[]).forEach(l=>{t.lv[l]=(t.lv[l]||0)+1})}else if(!t.n)t.n=0});return m}
+/* devolve {k:'' | 'ok' | 'vazio' | 'case' | 'nao' | 'nivel' , fix, msg} */
+function trThemeCheck(theme,levels){
+ theme=String(theme||'').trim();if(!theme)return{k:''};
+ const bt=trBankThemes(),names=Object.keys(bt);
+ if(!names.length)return{k:'nobank',msg:'O banco ainda não tem perguntas com tema.'};
+ if(bt[theme]){const lv=(levels||[]);const n=lv.length?lv.reduce((a,l)=>a+(bt[theme].lv[l]||0),0):bt[theme].n;
+  if(!bt[theme].n)return{k:'inativo',msg:'O tema existe no banco, mas só tem rascunhos. Active as perguntas.'};
+  if(lv.length&&!n)return{k:'nivel',msg:'O tema existe no banco, mas sem perguntas activas para o nível desta turma.'};
+  return{k:'ok',n:n}}
+ const near=names.find(x=>trNorm(x)===trNorm(theme));
+ if(!near&&read(KEYS.sessions).some(x=>x.title===theme))return{k:'nao',msg:'A sessão existe, mas ainda não tem perguntas de treino no banco. Crie-as em Sessões → Materiais (passo Treino).'};
+ if(near)return{k:'case',fix:near,msg:'Difere do banco só em maiúsculas ou acentos. No banco: «'+near+'».'};
+ const part=names.filter(x=>trNorm(x).includes(trNorm(theme))||trNorm(theme).includes(trNorm(x))).slice(0,3);
+ return{k:'nao',fix:part[0]||'',msg:'Este tema não existe no banco de perguntas.'+(part.length?' Parecido: '+part.map(x=>'«'+x+'»').join(', ')+'.':' Temas do banco: '+names.slice(0,5).map(x=>'«'+x+'»').join(', ')+(names.length>5?'…':'')+'.')}}
+function trThemeNote(theme,levels){const c=trThemeCheck(theme,levels);
+ if(!c.k)return '';if(c.k==='ok')return '<span class="tr-thok">✓ '+c.n+' pergunta(s) activa(s) no banco</span>';
+ return '<span class="tr-thbad">⚠ '+esc(c.msg)+'</span>'}
+function trCohWarn(c){
+ const th=(TR.aulas||[]).filter(a=>a.cohort_id===c.id&&a.theme).map(a=>a.theme);if(c.current_theme)th.push(c.current_theme);
+ const bad=[...new Set(th)].filter(t=>{const k=trThemeCheck(t,c.levels).k;return k&&k!=='ok'});
+ return bad.length?' <span class="tag warn" title="'+esc('Tema(s) sem correspondência no banco: '+bad.join(', '))+'">tema ≠ banco</span>':''}
+
+/* --- assistente «Preparar o treino» --- */
+const WZT_STEPS=[['Banco','Veja se o banco tem perguntas para o treino.'],['Turma','Escolha a turma ou crie uma nova, com o seu nível.'],['Aulas','Indique as datas das 4 aulas presenciais.'],['Temas','Dê o tema de cada aula, igual ao do banco.'],['Formandos','Escolha os formandos desta turma.']];
+let WZT=null;
+function trWzOpen(cid){
+ const c=cid?TR.cohorts.find(x=>x.id===cid):null;
+ WZT={step:1,cid:c?c.id:'',name:c?c.name:'',level:c&&c.levels&&c.levels[0]||'',active:c?c.active:true,dates:['','','',''],themes:['','','',''],pick:null,loaded:false};
+ if(c){const a=(TR.aulas||[]).filter(x=>x.cohort_id===c.id);a.forEach(x=>{if(x.lesson_no>=1&&x.lesson_no<=4){WZT.dates[x.lesson_no-1]=x.lesson_date||'';WZT.themes[x.lesson_no-1]=x.theme||''}});WZT.step=2}
+ trWzDraw()}
+function trWzLevels(){return WZT.level?[WZT.level]:[]}
+function trWzBody(){
+ const st=WZT.step,head='<div class="wizsteps">'+WZT_STEPS.map((x,i)=>'<span class="wizstep'+(i+1===st?' on':i+1<st?' done':'')+'"><b>'+(i+1<st?'✓':i+1)+'</b>'+x[0]+'</span>').join('')+'</div>'
+  +'<p class="wiztitle">Passo '+st+' de 5 · '+WZT_STEPS[st-1][0]+'</p><p class="muted wizhint">'+esc(WZT_STEPS[st-1][1])+'</p>';
+ if(st===1){
+  const bt=trBankThemes(),names=Object.keys(bt).sort((a,b)=>a.localeCompare(b,'pt')),tot=(TR.bank||[]).filter(r=>r.active).length;
+  return head+(tot?'':'<div class="notice">O banco de treino não tem perguntas activas. Sem elas, o treino fica vazio. Abra o Banco, importe ou crie perguntas e volte aqui (pode «Sair» e retomar).</div>')
+   +(names.length?'<div class="tablewrap"><table class="table"><thead><tr><th>Tema</th>'+TR_LV.map(l=>'<th>'+esc(l[1])+'</th>').join('')+'</tr></thead><tbody>'+names.map(t=>'<tr><td>'+esc(t)+'</td>'+TR_LV.map(l=>'<td>'+(bt[t].lv[l[0]]||'—')+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>':'')
+   +'<p class="muted smalltext">Activas por tema e nível. '+tot+' no total.</p><button type="button" class="btn secondary small" data-wz-bank>Abrir o Banco de treino</button>'}
+ if(st===2){
+  return head+'<div class="field"><label for="wzName">Nome da turma *</label><input id="wzName" maxlength="80" value="'+esc(WZT.name)+'"></div>'
+   +'<div class="field"><label>Nível da turma *</label><div class="tr-opts">'+TR_LV.map(l=>'<label class="tr-opt"><input type="radio" name="wzLv" value="'+l[0]+'"'+(WZT.level===l[0]?' checked':'')+'><span>'+esc(l[1])+'</span></label>').join('')+'</div></div>'
+   +'<label class="tr-opt"><input type="checkbox" id="wzAct"'+(WZT.active?' checked':'')+'><span>Turma activa</span></label>'
+   +(WZT.cid?'<p class="muted smalltext">Está a editar uma turma que já existe.</p>':'')}
+ if(st===3){
+  return head+[1,2,3,4].map(n=>'<div class="tr-aula"><span class="muted">Aula '+n+'</span><input type="date" data-wz-dt="'+n+'" value="'+esc(WZT.dates[n-1])+'"></div>').join('')
+   +'<button type="button" class="btn secondary small" data-wz-weekly>Repetir semanalmente a partir da aula 1</button><p class="muted smalltext">Pode deixar em branco e voltar mais tarde.</p>'}
+ if(st===4){
+  const ss=read(KEYS.sessions).slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')),seen=new Set(),opts=ss.filter(x=>x.title&&!seen.has(x.title)&&seen.add(x.title));
+  const sel=n=>{const cur=WZT.themes[n-1]||'';return '<select data-wz-th="'+n+'"><option value="">— escolher a sessão —</option>'+opts.map(x=>'<option value="'+esc(x.title)+'"'+(x.title===cur?' selected':'')+'>'+esc(x.title)+(x.area?' · '+esc(x.area):'')+'</option>').join('')+(cur&&!seen.has(cur)?'<option value="'+esc(cur)+'" selected>(tema actual) '+esc(cur)+'</option>':'')+'</select>'};
+  return head
+   +[1,2,3,4].map(n=>'<div class="field"><div class="tr-aula"><span class="muted">Aula '+n+(WZT.dates[n-1]?' · '+esc(WZT.dates[n-1]):'')+'</span>'+sel(n)+'</div><div class="tr-thw" data-wz-w="'+n+'">'+trThemeNote(WZT.themes[n-1],trWzLevels())+'</div></div>').join('')
+   +'<p class="muted smalltext">O tema da aula é o título da sessão. As perguntas de treino criam-se em Sessões → Materiais, no passo «Treino».</p>'}
+ const lv=WZT.level,staff=trStaffList();
+ if(!WZT.pick){WZT.pick={};staff.forEach(x=>{if(TR.staffCoh[x.id]===WZT.cid&&WZT.cid)WZT.pick[x.id]=true})}
+ const same=staff.filter(x=>{const p=trProfOf(x.id);return p&&p.level_final===lv}),other=staff.filter(x=>same.indexOf(x)<0);
+ const row=x=>{const cur=TR.staffCoh[x.id],oc=cur&&cur!==WZT.cid?TR.cohorts.find(c=>c.id===cur):null,p=trProfOf(x.id);
+  return '<label class="tr-opt"><input type="checkbox" data-wz-st="'+x.id+'"'+(WZT.pick[x.id]?' checked':'')+'><span>'+esc(x.name)+' <span class="muted smalltext">'+(p?esc(trLv(p.level_final)):'sem perfil')+(oc?' · está em «'+esc(oc.name)+'»':'')+'</span></span></label>'};
+ return head+'<p class="muted smalltext">Nível '+esc(trLv(lv))+': '+same.length+' formando(s). Quem já está noutra turma passa para esta ao guardar.</p><div class="tr-opts">'+(same.length?same.map(row).join(''):'<div class="empty">Nenhum formando neste nível.</div>')+'</div>'
+  +(other.length?'<details style="margin-top:10px"><summary>Outros níveis ('+other.length+')</summary><div class="tr-opts" style="margin-top:8px">'+other.map(row).join('')+'</div></details>':'')}
+function trWzRead(){
+ const g=q=>document.querySelector(q);
+ if(WZT.step===2){WZT.name=g('#wzName').value.trim();const r=g('input[name=wzLv]:checked');WZT.level=r?r.value:'';WZT.active=g('#wzAct').checked}
+ if(WZT.step===3)[1,2,3,4].forEach(n=>{WZT.dates[n-1]=g('[data-wz-dt="'+n+'"]').value});
+ if(WZT.step===4)[1,2,3,4].forEach(n=>{WZT.themes[n-1]=g('[data-wz-th="'+n+'"]').value.trim()});
+ if(WZT.step===5){WZT.pick={};document.querySelectorAll('[data-wz-st]').forEach(x=>{if(x.checked)WZT.pick[x.dataset.wzSt]=true})}}
+async function trWzSave(){
+ const st=WZT.step;
+ if(st===2){
+  if(!WZT.name){alert('Indique o nome da turma.');return false}
+  if(!WZT.level){alert('Escolha o nível da turma.');return false}
+  if(WZT.cid){const r=await SB.from('av_cohorts').update({name:WZT.name,levels:[WZT.level],active:WZT.active}).eq('id',WZT.cid);if(r.error)throw r.error}
+  else{const r=await SB.from('av_cohorts').insert({name:WZT.name,levels:[WZT.level],active:WZT.active,trainer_user_id:PROFILE.role==='trainer'?USER.id:null}).select('id').single();if(r.error)throw r.error;WZT.cid=r.data.id}
+ }
+ if(st===3||st===4){
+  const up=[],del=[];
+  [1,2,3,4].forEach(n=>{const th=WZT.themes[n-1]||null,dt=WZT.dates[n-1]||null;if(th||dt)up.push({cohort_id:WZT.cid,lesson_no:n,theme:th,lesson_date:dt});else del.push(n)});
+  if(up.length){const r=await SB.from('av_cohort_aulas').upsert(up,{onConflict:'cohort_id,lesson_no'});if(r.error)throw r.error}
+  if(del.length){const r=await SB.from('av_cohort_aulas').delete().eq('cohort_id',WZT.cid).in('lesson_no',del);if(r.error)throw r.error}
+ }
+ if(st===5){
+  for(const x of trStaffList()){const want=!!WZT.pick[x.id],cur=TR.staffCoh[x.id]===WZT.cid;
+   if(want&&!cur){const r=await SB.rpc('av_assign_cohort',{p_staff:x.id,p_cohort:WZT.cid});if(r.error)throw r.error}
+   else if(!want&&cur){const r=await SB.rpc('av_assign_cohort',{p_staff:x.id,p_cohort:null});if(r.error)throw r.error}}
+ }
+ if(st>=2)await trLoad();
+}
+function trWzDraw(){
+ const st=WZT.step,acts=[{label:'Sair (retomar depois)',cls:'secondary'}];
+ if(st>1)acts.push({label:'Voltar',cls:'secondary',fn:async()=>{trWzRead();WZT.step--;trWzDraw();return false}});
+ acts.push({label:st===5?'Concluir':'Guardar e continuar',fn:async()=>{
+  trWzRead();
+  try{await trWzSave()}catch(er){alert('Não foi possível guardar: '+trErr(er));return false}
+  if(st===4){const bad=WZT.themes.map((t,i)=>[t,i]).filter(x=>x[0]&&['nao','case','nivel','inativo'].includes(trThemeCheck(x[0],trWzLevels()).k));
+   if(bad.length&&!confirm('Há '+bad.length+' tema(s) que não correspondem ao banco para este nível. O treino dessas aulas pode ficar vazio. Continuar mesmo assim?')){return false}}
+  if(st===5){toast('Treino preparado.');trAdminRender();return true}
+  WZT.step++;if(WZT.step===5)WZT.pick=null;trWzDraw();return false}});
+ trOpen('Preparar o treino'+(WZT.name?' · '+WZT.name:''),trWzBody(),acts);
+ const mb=$('trMBody');
+ mb.oninput=mb.onchange=e=>{if(WZT.step!==4)return;const t=e.target;if(t&&t.dataset&&t.dataset.wzTh){const w=document.querySelector('[data-wz-w="'+t.dataset.wzTh+'"]');if(w)w.innerHTML=trThemeNote(t.value,trWzLevels())}};
+ mb.onclick=e=>{const b=e.target.closest&&e.target.closest('[data-wz-bank],[data-wz-weekly]');if(!b)return;
+  if(b.hasAttribute('data-wz-bank')){trClose();trTab('bank');return}
+  const f=document.querySelector('[data-wz-dt="1"]').value;if(!f){alert('Escolha primeiro a data da aula 1.');return}
+  const d=new Date(f+'T12:00:00');[1,2,3,4].forEach(n=>{const x=new Date(d);x.setDate(d.getDate()+7*(n-1));document.querySelector('[data-wz-dt="'+n+'"]').value=x.toISOString().slice(0,10)})}}
 
 boot();
 })();
