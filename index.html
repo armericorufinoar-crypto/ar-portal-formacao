@@ -1938,7 +1938,7 @@ function trReassess(){
 Object.assign(TR_ERR,{sem_perfil_treino:'Responda primeiro às 6 perguntas do perfil.',pergunta_nao_servida:'Esta pergunta não faz parte da sessão de hoje.',resposta_invalida:'Resposta inválida. Tente de novo.',tipo_nao_suportado:'Este tipo de pergunta ainda não é suportado.',formando_inactivo:'A sua ficha de formando está inactiva.'});
 const TR_KIND={vf:'Verdadeiro ou falso',mc:'Escolha múltipla',num:'Cálculo',order:'Ordenar',case:'Caso'};
 const TRS={state:null,sess:null,idx:0,fb:null,ord:null,busy:false};
-const TRB={rows:[],f:{q:'',lv:'',th:'',kd:'',st:''},ed:null,csv:null};
+const TRB={rows:[],f:{q:'',lv:'',th:'',kd:'',st:''},ed:null,csv:null,sel:new Set()};
 const trLetter=i=>String.fromCharCode(65+i);
 const trFmt=n=>Number(n).toLocaleString('pt-PT',{maximumFractionDigits:4});
 const trNorm=s=>String(s==null?'':s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
@@ -2167,14 +2167,14 @@ function trBankRender(){
   +'<div class="card"><div class="muted smalltext">Total</div><strong class="tr-sv">'+rows.filter(r=>r.active).length+'</strong><div class="muted smalltext">activas · '+rows.length+' no banco</div></div>';
  const sel=(id,cur,opts)=>'<select id="'+id+'">'+opts.map(o=>'<option value="'+esc(o[0])+'"'+(o[0]===cur?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>';
  box.innerHTML='<div class="tr-lv">'+tiles+'</div>'
-  +'<div class="card"><div class="cardhead"><h2>Banco de treino</h2><div class="tr-tools"><button type="button" class="btn" data-tr-bnew>+ Nova pergunta</button><button type="button" class="btn secondary" data-tr-bcsv>Importar CSV</button><button type="button" class="btn secondary" data-tr-bact>Activar as filtradas</button></div></div>'
+  +'<div class="card"><div class="cardhead"><h2>Banco de treino</h2><div class="tr-tools"><button type="button" class="btn" data-tr-bnew>+ Nova pergunta</button><button type="button" class="btn secondary" data-tr-bcsv>Importar CSV</button><button type="button" class="btn secondary" data-tr-bact>Activar as filtradas</button><button type="button" class="btn danger" id="trbDel" data-tr-bdel disabled>Eliminar seleccionadas</button></div></div>'
   +'<details class="clnote-d"><summary>Como obter um lote de perguntas com o Claude</summary>'+claudeBlock('treino','trb')+'</details>'+'<div class="tr-filters"><input id="trbSearch" type="search" placeholder="Pesquisar enunciado ou tema" value="'+esc(f.q)+'">'
   +sel('trbLv',f.lv,[['','Todos os níveis']].concat(TR_LV))
   +sel('trbTh',f.th,[['','Todos os temas']].concat(themes.map(t=>[t,t])))
   +sel('trbKind',f.kd,[['','Todos os tipos']].concat(Object.keys(TR_KIND).map(k=>[k,TR_KIND[k]])))
   +sel('trbSt',f.st,[['','Activas e rascunhos'],['on','Só activas'],['off','Só rascunhos']])+'</div>'
   +'<div class="muted smalltext" id="trbCount" style="margin:8px 0"></div>'
-  +'<div class="tablewrap"><table class="table"><thead><tr><th>Pergunta</th><th>Tema</th><th>Níveis</th><th>Estado</th><th></th></tr></thead><tbody id="trbRows"></tbody></table></div></div>';
+  +'<div class="tablewrap"><table class="table"><thead><tr><th style="width:34px"><input type="checkbox" id="trbAll" aria-label="Seleccionar todas as perguntas mostradas"></th><th>Pergunta</th><th>Tema</th><th>Níveis</th><th>Estado</th><th></th></tr></thead><tbody id="trbRows"></tbody></table></div></div>';
  trBankRows()}
 function trBankFiltered(){const f=TRB.f,q=f.q.toLowerCase().trim();
  return TRB.rows.filter(r=>{if(q&&!(String(r.statement)+' '+String(r.theme||'')).toLowerCase().includes(q))return false;
@@ -2183,7 +2183,20 @@ function trBankFiltered(){const f=TRB.f,q=f.q.toLowerCase().trim();
 function trBankRows(){
  const tb=$('trbRows');if(!tb)return;const list=trBankFiltered(),shown=list.slice(0,200);
  $('trbCount').textContent=list.length+' pergunta(s)'+(list.length>shown.length?' · a mostrar as primeiras '+shown.length+'; use os filtros':'');
- tb.innerHTML=shown.length?shown.map(r=>'<tr><td><span class="tag">'+esc(TR_KIND[r.kind]||r.kind)+'</span> '+esc(String(r.statement).slice(0,110)+(String(r.statement).length>110?'…':''))+'</td><td>'+esc(r.theme||'—')+'</td><td>'+esc((r.levels||[]).map(trLv).join(', ')||'—')+'</td><td>'+(r.active?'Activa':'<span class="muted">Rascunho</span>')+'</td><td><button type="button" class="btn secondary" data-tr-bedit="'+r.id+'">Editar</button></td></tr>').join(''):'<tr><td colspan="5" class="muted">Sem perguntas para estes filtros.</td></tr>'}
+ tb.innerHTML=shown.length?shown.map(r=>'<tr><td><input type="checkbox" data-tr-bsel="'+r.id+'"'+(TRB.sel.has(r.id)?' checked':'')+' aria-label="Seleccionar pergunta"></td><td><span class="tag">'+esc(TR_KIND[r.kind]||r.kind)+'</span> '+esc(String(r.statement).slice(0,110)+(String(r.statement).length>110?'…':''))+'</td><td>'+esc(r.theme||'—')+'</td><td>'+esc((r.levels||[]).map(trLv).join(', ')||'—')+'</td><td>'+(r.active?'Activa':'<span class="muted">Rascunho</span>')+'</td><td><button type="button" class="btn secondary" data-tr-bedit="'+r.id+'">Editar</button></td></tr>').join(''):'<tr><td colspan="6" class="muted">Sem perguntas para estes filtros.</td></tr>'
+ trBankSelUI(shown)}
+function trBankSelUI(shown){
+ const ids=new Set(TRB.rows.map(r=>r.id));[...TRB.sel].forEach(i=>{if(!ids.has(i))TRB.sel.delete(i)});
+ const b=$('trbDel'),a=$('trbAll'),n=TRB.sel.size;
+ if(b){b.disabled=!n;b.textContent=n?'Eliminar seleccionadas ('+n+')':'Eliminar seleccionadas'}
+ if(a){shown=shown||trBankFiltered().slice(0,200);const k=shown.filter(r=>TRB.sel.has(r.id)).length;a.checked=!!shown.length&&k===shown.length;a.indeterminate=k>0&&k<shown.length}}
+function trBankDelete(){
+ const ids=[...TRB.sel];if(!ids.length){alert('Seleccione pelo menos uma pergunta.');return}
+ askConfirm({title:'Eliminar '+(ids.length===1?'pergunta':ids.length+' perguntas'),message:'Eliminar '+(ids.length===1?'a pergunta seleccionada':'as '+ids.length+' perguntas seleccionadas')+' do banco de treino?',detail:'Deixam de aparecer nas sessões de treino dos formandos. Esta acção não pode ser desfeita.',confirmLabel:'Eliminar',danger:true}).then(async ok=>{
+  if(!ok)return;
+  try{for(let i=0;i<ids.length;i+=100){const r=await SB.from('av_train_questions').delete().in('id',ids.slice(i,i+100));if(r.error)throw r.error}
+   TRB.sel.clear();toast(ids.length+' pergunta(s) eliminada(s).');await trBankReload()}
+  catch(er){alert('Não foi possível eliminar: '+(er.message||er));try{await trBankReload()}catch(_){}}})}
 async function trBankReload(){const r=await SB.from('av_train_questions').select('*').order('created_at',{ascending:false}).limit(5000);if(r.error)throw r.error;TRB.rows=r.data||[];trBankRender()}
 
 /* editor de pergunta */
@@ -2358,7 +2371,7 @@ function trCsvTemplate(){
 
 /* --- eventos da fase 2 --- */
 document.addEventListener('click',async e=>{
- const b=e.target.closest&&e.target.closest('[data-tr-start],[data-tr-ans],[data-tr-numgo],[data-tr-ordmv],[data-tr-ordgo],[data-tr-next],[data-tr-end],[data-tr-tab],[data-tr-bnew],[data-tr-bedit],[data-tr-bimp],[data-tr-bcsv],[data-tr-bcsvtpl],[data-tr-bact],[data-trq-oadd],[data-trq-orm]');
+ const b=e.target.closest&&e.target.closest('[data-tr-start],[data-tr-ans],[data-tr-numgo],[data-tr-ordmv],[data-tr-ordgo],[data-tr-next],[data-tr-end],[data-tr-tab],[data-tr-bnew],[data-tr-bedit],[data-tr-bimp],[data-tr-bcsv],[data-tr-bcsvtpl],[data-tr-bact],[data-tr-bdel],[data-trq-oadd],[data-trq-orm]');
  if(!b)return;
  if(b.hasAttribute('data-tr-start'))return trSessionStart();
  if(b.hasAttribute('data-tr-ans')){const it=TRS.sess&&TRS.sess.items[TRS.idx];if(!it)return;const v=b.dataset.trAns;return trAnswer(it.kind==='vf'?v==='true':Number(v))}
@@ -2374,11 +2387,14 @@ document.addEventListener('click',async e=>{
  if(b.hasAttribute('data-tr-bcsv'))return trCsvOpen('');
  if(b.hasAttribute('data-tr-bcsvtpl'))return trCsvTemplate();
  if(b.hasAttribute('data-tr-bact'))return trBankActivate();
+ if(b.hasAttribute('data-tr-bdel'))return trBankDelete();
  if(b.hasAttribute('data-trq-oadd')){trEdSync();TRB.ed.opts.push('');return trEdRedraw()}
  if(b.dataset.trqOrm!==undefined){trEdSync();const i=Number(b.dataset.trqOrm),ed=TRB.ed;if(ed.opts.length<=2)return;ed.opts.splice(i,1);if(ed.cor===i)ed.cor=0;else if(ed.cor>i)ed.cor--;return trEdRedraw()}
 });
 document.addEventListener('input',e=>{if(e.target&&e.target.id==='trbSearch'){TRB.f.q=e.target.value;trBankRows()}});
-document.addEventListener('change',e=>{const t=e.target;if(!t||!t.id)return;
+document.addEventListener('change',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.trBsel!==undefined){t.checked?TRB.sel.add(t.dataset.trBsel):TRB.sel.delete(t.dataset.trBsel);trBankSelUI();return}
+ if(t&&t.id==='trbAll'){trBankFiltered().slice(0,200).forEach(r=>{t.checked?TRB.sel.add(r.id):TRB.sel.delete(r.id)});trBankRows();return}
+ if(!t||!t.id)return;
  const m={trbLv:'lv',trbTh:'th',trbKind:'kd',trbSt:'st'};if(m[t.id]){TRB.f[m[t.id]]=t.value;trBankRows();return}
  if(t.id==='trqKind'){trEdSync();TRB.ed.kind=t.value;trEdRedraw();return}
  if(t.id==='trCsvFile'&&t.files&&t.files[0]){const fr=new FileReader();fr.onload=()=>{$('trCsvText').value=String(fr.result||'')};fr.readAsText(t.files[0])}});
