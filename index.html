@@ -1777,7 +1777,7 @@ function sessWatch(){if(SESS_T)return;['pointerdown','mousemove','keydown','scro
    Módulo isolado. Não toca nos testes, na pauta nem no diagnóstico de competências.
    Depende da migração 015_treino_niveis.sql. Sem ela, o formando não vê nada e a página
    de administração mostra um aviso. */
-var TR={prof:null,cohortName:'',missing:false,ready:false,profs:[],cohorts:[],staffCoh:{},cfg:{cohort_min_size:5},busy:false};
+var TR={prof:null,cohortName:'',missing:false,ready:false,profs:[],cohorts:[],staffCoh:{},cfg:{cohort_min_size:5},busy:false,cohSel:new Set()};
 const TR_LV=[['estudante','Estudante'],['empreendedor','Empreendedor'],['empreendedor_plus','Empreendedor+'],['empresario','Empresário']];
 const TR_PAIR={estudante:'empreendedor',empreendedor:'estudante',empreendedor_plus:'empresario',empresario:'empreendedor_plus'};
 const TR_Q=[
@@ -1864,19 +1864,35 @@ function trAdminRender(){
   '<div class="tr-lv">'+TR_LV.map(l=>'<div class="card"><span class="muted smalltext">'+esc(l[1])+'</span><strong>'+cnt[l[0]]+'</strong></div>').join('')+'<div class="card"><span class="muted smalltext">Sem perfil</span><strong>'+none+'</strong></div></div>'
   +(leads?'<p class="muted smalltext" style="margin:-4px 0 14px">'+leads+' formando(s) com a marca «sem registo de leads»: reforçar prospecção e CRM.</p>':'')
   +(sug.length?'<div class="notice"><strong>Sugestão de junção de turmas</strong><ul style="margin:6px 0 0 18px">'+sug.join('')+'</ul><div style="margin-top:6px">A administração confirma a junção ao editar os níveis da turma.</div></div>':'')
-  +'<div class="card"><div class="cardhead"><h2>Turmas</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn small" data-tr-wz="">Preparar o treino</button><button type="button" class="btn secondary small" data-tr-newcoh>+ Nova turma</button></div></div>'+trCohortsHTML(staff)+'</div>'
+  +'<div class="card"><div class="cardhead"><h2>Turmas</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn small" data-tr-wz="">Preparar o treino</button><button type="button" class="btn secondary small" data-tr-newcoh>+ Nova turma</button><button type="button" class="btn danger small" id="trCohDel" data-tr-cohdel disabled>Eliminar seleccionadas</button></div></div>'+trCohortsHTML(staff)+'</div>'
   +'<div class="card"><div class="cardhead"><h2>Formandos e níveis</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn secondary small" data-tr-reass>Reavaliar níveis</button></div></div>'
   +'<div class="toolbar"><input id="trSearch" placeholder="Pesquisar formando…"><select id="trLvFilter"><option value="">Todos os níveis</option>'+TR_LV.map(l=>'<option value="'+l[0]+'">'+esc(l[1])+'</option>').join('')+'<option value="_none">Sem perfil</option></select></div>'
   +'<div class="tablewrap"><table class="table"><thead><tr><th>Formando</th><th>Nível</th><th>Turma</th><th>Marca</th><th></th></tr></thead><tbody id="trRows"></tbody></table></div></div>';
- trRows();
+ trRows();trCohSelUI();
 }
 function trCohortsHTML(staff){
  if(!TR.cohorts.length)return '<div class="empty">Ainda não existem turmas. Crie a primeira com «+ Nova turma».</div>';
  const min=Number(TR.cfg.cohort_min_size)||5;
- return '<div class="tablewrap"><table class="table"><thead><tr><th>Turma</th><th>Níveis</th><th>Formandos</th><th>Estado</th><th></th></tr></thead><tbody>'+TR.cohorts.map(c=>{
+ return '<div class="tablewrap"><table class="table"><thead><tr><th style="width:34px"><input type="checkbox" id="trCohAll" aria-label="Seleccionar todas as turmas"></th><th>Turma</th><th>Níveis</th><th>Formandos</th><th>Estado</th><th></th></tr></thead><tbody>'+TR.cohorts.map(c=>{
   const n=staff.filter(s=>TR.staffCoh[s.id]===c.id).length;
-  return '<tr><td data-label="Turma">'+esc(c.name)+'</td><td data-label="Níveis">'+((c.levels||[]).map(trLv).map(esc).join(', ')||'—')+'</td><td data-label="Formandos">'+n+(c.active&&n<min?' <span class="tag warn">abaixo de '+min+'</span>':'')+'</td><td data-label="Estado"><span class="tag '+(c.active?'good':'')+'">'+(c.active?'Activa':'Inactiva')+'</span>'+trCohWarn(c)+'</td><td><button type="button" class="btn secondary small" data-tr-wz="'+c.id+'">Preparar</button> <button type="button" class="btn secondary small" data-tr-editcoh="'+c.id+'">Editar</button></td></tr>'}).join('')+'</tbody></table></div>';
+  return '<tr><td><input type="checkbox" data-tr-csel="'+c.id+'"'+(TR.cohSel.has(c.id)?' checked':'')+' aria-label="Seleccionar turma"></td><td data-label="Turma">'+esc(c.name)+'</td><td data-label="Níveis">'+((c.levels||[]).map(trLv).map(esc).join(', ')||'—')+'</td><td data-label="Formandos">'+n+(c.active&&n<min?' <span class="tag warn">abaixo de '+min+'</span>':'')+'</td><td data-label="Estado"><span class="tag '+(c.active?'good':'')+'">'+(c.active?'Activa':'Inactiva')+'</span>'+trCohWarn(c)+'</td><td><button type="button" class="btn secondary small" data-tr-wz="'+c.id+'">Preparar</button> <button type="button" class="btn secondary small" data-tr-editcoh="'+c.id+'">Editar</button></td></tr>'}).join('')+'</tbody></table></div>';
 }
+function trCohSelUI(){
+ const ids=new Set(TR.cohorts.map(c=>c.id));[...TR.cohSel].forEach(i=>{if(!ids.has(i))TR.cohSel.delete(i)});
+ const b=$('trCohDel'),a=$('trCohAll'),n=TR.cohSel.size,t=TR.cohorts.length;
+ if(b){b.disabled=!n;b.textContent=n?'Eliminar seleccionadas ('+n+')':'Eliminar seleccionadas'}
+ if(a){a.checked=!!t&&n===t;a.indeterminate=n>0&&n<t}}
+function trCohDelete(){
+ const ids=[...TR.cohSel];if(!ids.length){alert('Seleccione pelo menos uma turma.');return}
+ const cs=TR.cohorts.filter(c=>ids.includes(c.id)),mem=Object.keys(TR.staffCoh).filter(k=>ids.includes(TR.staffCoh[k]));
+ askConfirm({title:'Eliminar '+(ids.length===1?'turma':ids.length+' turmas'),message:'Eliminar '+(ids.length===1?'a turma «'+cs[0].name+'»':'as '+ids.length+' turmas seleccionadas')+'?',detail:(mem.length?mem.length+' formando(s) ficam sem turma. ':'')+'As datas e temas das aulas da turma também são apagados. Os formandos, os perfis e o histórico de níveis não são afectados. Esta acção não pode ser desfeita.',confirmLabel:'Eliminar',danger:true}).then(async ok=>{
+  if(!ok)return;
+  try{
+   for(const sid of mem){const r=await SB.rpc('av_assign_cohort',{p_staff:sid,p_cohort:null});if(r.error)throw r.error}
+   const a=await SB.from('av_cohort_aulas').delete().in('cohort_id',ids);if(a.error)throw a.error;
+   const r=await SB.from('av_cohorts').delete().in('id',ids);if(r.error)throw r.error;
+   TR.cohSel.clear();toast(ids.length+' turma(s) eliminada(s).');await trLoad();trAdminRender()}
+  catch(er){alert('Não foi possível eliminar: '+trErr(er));try{await trLoad();trAdminRender()}catch(_){}}})}
 function trRows(){
  const tb=$('trRows');if(!tb)return;
  const q=($('trSearch').value||'').toLowerCase().trim(),lf=$('trLvFilter').value;
@@ -1892,14 +1908,17 @@ document.addEventListener('input',e=>{if(e.target&&e.target.id==='trSearch')trRo
 document.addEventListener('change',async e=>{
  const t=e.target;if(!t)return;
  if(t.id==='trLvFilter')trRows();
+ if(t.dataset&&t.dataset.trCsel!==undefined){t.checked?TR.cohSel.add(t.dataset.trCsel):TR.cohSel.delete(t.dataset.trCsel);trCohSelUI();return}
+ if(t.id==='trCohAll'){TR.cohorts.forEach(c=>{t.checked?TR.cohSel.add(c.id):TR.cohSel.delete(c.id)});document.querySelectorAll('[data-tr-csel]').forEach(x=>{x.checked=t.checked});trCohSelUI();return}
  if(t.dataset&&t.dataset.trCoh){
   try{const r=await SB.rpc('av_assign_cohort',{p_staff:t.dataset.trCoh,p_cohort:t.value||null});if(r.error)throw r.error;TR.staffCoh[t.dataset.trCoh]=t.value||null;toast('Turma actualizada.');trAdminRender()}
   catch(er){alert('Não foi possível atribuir a turma: '+trErr(er));trAdminRender()}}});
 document.addEventListener('click',async e=>{
- const b=e.target.closest&&e.target.closest('[data-tr-profile],[data-tr-newcoh],[data-tr-editcoh],[data-tr-lvl],[data-tr-hist],[data-tr-reass],[data-tr-wz]');if(!b)return;
+ const b=e.target.closest&&e.target.closest('[data-tr-profile],[data-tr-newcoh],[data-tr-cohdel],[data-tr-editcoh],[data-tr-lvl],[data-tr-hist],[data-tr-reass],[data-tr-wz]');if(!b)return;
  if(b.hasAttribute('data-tr-wz'))return trWzOpen(b.dataset.trWz||null);
  if(b.hasAttribute('data-tr-profile'))return trProfileOpen();
  if(b.hasAttribute('data-tr-newcoh'))return trCohortForm(null);
+ if(b.hasAttribute('data-tr-cohdel'))return trCohDelete();
  if(b.dataset.trEditcoh)return trCohortForm(TR.cohorts.find(c=>c.id===b.dataset.trEditcoh));
  if(b.dataset.trLvl)return trLevelForm(b.dataset.trLvl);
  if(b.dataset.trHist)return trHistory(b.dataset.trHist);
