@@ -1153,10 +1153,15 @@ function claudePrompt(kind,o){
   'Primeira linha (cabeçalho): tipo;enunciado;opcoes;correta;competencia',
   '- tipo: vf ou mc.','- vf: correta é verdadeiro ou falso, e opcoes fica vazia.','- mc: 4 opções separadas por |, e correta é a letra A, B, C ou D.','- competencia: fica vazia.','',
   'Regras: uma só resposta certa, sem pegadinhas; cerca de 30% de vf e 70% de mc; não uses ponto e vírgula, barras verticais nem aspas dentro dos textos.','',...CL_BIAS].join('\n');
- return ['Anexei o ficheiro da aula (PDF ou PowerPoint). Cria '+o.n+' perguntas de treino (sem nota) para o nível «'+o.lvName+'», sobre o tema «'+o.theme+'», só com base no ficheiro.','',
+ return ['Anexei o ficheiro da aula «'+o.theme+'» (PDF ou PowerPoint). Cria perguntas de treino (sem nota) para o nível «'+o.lvName+'», sobre o tema «'+o.theme+'», só com base no ficheiro.','',
+  'Gera SEMPRE as 4 profundidades abaixo, todas do mesmo tema e do mesmo nível, com '+o.n+' perguntas em cada uma (total: '+(4*o.n)+'). O tema e o nível não mudam; muda só a profundidade do raciocínio, sempre a crescer:',
+  '- profundidade 1 · Reconhecer: lembrar factos, definições e termos do ficheiro. Tipos: vf e mc.',
+  '- profundidade 2 · Compreender: explicar ou distinguir conceitos e relacionar ideias. Tipos: mc e order.',
+  '- profundidade 3 · Aplicar: usar o conteúdo numa situação concreta do dia-a-dia da empresa. Tipos: case e num (num só se o ficheiro tiver números; senão mais case).',
+  '- profundidade 4 · Decidir: casos com vários factores, em que é preciso analisar, comparar e escolher o melhor caminho. Tipos: case e order.','',
   'Responde com um único bloco de código CSV (separador ponto e vírgula) escrito directamente na conversa e, por baixo do bloco, a lista da página ou do slide de origem de cada pergunta. Não cries nem anexes ficheiros para descarregar (.csv, .xlsx ou outros): quero só o texto no bloco de código, para o copiar.','',
-  'Primeira linha (cabeçalho): tipo;nivel;area;tema;enunciado;contexto;opcoes;correta;tolerancia;explicacao',
-  '- tipo: vf, mc, num, order ou case. Mistura sugerida: 20% vf, 25% mc, 25% case, 20% num (só se o ficheiro tiver números; senão mais mc) e 10% order.',
+  'Primeira linha (cabeçalho): tipo;nivel;area;tema;profundidade;enunciado;contexto;opcoes;correta;tolerancia;explicacao',
+  '- profundidade: 1, 2, 3 ou 4, conforme a lista acima. Ordena as linhas da profundidade 1 à 4.',
   '- nivel: '+o.lv+' em todas as linhas. tema: '+o.theme+' em todas as linhas. area: deixa vazia.',
   '- vf: correta é verdadeiro ou falso, e opcoes fica vazia.',
   '- mc e case: 4 opções separadas por |, e correta é a letra A, B, C ou D. Em case, contexto descreve a situação e enunciado faz a pergunta.',
@@ -1165,18 +1170,18 @@ function claudePrompt(kind,o){
   '- explicacao: uma frase que explica a resposta, a terminar em ponto.','',
   'Regras: uma só resposta certa; valores em Kz sem separador de milhares; não uses ponto e vírgula, barras verticais nem aspas dentro dos textos. Não repitas perguntas do teste da aula (se eu anexar o CSV do teste).','',...CL_BIAS].join('\n')}
 function claudeBlock(kind,pfx){
- const teste=kind==='teste',themes=[...new Set((typeof TRB!=='undefined'?TRB.rows:[]).map(r=>r.theme).filter(Boolean))];
+ const teste=kind==='teste',sess=(typeof trSessThemes==='function'?trSessThemes(''):[]),preTh=(typeof TRB!=='undefined'&&TRB.f&&TRB.f.th)||'',preLv=(typeof TRB!=='undefined'&&TRB.f&&TRB.f.lv)||'';
  const ctl=teste?'<div class="clrow"><label for="'+pfx+'N">Nº de perguntas</label><input id="'+pfx+'N" type="number" min="5" max="40" value="20" style="width:90px"></div>'
-  :'<div class="clrow"><select id="'+pfx+'Lv" aria-label="Nível"><option value="">Nível…</option>'+TR_LV.map(l=>'<option value="'+l[0]+'">'+esc(l[1])+'</option>').join('')+'</select><input id="'+pfx+'Th" list="'+pfx+'Dl" placeholder="Tema (igual ao da aula)" maxlength="120" aria-label="Tema"><datalist id="'+pfx+'Dl">'+themes.map(t=>'<option value="'+esc(t)+'">').join('')+'</datalist><input id="'+pfx+'N" type="number" min="5" max="40" value="15" style="width:90px" aria-label="Nº de perguntas"></div>';
+  :'<div class="clrow"><select id="'+pfx+'Se" aria-label="Sessão (aula)"><option value="">Sessão (aula)…</option>'+sess.map(t=>'<option value="'+esc(t)+'"'+(t===preTh?' selected':'')+'>'+esc(t)+'</option>').join('')+'</select><select id="'+pfx+'Lv" aria-label="Nível"><option value="">Nível…</option>'+TR_LV.map(l=>'<option value="'+l[0]+'"'+(l[0]===preLv?' selected':'')+'>'+esc(l[1])+'</option>').join('')+'</select><label for="'+pfx+'N" class="muted smalltext">Perguntas por profundidade</label><input id="'+pfx+'N" type="number" min="2" max="10" value="5" style="width:90px"></div><div class="muted smalltext" style="margin:-2px 0 8px">O pedido gera sempre 4 profundidades (Reconhecer, Compreender, Aplicar, Decidir) do mesmo tema e nível: 4 × o número indicado. O tema é o título da sessão escolhida.</div>';
  return '<div class="clnote"><strong>Peça ao Claude o lote de perguntas.</strong><ol><li>Abra o Claude e anexe o ficheiro desta '+(teste?'sessão':'aula')+'.</li><li>Carregue em «Copiar pedido» e cole-o no Claude.</li><li>Copie o bloco de código da resposta (botão «Copiar» do bloco).</li><li>Aqui, carregue em «Importar CSV» e cole o texto na caixa «… ou cole aqui o conteúdo».</li></ol>'
   +'<p style="margin:0 0 4px"><strong>Reveja sempre as perguntas com os slides antes de guardar: o Claude pode errar.</strong> Se o Claude não ler bem o PowerPoint, exporte-o para PDF.</p>'
   +ctl+'<button type="button" class="btn secondary small" data-claude-copy="'+kind+'" data-pfx="'+pfx+'">Copiar pedido</button><textarea id="'+pfx+'Box" class="hidden" readonly aria-label="Pedido para o Claude"></textarea></div>'}
 async function claudeCopy(kind,pfx){
  let text;const n=Number($(pfx+'N').value);
- if(!(n>=5&&n<=40)){alert('Indique entre 5 e 40 perguntas.');return}
+ if(kind==='teste'?!(n>=5&&n<=40):!(n>=2&&n<=10)){alert(kind==='teste'?'Indique entre 5 e 40 perguntas.':'Indique entre 2 e 10 perguntas por profundidade.');return}
  if(kind==='teste'){const s=sessionById(MAT_SESSION);text=claudePrompt('teste',{title:s?s.title:'',n:n})}
- else{const lv=$(pfx+'Lv').value,th=$(pfx+'Th').value.trim();
-  if(!lv){alert('Escolha o nível.');return}if(!th){alert('Indique o tema (igual ao da aula).');return}
+ else{const lv=$(pfx+'Lv').value,th=($(pfx+'Se').value||'').trim();
+  if(!lv){alert('Escolha o nível.');return}if(!th){alert('Escolha a sessão (aula): o tema é o título da sessão.');return}
   const L=TR_LV.find(x=>x[0]===lv);text=claudePrompt('treino',{lv:lv,lvName:L?L[1]:lv,theme:th,n:n})}
  const box=$(pfx+'Box');box.value=text;
  try{await navigator.clipboard.writeText(text);box.classList.add('hidden');toast('Pedido copiado. Cole-o no Claude, com o ficheiro anexado.')}
@@ -1747,6 +1752,7 @@ function sessWatch(){if(SESS_T)return;['pointerdown','mousemove','keydown','scro
    de administração mostra um aviso. */
 var TR={prof:null,cohortName:'',missing:false,ready:false,profs:[],cohorts:[],staffCoh:{},cfg:{cohort_min_size:5},busy:false,cohSel:new Set()};
 const TR_LV=[['estudante','Estudante'],['empreendedor','Empreendedor'],['empreendedor_plus','Empreendedor+'],['empresario','Empresário']];
+const TR_DEPTH=['','Reconhecer','Compreender','Aplicar','Decidir'];
 const TR_PAIR={estudante:'empreendedor',empreendedor:'estudante',empreendedor_plus:'empresario',empresario:'empreendedor_plus'};
 const TR_Q=[
  {k:'q1',t:'Tem um negócio ou actividade que gera rendimento?',o:[['nao','Não'],['preparacao','Em preparação'],['sim','Sim']]},
@@ -1843,7 +1849,7 @@ function trCohortsHTML(staff){
  const min=Number(TR.cfg.cohort_min_size)||5;
  return '<div class="tablewrap"><table class="table"><thead><tr><th style="width:34px"><input type="checkbox" id="trCohAll" aria-label="Seleccionar todas as turmas"></th><th>Turma</th><th>Níveis</th><th>Formandos</th><th>Estado</th><th></th></tr></thead><tbody>'+TR.cohorts.map(c=>{
   const n=staff.filter(s=>TR.staffCoh[s.id]===c.id).length;
-  return '<tr><td><input type="checkbox" data-tr-csel="'+c.id+'"'+(TR.cohSel.has(c.id)?' checked':'')+' aria-label="Seleccionar turma"></td><td data-label="Turma">'+esc(c.name)+'</td><td data-label="Níveis">'+((c.levels||[]).map(trLv).map(esc).join(', ')||'—')+'</td><td data-label="Formandos">'+n+(c.active&&n<min?' <span class="tag warn">abaixo de '+min+'</span>':'')+'</td><td data-label="Estado"><span class="tag '+(c.active?'good':'')+'">'+(c.active?'Activa':'Inactiva')+'</span>'+trCohWarn(c)+'</td><td><button type="button" class="btn secondary small" data-tr-wz="'+c.id+'">Preparar</button> <button type="button" class="btn secondary small" data-tr-editcoh="'+c.id+'">Editar</button></td></tr>'}).join('')+'</tbody></table></div>';
+  return '<tr><td><input type="checkbox" data-tr-csel="'+c.id+'"'+(TR.cohSel.has(c.id)?' checked':'')+' aria-label="Seleccionar turma"></td><td data-label="Turma">'+esc(c.name)+'</td><td data-label="Níveis">'+((c.levels||[]).map(trLv).map(esc).join(', ')||'—')+'</td><td data-label="Formandos">'+n+(c.active&&n<min?' <span class="tag warn">abaixo de '+min+'</span>':'')+'</td><td data-label="Estado"><span class="tag '+(c.active?'good':'')+'">'+(c.active?'Activa':'Inactiva')+'</span>'+trCohWarn(c)+trCadTag(c)+'</td><td><button type="button" class="btn secondary small" data-tr-wz="'+c.id+'">Preparar</button> <button type="button" class="btn secondary small" data-tr-editcoh="'+c.id+'">Editar</button></td></tr>'}).join('')+'</tbody></table></div>';
 }
 function trCohSelUI(){
  const ids=new Set(TR.cohorts.map(c=>c.id));[...TR.cohSel].forEach(i=>{if(!ids.has(i))TR.cohSel.delete(i)});
@@ -1925,7 +1931,14 @@ function trReassess(){
 Object.assign(TR_ERR,{sem_perfil_treino:'Responda primeiro às 6 perguntas do perfil.',pergunta_nao_servida:'Esta pergunta não faz parte da sessão de hoje.',resposta_invalida:'Resposta inválida. Tente de novo.',tipo_nao_suportado:'Este tipo de pergunta ainda não é suportado.',formando_inactivo:'A sua ficha de formando está inactiva.'});
 const TR_KIND={vf:'Verdadeiro ou falso',mc:'Escolha múltipla',num:'Cálculo',order:'Ordenar',case:'Caso'};
 const TRS={state:null,sess:null,idx:0,fb:null,ord:null,busy:false};
-const TRB={rows:[],f:{q:'',lv:'',th:'',kd:'',st:''},ed:null,csv:null,sel:new Set()};
+const TRB={rows:[],f:{q:'',lv:'',th:'',kd:'',st:'',dp:''},ed:null,csv:null,sel:new Set(),depthOK:undefined};
+/* sondas: as colunas novas (migração 020) podem ainda não existir no servidor */
+async function trDepthProbe(force){if(TRB.depthOK!==undefined&&!force)return TRB.depthOK;try{const r=await SB.from('av_train_questions').select('depth').limit(1);TRB.depthOK=!r.error}catch(_){TRB.depthOK=false}return TRB.depthOK}
+async function trCadProbe(force){if(TR.cadOK!==undefined&&!force)return TR.cadOK;try{const r=await SB.from('av_cohorts').select('lessons_count').limit(1);TR.cadOK=!r.error}catch(_){TR.cadOK=false}return TR.cadOK}
+function trCadTag(c){const au=(TR.aulas||[]).filter(a=>a.cohort_id===c.id),n=Number(c.lessons_count)||au.reduce((m,x)=>Math.max(m,x.lesson_no||0),0);
+ if(!n)return ' <span class="tag warn" title="O formador ainda não definiu a cadência: a jornada dos formandos não aparece.">sem cadência</span>';
+ const ok=au.filter(a=>a.lesson_no<=n&&a.lesson_date&&a.theme).length;
+ return ' <span class="tag'+(ok===n?' good':' warn')+'" title="'+(ok===n?'Jornada visível para os formandos desta turma.':'Faltam datas ou temas: a jornada dos formandos só aparece com tudo definido.')+'">'+n+(n===1?' aula':' aulas')+(ok===n?'':' · '+ok+'/'+n+' definidas')+'</span>'}
 const trLetter=i=>String.fromCharCode(65+i);
 const trFmt=n=>Number(n).toLocaleString('pt-PT',{maximumFractionDigits:4});
 const trNorm=s=>String(s==null?'':s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
@@ -1954,7 +1967,7 @@ const TR_IC={
 
 /* dados da trilha: aulas da turma (4 sábados) e dias de treino já concluídos */
 async function trTrailLoad(){
- TRT.today=trToday();TRT.units=[];TRT.days={};let d=null;
+ TRT.today=trToday();TRT.units=[];TRT.days={};TRT.cad=0;TRT.ready=0;let d=null;
  try{const r=await SB.rpc('av_train_trail');if(r.error)throw r.error;d=r.data||{}}
  catch(_){
   /* sem a migração 018: tenta ler as tabelas directamente (depende das permissões) */
@@ -1965,7 +1978,13 @@ async function trTrailLoad(){
    const y=await SB.from('av_train_days').select('day,answered,correct,completed').eq('staff_id',PROFILE.staff_id);
    d={aulas:(a&&a.data)||[],days:(y&&y.data)||[]}
   }catch(__){d={aulas:[],days:[]}}}
- TRT.units=(d.aulas||[]).filter(a=>a.lesson_date).map(a=>({no:a.lesson_no,theme:a.theme||'',date:String(a.lesson_date).slice(0,10)})).sort((a,b)=>a.no-b.no);
+ /* a jornada só aparece com a cadência definida e a data e o tema de TODAS as aulas da turma */
+ let cad=Number(d.lessons_count||(d.cohort&&d.cohort.lessons_count))||0;
+ if(!cad){try{const c=await SB.from('av_staff').select('cohort_id').eq('id',PROFILE.staff_id).maybeSingle(),ch=c.data&&c.data.cohort_id;if(ch){const k=await SB.from('av_cohorts').select('lessons_count').eq('id',ch).maybeSingle();cad=Number(k.data&&k.data.lessons_count)||0}}catch(_){}}
+ const all=(d.aulas||[]).filter(a=>a.lesson_no>=1&&a.lesson_no<=4);
+ if(!cad)cad=all.reduce((m,a)=>Math.max(m,a.lesson_no||0),0);
+ const full=all.filter(a=>a.lesson_no<=cad&&a.lesson_date&&a.theme).map(a=>({no:a.lesson_no,theme:a.theme,date:String(a.lesson_date).slice(0,10)})).sort((a,b)=>a.no-b.no);
+ TRT.cad=cad;TRT.ready=full.length;TRT.units=cad&&full.length===cad?full:[];
  (d.days||[]).forEach(x=>{TRT.days[String(x.day).slice(0,10)]=x})}
 
 async function trStudentOpen(){
@@ -1996,7 +2015,7 @@ function trEvoHTML(s){
  us.forEach(u=>{for(let k=1;k<=6;k++){const r=TRT.days[trAdd(u.date,k)];if(r&&r.completed){done++;ans+=Number(r.answered)||0;cor+=Number(r.correct)||0}}});
  const pct=total?Math.round(100*done/total):0,acc=ans?Math.round(100*cor/ans)+'%':'—',aulaNo=Math.min(us.length,us.filter(u=>td>=u.date).length);
  return '<div class="card tr-evo"><div class="cardhead"><h2>A minha evolução</h2><span class="tag">'+esc(trLv(s.level))+'</span></div>'
- +(total?'<div class="tr-evo-top"><strong>'+done+' de '+total+' sessões</strong><span class="muted smalltext">'+(aulaNo?'Aula '+aulaNo+' de '+us.length:'O ciclo começa na aula 1')+'</span></div><div class="tr-pbar tr-pbar-s"><i style="width:'+pct+'%"></i></div>':'<p class="muted smalltext" style="margin:0 0 10px">A trilha completa aparece quando o formador definir as datas das 4 aulas da sua turma.</p>')
+ +(total?'<div class="tr-evo-top"><strong>'+done+' de '+total+' sessões</strong><span class="muted smalltext">'+(aulaNo?'Aula '+aulaNo+' de '+us.length:'O ciclo começa na aula 1')+'</span></div><div class="tr-pbar tr-pbar-s"><i style="width:'+pct+'%"></i></div>':'<p class="muted smalltext" style="margin:0 0 10px">A trilha completa aparece quando o formador definir a cadência, as datas e os temas das aulas da sua turma.</p>')
  +'<div class="tr-evo-grid"><div><span>Sequência</span><strong>'+(s.streak||0)+' dia(s)</strong></div><div><span>Precisão</span><strong>'+acc+'</strong></div><div><span>Erros por rever</span><strong>'+(er.due||0)+'</strong></div><div><span>Esta semana</span><strong>'+(wk.days_done||0)+' de '+(wk.needed||3)+'</strong></div></div></div>'}
 
 function trTodayHTML(s){
@@ -2040,9 +2059,11 @@ function trTrailHTML(s){
  const last=us[us.length-1],fin=td>trAdd(last.date,6);
  h+='<div class="tr-end"><div class="tr-node trophy '+(fin?'done':'lock')+'" role="img" aria-label="Fim do ciclo">'+TR_IC.flag+'</div><span class="tr-dl">Fim do ciclo</span></div></div>';
  return h}
+function trJourneyPendingHTML(s){if(!s.cohort)return '';
+ return '<div class="card"><div class="cardhead"><h2>A minha jornada</h2></div><p class="muted smalltext" style="margin:0">'+(TRT.cad?'A jornada aparece quando o formador definir a data e o tema das '+TRT.cad+(TRT.cad===1?' aula':' aulas')+' da sua turma ('+TRT.ready+' de '+TRT.cad+' definidas).':'A jornada aparece quando o formador definir a cadência das aulas presenciais da sua turma, com as datas e os temas.')+'</p></div>'}
 function trStRender(){
  const box=trStBox(),s=TRS.state||{};
- box.innerHTML=trEvoHTML(s)+(TRT.units.length?'':trTodayHTML(s))+trTrailHTML(s)+trGoalCard(s)
+ box.innerHTML=trEvoHTML(s)+(TRT.units.length?'':trTodayHTML(s)+trJourneyPendingHTML(s))+trTrailHTML(s)+trGoalCard(s)
   +'<p class="muted smalltext">O Treino não tem nota e não altera a pauta nem os testes.</p>';
  const c=box.querySelector('.tr-node.cur');if(c)setTimeout(()=>{try{c.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}},120)}
 
@@ -2145,7 +2166,7 @@ function trTab(t){
  if(t==='sessions'){try{renderSessions()}catch(e){}}
  if(t==='bank')trBankOpen()}
 async function trBankOpen(){
- const box=$('trBankBody');if(!box)return;box.innerHTML='<div class="empty">A carregar…</div>';
+ const box=$('trBankBody');if(!box)return;box.innerHTML='<div class="empty">A carregar…</div>';await trDepthProbe(true);
  try{const r=await SB.from('av_train_questions').select('*').order('created_at',{ascending:false}).limit(5000);if(r.error)throw r.error;TRB.rows=r.data||[];trBankRender()}
  catch(e){box.innerHTML=trMiss(e)?'<div class="notice">O banco de treino ainda não está instalado no servidor (migração 015).</div>':'<div class="notice">Não foi possível carregar o banco de treino: '+esc(e.message||e)+'</div>'}}
 function trBankRender(){
@@ -2161,18 +2182,19 @@ function trBankRender(){
   +sel('trbLv',f.lv,[['','Todos os níveis']].concat(TR_LV))
   +sel('trbTh',f.th,[['','Todos os temas']].concat(themes.map(t=>[t,t])))
   +sel('trbKind',f.kd,[['','Todos os tipos']].concat(Object.keys(TR_KIND).map(k=>[k,TR_KIND[k]])))
+  +(TRB.depthOK?sel('trbDp',f.dp||'',[['','Todas as profundidades']].concat([1,2,3,4].map(n=>[String(n),n+' · '+TR_DEPTH[n]]))):'')
   +sel('trbSt',f.st,[['','Activas e rascunhos'],['on','Só activas'],['off','Só rascunhos']])+'</div>'
   +'<div class="muted smalltext" id="trbCount" style="margin:8px 0"></div>'
   +'<div class="tablewrap"><table class="table"><thead><tr><th style="width:34px"><input type="checkbox" id="trbAll" aria-label="Seleccionar todas as perguntas mostradas"></th><th>Pergunta</th><th>Tema</th><th>Níveis</th><th>Estado</th><th></th></tr></thead><tbody id="trbRows"></tbody></table></div></div>';
  trBankRows()}
 function trBankFiltered(){const f=TRB.f,q=f.q.toLowerCase().trim();
  return TRB.rows.filter(r=>{if(q&&!(String(r.statement)+' '+String(r.theme||'')).toLowerCase().includes(q))return false;
-  if(f.lv&&!(r.levels||[]).includes(f.lv))return false;if(f.th&&(r.theme||'')!==f.th)return false;if(f.kd&&r.kind!==f.kd)return false;
+  if(f.lv&&!(r.levels||[]).includes(f.lv))return false;if(f.th&&(r.theme||'')!==f.th)return false;if(f.kd&&r.kind!==f.kd)return false;if(f.dp&&String(r.depth||'')!==f.dp)return false;
   if(f.st==='on'&&!r.active)return false;if(f.st==='off'&&r.active)return false;return true})}
 function trBankRows(){
  const tb=$('trbRows');if(!tb)return;const list=trBankFiltered(),shown=list.slice(0,200);
  $('trbCount').textContent=list.length+' pergunta(s)'+(list.length>shown.length?' · a mostrar as primeiras '+shown.length+'; use os filtros':'');
- tb.innerHTML=shown.length?shown.map(r=>'<tr><td><input type="checkbox" data-tr-bsel="'+r.id+'"'+(TRB.sel.has(r.id)?' checked':'')+' aria-label="Seleccionar pergunta"></td><td><span class="tag">'+esc(TR_KIND[r.kind]||r.kind)+'</span> '+esc(String(r.statement).slice(0,110)+(String(r.statement).length>110?'…':''))+'</td><td>'+esc(r.theme||'—')+'</td><td>'+esc((r.levels||[]).map(trLv).join(', ')||'—')+'</td><td>'+(r.active?'Activa':'<span class="muted">Rascunho</span>')+'</td><td><button type="button" class="btn secondary" data-tr-bedit="'+r.id+'">Editar</button></td></tr>').join(''):'<tr><td colspan="6" class="muted">Sem perguntas para estes filtros.</td></tr>'
+ tb.innerHTML=shown.length?shown.map(r=>'<tr><td><input type="checkbox" data-tr-bsel="'+r.id+'"'+(TRB.sel.has(r.id)?' checked':'')+' aria-label="Seleccionar pergunta"></td><td><span class="tag">'+esc(TR_KIND[r.kind]||r.kind)+'</span> '+esc(String(r.statement).slice(0,110)+(String(r.statement).length>110?'…':''))+'</td><td>'+esc(r.theme||'—')+(r.depth?' <span class="tag" title="Profundidade '+r.depth+' · '+esc(TR_DEPTH[r.depth]||'')+'">P'+r.depth+'</span>':'')+'</td><td>'+esc((r.levels||[]).map(trLv).join(', ')||'—')+'</td><td>'+(r.active?'Activa':'<span class="muted">Rascunho</span>')+'</td><td><button type="button" class="btn secondary" data-tr-bedit="'+r.id+'">Editar</button></td></tr>').join(''):'<tr><td colspan="6" class="muted">Sem perguntas para estes filtros.</td></tr>'
  trBankSelUI(shown)}
 function trBankSelUI(shown){
  const ids=new Set(TRB.rows.map(r=>r.id));[...TRB.sel].forEach(i=>{if(!ids.has(i))TRB.sel.delete(i)});
@@ -2189,8 +2211,8 @@ function trBankDelete(){
 async function trBankReload(){const r=await SB.from('av_train_questions').select('*').order('created_at',{ascending:false}).limit(5000);if(r.error)throw r.error;TRB.rows=r.data||[];trBankRender()}
 
 /* editor de pergunta */
-function trEdNew(){return{id:null,kind:'vf',st:'',ctx:'',area:'',theme:'',levels:[],exp:'',act:true,vf:true,opts:['',''],cor:0,val:'',tol:'0'}}
-function trEdFrom(r){const e=trEdNew();e.id=r.id;e.kind=r.kind;e.st=r.statement||'';e.ctx=r.case_context||'';e.area=r.area||'';e.theme=r.theme||'';e.levels=(r.levels||[]).slice();e.exp=r.explanation||'';e.act=!!r.active;
+function trEdNew(){return{id:null,kind:'vf',st:'',ctx:'',area:'',theme:'',levels:[],exp:'',act:true,vf:true,opts:['',''],cor:0,val:'',tol:'0',dp:''}}
+function trEdFrom(r){const e=trEdNew();e.id=r.id;e.kind=r.kind;e.st=r.statement||'';e.ctx=r.case_context||'';e.area=r.area||'';e.theme=r.theme||'';e.levels=(r.levels||[]).slice();e.exp=r.explanation||'';e.act=!!r.active;e.dp=r.depth?String(r.depth):'';
  e.vf=r.answer_bool!==false;const o=Array.isArray(r.options)?r.options.map(String):[];
  if(r.kind==='order'&&Array.isArray(r.correct_order)&&r.correct_order.length===o.length)e.opts=r.correct_order.map(i=>o[i]);else if(o.length)e.opts=o;
  e.cor=Number.isInteger(r.correct_index)?r.correct_index:0;e.val=r.expected_value==null?'':String(r.expected_value).replace('.',',');e.tol=r.tolerance==null?'0':String(r.tolerance).replace('.',',');return e}
@@ -2210,6 +2232,7 @@ function trEdHTML(){
  h+='<div class="field"><label for="trqArea">Área</label><input id="trqArea" maxlength="80" value="'+esc(e.area)+'"></div>'
   +'<div class="field"><label for="trqTheme">Tema (título de uma sessão) *</label><select id="trqTheme"><option value="">— escolher a sessão —</option>'+trSessThemes(e.theme).map(t=>'<option value="'+esc(t)+'"'+(t===e.theme?' selected':'')+'>'+esc(t)+'</option>').join('')+'</select></div>'
   +'<div class="field"><label>Níveis *</label><div class="tr-opts">'+TR_LV.map(l=>'<label class="tr-opt"><input type="checkbox" data-trq-lv value="'+l[0]+'"'+(e.levels.includes(l[0])?' checked':'')+'><span>'+esc(l[1])+'</span></label>').join('')+'</div></div>'
+  +(TRB.depthOK?'<div class="field"><label for="trqDp">Profundidade</label><select id="trqDp"><option value="">—</option>'+[1,2,3,4].map(n=>'<option value="'+n+'"'+(String(e.dp)===String(n)?' selected':'')+'>'+n+' · '+TR_DEPTH[n]+'</option>').join('')+'</select></div>':'')
   +'<div class="field"><label for="trqExp">Explicação (uma frase, aparece depois de responder)</label><textarea id="trqExp" rows="2" maxlength="400">'+esc(e.exp)+'</textarea></div>'
   +'<label class="tr-opt"><input type="checkbox" id="trqAct"'+(e.act?' checked':'')+'><span>Activa (aparece nas sessões; desmarque para rascunho)</span></label>';
  return h}
@@ -2217,7 +2240,7 @@ function trSessThemes(cur){const a=[...new Set(read(KEYS.sessions).map(x=>(x.tit
 function trTestSet(){return new Set(QS.filter(q=>q.kind!=='sd').map(q=>trNorm(q.text)))}
 function trEdSync(){
  const e=TRB.ed,v=i=>{const x=$(i);return x?x.value:null};
- let x=v('trqSt');if(x!=null)e.st=x;x=v('trqCtx');if(x!=null)e.ctx=x;x=v('trqArea');if(x!=null)e.area=x;x=v('trqTheme');if(x!=null)e.theme=x;x=v('trqExp');if(x!=null)e.exp=x;
+ let x=v('trqSt');if(x!=null)e.st=x;x=v('trqCtx');if(x!=null)e.ctx=x;x=v('trqArea');if(x!=null)e.area=x;x=v('trqTheme');if(x!=null)e.theme=x;x=v('trqExp');if(x!=null)e.exp=x;x=v('trqDp');if(x!=null)e.dp=x;
  if($('trqAct'))e.act=$('trqAct').checked;
  if(document.querySelector('[data-trq-lv]'))e.levels=[...document.querySelectorAll('[data-trq-lv]:checked')].map(i=>i.value);
  const vf=document.querySelector('input[name="trqVf"]:checked');if(vf)e.vf=vf.value==='1';
@@ -2230,7 +2253,7 @@ function trQuestionOpen(r){
  trOpen(r?'Editar pergunta':'Nova pergunta',trEdHTML(),[{label:'Cancelar',cls:'secondary'},{label:'Guardar',fn:trQuestionSave}])}
 async function trQuestionSave(){
  trEdSync();const e=TRB.ed,k=e.kind,st=e.st.trim(),th=e.theme.trim(),ex=e.exp.trim();
- const p={area:e.area.trim()||null,theme:th||null,levels:e.levels,kind:k,statement:st,case_context:null,options:null,correct_index:null,answer_bool:null,expected_value:null,tolerance:null,correct_order:null,explanation:ex||null,active:e.act};
+ const p={area:e.area.trim()||null,theme:th||null,levels:e.levels,kind:k,statement:st,case_context:null,options:null,correct_index:null,answer_bool:null,expected_value:null,tolerance:null,correct_order:null,explanation:ex||null,active:e.act};if(TRB.depthOK)p.depth=e.dp?Number(e.dp):null;
  if(!st){alert('Escreva o enunciado.');return false}
  if(!e.levels.length){alert('Escolha pelo menos um nível.');return false}
  if(e.act&&!th){alert('Para activar, escolha o tema (título de uma sessão).');return false}
@@ -2312,7 +2335,9 @@ function trCsvRow(o){
  const kind=trNorm(o.tipo);if(!TR_KIND[kind])return{err:'tipo inválido ("'+(o.tipo||'')+'")'};
  const lv=trCsvLevels(o.nivel);if(!lv.length)return{err:'nível em falta ou inválido'};
  const st=String(o.enunciado||'').trim();if(!st)return{err:'enunciado em falta'};
- const r={area:String(o.area||'').trim()||null,theme:String(o.tema||'').trim()||null,levels:lv,kind:kind,statement:st,case_context:null,options:null,correct_index:null,answer_bool:null,expected_value:null,tolerance:null,correct_order:null,explanation:String(o.explicacao||'').trim()||null,active:false};
+ const dpRaw=trNorm(o.profundidade||''),dp=/^[1-4]$/.test(dpRaw)?Number(dpRaw):({reconhecer:1,compreender:2,aplicar:3,decidir:4}[dpRaw]||null);
+ if(dpRaw!==''&&!dp)return{err:'profundidade inválida (use 1, 2, 3 ou 4)'};
+ const r={area:String(o.area||'').trim()||null,theme:String(o.tema||'').trim()||null,levels:lv,kind:kind,statement:st,case_context:null,options:null,correct_index:null,answer_bool:null,expected_value:null,tolerance:null,correct_order:null,explanation:String(o.explicacao||'').trim()||null,active:false,depth:dp};
  const opts=String(o.opcoes||'').split('|').map(x=>x.trim()).filter(Boolean),cor=String(o.correta||'').trim();
  if(kind==='vf'){const c=trNorm(cor);if(['v','verdadeiro','true','1','sim'].includes(c))r.answer_bool=true;else if(['f','falso','false','0','nao'].includes(c))r.answer_bool=false;else return{err:'«correta» deve ser verdadeiro ou falso'}}
  else if(kind==='mc'||kind==='case'){if(opts.length<2||opts.length>6)return{err:'são precisas 2 a 6 opções separadas por |'};
@@ -2337,8 +2362,8 @@ function trCsvAnalyse(text,forceTheme){
  return{ok:ok,errs:errs,dup:dup,dupT:dupT}}
 function trCsvOpen(prev){
  trOpen('Importar CSV',
-  claudeBlock('treino','trm')+'<p class="muted smalltext">Colunas: <strong>tipo; nivel; area; tema; enunciado; contexto; opcoes; correta; tolerancia; explicacao</strong>. Opções separadas por <strong>|</strong>; em «ordenar», os passos pela ordem certa. Todas entram como <strong>rascunho</strong>.</p>'
-  +'<div class="field"><label for="trCsvText">Cole aqui a resposta do Claude</label><textarea id="trCsvText" rows="8" placeholder="tipo;nivel;area;tema;enunciado;…">'+esc(prev||'')+'</textarea></div>',
+  claudeBlock('treino','trm')+'<p class="muted smalltext">Colunas: <strong>tipo; nivel; area; tema; profundidade; enunciado; contexto; opcoes; correta; tolerancia; explicacao</strong> (profundidade 1 a 4; é opcional em ficheiros antigos). Opções separadas por <strong>|</strong>; em «ordenar», os passos pela ordem certa. Todas entram como <strong>rascunho</strong>.</p>'
+  +'<div class="field"><label for="trCsvText">Cole aqui a resposta do Claude</label><textarea id="trCsvText" rows="8" placeholder="tipo;nivel;area;tema;profundidade;enunciado;…">'+esc(prev||'')+'</textarea></div>',
   [{label:'Cancelar',cls:'secondary'},{label:'Analisar',fn:()=>{
    const txt=$('trCsvText').value,a=trCsvAnalyse(txt);if(a.err){alert(a.err);return false}
    TRB.csv=a;trCsvPreview(txt);return false}}])}
@@ -2350,7 +2375,9 @@ function trCsvPreview(txt){
   [{label:'Voltar',cls:'secondary',fn:()=>{trCsvOpen(txt);return false}},
    {label:a.ok.length?'Importar '+a.ok.length:'Nada a importar',fn:async()=>{
     if(!a.ok.length)return true;
-    try{for(let i=0;i<a.ok.length;i+=100){const r=await SB.from('av_train_questions').insert(a.ok.slice(i,i+100));if(r.error)throw r.error}
+    try{await trDepthProbe();const rowsIn=TRB.depthOK?a.ok:a.ok.map(x=>{const c=Object.assign({},x);delete c.depth;return c});
+     for(let i=0;i<rowsIn.length;i+=100){const r=await SB.from('av_train_questions').insert(rowsIn.slice(i,i+100));if(r.error)throw r.error}
+     if(!TRB.depthOK&&a.ok.some(x=>x.depth))alert('As perguntas foram importadas, mas a profundidade não ficou guardada: falta executar a migração 020 no Supabase.');
      toast(a.ok.length+' pergunta(s) importadas como rascunho.');await trBankReload();return true}
     catch(er){alert('Não foi possível importar: '+(er.message||er));await trBankReload();return false}}}])}
 
@@ -2379,7 +2406,7 @@ document.addEventListener('input',e=>{if(e.target&&e.target.id==='trbSearch'){TR
 document.addEventListener('change',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.trBsel!==undefined){t.checked?TRB.sel.add(t.dataset.trBsel):TRB.sel.delete(t.dataset.trBsel);trBankSelUI();return}
  if(t&&t.id==='trbAll'){trBankFiltered().slice(0,200).forEach(r=>{t.checked?TRB.sel.add(r.id):TRB.sel.delete(r.id)});trBankRows();return}
  if(!t||!t.id)return;
- const m={trbLv:'lv',trbTh:'th',trbKind:'kd',trbSt:'st'};if(m[t.id]){TRB.f[m[t.id]]=t.value;trBankRows();return}
+ const m={trbLv:'lv',trbTh:'th',trbKind:'kd',trbSt:'st',trbDp:'dp'};if(m[t.id]){TRB.f[m[t.id]]=t.value;trBankRows();return}
  if(t.id==='trqKind'){trEdSync();TRB.ed.kind=t.value;trEdRedraw();return}
 });
 
@@ -2388,12 +2415,12 @@ async function trCohortForm(c){
  let au=[];
  if(c){try{const r=await SB.from('av_cohort_aulas').select('*').eq('cohort_id',c.id);if(r.error)throw r.error;au=r.data||[]}
   catch(er){alert('Não foi possível carregar as aulas da turma: '+trErr(er));return}}
- const lv=(c&&c.levels)||[],A=n=>au.find(x=>x.lesson_no===n)||{},themes=[...new Set(TRB.rows.map(r=>r.theme).filter(Boolean))];
+ const lv=(c&&c.levels)||[],A=n=>au.find(x=>x.lesson_no===n)||{},themes=[...new Set(TRB.rows.map(r=>r.theme).filter(Boolean))],cnt0=Number(c&&c.lessons_count)||au.reduce((m,x)=>Math.max(m,x.lesson_no||0),0);
  trOpen(c?'Editar turma':'Nova turma',
   '<div class="field"><label for="trCName">Nome da turma *</label><input id="trCName" maxlength="80" value="'+esc(c?c.name:'')+'"></div>'
   +'<div class="field"><label>Níveis da turma</label><div class="tr-opts">'+TR_LV.map(l=>'<label class="tr-opt"><input type="checkbox" data-tr-clv value="'+l[0]+'"'+(lv.includes(l[0])?' checked':'')+'><span>'+esc(l[1])+'</span></label>').join('')+'</div><div class="muted smalltext" style="margin-top:6px">Uma turma tem um só nível. Marque dois níveis vizinhos apenas se confirmar a junção.</div></div>'
-  +'<div class="field"><label>Aulas presenciais (4 sábados)</label><datalist id="trThemes">'+themes.map(t=>'<option value="'+esc(t)+'">').join('')+'</datalist>'
-  +[1,2,3,4].map(n=>'<div class="tr-aula"><span class="muted">Aula '+n+'</span><input list="trThemes" data-trc-th="'+n+'" maxlength="120" placeholder="Tema" value="'+esc(A(n).theme||'')+'"><input type="date" data-trc-dt="'+n+'" value="'+esc(A(n).lesson_date||'')+'"></div><div class="tr-thw" data-trc-w="'+n+'"></div>').join('')
+  +'<div class="field"><label>Aulas presenciais</label><div class="tr-aula"><span class="muted">Cadência *</span><select id="trCCnt"><option value="">— escolher —</option>'+[1,2,3,4].map(k=>'<option value="'+k+'"'+(k===cnt0?' selected':'')+'>'+k+(k===1?' aula (um único sábado)':' aulas')+'</option>').join('')+'</select></div><datalist id="trThemes">'+themes.map(t=>'<option value="'+esc(t)+'">').join('')+'</datalist>'
+  +[1,2,3,4].map(n=>'<div data-trc-row="'+n+'"><div class="tr-aula"><span class="muted">Aula '+n+'</span><input list="trThemes" data-trc-th="'+n+'" maxlength="120" placeholder="Tema" value="'+esc(A(n).theme||'')+'"><input type="date" data-trc-dt="'+n+'" value="'+esc(A(n).lesson_date||'')+'"></div><div class="tr-thw" data-trc-w="'+n+'"></div></div>').join('')
   +'<div class="muted smalltext">O tema da semana é o da aula mais recente com data até hoje. Escreva o tema exactamente como no Banco de treino.</div></div>'
   +'<div class="field"><label for="trCTheme">Tema actual (usado só se as aulas não tiverem data)</label><input id="trCTheme" list="trThemes" maxlength="120" value="'+esc((c&&c.current_theme)||'')+'"></div>'
   +'<label class="tr-opt" style="margin-top:8px"><input type="checkbox" id="trCAct"'+(!c||c.active?' checked':'')+'><span>Turma activa</span></label>',
@@ -2401,18 +2428,20 @@ async function trCohortForm(c){
    const name=$('trCName').value.trim(),levels=[...document.querySelectorAll('[data-tr-clv]:checked')].map(x=>x.value),active=$('trCAct').checked,cth=$('trCTheme').value.trim()||null;
    if(!name){alert('Indique o nome da turma.');return false}
    if(!levels.length){alert('Escolha pelo menos um nível.');return false}
+   const kc=Number($('trCCnt').value)||0;if(!kc){alert('Escolha a cadência das aulas presenciais (1 a 4).');return false}
+   const cadOK=await trCadProbe(),cx=cadOK?{lessons_count:kc}:{};
    try{
     let cid=c?c.id:null;
-    if(c){const r=await SB.from('av_cohorts').update({name,levels,active,current_theme:cth}).eq('id',c.id);if(r.error)throw r.error}
-    else{const r=await SB.from('av_cohorts').insert({name,levels,active,current_theme:cth,trainer_user_id:PROFILE.role==='trainer'?USER.id:null}).select('id').single();if(r.error)throw r.error;cid=r.data.id}
+    if(c){const r=await SB.from('av_cohorts').update(Object.assign({name,levels,active,current_theme:cth},cx)).eq('id',c.id);if(r.error)throw r.error}
+    else{const r=await SB.from('av_cohorts').insert(Object.assign({name,levels,active,current_theme:cth},cx,{trainer_user_id:PROFILE.role==='trainer'?USER.id:null})).select('id').single();if(r.error)throw r.error;cid=r.data.id}
     const up=[],del=[];
     [1,2,3,4].forEach(n=>{const th=document.querySelector('[data-trc-th="'+n+'"]').value.trim(),dt=document.querySelector('[data-trc-dt="'+n+'"]').value;
-     if(th||dt)up.push({cohort_id:cid,lesson_no:n,theme:th||null,lesson_date:dt||null});else if(A(n).id)del.push(n)});
+     if(n<=kc&&(th||dt))up.push({cohort_id:cid,lesson_no:n,theme:th||null,lesson_date:dt||null});else if(A(n).id)del.push(n)});
     if(up.length){const r=await SB.from('av_cohort_aulas').upsert(up,{onConflict:'cohort_id,lesson_no'});if(r.error)throw r.error}
     if(del.length){const r=await SB.from('av_cohort_aulas').delete().eq('cohort_id',cid).in('lesson_no',del);if(r.error)throw r.error}
-    toast('Turma guardada.');await trLoad();trAdminRender();return true}
+    toast('Turma guardada.');if(!cadOK)alert('A turma e as aulas ficaram guardadas, mas falta executar a migração 020 no Supabase para guardar a cadência na turma.');await trLoad();trAdminRender();return true}
    catch(er){alert('Não foi possível guardar a turma: '+trErr(er));return false}}}]);
- const upd=()=>{const lv=[...document.querySelectorAll('[data-tr-clv]:checked')].map(x=>x.value);[1,2,3,4].forEach(n=>{const el=document.querySelector('[data-trc-w="'+n+'"]');if(el)el.innerHTML=trThemeNote(document.querySelector('[data-trc-th="'+n+'"]').value,lv)})};
+ const upd=()=>{const kc=Number(($('trCCnt')||{}).value)||0;[1,2,3,4].forEach(n=>{const r=document.querySelector('[data-trc-row="'+n+'"]');if(r)r.classList.toggle('hidden',!kc||n>kc)});const lv=[...document.querySelectorAll('[data-tr-clv]:checked')].map(x=>x.value);[1,2,3,4].forEach(n=>{const el=document.querySelector('[data-trc-w="'+n+'"]');if(el)el.innerHTML=trThemeNote(document.querySelector('[data-trc-th="'+n+'"]').value,lv)})};
  $('trMBody').oninput=upd;$('trMBody').onchange=upd;upd();
  setTimeout(()=>{const i=$('trCName');if(i)i.focus()},50)}
 
@@ -2441,12 +2470,12 @@ function trCohWarn(c){
  return bad.length?' <span class="tag warn" title="'+esc('Tema(s) sem correspondência no banco: '+bad.join(', '))+'">tema ≠ banco</span>':''}
 
 /* --- assistente «Preparar o treino» --- */
-const WZT_STEPS=[['Banco','Veja se o banco tem perguntas para o treino.'],['Turma','Escolha a turma ou crie uma nova, com o seu nível.'],['Aulas','Indique as datas das 4 aulas presenciais.'],['Temas','Dê o tema de cada aula, igual ao do banco.'],['Formandos','Escolha os formandos desta turma.']];
+const WZT_STEPS=[['Banco','Veja se o banco tem perguntas para o treino.'],['Turma','Escolha a turma ou crie uma nova, com o seu nível.'],['Aulas','Defina a cadência das aulas presenciais (1 a 4) e as respectivas datas.'],['Temas','Dê o tema de cada aula, igual ao do banco.'],['Formandos','Escolha os formandos desta turma.']];
 let WZT=null;
 function trWzOpen(cid){
  const c=cid?TR.cohorts.find(x=>x.id===cid):null;
- WZT={step:1,cid:c?c.id:'',name:c?c.name:'',level:c&&c.levels&&c.levels[0]||'',active:c?c.active:true,dates:['','','',''],themes:['','','',''],pick:null,loaded:false};
- if(c){const a=(TR.aulas||[]).filter(x=>x.cohort_id===c.id);a.forEach(x=>{if(x.lesson_no>=1&&x.lesson_no<=4){WZT.dates[x.lesson_no-1]=x.lesson_date||'';WZT.themes[x.lesson_no-1]=x.theme||''}});WZT.step=2}
+ WZT={step:1,cid:c?c.id:'',name:c?c.name:'',level:c&&c.levels&&c.levels[0]||'',active:c?c.active:true,dates:['','','',''],themes:['','','',''],pick:null,loaded:false,count:0};
+ if(c){const a=(TR.aulas||[]).filter(x=>x.cohort_id===c.id);a.forEach(x=>{if(x.lesson_no>=1&&x.lesson_no<=4){WZT.dates[x.lesson_no-1]=x.lesson_date||'';WZT.themes[x.lesson_no-1]=x.theme||''}});WZT.count=Number(c.lessons_count)||a.reduce((m,x)=>Math.max(m,x.lesson_no||0),0);WZT.step=2}
  trWzDraw()}
 function trWzLevels(){return WZT.level?[WZT.level]:[]}
 function trWzBody(){
@@ -2463,13 +2492,17 @@ function trWzBody(){
    +'<label class="tr-opt"><input type="checkbox" id="wzAct"'+(WZT.active?' checked':'')+'><span>Turma activa</span></label>'
    +(WZT.cid?'<p class="muted smalltext">Está a editar uma turma que já existe.</p>':'')}
  if(st===3){
-  return head+[1,2,3,4].map(n=>'<div class="tr-aula"><span class="muted">Aula '+n+'</span><input type="date" data-wz-dt="'+n+'" value="'+esc(WZT.dates[n-1])+'"></div>').join('')
-   +'<button type="button" class="btn secondary small" data-wz-weekly>Repetir semanalmente a partir da aula 1</button><p class="muted smalltext">Pode deixar em branco e voltar mais tarde.</p>'}
+  const N=WZT.count||0,cad=[[1,'1 aula','um único sábado'],[2,'2 aulas','dois sábados'],[3,'3 aulas','três sábados'],[4,'4 aulas','quatro sábados (o previsto)']];
+  return head+'<div class="field"><label>Cadência das aulas presenciais *</label><div class="tr-opts">'+cad.map(c=>'<label class="tr-opt"><input type="radio" name="wzCnt" value="'+c[0]+'"'+(N===c[0]?' checked':'')+'><span>'+c[1]+' <span class="muted smalltext">· '+c[2]+'</span></span></label>').join('')+'</div></div>'
+   +(N?[1,2,3,4].filter(n=>n<=N).map(n=>'<div class="tr-aula"><span class="muted">Aula '+n+'</span><input type="date" data-wz-dt="'+n+'" value="'+esc(WZT.dates[n-1])+'"></div>').join('')
+    +(N>1?'<button type="button" class="btn secondary small" data-wz-weekly>Repetir semanalmente a partir da aula 1</button>':'')
+    +'<p class="muted smalltext">Pode deixar as datas em branco e voltar mais tarde. A jornada do formando só aparece quando a cadência, as datas e os temas de todas as aulas estiverem definidos.</p>'
+    :'<p class="muted smalltext">Escolha a cadência para indicar as datas das aulas.</p>')}
  if(st===4){
   const ss=read(KEYS.sessions).slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')),seen=new Set(),opts=ss.filter(x=>x.title&&!seen.has(x.title)&&seen.add(x.title));
   const sel=n=>{const cur=WZT.themes[n-1]||'';return '<select data-wz-th="'+n+'"><option value="">— escolher a sessão —</option>'+opts.map(x=>'<option value="'+esc(x.title)+'"'+(x.title===cur?' selected':'')+'>'+esc(x.title)+(x.area?' · '+esc(x.area):'')+'</option>').join('')+(cur&&!seen.has(cur)?'<option value="'+esc(cur)+'" selected>(tema actual) '+esc(cur)+'</option>':'')+'</select>'};
   return head
-   +[1,2,3,4].map(n=>'<div class="field"><div class="tr-aula"><span class="muted">Aula '+n+(WZT.dates[n-1]?' · '+esc(WZT.dates[n-1]):'')+'</span>'+sel(n)+'</div><div class="tr-thw" data-wz-w="'+n+'">'+trThemeNote(WZT.themes[n-1],trWzLevels())+'</div></div>').join('')
+   +[1,2,3,4].filter(n=>n<=(WZT.count||4)).map(n=>'<div class="field"><div class="tr-aula"><span class="muted">Aula '+n+(WZT.dates[n-1]?' · '+esc(WZT.dates[n-1]):'')+'</span>'+sel(n)+'</div><div class="tr-thw" data-wz-w="'+n+'">'+trThemeNote(WZT.themes[n-1],trWzLevels())+'</div></div>').join('')
    +'<p class="muted smalltext">O tema da aula é o título da sessão. As perguntas de treino criam-se no separador «Banco de treino», com este mesmo tema.</p>'}
  const lv=WZT.level,staff=trStaffList();
  if(!WZT.pick){WZT.pick={};staff.forEach(x=>{if(TR.staffCoh[x.id]===WZT.cid&&WZT.cid)WZT.pick[x.id]=true})}
@@ -2481,8 +2514,8 @@ function trWzBody(){
 function trWzRead(){
  const g=q=>document.querySelector(q);
  if(WZT.step===2){WZT.name=g('#wzName').value.trim();const r=g('input[name=wzLv]:checked');WZT.level=r?r.value:'';WZT.active=g('#wzAct').checked}
- if(WZT.step===3)[1,2,3,4].forEach(n=>{WZT.dates[n-1]=g('[data-wz-dt="'+n+'"]').value});
- if(WZT.step===4)[1,2,3,4].forEach(n=>{WZT.themes[n-1]=g('[data-wz-th="'+n+'"]').value.trim()});
+ if(WZT.step===3){const rc=g('input[name=wzCnt]:checked');if(rc)WZT.count=Number(rc.value);[1,2,3,4].forEach(n=>{const el=g('[data-wz-dt="'+n+'"]');if(el)WZT.dates[n-1]=el.value})}
+ if(WZT.step===4)[1,2,3,4].forEach(n=>{const el=g('[data-wz-th="'+n+'"]');if(el)WZT.themes[n-1]=el.value.trim()});
  if(WZT.step===5){WZT.pick={};document.querySelectorAll('[data-wz-st]').forEach(x=>{if(x.checked)WZT.pick[x.dataset.wzSt]=true})}}
 async function trWzSave(){
  const st=WZT.step;
@@ -2494,9 +2527,12 @@ async function trWzSave(){
  }
  if(st===3||st===4){
   const up=[],del=[];
-  [1,2,3,4].forEach(n=>{const th=WZT.themes[n-1]||null,dt=WZT.dates[n-1]||null;if(th||dt)up.push({cohort_id:WZT.cid,lesson_no:n,theme:th,lesson_date:dt});else del.push(n)});
+  const N=WZT.count||4;
+  [1,2,3,4].forEach(n=>{const th=WZT.themes[n-1]||null,dt=WZT.dates[n-1]||null;if(n<=N&&(th||dt))up.push({cohort_id:WZT.cid,lesson_no:n,theme:th,lesson_date:dt});else del.push(n)});
   if(up.length){const r=await SB.from('av_cohort_aulas').upsert(up,{onConflict:'cohort_id,lesson_no'});if(r.error)throw r.error}
   if(del.length){const r=await SB.from('av_cohort_aulas').delete().eq('cohort_id',WZT.cid).in('lesson_no',del);if(r.error)throw r.error}
+  if(st===3&&WZT.count){if(await trCadProbe()){const r=await SB.from('av_cohorts').update({lessons_count:WZT.count}).eq('id',WZT.cid);if(r.error)throw r.error}
+   else alert('A cadência ficou aplicada às aulas, mas falta executar a migração 020 no Supabase para a guardar na turma.')}
  }
  if(st===5){
   for(const x of trStaffList()){const want=!!WZT.pick[x.id],cur=TR.staffCoh[x.id]===WZT.cid;
@@ -2510,6 +2546,9 @@ function trWzDraw(){
  if(st>1)acts.push({label:'Voltar',cls:'secondary',fn:async()=>{trWzRead();WZT.step--;trWzDraw();return false}});
  acts.push({label:st===5?'Concluir':'Guardar e continuar',fn:async()=>{
   trWzRead();
+  if(st===3){if(!WZT.count){alert('Escolha a cadência das aulas presenciais (1, 2, 3 ou 4).');return false}
+   const lost=[1,2,3,4].filter(n=>n>WZT.count&&(WZT.dates[n-1]||WZT.themes[n-1]));
+   if(lost.length&&!confirm('Com esta cadência, as aulas '+lost.join(' e ')+' deixam de existir e perdem a data e o tema. Continuar?'))return false}
   try{await trWzSave()}catch(er){alert('Não foi possível guardar: '+trErr(er));return false}
   if(st===4){const bad=WZT.themes.map((t,i)=>[t,i]).filter(x=>x[0]&&['nao','case','nivel','inativo'].includes(trThemeCheck(x[0],trWzLevels()).k));
    if(bad.length&&!confirm('Há '+bad.length+' tema(s) que não correspondem ao banco para este nível. O treino dessas aulas pode ficar vazio. Continuar mesmo assim?')){return false}}
@@ -2517,11 +2556,12 @@ function trWzDraw(){
   WZT.step++;if(WZT.step===5)WZT.pick=null;trWzDraw();return false}});
  trOpen('Preparar o treino'+(WZT.name?' · '+WZT.name:''),trWzBody(),acts);
  const mb=$('trMBody');
- mb.oninput=mb.onchange=e=>{if(WZT.step!==4)return;const t=e.target;if(t&&t.dataset&&t.dataset.wzTh){const w=document.querySelector('[data-wz-w="'+t.dataset.wzTh+'"]');if(w)w.innerHTML=trThemeNote(t.value,trWzLevels())}};
+ mb.oninput=mb.onchange=e=>{if(WZT.step===3&&e.target&&e.target.name==='wzCnt'){trWzRead();WZT.count=Number(e.target.value);trWzDraw();return}
+  if(WZT.step!==4)return;const t=e.target;if(t&&t.dataset&&t.dataset.wzTh){const w=document.querySelector('[data-wz-w="'+t.dataset.wzTh+'"]');if(w)w.innerHTML=trThemeNote(t.value,trWzLevels())}};
  mb.onclick=e=>{const b=e.target.closest&&e.target.closest('[data-wz-bank],[data-wz-weekly]');if(!b)return;
   if(b.hasAttribute('data-wz-bank')){trClose();trTab('bank');return}
   const f=document.querySelector('[data-wz-dt="1"]').value;if(!f){alert('Escolha primeiro a data da aula 1.');return}
-  const d=new Date(f+'T12:00:00');[1,2,3,4].forEach(n=>{const x=new Date(d);x.setDate(d.getDate()+7*(n-1));document.querySelector('[data-wz-dt="'+n+'"]').value=x.toISOString().slice(0,10)})}}
+  const d=new Date(f+'T12:00:00');[1,2,3,4].forEach(n=>{const x=new Date(d);x.setDate(d.getDate()+7*(n-1));const el=document.querySelector('[data-wz-dt="'+n+'"]');if(el)el.value=x.toISOString().slice(0,10)})}}
 
 boot();
 })();
