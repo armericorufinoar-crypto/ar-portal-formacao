@@ -1111,7 +1111,7 @@ function tqLoading(){tqShow();tqEl().innerHTML=tqShell('<div class="empty">A car
 function tqError(m){tqShow();tqEl().innerHTML=tqShell('<div class="notice">'+esc(m)+'</div>','<div class="tr-lfoot"><div class="tr-lfin"><span></span><button type="button" class="tr-btn go" data-tq-later>Fechar</button></div></div>')}
 function tqIntro(T,d){
  const m=findMat(T.id)||{},diag=d.purpose==='diagnostico',n=d.total||0;
- tqEl().innerHTML=tqShell('<div class="tr-res"><div class="tr-trophy">'+TR_IC.trophy+'</div><h2>'+esc(m.title||'Teste')+'</h2>'
+ tqEl().innerHTML=tqShell('<div class="tr-res"><h2>'+esc(m.title||'Teste')+'</h2>'
   +'<div class="tr-rgrid"><div class="a"><small>PERGUNTAS</small><b>'+n+'</b></div><div class="b"><small>TENTATIVAS</small><b>1</b></div><div class="c"><small>AVALIAÇÃO</small><b>'+(diag?'Sem nota':'Com nota')+'</b></div></div>'
   +'<ul class="tq-rules"><li>Só pode <strong>abrir uma vez</strong>. Se sair ou recarregar a página sem submeter, perde a tentativa.</li><li>Responda a uma pergunta de cada vez e use «Voltar» se quiser rever.</li><li>Reserve o tempo necessário e confirme que a ligação à internet está estável.</li></ul></div>',
   '<div class="tr-lfoot"><div class="tr-lfin"><button type="button" class="tr-btn ghost" data-tq-later>Agora não</button><button type="button" class="tr-btn go" data-tq-start>Começar</button></div></div>')}
@@ -1120,25 +1120,41 @@ function tqDraw(){
  const T=TEST_CUR,d=T&&T.data;if(!d)return;tqShow();
  if(!d.questions){if(d.locked)tqLocked();else tqIntro(T,d);return}
  const qs=d.questions||[],n=qs.length;if(!n){tqError('Este teste ainda não tem perguntas.');return}
- T.i=Math.max(0,Math.min(T.i||0,n-1));
- const bz=!!T.busy&&T.phase==='review',q=qs[T.i],a=T.answers[q.id],ok=qAnswered(q,a),last=T.i===n-1,done=qs.filter(x=>qAnswered(x,T.answers[x.id])).length,pct=Math.round(100*done/n),diag=d.purpose==='diagnostico';
+ T.i=Math.max(0,Math.min(T.i||0,n-1));T.fb=T.fb||{};
+ const q=qs[T.i],a=T.answers[q.id],ok=qAnswered(q,a),last=T.i===n-1,diag=d.purpose==='diagnostico',bz=!!T.busy&&T.phase==='review';
+ const fb=T.fb[q.id],needCheck=!diag&&!T.noFb&&q.kind!=='sd',done=qs.filter(x=>qAnswered(x,T.answers[x.id])&&(!needCheck||x.kind==='sd'||T.fb[x.id])).length,pct=Math.round(100*done/n);
  const prompt=diag?'Responda com sinceridade':q.kind==='mc'?'Escolha a resposta certa':q.kind==='sd'?'Escolha a opção que mais se aproxima':'Verdadeiro ou falso?';
  const opts=q.kind==='vf'?['Verdadeiro','Falso']:(q.options||[]);
  const sel=j=>q.kind==='mc'?a===j:q.kind==='sd'?a===q.options[j]:(j===0?a===true:a===false);
- const h='<div class="tr-lhead"><button type="button" class="tr-x" data-tq-exit aria-label="Sair do teste">'+TR_IC.x+'</button><div class="tr-pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div><span class="tr-lcount">'+(T.i+1)+'/'+n+'</span></div>'
-  +tqShell('<h2 class="tr-lq">'+esc(prompt)+'</h2><p class="tr-stmt2">'+esc(q.statement)+'</p>'+opts.map((o,j)=>'<button type="button" class="tr-ch'+(sel(j)?' sel':'')+'" data-tq-sel="'+j+'" aria-pressed="'+(sel(j)?'true':'false')+'"><b>'+(j+1)+'</b><span>'+esc(String(o))+'</span></button>').join(''),
-  '<div class="tr-lfoot"><div class="tr-lfin"><button type="button" class="tr-btn ghost" data-tq-back'+(T.i===0||bz?' disabled':'')+'>Voltar</button><button type="button" class="tr-btn go" data-tq-next'+(!ok||bz?' disabled':'')+'>'+(bz?'A submeter…':last?'Submeter':'Continuar')+'</button></div></div>');
- tqEl().innerHTML=h;const b=tqEl().querySelector('.tr-lbody');if(b)b.scrollTop=0}
+ const lock=!!fb||!!T.checking;
+ const chs=opts.map((o,j)=>{const s=sel(j);return '<button type="button" class="tr-ch'+(fb?(s?(fb.correct?' ok':' bad'):''):(s?' sel':''))+'" data-tq-sel="'+j+'" aria-pressed="'+(s?'true':'false')+'"'+(lock?' disabled':'')+'><b>'+(j+1)+'</b><span>'+esc(String(o))+'</span></button>'}).join('');
+ let foot;const nextLbl=last?'Submeter':'Continuar';
+ if(fb){const good=!!fb.correct,mm=MAT.find(x=>x.id===T.id)||{},cl=mm.closesAt?Date.parse(mm.closesAt):0;
+  foot='<div class="tr-lfoot '+(good?'ok':'bad')+'"><div class="tr-lfin"><div class="tr-fbmsg"><span class="tr-fbic">'+(good?TR_IC.check:TR_IC.x)+'</span><div><strong>'+(good?'Certo!':'Resposta errada')+'</strong>'+(good?'':'<div class="tr-exp">'+(cl&&cl>Date.now()?'A resposta certa fica disponível depois da data de fecho do teste.':'Veja a correcção no fim do teste.')+'</div>')+'</div></div><button type="button" class="tr-btn '+(good?'ok':'bad')+'" data-tq-next'+(bz?' disabled':'')+'>'+(bz?'A submeter…':nextLbl)+'</button></div></div>'}
+ else if(needCheck){foot='<div class="tr-lfoot"><div class="tr-lfin"><button type="button" class="tr-btn ghost" data-tq-back'+(T.i===0||T.checking?' disabled':'')+'>Voltar</button><button type="button" class="tr-btn go" data-tq-check'+(!ok||T.checking?' disabled':'')+'>'+(T.checking?'A verificar…':'Verificar')+'</button></div></div>'}
+ else{foot='<div class="tr-lfoot"><div class="tr-lfin"><button type="button" class="tr-btn ghost" data-tq-back'+(T.i===0||bz?' disabled':'')+'>Voltar</button><button type="button" class="tr-btn go" data-tq-next'+(!ok||bz?' disabled':'')+'>'+(bz?'A submeter…':nextLbl)+'</button></div></div>'}
+ tqEl().innerHTML='<div class="tr-lhead"><button type="button" class="tr-x" data-tq-exit aria-label="Sair do teste">'+TR_IC.x+'</button><div class="tr-pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div><span class="tr-lcount">'+(T.i+1)+'/'+n+'</span></div>'
+  +tqShell('<h2 class="tr-lq">'+esc(prompt)+'</h2><p class="tr-stmt2">'+esc(q.statement)+'</p>'+chs,foot);
+ const bd=tqEl().querySelector('.tr-lbody');if(bd)bd.scrollTop=0}
+async function tqCheck(){
+ const T=TEST_CUR;if(!T||!T.data||T.checking)return;const q=(T.data.questions||[])[T.i||0];if(!q||T.fb[q.id])return;
+ T.checking=true;tqDraw();
+ try{const r=await SB.rpc('av_check_test_answer',{p_material:T.id,p_question:q.id,p_answer:T.answers[q.id]});
+  if(r.error)throw r.error;const c=r.data&&r.data.correct;
+  if(c===true||c===false)T.fb[q.id]={correct:c};else T.fb[q.id]={correct:null,neutral:true}}
+ catch(e){const m=String((e&&e.message)||e||'');
+  if(/could not find|does not exist|not found|PGRST202|42883/i.test(m+(e&&e.code||'')))T.noFb=true;else alert('Não foi possível verificar a resposta: '+m)}
+ finally{T.checking=false;if(TEST_CUR===T)tqDraw()}}
 function tqResult(){
  const T=TEST_CUR,d=T.data,mm=MAT.find(x=>x.id===T.id)||{},diag=d.purpose==='diagnostico'||mm.testPurpose==='diagnostico'||d.score==null,t=d.total||0,c=d.correct||0,nq=(d.review&&d.review.length)||t;
  tqShow();
  const grid=diag?'<div class="a"><small>PERGUNTAS</small><b>'+nq+'</b></div><div class="b"><small>RESPONDIDAS</small><b>'+nq+'</b></div><div class="c"><small>NOTA</small><b>Sem nota</b></div>'
   :'<div class="a"><small>NOTA</small><b>'+fmtNota(d.score)+'/20</b></div><div class="b"><small>CERTAS</small><b>'+c+'/'+t+'</b></div><div class="c"><small>PRECISÃO</small><b>'+(t?Math.round(100*c/t):0)+'%</b></div>';
  const msg=diag?'As suas respostas foram registadas. Veja a seguir o diagnóstico das competências.':(d.review?'Veja a seguir a correcção pergunta a pergunta.':'A correcção detalhada fica disponível depois da data de fecho do teste.');
- tqEl().innerHTML=tqShell('<div class="tr-res"><div class="tr-trophy">'+TR_IC.trophy+'</div><h2>'+(diag?'Diagnóstico concluído!':'Teste concluído!')+'</h2><div class="tr-rgrid">'+grid+'</div><p class="muted">'+msg+'</p></div>',
-  '<div class="tr-lfoot ok"><div class="tr-lfin"><span></span><button type="button" class="tr-btn ok" data-tq-end>'+(diag?'Ver o meu diagnóstico':'Continuar')+'</button></div></div>')}
+ tqEl().innerHTML=tqShell('<div class="tr-res"><h2>'+(diag?'Diagnóstico concluído!':'Teste concluído!')+'</h2><div class="tr-rgrid">'+grid+'</div><p class="muted">'+msg+'</p></div>',
+  '<div class="tr-lfoot ok"><div class="tr-lfin"><span></span><button type="button" class="tr-btn ok" data-tq-end>'+(diag?'Ver o meu diagnóstico':d.review?'Ver correcção':'Ver resultado')+'</button></div></div>')}
 document.addEventListener('click',e=>{
- const b=e.target.closest&&e.target.closest('[data-tq-sel],[data-tq-next],[data-tq-back],[data-tq-exit],[data-tq-start],[data-tq-later],[data-tq-end]');
+ const b=e.target.closest&&e.target.closest('[data-tq-sel],[data-tq-next],[data-tq-back],[data-tq-check],[data-tq-exit],[data-tq-start],[data-tq-later],[data-tq-end]');
  if(!b||b.disabled)return;const T=TEST_CUR;
  if(b.hasAttribute('data-tq-later')){TEST_CUR=null;tqHide();return}
  if(!T)return;
@@ -1146,7 +1162,8 @@ document.addEventListener('click',e=>{
  if(b.hasAttribute('data-tq-start'))return startTest();
  if(b.hasAttribute('data-tq-exit')){closeTest().then(()=>{if(!TEST_CUR)tqHide()});return}
  const qs=(T.data&&T.data.questions)||[];if(!qs.length||(T.busy&&T.phase==='review'))return;
- if(b.hasAttribute('data-tq-sel')){const q=qs[T.i||0],j=Number(b.dataset.tqSel);T.answers[q.id]=q.kind==='mc'?j:q.kind==='sd'?q.options[j]:j===0;return tqDraw()}
+ if(b.hasAttribute('data-tq-check'))return tqCheck();
+ if(b.hasAttribute('data-tq-sel')){const q=qs[T.i||0],j=Number(b.dataset.tqSel);if(T.fb&&T.fb[q.id])return;T.answers[q.id]=q.kind==='mc'?j:q.kind==='sd'?q.options[j]:j===0;return tqDraw()}
  if(b.hasAttribute('data-tq-back')){T.i=Math.max(0,(T.i||0)-1);return tqDraw()}
  if(b.hasAttribute('data-tq-next')){if((T.i||0)<qs.length-1){T.i=(T.i||0)+1;tqDraw()}else{T.phase='review';submitTest().finally(()=>{if(TEST_CUR===T&&T.data&&!T.data.done)tqDraw()})}}
 });
