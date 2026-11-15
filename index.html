@@ -576,7 +576,7 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
 <script>
 (()=>{'use strict';
 if(!window.supabase){const m=document.getElementById('loginMsg');if(m)m.textContent='Não foi possível carregar o serviço de autenticação. Verifique a ligação à internet e actualize a página.';return}
-const AREAS=['Gestão Financeira e Tesouraria','Marketing, Prospecção e CRM','Empreendedorismo e Modelo de Negócio','Gestão Estratégica e Liderança','Gestão de Equipas, Processos e KPIs'];
+const AREAS=['Empreendedorismo e Modelo de Negócio','Marketing, Prospecção e CRM','Gestão Financeira e Tesouraria','Gestão de Equipas, Processos e KPIs','Gestão Estratégica e Liderança'];
 const LEGACY_AREAS={'Finanças e Investimentos':'Gestão Financeira e Tesouraria','Marketing e Vendas':'Marketing, Prospecção e CRM','Negócios':'Empreendedorismo e Modelo de Negócio','Oratória':'Gestão Estratégica e Liderança','Liderança':'Gestão Estratégica e Liderança'};
 const normArea=a=>LEGACY_AREAS[a]||a;
 const normAreas=l=>[...new Set((Array.isArray(l)?l:[]).map(normArea))];
