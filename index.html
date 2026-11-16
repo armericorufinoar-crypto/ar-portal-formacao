@@ -366,6 +366,8 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 .mk-flist{display:grid;gap:8px}.mk-fi{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:12px 14px}.mk-fa{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 @media(max-width:900px){.mk-two{grid-template-columns:1fr}.mk-res{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.mk-grid,.mk-g3{grid-template-columns:1fr}.mk-row{grid-template-columns:1fr 120px}.mk-row .linkdel{grid-column:1/-1;justify-self:start}.mk-exb{padding-left:14px}.mk-in input{font-size:16px}.mk-row>input{font-size:16px}}
+.mk-tabs .mk-flink{border:0;background:transparent;text-decoration:underline;margin-left:auto;color:#6c7078}.mk-tabs .mk-flink.active{background:transparent;color:var(--ink)}
+.mk-det{margin-top:14px}.mk-det summary{cursor:pointer;font-weight:800;font-size:13px;list-style:none}.mk-det summary::-webkit-details-marker{display:none}.mk-det summary:before{content:"▸ ";color:var(--red)}.mk-det[open] summary:before{content:"▾ "}.mk-det[open] summary{margin-bottom:10px}
 .ct-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}.ct-topr{display:flex;gap:8px;flex-wrap:wrap}
 .ct-seg{display:inline-flex;background:#eceef1;border-radius:999px;padding:3px}.ct-seg button{border:0;background:transparent;border-radius:999px;padding:8px 14px;font-size:12px;font-weight:700;color:#42464e}.ct-seg button.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px #1018281f}
 .ct-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}.ct-bar input{flex:1;min-width:200px;max-width:340px;border:1px solid #d9dce1;border-radius:10px;padding:9px 12px;background:#fff}.ct-flt{display:flex;gap:6px;flex-wrap:wrap}
@@ -380,6 +382,15 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 .ct-m{display:flex;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;margin:10px 0;background:#fff}.ct-m.ok{border-color:#bfe3d0;background:#f7fcf9}.ct-mk{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#eceef1;font-size:12px;font-weight:800}.ct-m.ok .ct-mk{background:var(--green);color:#fff}.ct-mb{min-width:0;flex:1}.ct-mb p{margin:4px 0 8px;font-size:13px;color:#42464e}
 .ct-ov{position:fixed;inset:0;background:#101114a8;z-index:80;display:flex;align-items:center;justify-content:center;padding:16px}.ct-mbox{width:min(560px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:16px;padding:22px}.ct-mbox h2{margin:0 0 6px;font-size:19px}.ct-mg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ct-mbox .field{margin-bottom:12px}.ct-mbox .field input,.ct-mbox .field select{width:100%;border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;background:#fff}.ct-mf{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
 @media(max-width:760px){.ct-board{grid-auto-columns:84%}.ct-mg{grid-template-columns:1fr}.ct-fr{grid-template-columns:96px 1fr 24px}.ct-fv{display:none}.ct-bar input{max-width:none}.ct-mbox .field input,.ct-mbox .field select,.ct-sel,.ct-bar input{font-size:16px}}
+.ct-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 12px}.ct-strip>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}.ct-strip span{display:block;font-size:11px;color:var(--muted);font-weight:600}.ct-strip strong{display:block;font-size:16px;letter-spacing:-.01em;margin-top:2px;overflow-wrap:anywhere}
+.ct-note{margin:0 0 10px}.ct-more{margin-top:8px}.ct-more summary{cursor:pointer;font-size:11px;font-weight:700;color:#6c7078;list-style:none}.ct-more summary::-webkit-details-marker{display:none}.ct-more[open] summary{margin-bottom:6px}.ct-card .ct-acts{margin-top:6px}
+@media(max-width:760px){.ct-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.ct-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.ct-strip>div:nth-child(2),.ct-strip>div:nth-child(4){display:none}.ct-strip>div{padding:8px 12px}}
+.pr-intro h2{margin:0 0 4px;font-size:20px}.pr-intro p{margin:0 0 16px;color:var(--muted);font-size:14px;max-width:640px}
+.pr-cards{display:grid;gap:12px;max-width:760px}.pr-card{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);transition:border-color .15s,transform .15s}.pr-card:hover,.pr-card:focus-visible{border-color:var(--red);transform:translateY(-1px)}
+.pr-n{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#fbeaec;color:var(--red);font-weight:800}.pr-b{flex:1;min-width:0;display:grid;gap:3px}.pr-b strong{font-size:16px}.pr-b span{font-size:13px;color:#42464e}.pr-b em{font-style:normal;font-size:11px;color:var(--muted)}.pr-go{flex:none;font-size:12px;font-weight:800;color:var(--red)}
+.pr-bar{display:flex;align-items:center;gap:12px;margin:0 0 14px}.pr-bar button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:700}.pr-bar strong{font-size:15px}
+@media(max-width:560px){.pr-card{padding:14px}.pr-go{display:none}}
 </style>
 </head><body>
 <style>[data-invite]{display:none!important}#loginBox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fcfbf9;z-index:50}#loginBox form{background:#fff;padding:28px;border-radius:12px;width:min(92vw,360px);box-shadow:0 8px 30px #0002;display:grid;gap:12px}#loginMsg{color:#b42318;font-size:.9rem;min-height:1.2em}#logoutBtn{position:fixed;top:10px;right:12px;z-index:20}/* v12: formatação, anexos estilo Facebook, edição */
@@ -584,13 +595,12 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
 <section class="page hidden" id="page-treino"><div class="pagehead"><div><div class="eyebrow">Treino e níveis</div><h1>Turmas e Treinos</h1><p>Crie a turma e os níveis, construa as sessões e preencha o banco de treino com os mesmos temas.</p></div></div><div class="tr-tabs" id="trTabs"><button type="button" class="active" data-tr-tab="diag">1 · Diagnóstico inicial</button><button type="button" data-tr-tab="sessions">2 · Sessões e materiais</button><button type="button" data-tr-tab="levels">3 · Turmas e níveis</button><button type="button" data-tr-tab="bank">4 · Treino</button></div><div id="trAdminBody"></div><div id="trSessBody" class="hidden"><div class="notice" style="margin-bottom:12px">Passo 2: construa as sessões, cada uma ligada a um nível — materiais, testes e ligações. O <strong>título da sessão</strong> é o tema que depois usa no Banco de treino e nas aulas da turma. As perguntas dos testes não podem repetir-se no treino.</div><div class="actions" style="margin-bottom:12px"><button class="btn" id="addSessionBtn">+ Criar sessão</button></div><div class="card"><div class="toolbar"><select id="sessionFilter"><option value="">Todas as áreas</option></select><select id="sessionStatusFilter"><option value="">Todas as datas</option><option value="upcoming">Por realizar</option><option value="past">Realizadas</option></select></div><div id="sessionCards"></div></div></div><div id="trBankBody" class="hidden"></div><div id="trDiagBody" class="hidden"></div></section>
 <section class="page hidden" id="page-pay"><div class="pagehead"><div><div class="eyebrow">Controlo financeiro</div><h1>Pagamentos</h1><p>Parcelas, pedidos de pagamento, comprovativos e facturas internas dos formandos.</p></div><button class="btn" id="payGenBtn">+ Gerar parcelas</button></div><div id="payAdminMsg"></div><div class="paytabs" id="payTabs"><button type="button" data-pt="panel" class="active">Painel</button><button type="button" data-pt="confirm">A confirmar <span class="tag warn hidden" id="payCnt">0</span></button><button type="button" data-pt="pro">Parcelas</button><button type="button" data-pt="inv">Facturas</button><button type="button" data-pt="plans">Planos</button><button type="button" data-pt="set">Definições</button></div><div id="payBody"></div></section>
 </main></div></div>
-<div id="studentView" class="hidden"><header class="studenthead"><div class="student"><div class="studenttop"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>ESPAÇO DO FORMANDO</small></span></div><div class="topicons" data-topicons></div></div></div></header><nav class="stnav" id="stNav"><button type="button" class="active" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="sim">Simulador</button><button type="button" data-st-tab="crmt">CRM de treino</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button><button type="button" data-st-tab="billing">Facturação</button><button type="button" data-st-tab="profile">Perfil</button></nav><main class="student"><div class="pagehead" style="margin-top:25px"><div><div class="eyebrow">Área reservada</div><h1 id="studentName">Bem-vindo</h1><p id="studentMeta"></p></div></div>
+<div id="studentView" class="hidden"><header class="studenthead"><div class="student"><div class="studenttop"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>ESPAÇO DO FORMANDO</small></span></div><div class="topicons" data-topicons></div></div></div></header><nav class="stnav" id="stNav"><button type="button" class="active" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="prat">Prática</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button><button type="button" data-st-tab="billing">Facturação</button><button type="button" data-st-tab="profile">Perfil</button></nav><main class="student"><div class="pagehead" style="margin-top:25px"><div><div class="eyebrow">Área reservada</div><h1 id="studentName">Bem-vindo</h1><p id="studentMeta"></p></div></div>
 <section data-st-page="materials"><div class="grid stats"><div class="stat"><div class="label">Sessões</div><strong id="stSessionCount">0</strong></div><div class="stat"><div class="label">Presenças</div><strong id="stAttendance">0%</strong></div><div class="stat"><div class="label">Média prática (0–20)</div><strong id="stScore">—</strong></div><div class="stat"><div class="label">Materiais</div><strong id="stMaterials">0</strong></div></div><div class="card"><div class="cardhead"><h2>Materiais por área</h2><span class="muted smalltext" id="stMatHint">Abra uma pasta</span></div><div class="tilegrid" id="stTiles"></div><div class="matpanel hidden" id="stMatPanel"></div></div></section>
 <section data-st-page="diagnosis" class="hidden"><div class="card"><div class="cardhead"><h2>Diagnóstico de competências</h2><span class="muted smalltext">Separado da classificação oficial</span></div><p class="muted smalltext">O diagnóstico mostra evidências das respostas nos testes. Não altera a nota de certificação, calculada com 60% de testes automáticos e 40% de avaliação prática do formador.</p><div id="stDiagnosis"><div class="empty">O diagnóstico será apresentado quando existirem tentativas com perguntas associadas a competências e a migração estiver instalada.</div></div></div></section><section data-st-page="pauta" class="hidden"><div class="card"><div class="cardhead"><h2>Pauta</h2><span class="muted smalltext" id="studentPautaWeights">Escala 0–20 · Testes 60% / Prática 40%</span></div><div id="stPauta"></div></div></section>
 <section data-st-page="forum" class="hidden"><div class="grid feedgrid"><div class="card"><div class="cardhead"><h2>Publicações da formação</h2></div><form id="stForumForm" class="composer"><textarea id="stForumText" maxlength="1500" rows="2" placeholder="Escreva a sua dúvida, pergunta, contribuição ou anotação…" aria-label="Nova publicação"></textarea><div class="composerbar"><label class="attbtn" title="Anexar ficheiro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2l-8.6 8.6a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/></svg><input type="file" id="stForumFile" hidden></label><span class="attchip hidden" id="stForumChip"></span><button class="btn small">Publicar</button></div></form><div class="feed" id="stForumPosts"></div></div><div class="card"><div class="cardhead"><h2>Feedback da sessão</h2></div><form id="stFeedbackForm"><div class="field"><label>Sessão</label><select id="stFeedbackSession" required></select></div><div class="field" style="margin-top:12px"><label>Como avalia esta sessão?</label><select id="stFeedbackRating" required><option value="">Seleccione</option><option value="5">5 — Excelente</option><option value="4">4 — Muito boa</option><option value="3">3 — Boa</option><option value="2">2 — Precisa de melhorar</option><option value="1">1 — Insatisfatória</option></select></div><div class="field" style="margin-top:12px"><label>Comentário / sugestão</label><textarea id="stFeedbackText" maxlength="1200" placeholder="O que foi útil? O que poderia melhorar?"></textarea></div><button class="btn" style="margin-top:12px">Enviar feedback</button></form><div id="stFeedbackHistory" style="margin-top:15px"></div></div></div></section>
 <section data-st-page="billing" class="hidden"><div id="payStMsg"></div><div id="payStBody"></div></section>
-<section data-st-page="train" class="hidden"><div id="trStBody"></div></section><section data-st-page="sim" class="hidden"><div id="mkRoot"></div></section>
-<section data-st-page="crmt" class="hidden"><div id="ctRoot"></div></section>
+<section data-st-page="train" class="hidden"><div id="trStBody"></div></section><section data-st-page="prat" class="hidden"><div id="prRoot"><div id="prHome"></div><div id="prTool" class="hidden"><div class="pr-bar"><button type="button" data-pr-back>← Prática</button><strong id="prTitle"></strong></div><div id="mkRoot" class="hidden"></div><div id="ctRoot" class="hidden"></div></div></div></section>
 <section data-st-page="profile" class="hidden"><div class="profgrid"><div class="card"><div class="cardhead"><h2>Os meus dados</h2></div><div class="kv" id="stProfile"></div></div><div class="card"><div class="cardhead"><h2>Participação</h2></div><div class="kv" id="stProfile2"></div></div><div class="card" id="trProfileCard" style="grid-column:1/-1;display:none"></div></div></section>
 <p class="footer-note">Formação · Área do formando</p></main></div>
 <div id="msgPanel" class="dropdown hidden" role="dialog" aria-label="Mensagens privadas"><div class="ph"><button type="button" id="msgBack" class="hidden" aria-label="Voltar">←</button><strong id="msgTitle">Mensagens privadas</strong><button type="button" data-close-panels aria-label="Fechar">✕</button></div><div class="msgbody"><div class="chatlist" id="msgList"></div><div id="msgThread" class="hidden"><div class="chatmsgs" id="msgMsgs"></div><form id="msgForm" class="chatform"><input id="msgText" required maxlength="1200" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem privada"><button class="btn small">Enviar</button></form></div></div></div>
@@ -1462,7 +1472,7 @@ function renderBell(){const ev=notifEvents().slice(0,25),seen=ts(SEEN.notif);$('
 function updateBadges(){const set=(k,n)=>document.querySelectorAll('[data-badge="'+k+'"]').forEach(el=>{el.textContent=n>9?'9+':String(n);el.classList.toggle('hidden',!n)});set('msg',unreadMsgs());set('bell',unreadNotifs())}
 
 /* --- topo: ícones, painéis e menu do utilizador --- */
-function renderTopIcons(){if(!PROFILE||!USER)return;const staff=isStaffUser(),me=staff?null:staffById(PROFILE.staff_id),name=staff?(PROFILE.display_name||USER.email||'Equipa'):(me?.name||PROFILE.display_name||USER.email||'Formando'),menu=staff?'':'<button type="button" data-st-tab="profile">Perfil</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="sim">Simulador</button><button type="button" data-st-tab="crmt">CRM de treino</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button>';
+function renderTopIcons(){if(!PROFILE||!USER)return;const staff=isStaffUser(),me=staff?null:staffById(PROFILE.staff_id),name=staff?(PROFILE.display_name||USER.email||'Equipa'):(me?.name||PROFILE.display_name||USER.email||'Formando'),menu=staff?'':'<button type="button" data-st-tab="profile">Perfil</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="prat">Prática</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button>';
 const html=`<button type="button" class="iconbtn" data-act="msg" aria-label="Mensagens privadas">${ICO_MSG}<span class="badge hidden" data-badge="msg"></span></button><button type="button" class="iconbtn" data-act="bell" aria-label="Notificações">${ICO_BELL}<span class="badge hidden" data-badge="bell"></span></button><div class="avwrap"><button type="button" class="avbtn" data-act="av" aria-label="Menu do utilizador">${esc(initials(name))}</button><div class="avmenu hidden"><div class="who"><strong>${esc(name)}</strong><br>${esc(USER.email||'')}<br>${esc(ROLE_LABEL[PROFILE.role]||'')}</div>${menu}<button type="button" data-act="logout">Sair</button></div></div>`;document.querySelectorAll('[data-topicons]').forEach(el=>{el.innerHTML=html});updateBadges()}
 function closePanels(){const wasBell=!$('bellPanel').classList.contains('hidden');$('msgPanel').classList.add('hidden');$('bellPanel').classList.add('hidden');document.querySelectorAll('.avmenu').forEach(m=>m.classList.add('hidden'));if(wasBell)markNotifSeen()}
 function toggleMsg(){const open=$('msgPanel').classList.contains('hidden');closePanels();if(open){$('msgPanel').classList.remove('hidden');if(isStaffUser())MSG_VIEW='list';renderMsgPanel()}}
@@ -1519,7 +1529,7 @@ function drawDiagNav(box){box=box||$('stDiagnosis');if(!box)return;const n=DIAG_
 document.addEventListener('click',e=>{const b=e.target.closest('[data-diag-nav]'),g=e.target.closest('[data-diag-go]');if(!b&&!g)return;DIAG_I=b?DIAG_I+Number(b.dataset.diagNav):Number(g.dataset.diagGo);drawDiagNav();$('stDiagnosis').scrollIntoView({block:'nearest'})});
 document.addEventListener('keydown',e=>{if(ST_TAB!=='diagnosis'||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;const t=e.target&&e.target.tagName;if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT'||document.querySelector('.modal.open'))return;if(DIAG_PANELS.length<2)return;DIAG_I+=e.key==='ArrowRight'?1:-1;drawDiagNav()});
 async function drawStudentDiagnosis(){const box=$('stDiagnosis');if(!box)return;const mine=ATT.filter(a=>a.staffId===PROFILE.staff_id).sort((a,b)=>ts(b.at)-ts(a.at));if(!mine.length){box.innerHTML='<div class="empty">Ainda não existem testes submetidos para gerar o diagnóstico.</div>';return}let out=[];for(const a of mine){const m=MAT.find(x=>x.id===a.materialId);if(!m)continue;if(m.testPurpose==='diagnostico'){try{const p=await fetchInitialProfile(a.materialId);if(p){out.push({label:(m.title||'Diagnóstico')+' · '+fmtDT(a.at),html:initialProfileHTML(p)});continue}}catch(e){out.push({label:(m.title||'Diagnóstico')+' · '+fmtDT(a.at),html:'<div class="notice">O diagnóstico inicial foi submetido, mas não foi possível reconstruir agora o perfil individual. Abra «Ver a minha resposta» e consulte o separador Diagnóstico.</div>'});continue}}if(!COMP_OK)continue;try{const comps=await fetchStudentDiagnosis(a.materialId);if(comps.length){DIAG_CACHE=comps;let items=[];try{const g=await SB.rpc('av_get_test',{p_material:a.materialId});if(!g.error&&g.data&&Array.isArray(g.data.review))items=g.data.review}catch(_){}const title=m.title||'Teste',when=fmtDT(a.at);out.push({label:title+' · '+when,html:`<div class="matpanel"><h3>${esc(title)} · ${esc(when)}</h3>${diagActionsHTML(a.id,comps,title,when,items)}${diagnosisRowsHTML(comps,items)}<h4>Recomendações</h4>${recommendationRowsHTML(comps,items)}</div>`})}}catch(e){}}out.reverse();const keep=DIAG_PANELS[DIAG_I]&&DIAG_PANELS[DIAG_I].key;DIAG_PANELS=out;const k=out.findIndex(x=>x.label===keep);DIAG_I=k>=0?k:out.length-1;drawDiagNav(box)}
- async function stTab(t){ST_TAB=t;document.querySelectorAll('[data-st-page]').forEach(p=>p.classList.toggle('hidden',p.dataset.stPage!==t));document.querySelectorAll('#stNav [data-st-tab]').forEach(b=>b.classList.toggle('active',b.dataset.stTab===t));if(t==='diagnosis')await drawStudentDiagnosis();if(t==='billing')payStudentOpen();if(t==='train')trStudentOpen();if(t==='sim'&&window.mkOpen)mkOpen();if(t==='crmt'&&window.ctOpen)ctOpen();if(t==='forum'){const f=$('stForumPosts');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}window.scrollTo({top:0})}
+ async function stTab(t){ST_TAB=t;document.querySelectorAll('[data-st-page]').forEach(p=>p.classList.toggle('hidden',p.dataset.stPage!==t));document.querySelectorAll('#stNav [data-st-tab]').forEach(b=>b.classList.toggle('active',b.dataset.stTab===t));if(t==='diagnosis')await drawStudentDiagnosis();if(t==='billing')payStudentOpen();if(t==='train')trStudentOpen();if(t==='prat'&&window.prOpen)prOpen();if(t==='forum'){const f=$('stForumPosts');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}window.scrollTo({top:0})}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act]');if(a){const k=a.dataset.act;if(k==='msg')toggleMsg();else if(k==='bell')toggleBell();else if(k==='av'){const m=a.parentElement.querySelector('.avmenu'),open=m.classList.contains('hidden');closePanels();if(open)m.classList.remove('hidden')}else if(k==='logout')logout();return}
 if(e.target.closest('[data-close-panels]')){closePanels();return}
 const mo=e.target.closest('[data-msg-open]');if(mo){PRIV_ACTIVE=mo.dataset.msgOpen;MSG_VIEW='thread';renderMsgPanel();$('msgText').focus();return}
@@ -2732,16 +2742,15 @@ const root=()=>document.getElementById('mkRoot');
 const g=id=>document.getElementById(id);
 
 /* ---------- Estrutura ---------- */
-const TABS=[['calc','Calculadora'],['custo','Custo e preço'],['eq','Equilíbrio e cenários'],['ex','Exercícios'],['fichas','Fichas guardadas']];
+const TABS=[['calc','1 · Calcular'],['custo','2 · O meu produto'],['ex','3 · Exercícios']];
 function shell(){
- root().innerHTML='<div class="mk-tabs" role="tablist">'+TABS.map(t=>'<button type="button" role="tab" data-mk-tab="'+t[0]+'">'+t[1]+'</button>').join('')+'</div>'+
+ root().innerHTML='<div class="mk-tabs" role="tablist">'+TABS.map(t=>'<button type="button" role="tab" data-mk-tab="'+t[0]+'">'+t[1]+'</button>').join('')+'<button type="button" class="mk-flink" data-mk-tab="fichas">Fichas guardadas</button></div>'+
  '<div id="mkPanel"></div>';draw()}
 function draw(){
  root().querySelectorAll('[data-mk-tab]').forEach(b=>{const on=b.dataset.mkTab===S.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',on)});
  const p=g('mkPanel');
  if(S.tab==='calc'){p.innerHTML=calcHTML();calcOut()}
- else if(S.tab==='custo'){p.innerHTML=custoHTML();custoOut()}
- else if(S.tab==='eq'){p.innerHTML=eqHTML();eqOut()}
+ else if(S.tab==='custo'){p.innerHTML=custoHTML();custoOut();eqOut()}
  else if(S.tab==='ex'){p.innerHTML=exHTML();exLoad()}
  else{p.innerHTML=fichasHTML();fichasLoad()}}
 
@@ -2749,7 +2758,7 @@ function draw(){
 function calcHTML(){const c=S.calc;
  const f=(k,l,h,suf)=>'<div class="field mk-f'+(c.driver===k?' mk-drv':'')+'"><label for="mkc_'+k+'">'+l+'</label><div class="mk-in"><input id="mkc_'+k+'" data-mk-c="'+k+'" inputmode="decimal" autocomplete="off" value="'+esc(c[k])+'" placeholder="'+h+'"><span>'+suf+'</span></div></div>';
  return '<div class="card"><div class="cardhead"><h2>Calculadora de markup e margem</h2></div>'+
- '<p class="muted smalltext">Escreva o custo e depois mude <strong>um</strong> dos três campos (markup, margem ou preço): os outros dois actualizam-se sozinhos. O campo que está a usar fica destacado.</p>'+
+ '<p class="muted smalltext">Escreva o custo e mude <strong>um</strong> dos outros três campos: os restantes actualizam-se.</p>'+
  '<div class="mk-grid">'+f('custo','Custo por unidade','0','Kz')+f('markup','Markup (sobre o custo)','0','%')+f('margem','Margem (sobre o preço)','0','%')+f('preco','Preço de venda','0','Kz')+'</div>'+
  '<div id="mkCalcOut"></div></div>'}
 function calcOut(){const c=S.calc,custo=num(c.custo),val=num(c[c.driver==='custo'?'markup':c.driver]);const o=g('mkCalcOut');
@@ -2769,7 +2778,7 @@ function custoHTML(){const m=S.m;
  '<button type="button" class="btn secondary small" data-mk-add>+ Adicionar custo</button>'+
  '<h3 class="mk-h">Custos fixos e vendas</h3><div class="mk-grid">'+f('fixos','Custos fixos por mês','Kz')+f('vendas','Unidades vendidas por mês','un.')+'</div>'+
  '<h3 class="mk-h">Percentagens do preço</h3><div class="mk-grid mk-g3">'+f('imposto','Impostos e taxas','%')+f('comissao','Comissão de venda','%')+f('margem','Margem pretendida','%','30')+'</div></div>'+
- '<div class="card" id="mkCustoOut"></div></div>'}
+ '<div><div class="card" id="mkCustoOut"></div><details class="card mk-det"><summary>E se der desconto? Ponto de equilíbrio</summary><div id="mkEqOut"></div></details></div></div>'}
 function custoOut(){const m=S.m,mo=model(m),o=g('mkCustoOut');
  let h='<div class="cardhead"><h2>Resultado</h2></div>';
  if(mo.base<=0){o.innerHTML=h+'<div class="empty">Preencha pelo menos um custo directo para ver o preço.</div>';return}
@@ -2780,18 +2789,17 @@ function custoOut(){const m=S.m,mo=model(m),o=g('mkCustoOut');
  if(mo.warn)h+='<div class="mk-note mk-bad">'+esc(mo.warn)+'</div>';
  else h+='<div class="mk-res"><div><span>Preço mínimo (margem 0%)</span><strong>'+kz(mo.pMin)+'</strong></div><div><span>Preço com a margem pretendida</span><strong>'+kz(mo.pTar)+'</strong></div><div><span>Markup sobre o custo total</span><strong>'+pc(mo.markup)+'</strong></div><div><span>Lucro por mês</span><strong>'+kz(mo.lucroMes)+'</strong></div></div>'+
  '<p class="muted smalltext">Impostos, comissão e margem são percentagens do <strong>preço</strong>: por isso o preço é o custo dividido por (1 − '+pc((mo.imp+mo.com+mo.mg)*100)+'), e não o custo multiplicado por um markup.</p>'+
- '<div class="mk-act"><button type="button" class="btn small" data-mk-save>Guardar ficha</button><button type="button" class="btn secondary small" data-mk-go="eq">Ver equilíbrio e cenários →</button></div>';
+ '<div class="mk-act"><button type="button" class="btn small" data-mk-save>Guardar ficha</button></div>';
  o.innerHTML=h}
 
 /* ---------- 3. Equilíbrio e cenários ---------- */
-function eqHTML(){return '<div class="card"><div class="cardhead"><h2>Ponto de equilíbrio e cenários de desconto</h2></div><div id="mkEqOut"></div></div>'}
-function eqOut(){const m=S.m,mo=model(m),o=g('mkEqOut');
- if(!mo.pTar||mo.base<=0){o.innerHTML='<div class="empty">Preencha primeiro o separador <strong>Custo e preço</strong>. Os cenários usam esse preço.</div><button type="button" class="btn small" data-mk-go="custo">Ir para Custo e preço</button>';return}
+function eqOut(){const m=S.m,mo=model(m),o=g('mkEqOut');if(!o)return;
+ if(!mo.pTar||mo.base<=0){o.innerHTML='<div class="empty">Preencha os custos acima para ver o equilíbrio e o efeito dos descontos.</div>';return}
  const sc=scenarios(m,mo);
  let h='<div class="mk-res"><div><span>Preço de referência</span><strong>'+kz(mo.pTar)+'</strong></div><div><span>Contribuição por unidade</span><strong>'+kz(mo.contrib)+'</strong></div><div><span>Equilíbrio (unid./mês)</span><strong>'+un(mo.be)+'</strong></div><div><span>Vendas actuais</span><strong>'+(mo.units>0?un(mo.units):'—')+'</strong></div></div>'+
  '<p class="muted smalltext">Contribuição = preço − impostos e comissão − custos directos. É o que cada unidade deixa para pagar os custos fixos ('+kz(mo.fixos)+' por mês).</p>'+
- '<h3 class="mk-h">E se der desconto?</h3><div class="mk-scroll"><table class="mk-tbl mk-sc"><thead><tr><th>Desconto</th><th>Preço</th><th>Contribuição/un.</th><th>Equilíbrio</th><th>Lucro/mês (mesmas vendas)</th><th>Unidades para igualar o lucro</th></tr></thead><tbody>'+
- sc.map((s,i)=>'<tr><td><div class="mk-in mk-sm"><input data-mk-d="'+i+'" inputmode="decimal" value="'+esc(S.m.desc[i])+'" aria-label="Desconto '+(i+1)+'"><span>%</span></div></td><td>'+kz(s.p)+'</td><td>'+(s.cm>0?kz(s.cm):'<span class="mk-badtxt">negativa</span>')+'</td><td>'+(s.be==null?'<span class="mk-badtxt">nunca</span>':un(s.be))+'</td><td>'+(s.lucro==null?'—':'<span class="'+(s.lucro<0?'mk-badtxt':'')+'">'+kz(s.lucro)+'</span>')+'</td><td>'+(s.need==null?'—':un(s.need)+(s.d>0&&s.extra!=null?' <em>(+'+pc(s.extra,0)+')</em>':''))+'</td></tr>').join('')+'</tbody></table></div>'+
+ '<h3 class="mk-h">E se der desconto?</h3><div class="mk-scroll"><table class="mk-tbl mk-sc"><thead><tr><th>Desconto</th><th>Preço</th><th>Equilíbrio</th><th>Lucro/mês</th><th>Vender para igualar o lucro</th></tr></thead><tbody>'+
+ sc.map((s,i)=>'<tr><td><div class="mk-in mk-sm"><input data-mk-d="'+i+'" inputmode="decimal" value="'+esc(S.m.desc[i])+'" aria-label="Desconto '+(i+1)+'"><span>%</span></div></td><td>'+kz(s.p)+'</td><td>'+(s.be==null?'<span class="mk-badtxt">nunca</span>':un(s.be))+'</td><td>'+(s.lucro==null?'—':'<span class="'+(s.lucro<0?'mk-badtxt':'')+'">'+kz(s.lucro)+'</span>')+'</td><td>'+(s.need==null?'—':un(s.need)+(s.d>0&&s.extra!=null?' <em>(+'+pc(s.extra,0)+')</em>':''))+'</td></tr>').join('')+'</tbody></table></div>'+
  (mo.units>0?'':'<p class="muted smalltext">Indique as unidades vendidas por mês no separador Custo e preço para ver o lucro e as unidades necessárias.</p>')+
  '<div class="mk-note">Um desconto parece pequeno no preço mas é grande na margem: reduz a contribuição de cada unidade, e é preciso vender muito mais para ganhar o mesmo.</div>';
  o.innerHTML=h}
@@ -2813,7 +2821,7 @@ function exDraw(){const b=g('mkExBody');if(!b)return;
  if(!EX.list.length){b.innerHTML='<div class="card"><div class="cardhead"><h2>Exercícios</h2></div><div class="empty">Ainda não há exercícios publicados.</div></div>';return}
  const done=EX.list.filter(e=>exDone(e.id)).length,L={1:'Nível 1 · Conceitos',2:'Nível 2 · Negócios reais',3:'Nível 3 · Decisões'};
  let h='<div class="card"><div class="cardhead"><h2>Exercícios</h2><span class="muted smalltext">'+done+' de '+EX.list.length+' resolvidos</span></div><div class="mk-bar"><i style="width:'+Math.round(done/EX.list.length*100)+'%"></i></div>'+
- '<p class="muted smalltext">Use as outras páginas do simulador para calcular. A resposta é verificada no servidor; pode tentar mais vezes. Os exercícios são treino e não contam para a nota.</p>';
+ '<p class="muted smalltext">Pode tentar as vezes que quiser. É treino e não conta para a nota.</p>';
  [1,2,3].forEach(l=>{const xs=EX.list.filter(e=>e.level===l);if(!xs.length)return;
   h+='<h3 class="mk-h">'+L[l]+'</h3><div class="mk-exlist">'+xs.map(e=>{const a=EX.att[e.id]||{},cur=EX.cur===e.id;
    return '<div class="mk-ex'+(a.ok?' ok':'')+(cur?' open':'')+'"><button type="button" class="mk-exh" data-mk-ex="'+e.id+'" aria-expanded="'+cur+'"><span class="mk-ck">'+(a.ok?'✓':e.position)+'</span><span>'+esc(e.title)+'</span></button>'+
@@ -2836,7 +2844,7 @@ async function exCheck(id,raw,form){
  btn.disabled=false}
 
 /* ---------- 5. Fichas ---------- */
-function fichasHTML(){return '<div class="card"><div class="cardhead"><h2>Fichas de preço guardadas</h2></div><div id="mkFichas"><div class="empty">A carregar…</div></div></div>'}
+function fichasHTML(){return '<div class="card"><div class="cardhead"><h2>Fichas guardadas</h2><button type="button" class="btn secondary small" data-mk-tab="custo">← Voltar</button></div><div id="mkFichas"><div class="empty">A carregar…</div></div></div>'}
 function lsFichas(){try{const x=JSON.parse(localStorage.getItem(LS_FICHAS)||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
 async function fichasLoad(){
  try{const r=await SB.from('av_sim_pricing').select('id,name,data,created_at').order('created_at',{ascending:false});if(r.error)throw r.error;FICHAS=r.data||[];FDB=true}
@@ -2868,9 +2876,9 @@ function onInput(e){const t=e.target;
   if(k==='custo'){const d=S.calc.driver,r=calc(num(S.calc.custo),d==='custo'?'markup':d,num(S.calc[d==='custo'?'markup':d]));
    if(r)['markup','margem','preco'].forEach(f=>{if(f!==d){const el=g('mkc_'+f);S.calc[f]=String(Math.round(r[f]*100)/100).replace('.',',');if(el)el.value=S.calc[f]}})}
   save();calcOut();return}
- if(t.dataset.mkM!==undefined){S.m[t.dataset.mkM]=t.value;save();custoOut();return}
+ if(t.dataset.mkM!==undefined){S.m[t.dataset.mkM]=t.value;save();custoOut();eqOut();return}
  if(t.dataset.mkCn!==undefined){S.m.custos[+t.dataset.mkCn].n=t.value;save();return}
- if(t.dataset.mkCv!==undefined){S.m.custos[+t.dataset.mkCv].v=t.value;save();custoOut();return}
+ if(t.dataset.mkCv!==undefined){S.m.custos[+t.dataset.mkCv].v=t.value;save();custoOut();eqOut();return}
  if(t.dataset.mkD!==undefined){S.m.desc[+t.dataset.mkD]=t.value;save();const a=document.activeElement,i=t.dataset.mkD,pos=t.selectionStart;eqOut();const n=root().querySelector('[data-mk-d="'+i+'"]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}}}
 async function onClick(e){const t=e.target.closest('button');if(!t)return;
  if(t.dataset.mkTab){S.tab=t.dataset.mkTab;draw();return}
@@ -2939,11 +2947,11 @@ async function load(){
 const fail=(r,msg)=>{if(r&&r.error){toast(msg||'Não foi possível guardar. Tente de novo.');return true}return false};
 
 /* ---------- Estrutura ---------- */
-const TABS=[['quadro','Quadro'],['tarefas','Tarefas'],['funil','Funil']];
+const TABS=[['quadro','Quadro'],['tarefas','Tarefas']];
 function shell(){
  root().innerHTML='<div class="ct-top"><div class="ct-seg" role="tablist" aria-label="Modo">'+
  '<button type="button" data-ct-mode="guiado">Cenário guiado</button><button type="button" data-ct-mode="negocio">Meu negócio</button></div>'+
- '<div class="ct-topr"><button type="button" class="btn small" data-ct-new>+ Nova oportunidade</button><button type="button" class="btn secondary small" data-ct-reset>Repor cenário</button></div></div>'+
+ '<div class="ct-topr"><button type="button" class="btn small" data-ct-new>+ Nova oportunidade</button><button type="button" class="linkdel" data-ct-reset>Repor cenário</button></div></div>'+
  '<div class="mk-tabs" id="ctTabs" role="tablist"></div><div id="ctNote"></div><div id="ctPanel"></div><div id="ctModal"></div>';
  draw()}
 function draw(){
@@ -2952,13 +2960,13 @@ function draw(){
  const reset=r.querySelector('[data-ct-reset]');if(reset)reset.classList.toggle('hidden',CT.mode!=='guiado');
  const tabs=TABS.concat(CT.mode==='guiado'?[['missoes','Missões']]:[]);if(!tabs.some(t=>t[0]===CT.tab))CT.tab='quadro';
  g('ctTabs').innerHTML=tabs.map(t=>'<button type="button" role="tab" data-ct-tab="'+t[0]+'" class="'+(t[0]===CT.tab?'active':'')+'">'+t[1]+'</button>').join('');
- g('ctNote').innerHTML=CT.mode==='negocio'?'<div class="mk-note">Este é o <strong>seu</strong> espaço de treino. Só você e o formador veem estes contactos. Não escreva dados sensíveis (documentos de identificação, contas bancárias, saúde). O CRM real da empresa não é afectado.</div>':'<div class="mk-note">Cenário de treino com <strong>dados fictícios</strong>. Trate-o como um CRM real: há tarefas esquecidas, contactos duplicados e oportunidades paradas à sua espera. Pode repô-lo quando quiser.</div>';
+ g('ctNote').innerHTML=CT.mode==='negocio'?'<p class="muted smalltext ct-note">Só você e o formador veem estes contactos. Não escreva dados sensíveis (documentos, contas bancárias, saúde).</p>':'<p class="muted smalltext ct-note">Dados fictícios. Há tarefas esquecidas, duplicados e negócios parados: resolva-os na aba Missões.</p>';
  const p=g('ctPanel');
  if(CT.err){p.innerHTML='<div class="card"><div class="empty">O CRM de treino ainda não está disponível. Peça ao formador para activar o simulador.</div></div>';return}
  if(!CT.loaded){p.innerHTML='<div class="empty">A carregar…</div>';return}
  if(CT.tab==='quadro')p.innerHTML=boardHTML();
  else if(CT.tab==='tarefas')p.innerHTML=tasksHTML();
- else if(CT.tab==='funil')p.innerHTML=funnelHTML();
+
  else p.innerHTML=missionsHTML();
  modalDraw()}
 
@@ -2971,12 +2979,14 @@ function cardHTML(d){
  '<div class="ct-meta">'+esc(d.c.source||'—')+(d.c.phone?' · '+esc(d.c.phone):'')+'</div>'+(d.expected_close&&d.open?'<div class="ct-meta">Fecho previsto: '+fd(d.expected_close)+'</div>':'')+(d.stage==='PERDIDO'&&d.lost_reason?'<div class="ct-meta">Motivo: '+esc(d.lost_reason)+'</div>':'')+
  due+(badges.length?'<div class="ct-bs">'+badges.join('')+'</div>':'')+
  '<select class="ct-sel" data-ct-move="'+esc(d.id)+'" aria-label="Mover '+esc(d.c.name)+'">'+opts+'</select>'+
- '<div class="ct-acts">'+(d.open?'<button type="button" class="crm-mini primary" data-ct-touch="'+esc(d.id)+'">Contactei</button>':'')+'<button type="button" class="crm-mini" data-ct-task="'+esc(d.id)+'">+ Tarefa</button><button type="button" class="crm-mini" data-ct-edit="'+esc(d.id)+'">Editar</button><button type="button" class="crm-mini danger" data-ct-del="'+esc(d.id)+'">Eliminar</button></div></div>'}
+ '<div class="ct-acts">'+(d.open?'<button type="button" class="crm-mini primary" data-ct-touch="'+esc(d.id)+'">Contactei</button>':'')+'<button type="button" class="crm-mini" data-ct-task="'+esc(d.id)+'">+ Tarefa</button></div><details class="ct-more"><summary>Mais</summary><div class="ct-acts"><button type="button" class="crm-mini" data-ct-edit="'+esc(d.id)+'">Editar</button><button type="button" class="crm-mini danger" data-ct-del="'+esc(d.id)+'">Eliminar</button></div></details></div>'}
+function stripHTML(){const s=stats();
+ return '<div class="ct-strip"><div><span>Abertas</span><strong>'+s.open.length+'</strong></div><div><span>Valor em aberto</span><strong>'+kz(s.val(s.open))+'</strong></div><div><span>Previsão</span><strong>'+kz(s.w)+'</strong></div><div><span>Conversão</span><strong>'+(s.conv==null?'—':Math.round(s.conv)+'%')+'</strong></div></div>'}
 function boardHTML(){
  const q=CT.q.trim().toLowerCase(),vs=view().filter(d=>!q||(d.c.name+' '+(d.title||'')+' '+(d.c.phone||'')).toLowerCase().includes(q));
  const fa=CT.fa,fl=[['stalled','Paradas'],['noTask','Sem follow-up'],['dup','Duplicados']];
  const list=vs.filter(d=>!fa||d[fa]);
- return '<div class="ct-bar"><input type="search" id="ctSearch" placeholder="Pesquisar nome, serviço ou telefone" value="'+esc(CT.q)+'" aria-label="Pesquisar"><div class="ct-flt">'+fl.map(f=>'<button type="button" class="ct-chip'+(fa===f[0]?' on':'')+'" data-ct-flt="'+f[0]+'">'+f[1]+' ('+vs.filter(d=>d[f[0]]).length+')</button>').join('')+'</div></div>'+
+ return stripHTML()+'<div class="ct-bar"><input type="search" id="ctSearch" placeholder="Pesquisar nome, serviço ou telefone" value="'+esc(CT.q)+'" aria-label="Pesquisar"><div class="ct-flt">'+fl.map(f=>'<button type="button" class="ct-chip'+(fa===f[0]?' on':'')+'" data-ct-flt="'+f[0]+'">'+f[1]+' ('+vs.filter(d=>d[f[0]]).length+')</button>').join('')+'</div></div>'+
  (CT.deals.length?'':'<div class="empty">Ainda não tem oportunidades. Crie a primeira com «+ Nova oportunidade».</div>')+
  '<div class="ct-board">'+STAGES.map(s=>{const it=list.filter(d=>d.stage===s.k);return '<div class="ct-col" style="--c:'+s.c+'"><div class="ct-colh"><span>'+s.l+'</span><span class="ct-n">'+it.length+'</span></div>'+(it.length?it.map(cardHTML).join(''):'<div class="crm-empty">Vazio</div>')+'</div>'}).join('')+'</div>'}
 
@@ -2995,12 +3005,6 @@ function stats(){const vs=view(),by=k=>vs.filter(d=>d.stage===k),open=vs.filter(
  const wpn=['PROPOSTA','NEGOCIACAO'].reduce((s,k)=>s+by(k).reduce((a,d)=>a+Number(d.value||0)*ST(k).p/100,0),0);
  return{vs,by,open,val,w,won,lost,conv,wpn,stalled:vs.filter(d=>d.stalled).length,noTask:vs.filter(d=>d.noTask).length,dupGroups:dupGroups()}}
 function dupGroups(){const m={};CT.contacts.forEach(c=>{const p=String(c.phone||'').replace(/\D/g,'');if(p)m[p]=(m[p]||0)+1});return Object.values(m).filter(n=>n>1).length}
-function funnelHTML(){const s=stats(),mx=Math.max(1,...STAGES.map(x=>s.by(x.k).length));
- const reasons={};s.lost.forEach(d=>{const r=d.lost_reason||'Sem motivo';reasons[r]=(reasons[r]||0)+1});
- return '<div class="card"><div class="cardhead"><h2>O seu funil</h2></div><div class="mk-res"><div><span>Oportunidades abertas</span><strong>'+s.open.length+'</strong></div><div><span>Valor em aberto</span><strong>'+kz(s.val(s.open))+'</strong></div><div><span>Previsão (valor × probabilidade)</span><strong>'+kz(s.w)+'</strong></div><div><span>Taxa de conversão</span><strong>'+(s.conv==null?'—':Math.round(s.conv)+'%')+'</strong></div></div>'+
- '<div class="ct-fun">'+STAGES.map(x=>{const a=s.by(x.k);return '<div class="ct-fr"><span>'+x.l+' <em>'+x.p+'%</em></span><div class="ct-ft"><i style="width:'+Math.round(a.length/mx*100)+'%;background:'+x.c+'"></i></div><strong>'+a.length+'</strong><span class="ct-fv">'+kz(s.val(a))+'</span></div>'}).join('')+'</div>'+
- '<p class="muted smalltext">A taxa de conversão é Ganho ÷ (Ganho + Perdido). A previsão multiplica o valor de cada oportunidade aberta pela probabilidade da sua etapa.</p>'+
- (s.lost.length?'<h3 class="mk-h">Porque se perdem negócios</h3>'+Object.keys(reasons).map(r=>'<div class="ct-rs"><span>'+esc(r)+'</span><strong>'+reasons[r]+'</strong></div>').join(''):'')+'</div>'}
 
 /* ---------- Missões (só no cenário guiado) ---------- */
 function missionsHTML(){const s=stats(),openN=s.open.length,withT=openN-s.noTask;
@@ -3086,6 +3090,28 @@ window.ctOpen=function(){const r=root();if(!r)return;
  if(!WIRED){WIRED=true;r.addEventListener('click',onClick);r.addEventListener('change',onChange);r.addEventListener('input',onInput);r.addEventListener('submit',onSubmit);r.addEventListener('keydown',onKey)}
  if(!r.firstChild)shell();if(!CT.loaded&&!CT.loading)load();else draw()};
 window.ctCalc={stats:()=>stats()};
+})();
+
+/* ===== Prática: um só separador para o Simulador de Markup e o CRM de treino ===== */
+(function(){
+'use strict';
+const g=id=>document.getElementById(id);
+const TOOLS=[
+ {k:'mk',n:1,t:'Simulador de Markup',d:'Descubra o preço certo a partir do custo e treine com 12 exercícios.',time:'≈ 30 min',open:()=>window.mkOpen&&window.mkOpen(),root:'mkRoot'},
+ {k:'ct',n:2,t:'CRM de treino',d:'Pratique contactos, follow-ups e negócios num cenário de treino, sem riscos.',time:'≈ 40 min',open:()=>window.ctOpen&&window.ctOpen(),root:'ctRoot'}];
+let cur=null;
+function home(){
+ g('prHome').innerHTML='<div class="pr-intro"><h2>Prática</h2><p>Duas ferramentas para treinar o que aprende na aula. Comece pela primeira. O seu progresso fica guardado: pode continuar em casa.</p></div>'+
+ '<div class="pr-cards">'+TOOLS.map(t=>'<button type="button" class="pr-card" data-pr-open="'+t.k+'"><span class="pr-n">'+t.n+'</span><span class="pr-b"><strong>'+t.t+'</strong><span>'+t.d+'</span><em>Tempo indicativo em aula: '+t.time+'</em></span><span class="pr-go" aria-hidden="true">Abrir →</span></button>').join('')+'</div>'}
+function show(k){
+ cur=k;const t=TOOLS.find(x=>x.k===k);
+ g('prHome').classList.toggle('hidden',!!k);g('prTool').classList.toggle('hidden',!k);
+ TOOLS.forEach(x=>g(x.root).classList.toggle('hidden',x.k!==k));
+ if(k){g('prTitle').textContent=t.t;t.open()}else home();
+ window.scrollTo({top:0})}
+window.prOpen=function(){const r=g('prRoot');if(!r)return;
+ if(!r.dataset.wired){r.dataset.wired='1';r.addEventListener('click',e=>{const o=e.target.closest('[data-pr-open]');if(o){show(o.dataset.prOpen);return}if(e.target.closest('[data-pr-back]'))show(null)})}
+ show(cur)};
 })();
 
 boot();
