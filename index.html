@@ -366,6 +366,20 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 .mk-flist{display:grid;gap:8px}.mk-fi{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:12px 14px}.mk-fa{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 @media(max-width:900px){.mk-two{grid-template-columns:1fr}.mk-res{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.mk-grid,.mk-g3{grid-template-columns:1fr}.mk-row{grid-template-columns:1fr 120px}.mk-row .linkdel{grid-column:1/-1;justify-self:start}.mk-exb{padding-left:14px}.mk-in input{font-size:16px}.mk-row>input{font-size:16px}}
+.ct-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}.ct-topr{display:flex;gap:8px;flex-wrap:wrap}
+.ct-seg{display:inline-flex;background:#eceef1;border-radius:999px;padding:3px}.ct-seg button{border:0;background:transparent;border-radius:999px;padding:8px 14px;font-size:12px;font-weight:700;color:#42464e}.ct-seg button.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px #1018281f}
+.ct-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}.ct-bar input{flex:1;min-width:200px;max-width:340px;border:1px solid #d9dce1;border-radius:10px;padding:9px 12px;background:#fff}.ct-flt{display:flex;gap:6px;flex-wrap:wrap}
+.ct-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 11px;font-size:11px;font-weight:700;color:#42464e}.ct-chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ct-board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:12px;overflow-x:auto;padding-bottom:10px;align-items:start;scroll-snap-type:x proximity}
+.ct-col{scroll-snap-align:start;background:#f6f7f9;border-radius:14px;border-top:3px solid var(--c,#d7dce5);padding:12px 10px;min-width:0}.ct-colh{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--c,#606775);margin-bottom:10px}.ct-n{background:#e9eaed;border-radius:99px;padding:2px 8px;color:#555963;font-size:10px}
+.ct-card{background:#fff;border:1px solid #e5e6e9;border-radius:12px;padding:12px;margin:0 0 10px;box-shadow:0 1px 2px #1018280a}.ct-card h4{margin:0;font-size:13.5px;font-weight:800;overflow-wrap:anywhere}.ct-sub{font-size:12px;color:#6c7078;margin:2px 0 4px}.ct-val{font-size:15px;font-weight:800;color:var(--red);margin:2px 0 4px}.ct-meta{font-size:11px;color:#6c7078;margin:2px 0}
+.ct-due{font-size:11px;font-weight:600;color:#42464e;margin:6px 0}.ct-due.late{color:#a11c27}.ct-bs{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0}.ct-b{border-radius:6px;padding:2px 7px;font-size:10px;font-weight:800}.ct-warn{background:#fff4de;color:#8a5a00}.ct-bad{background:#fff0f0;color:#a11c27}.ct-info{background:#eaf0fb;color:#2b4a8c}
+.ct-sel{width:100%;margin:8px 0 6px;border:1px solid #d9dce1;border-radius:9px;padding:7px 8px;font-size:12px;font-weight:700;background:#fff}.ct-acts{display:flex;gap:5px;flex-wrap:wrap}
+.ct-tk{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);cursor:pointer}.ct-tk input{width:18px;height:18px}.ct-tk strong{display:block;font-size:13px}.ct-tk em{font-style:normal;font-size:11px;color:#6c7078}.ct-tk.done strong{text-decoration:line-through;color:#8a8f99}.ct-tdue{font-size:11px;font-weight:700;color:#42464e;white-space:nowrap}.ct-tdue.late{color:#a11c27}
+.ct-fun{display:grid;gap:8px;margin:10px 0}.ct-fr{display:grid;grid-template-columns:130px 1fr 28px 110px;gap:10px;align-items:center;font-size:12px}.ct-fr em{font-style:normal;color:#8a8f99;font-size:10px}.ct-ft{height:12px;background:#eceef1;border-radius:99px;overflow:hidden}.ct-ft i{display:block;height:100%;border-radius:99px}.ct-fv{text-align:right;color:#6c7078;font-size:11px}.ct-rs{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
+.ct-m{display:flex;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;margin:10px 0;background:#fff}.ct-m.ok{border-color:#bfe3d0;background:#f7fcf9}.ct-mk{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#eceef1;font-size:12px;font-weight:800}.ct-m.ok .ct-mk{background:var(--green);color:#fff}.ct-mb{min-width:0;flex:1}.ct-mb p{margin:4px 0 8px;font-size:13px;color:#42464e}
+.ct-ov{position:fixed;inset:0;background:#101114a8;z-index:80;display:flex;align-items:center;justify-content:center;padding:16px}.ct-mbox{width:min(560px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:16px;padding:22px}.ct-mbox h2{margin:0 0 6px;font-size:19px}.ct-mg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ct-mbox .field{margin-bottom:12px}.ct-mbox .field input,.ct-mbox .field select{width:100%;border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;background:#fff}.ct-mf{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+@media(max-width:760px){.ct-board{grid-auto-columns:84%}.ct-mg{grid-template-columns:1fr}.ct-fr{grid-template-columns:96px 1fr 24px}.ct-fv{display:none}.ct-bar input{max-width:none}.ct-mbox .field input,.ct-mbox .field select,.ct-sel,.ct-bar input{font-size:16px}}
 </style>
 </head><body>
 <style>[data-invite]{display:none!important}#loginBox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fcfbf9;z-index:50}#loginBox form{background:#fff;padding:28px;border-radius:12px;width:min(92vw,360px);box-shadow:0 8px 30px #0002;display:grid;gap:12px}#loginMsg{color:#b42318;font-size:.9rem;min-height:1.2em}#logoutBtn{position:fixed;top:10px;right:12px;z-index:20}/* v12: formatação, anexos estilo Facebook, edição */
@@ -570,12 +584,13 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
 <section class="page hidden" id="page-treino"><div class="pagehead"><div><div class="eyebrow">Treino e níveis</div><h1>Turmas e Treinos</h1><p>Crie a turma e os níveis, construa as sessões e preencha o banco de treino com os mesmos temas.</p></div></div><div class="tr-tabs" id="trTabs"><button type="button" class="active" data-tr-tab="diag">1 · Diagnóstico inicial</button><button type="button" data-tr-tab="sessions">2 · Sessões e materiais</button><button type="button" data-tr-tab="levels">3 · Turmas e níveis</button><button type="button" data-tr-tab="bank">4 · Treino</button></div><div id="trAdminBody"></div><div id="trSessBody" class="hidden"><div class="notice" style="margin-bottom:12px">Passo 2: construa as sessões, cada uma ligada a um nível — materiais, testes e ligações. O <strong>título da sessão</strong> é o tema que depois usa no Banco de treino e nas aulas da turma. As perguntas dos testes não podem repetir-se no treino.</div><div class="actions" style="margin-bottom:12px"><button class="btn" id="addSessionBtn">+ Criar sessão</button></div><div class="card"><div class="toolbar"><select id="sessionFilter"><option value="">Todas as áreas</option></select><select id="sessionStatusFilter"><option value="">Todas as datas</option><option value="upcoming">Por realizar</option><option value="past">Realizadas</option></select></div><div id="sessionCards"></div></div></div><div id="trBankBody" class="hidden"></div><div id="trDiagBody" class="hidden"></div></section>
 <section class="page hidden" id="page-pay"><div class="pagehead"><div><div class="eyebrow">Controlo financeiro</div><h1>Pagamentos</h1><p>Parcelas, pedidos de pagamento, comprovativos e facturas internas dos formandos.</p></div><button class="btn" id="payGenBtn">+ Gerar parcelas</button></div><div id="payAdminMsg"></div><div class="paytabs" id="payTabs"><button type="button" data-pt="panel" class="active">Painel</button><button type="button" data-pt="confirm">A confirmar <span class="tag warn hidden" id="payCnt">0</span></button><button type="button" data-pt="pro">Parcelas</button><button type="button" data-pt="inv">Facturas</button><button type="button" data-pt="plans">Planos</button><button type="button" data-pt="set">Definições</button></div><div id="payBody"></div></section>
 </main></div></div>
-<div id="studentView" class="hidden"><header class="studenthead"><div class="student"><div class="studenttop"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>ESPAÇO DO FORMANDO</small></span></div><div class="topicons" data-topicons></div></div></div></header><nav class="stnav" id="stNav"><button type="button" class="active" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="sim">Simulador</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button><button type="button" data-st-tab="billing">Facturação</button><button type="button" data-st-tab="profile">Perfil</button></nav><main class="student"><div class="pagehead" style="margin-top:25px"><div><div class="eyebrow">Área reservada</div><h1 id="studentName">Bem-vindo</h1><p id="studentMeta"></p></div></div>
+<div id="studentView" class="hidden"><header class="studenthead"><div class="student"><div class="studenttop"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>ESPAÇO DO FORMANDO</small></span></div><div class="topicons" data-topicons></div></div></div></header><nav class="stnav" id="stNav"><button type="button" class="active" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="sim">Simulador</button><button type="button" data-st-tab="crmt">CRM de treino</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button><button type="button" data-st-tab="billing">Facturação</button><button type="button" data-st-tab="profile">Perfil</button></nav><main class="student"><div class="pagehead" style="margin-top:25px"><div><div class="eyebrow">Área reservada</div><h1 id="studentName">Bem-vindo</h1><p id="studentMeta"></p></div></div>
 <section data-st-page="materials"><div class="grid stats"><div class="stat"><div class="label">Sessões</div><strong id="stSessionCount">0</strong></div><div class="stat"><div class="label">Presenças</div><strong id="stAttendance">0%</strong></div><div class="stat"><div class="label">Média prática (0–20)</div><strong id="stScore">—</strong></div><div class="stat"><div class="label">Materiais</div><strong id="stMaterials">0</strong></div></div><div class="card"><div class="cardhead"><h2>Materiais por área</h2><span class="muted smalltext" id="stMatHint">Abra uma pasta</span></div><div class="tilegrid" id="stTiles"></div><div class="matpanel hidden" id="stMatPanel"></div></div></section>
 <section data-st-page="diagnosis" class="hidden"><div class="card"><div class="cardhead"><h2>Diagnóstico de competências</h2><span class="muted smalltext">Separado da classificação oficial</span></div><p class="muted smalltext">O diagnóstico mostra evidências das respostas nos testes. Não altera a nota de certificação, calculada com 60% de testes automáticos e 40% de avaliação prática do formador.</p><div id="stDiagnosis"><div class="empty">O diagnóstico será apresentado quando existirem tentativas com perguntas associadas a competências e a migração estiver instalada.</div></div></div></section><section data-st-page="pauta" class="hidden"><div class="card"><div class="cardhead"><h2>Pauta</h2><span class="muted smalltext" id="studentPautaWeights">Escala 0–20 · Testes 60% / Prática 40%</span></div><div id="stPauta"></div></div></section>
 <section data-st-page="forum" class="hidden"><div class="grid feedgrid"><div class="card"><div class="cardhead"><h2>Publicações da formação</h2></div><form id="stForumForm" class="composer"><textarea id="stForumText" maxlength="1500" rows="2" placeholder="Escreva a sua dúvida, pergunta, contribuição ou anotação…" aria-label="Nova publicação"></textarea><div class="composerbar"><label class="attbtn" title="Anexar ficheiro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2l-8.6 8.6a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/></svg><input type="file" id="stForumFile" hidden></label><span class="attchip hidden" id="stForumChip"></span><button class="btn small">Publicar</button></div></form><div class="feed" id="stForumPosts"></div></div><div class="card"><div class="cardhead"><h2>Feedback da sessão</h2></div><form id="stFeedbackForm"><div class="field"><label>Sessão</label><select id="stFeedbackSession" required></select></div><div class="field" style="margin-top:12px"><label>Como avalia esta sessão?</label><select id="stFeedbackRating" required><option value="">Seleccione</option><option value="5">5 — Excelente</option><option value="4">4 — Muito boa</option><option value="3">3 — Boa</option><option value="2">2 — Precisa de melhorar</option><option value="1">1 — Insatisfatória</option></select></div><div class="field" style="margin-top:12px"><label>Comentário / sugestão</label><textarea id="stFeedbackText" maxlength="1200" placeholder="O que foi útil? O que poderia melhorar?"></textarea></div><button class="btn" style="margin-top:12px">Enviar feedback</button></form><div id="stFeedbackHistory" style="margin-top:15px"></div></div></div></section>
 <section data-st-page="billing" class="hidden"><div id="payStMsg"></div><div id="payStBody"></div></section>
 <section data-st-page="train" class="hidden"><div id="trStBody"></div></section><section data-st-page="sim" class="hidden"><div id="mkRoot"></div></section>
+<section data-st-page="crmt" class="hidden"><div id="ctRoot"></div></section>
 <section data-st-page="profile" class="hidden"><div class="profgrid"><div class="card"><div class="cardhead"><h2>Os meus dados</h2></div><div class="kv" id="stProfile"></div></div><div class="card"><div class="cardhead"><h2>Participação</h2></div><div class="kv" id="stProfile2"></div></div><div class="card" id="trProfileCard" style="grid-column:1/-1;display:none"></div></div></section>
 <p class="footer-note">Formação · Área do formando</p></main></div>
 <div id="msgPanel" class="dropdown hidden" role="dialog" aria-label="Mensagens privadas"><div class="ph"><button type="button" id="msgBack" class="hidden" aria-label="Voltar">←</button><strong id="msgTitle">Mensagens privadas</strong><button type="button" data-close-panels aria-label="Fechar">✕</button></div><div class="msgbody"><div class="chatlist" id="msgList"></div><div id="msgThread" class="hidden"><div class="chatmsgs" id="msgMsgs"></div><form id="msgForm" class="chatform"><input id="msgText" required maxlength="1200" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem privada"><button class="btn small">Enviar</button></form></div></div></div>
@@ -1447,7 +1462,7 @@ function renderBell(){const ev=notifEvents().slice(0,25),seen=ts(SEEN.notif);$('
 function updateBadges(){const set=(k,n)=>document.querySelectorAll('[data-badge="'+k+'"]').forEach(el=>{el.textContent=n>9?'9+':String(n);el.classList.toggle('hidden',!n)});set('msg',unreadMsgs());set('bell',unreadNotifs())}
 
 /* --- topo: ícones, painéis e menu do utilizador --- */
-function renderTopIcons(){if(!PROFILE||!USER)return;const staff=isStaffUser(),me=staff?null:staffById(PROFILE.staff_id),name=staff?(PROFILE.display_name||USER.email||'Equipa'):(me?.name||PROFILE.display_name||USER.email||'Formando'),menu=staff?'':'<button type="button" data-st-tab="profile">Perfil</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="sim">Simulador</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button>';
+function renderTopIcons(){if(!PROFILE||!USER)return;const staff=isStaffUser(),me=staff?null:staffById(PROFILE.staff_id),name=staff?(PROFILE.display_name||USER.email||'Equipa'):(me?.name||PROFILE.display_name||USER.email||'Formando'),menu=staff?'':'<button type="button" data-st-tab="profile">Perfil</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="sim">Simulador</button><button type="button" data-st-tab="crmt">CRM de treino</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button>';
 const html=`<button type="button" class="iconbtn" data-act="msg" aria-label="Mensagens privadas">${ICO_MSG}<span class="badge hidden" data-badge="msg"></span></button><button type="button" class="iconbtn" data-act="bell" aria-label="Notificações">${ICO_BELL}<span class="badge hidden" data-badge="bell"></span></button><div class="avwrap"><button type="button" class="avbtn" data-act="av" aria-label="Menu do utilizador">${esc(initials(name))}</button><div class="avmenu hidden"><div class="who"><strong>${esc(name)}</strong><br>${esc(USER.email||'')}<br>${esc(ROLE_LABEL[PROFILE.role]||'')}</div>${menu}<button type="button" data-act="logout">Sair</button></div></div>`;document.querySelectorAll('[data-topicons]').forEach(el=>{el.innerHTML=html});updateBadges()}
 function closePanels(){const wasBell=!$('bellPanel').classList.contains('hidden');$('msgPanel').classList.add('hidden');$('bellPanel').classList.add('hidden');document.querySelectorAll('.avmenu').forEach(m=>m.classList.add('hidden'));if(wasBell)markNotifSeen()}
 function toggleMsg(){const open=$('msgPanel').classList.contains('hidden');closePanels();if(open){$('msgPanel').classList.remove('hidden');if(isStaffUser())MSG_VIEW='list';renderMsgPanel()}}
@@ -1504,7 +1519,7 @@ function drawDiagNav(box){box=box||$('stDiagnosis');if(!box)return;const n=DIAG_
 document.addEventListener('click',e=>{const b=e.target.closest('[data-diag-nav]'),g=e.target.closest('[data-diag-go]');if(!b&&!g)return;DIAG_I=b?DIAG_I+Number(b.dataset.diagNav):Number(g.dataset.diagGo);drawDiagNav();$('stDiagnosis').scrollIntoView({block:'nearest'})});
 document.addEventListener('keydown',e=>{if(ST_TAB!=='diagnosis'||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;const t=e.target&&e.target.tagName;if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT'||document.querySelector('.modal.open'))return;if(DIAG_PANELS.length<2)return;DIAG_I+=e.key==='ArrowRight'?1:-1;drawDiagNav()});
 async function drawStudentDiagnosis(){const box=$('stDiagnosis');if(!box)return;const mine=ATT.filter(a=>a.staffId===PROFILE.staff_id).sort((a,b)=>ts(b.at)-ts(a.at));if(!mine.length){box.innerHTML='<div class="empty">Ainda não existem testes submetidos para gerar o diagnóstico.</div>';return}let out=[];for(const a of mine){const m=MAT.find(x=>x.id===a.materialId);if(!m)continue;if(m.testPurpose==='diagnostico'){try{const p=await fetchInitialProfile(a.materialId);if(p){out.push({label:(m.title||'Diagnóstico')+' · '+fmtDT(a.at),html:initialProfileHTML(p)});continue}}catch(e){out.push({label:(m.title||'Diagnóstico')+' · '+fmtDT(a.at),html:'<div class="notice">O diagnóstico inicial foi submetido, mas não foi possível reconstruir agora o perfil individual. Abra «Ver a minha resposta» e consulte o separador Diagnóstico.</div>'});continue}}if(!COMP_OK)continue;try{const comps=await fetchStudentDiagnosis(a.materialId);if(comps.length){DIAG_CACHE=comps;let items=[];try{const g=await SB.rpc('av_get_test',{p_material:a.materialId});if(!g.error&&g.data&&Array.isArray(g.data.review))items=g.data.review}catch(_){}const title=m.title||'Teste',when=fmtDT(a.at);out.push({label:title+' · '+when,html:`<div class="matpanel"><h3>${esc(title)} · ${esc(when)}</h3>${diagActionsHTML(a.id,comps,title,when,items)}${diagnosisRowsHTML(comps,items)}<h4>Recomendações</h4>${recommendationRowsHTML(comps,items)}</div>`})}}catch(e){}}out.reverse();const keep=DIAG_PANELS[DIAG_I]&&DIAG_PANELS[DIAG_I].key;DIAG_PANELS=out;const k=out.findIndex(x=>x.label===keep);DIAG_I=k>=0?k:out.length-1;drawDiagNav(box)}
- async function stTab(t){ST_TAB=t;document.querySelectorAll('[data-st-page]').forEach(p=>p.classList.toggle('hidden',p.dataset.stPage!==t));document.querySelectorAll('#stNav [data-st-tab]').forEach(b=>b.classList.toggle('active',b.dataset.stTab===t));if(t==='diagnosis')await drawStudentDiagnosis();if(t==='billing')payStudentOpen();if(t==='train')trStudentOpen();if(t==='sim'&&window.mkOpen)mkOpen();if(t==='forum'){const f=$('stForumPosts');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}window.scrollTo({top:0})}
+ async function stTab(t){ST_TAB=t;document.querySelectorAll('[data-st-page]').forEach(p=>p.classList.toggle('hidden',p.dataset.stPage!==t));document.querySelectorAll('#stNav [data-st-tab]').forEach(b=>b.classList.toggle('active',b.dataset.stTab===t));if(t==='diagnosis')await drawStudentDiagnosis();if(t==='billing')payStudentOpen();if(t==='train')trStudentOpen();if(t==='sim'&&window.mkOpen)mkOpen();if(t==='crmt'&&window.ctOpen)ctOpen();if(t==='forum'){const f=$('stForumPosts');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}window.scrollTo({top:0})}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act]');if(a){const k=a.dataset.act;if(k==='msg')toggleMsg();else if(k==='bell')toggleBell();else if(k==='av'){const m=a.parentElement.querySelector('.avmenu'),open=m.classList.contains('hidden');closePanels();if(open)m.classList.remove('hidden')}else if(k==='logout')logout();return}
 if(e.target.closest('[data-close-panels]')){closePanels();return}
 const mo=e.target.closest('[data-msg-open]');if(mo){PRIV_ACTIVE=mo.dataset.msgOpen;MSG_VIEW='thread';renderMsgPanel();$('msgText').focus();return}
@@ -2880,6 +2895,197 @@ window.mkOpen=function(){const r=root();if(!r)return;
  if(!WIRED){WIRED=true;r.addEventListener('input',onInput);r.addEventListener('click',onClick);r.addEventListener('submit',onSubmit)}
  if(!r.firstChild)shell();else draw()};
 window.mkCalc={calc,model,scenarios,num};
+})();
+
+/* ===== CRM de treino (Fase 2) — código isolado, prefixo ct. Usa só tabelas av_sim_*; nunca av_crm_deals ===== */
+(function(){
+'use strict';
+const STAGES=[{k:'NOVO',l:'Novo',p:10,c:'#a9aeb8'},{k:'CONTACTADO',l:'Contactado',p:20,c:'#8a93a3'},{k:'QUALIFICADO',l:'Qualificado',p:35,c:'#7c8594'},{k:'PROPOSTA',l:'Proposta',p:50,c:'#d9962b'},{k:'NEGOCIACAO',l:'Negociação',p:75,c:'#c8101e'},{k:'GANHO',l:'Ganho',p:100,c:'#1f9d63'},{k:'PERDIDO',l:'Perdido',p:0,c:'#3f4450'}];
+const ORIGINS=['Indicação','WhatsApp','Facebook','Instagram','Telefone','Presencial / Evento','Outro'];
+const LOST=['Preço','Sem resposta','Escolheu a concorrência','Sem orçamento agora','Outro motivo'];
+const ST=k=>STAGES.find(s=>s.k===k)||STAGES[0];
+const OPEN=s=>s!=='GANHO'&&s!=='PERDIDO';
+const kz=v=>(v==null||!isFinite(v))?'—':new Intl.NumberFormat('pt-AO',{maximumFractionDigits:0}).format(Math.round(v))+' Kz';
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const todayS=()=>ymd(new Date());
+const addDays=(s,n)=>{const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+n);return ymd(d)};
+const diffDays=(a,b)=>Math.round((new Date(a+'T12:00:00')-new Date(b+'T12:00:00'))/864e5);
+const fd=s=>s?new Date(s+'T12:00:00').toLocaleDateString('pt-PT'):'—';
+function num(s){s=String(s==null?'':s).trim().replace(/\s/g,'');if(!s)return NaN;if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');else if(/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,'');const n=Number(s);return isFinite(n)?n:NaN}
+const g=id=>document.getElementById(id),root=()=>g('ctRoot');
+
+let CT={mode:'guiado',tab:'quadro',deals:[],contacts:[],tasks:[],loaded:false,loading:false,err:null,modal:null,q:'',fa:null,m4:null};
+
+/* ---------- Dados ---------- */
+const byId=(a,id)=>a.find(x=>x.id===id);
+function view(){ /* junta oportunidade + contacto + tarefas e calcula os alertas */
+ const phones={};CT.contacts.forEach(c=>{const p=String(c.phone||'').replace(/\D/g,'');if(p)(phones[p]=phones[p]||[]).push(c.id)});
+ return CT.deals.map(d=>{const c=byId(CT.contacts,d.contact_id)||{name:'(sem contacto)'},
+  pend=CT.tasks.filter(t=>t.deal_id===d.id&&!t.done).sort((a,b)=>a.due<b.due?-1:1),
+  p=String(c.phone||'').replace(/\D/g,''),open=OPEN(d.stage),idle=diffDays(todayS(),d.last_activity||todayS());
+  return Object.assign({},d,{c,pend,next:pend[0]||null,open,idle,stalled:open&&idle>14,noTask:open&&!pend.length,dup:!!p&&phones[p].length>1})})}
+async function load(){
+ if(CT.loading)return;CT.loading=true;CT.err=null;
+ try{
+  const q=t=>SB.from(t).select('*').eq('mode',CT.mode);
+  let [d,c,t]=await Promise.all([q('av_sim_deals'),q('av_sim_contacts'),q('av_sim_tasks')]);
+  const e=d.error||c.error||t.error;if(e)throw e;
+  if(CT.mode==='guiado'&&!(d.data||[]).length){const r=await SB.rpc('av_sim_seed',{p_mode:'guiado'});if(r.error)throw r.error;
+   [d,c,t]=await Promise.all([q('av_sim_deals'),q('av_sim_contacts'),q('av_sim_tasks')]);const e2=d.error||c.error||t.error;if(e2)throw e2}
+  CT.deals=d.data||[];CT.contacts=c.data||[];CT.tasks=t.data||[];CT.loaded=true}
+ catch(e){CT.err=String((e&&e.message)||e||'erro');CT.loaded=false}
+ CT.loading=false;draw()}
+const fail=(r,msg)=>{if(r&&r.error){toast(msg||'Não foi possível guardar. Tente de novo.');return true}return false};
+
+/* ---------- Estrutura ---------- */
+const TABS=[['quadro','Quadro'],['tarefas','Tarefas'],['funil','Funil']];
+function shell(){
+ root().innerHTML='<div class="ct-top"><div class="ct-seg" role="tablist" aria-label="Modo">'+
+ '<button type="button" data-ct-mode="guiado">Cenário guiado</button><button type="button" data-ct-mode="negocio">Meu negócio</button></div>'+
+ '<div class="ct-topr"><button type="button" class="btn small" data-ct-new>+ Nova oportunidade</button><button type="button" class="btn secondary small" data-ct-reset>Repor cenário</button></div></div>'+
+ '<div class="mk-tabs" id="ctTabs" role="tablist"></div><div id="ctNote"></div><div id="ctPanel"></div><div id="ctModal"></div>';
+ draw()}
+function draw(){
+ const r=root();if(!r||!r.firstChild)return;
+ r.querySelectorAll('[data-ct-mode]').forEach(b=>b.classList.toggle('active',b.dataset.ctMode===CT.mode));
+ const reset=r.querySelector('[data-ct-reset]');if(reset)reset.classList.toggle('hidden',CT.mode!=='guiado');
+ const tabs=TABS.concat(CT.mode==='guiado'?[['missoes','Missões']]:[]);if(!tabs.some(t=>t[0]===CT.tab))CT.tab='quadro';
+ g('ctTabs').innerHTML=tabs.map(t=>'<button type="button" role="tab" data-ct-tab="'+t[0]+'" class="'+(t[0]===CT.tab?'active':'')+'">'+t[1]+'</button>').join('');
+ g('ctNote').innerHTML=CT.mode==='negocio'?'<div class="mk-note">Este é o <strong>seu</strong> espaço de treino. Só você e o formador veem estes contactos. Não escreva dados sensíveis (documentos de identificação, contas bancárias, saúde). O CRM real da empresa não é afectado.</div>':'<div class="mk-note">Cenário de treino com <strong>dados fictícios</strong>. Trate-o como um CRM real: há tarefas esquecidas, contactos duplicados e oportunidades paradas à sua espera. Pode repô-lo quando quiser.</div>';
+ const p=g('ctPanel');
+ if(CT.err){p.innerHTML='<div class="card"><div class="empty">O CRM de treino ainda não está disponível. Peça ao formador para activar o simulador.</div></div>';return}
+ if(!CT.loaded){p.innerHTML='<div class="empty">A carregar…</div>';return}
+ if(CT.tab==='quadro')p.innerHTML=boardHTML();
+ else if(CT.tab==='tarefas')p.innerHTML=tasksHTML();
+ else if(CT.tab==='funil')p.innerHTML=funnelHTML();
+ else p.innerHTML=missionsHTML();
+ modalDraw()}
+
+/* ---------- Quadro ---------- */
+function cardHTML(d){
+ const badges=[];if(d.stalled)badges.push('<span class="ct-b ct-warn">Parado há '+d.idle+' dias</span>');if(d.noTask)badges.push('<span class="ct-b ct-bad">Sem follow-up</span>');if(d.dup)badges.push('<span class="ct-b ct-info">Possível duplicado</span>');
+ const due=d.next?'<div class="ct-due'+(d.next.due<todayS()?' late':'')+'">Próximo: '+esc(d.next.title)+' · '+fd(d.next.due)+(d.next.due<todayS()?' (atrasado)':'')+'</div>':'';
+ const opts=STAGES.map(s=>'<option value="'+s.k+'"'+(s.k===d.stage?' selected':'')+'>'+s.l+'</option>').join('');
+ return '<div class="ct-card" data-id="'+esc(d.id)+'"><h4>'+esc(d.c.name)+'</h4><div class="ct-sub">'+esc(d.title||'')+'</div><div class="ct-val">'+kz(d.value)+'</div>'+
+ '<div class="ct-meta">'+esc(d.c.source||'—')+(d.c.phone?' · '+esc(d.c.phone):'')+'</div>'+(d.expected_close&&d.open?'<div class="ct-meta">Fecho previsto: '+fd(d.expected_close)+'</div>':'')+(d.stage==='PERDIDO'&&d.lost_reason?'<div class="ct-meta">Motivo: '+esc(d.lost_reason)+'</div>':'')+
+ due+(badges.length?'<div class="ct-bs">'+badges.join('')+'</div>':'')+
+ '<select class="ct-sel" data-ct-move="'+esc(d.id)+'" aria-label="Mover '+esc(d.c.name)+'">'+opts+'</select>'+
+ '<div class="ct-acts">'+(d.open?'<button type="button" class="crm-mini primary" data-ct-touch="'+esc(d.id)+'">Contactei</button>':'')+'<button type="button" class="crm-mini" data-ct-task="'+esc(d.id)+'">+ Tarefa</button><button type="button" class="crm-mini" data-ct-edit="'+esc(d.id)+'">Editar</button><button type="button" class="crm-mini danger" data-ct-del="'+esc(d.id)+'">Eliminar</button></div></div>'}
+function boardHTML(){
+ const q=CT.q.trim().toLowerCase(),vs=view().filter(d=>!q||(d.c.name+' '+(d.title||'')+' '+(d.c.phone||'')).toLowerCase().includes(q));
+ const fa=CT.fa,fl=[['stalled','Paradas'],['noTask','Sem follow-up'],['dup','Duplicados']];
+ const list=vs.filter(d=>!fa||d[fa]);
+ return '<div class="ct-bar"><input type="search" id="ctSearch" placeholder="Pesquisar nome, serviço ou telefone" value="'+esc(CT.q)+'" aria-label="Pesquisar"><div class="ct-flt">'+fl.map(f=>'<button type="button" class="ct-chip'+(fa===f[0]?' on':'')+'" data-ct-flt="'+f[0]+'">'+f[1]+' ('+vs.filter(d=>d[f[0]]).length+')</button>').join('')+'</div></div>'+
+ (CT.deals.length?'':'<div class="empty">Ainda não tem oportunidades. Crie a primeira com «+ Nova oportunidade».</div>')+
+ '<div class="ct-board">'+STAGES.map(s=>{const it=list.filter(d=>d.stage===s.k);return '<div class="ct-col" style="--c:'+s.c+'"><div class="ct-colh"><span>'+s.l+'</span><span class="ct-n">'+it.length+'</span></div>'+(it.length?it.map(cardHTML).join(''):'<div class="crm-empty">Vazio</div>')+'</div>'}).join('')+'</div>'}
+
+/* ---------- Tarefas ---------- */
+function tasksHTML(){
+ const vs=view(),nm=id=>{const d=vs.find(x=>x.id===id);return d?d.c.name:'(eliminada)'},t0=todayS();
+ const pend=CT.tasks.filter(t=>!t.done).sort((a,b)=>a.due<b.due?-1:1),done=CT.tasks.filter(t=>t.done).sort((a,b)=>a.due<b.due?1:-1).slice(0,15);
+ const row=t=>'<label class="ct-tk'+(t.done?' done':'')+'"><input type="checkbox" data-ct-done="'+esc(t.id)+'"'+(t.done?' checked':'')+'><span><strong>'+esc(t.title)+'</strong><em>'+esc(nm(t.deal_id))+'</em></span><span class="ct-tdue'+(!t.done&&t.due<t0?' late':'')+'">'+(t.due===t0?'Hoje':fd(t.due))+(!t.done&&t.due<t0?' · atrasada':'')+'</span></label>';
+ return '<div class="card"><div class="cardhead"><h2>Tarefas de follow-up</h2><span class="muted smalltext">'+pend.length+' por fazer</span></div>'+(pend.length?pend.map(row).join(''):'<div class="empty">Sem tarefas pendentes. Cada oportunidade aberta devia ter a seguinte.</div>')+
+ (done.length?'<h3 class="mk-h">Concluídas recentemente</h3>'+done.map(row).join(''):'')+'</div>'}
+
+/* ---------- Funil ---------- */
+function stats(){const vs=view(),by=k=>vs.filter(d=>d.stage===k),open=vs.filter(d=>d.open),
+ val=a=>a.reduce((s,d)=>s+Number(d.value||0),0),w=open.reduce((s,d)=>s+Number(d.value||0)*ST(d.stage).p/100,0),
+ won=by('GANHO'),lost=by('PERDIDO'),conv=won.length+lost.length?won.length/(won.length+lost.length)*100:null;
+ const wpn=['PROPOSTA','NEGOCIACAO'].reduce((s,k)=>s+by(k).reduce((a,d)=>a+Number(d.value||0)*ST(k).p/100,0),0);
+ return{vs,by,open,val,w,won,lost,conv,wpn,stalled:vs.filter(d=>d.stalled).length,noTask:vs.filter(d=>d.noTask).length,dupGroups:dupGroups()}}
+function dupGroups(){const m={};CT.contacts.forEach(c=>{const p=String(c.phone||'').replace(/\D/g,'');if(p)m[p]=(m[p]||0)+1});return Object.values(m).filter(n=>n>1).length}
+function funnelHTML(){const s=stats(),mx=Math.max(1,...STAGES.map(x=>s.by(x.k).length));
+ const reasons={};s.lost.forEach(d=>{const r=d.lost_reason||'Sem motivo';reasons[r]=(reasons[r]||0)+1});
+ return '<div class="card"><div class="cardhead"><h2>O seu funil</h2></div><div class="mk-res"><div><span>Oportunidades abertas</span><strong>'+s.open.length+'</strong></div><div><span>Valor em aberto</span><strong>'+kz(s.val(s.open))+'</strong></div><div><span>Previsão (valor × probabilidade)</span><strong>'+kz(s.w)+'</strong></div><div><span>Taxa de conversão</span><strong>'+(s.conv==null?'—':Math.round(s.conv)+'%')+'</strong></div></div>'+
+ '<div class="ct-fun">'+STAGES.map(x=>{const a=s.by(x.k);return '<div class="ct-fr"><span>'+x.l+' <em>'+x.p+'%</em></span><div class="ct-ft"><i style="width:'+Math.round(a.length/mx*100)+'%;background:'+x.c+'"></i></div><strong>'+a.length+'</strong><span class="ct-fv">'+kz(s.val(a))+'</span></div>'}).join('')+'</div>'+
+ '<p class="muted smalltext">A taxa de conversão é Ganho ÷ (Ganho + Perdido). A previsão multiplica o valor de cada oportunidade aberta pela probabilidade da sua etapa.</p>'+
+ (s.lost.length?'<h3 class="mk-h">Porque se perdem negócios</h3>'+Object.keys(reasons).map(r=>'<div class="ct-rs"><span>'+esc(r)+'</span><strong>'+reasons[r]+'</strong></div>').join(''):'')+'</div>'}
+
+/* ---------- Missões (só no cenário guiado) ---------- */
+function missionsHTML(){const s=stats(),openN=s.open.length,withT=openN-s.noTask;
+ const M=[
+ {ok:s.noTask===0&&openN>0,t:'Nenhuma oportunidade aberta sem follow-up',d:'Cada negócio aberto precisa de uma próxima tarefa com data. Hoje faltam em <strong>'+s.noTask+'</strong> de '+openN+'.',p:withT+' de '+openN},
+ {ok:s.stalled<=1,t:'Recuperar as oportunidades paradas',d:'Parada = aberta e sem contacto há mais de 14 dias. Contacte o cliente e use «Contactei». Objectivo: no máximo 1 parada. Agora: <strong>'+s.stalled+'</strong>.',p:s.stalled+' paradas'},
+ {ok:s.dupGroups===0,t:'Eliminar os contactos duplicados',d:'Procure os cartões com «Possível duplicado» (mesmo telefone), mantenha um e elimine o outro. Faltam <strong>'+s.dupGroups+'</strong>.',p:s.dupGroups+' pares'}];
+ const fc='<div class="ct-m'+(CT.m4==='ok'?' ok':'')+'"><div class="ct-mk">'+(CT.m4==='ok'?'✓':'4')+'</div><div class="ct-mb"><strong>Calcular a previsão de receita</strong><p>Some, só para as oportunidades em <strong>Proposta</strong> e <strong>Negociação</strong>, valor × probabilidade da etapa (50% e 75%). Qual é o total, em Kz, com os dados de agora?</p>'+
+ '<form data-ct-fc class="mk-exf"><div class="mk-in"><input name="a" inputmode="decimal" autocomplete="off" placeholder="A sua resposta" aria-label="Previsão"><span>Kz</span></div><button class="btn small">Verificar</button></form><div id="ctFc">'+(CT.m4==='ok'?'<div class="mk-note mk-good"><strong>Certo.</strong> Proposta × 50% + Negociação × 75% = '+kz(s.wpn)+'.</div>':CT.m4==='bad'?'<div class="mk-note mk-bad">Ainda não. Lembre-se: só duas etapas, cada uma com a sua probabilidade.</div>':'')+'</div></div></div>';
+ const done=M.filter(m=>m.ok).length+(CT.m4==='ok'?1:0);
+ return '<div class="card"><div class="cardhead"><h2>Missões</h2><span class="muted smalltext">'+done+' de 4 cumpridas</span></div><div class="mk-bar"><i style="width:'+(done*25)+'%"></i></div><p class="muted smalltext">Trabalhe no quadro e volte aqui: o progresso actualiza-se sozinho. São treino e não contam para a nota.</p>'+
+ M.map((m,i)=>'<div class="ct-m'+(m.ok?' ok':'')+'"><div class="ct-mk">'+(m.ok?'✓':(i+1))+'</div><div class="ct-mb"><strong>'+m.t+'</strong><p>'+m.d+'</p></div></div>').join('')+fc+'</div>'}
+
+/* ---------- Janelas (modal) ---------- */
+function modalDraw(){const m=CT.modal,h=g('ctModal');if(!h)return;if(!m){h.innerHTML='';return}
+ let body='';
+ if(m.t==='lost'){body='<h2>Porque se perdeu?</h2><p class="muted smalltext">Registar o motivo é o que permite aprender com as perdas.</p><form data-ct-form="lost"><div class="field"><label>Motivo</label><select name="r" required>'+LOST.map(r=>'<option>'+r+'</option>').join('')+'</select></div><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Marcar como perdido</button></div></form>'}
+ else if(m.t==='task'){const vs=view().filter(d=>d.open||d.id===m.id),def=addDays(todayS(),2);
+  body='<h2>Nova tarefa de follow-up</h2><form data-ct-form="task"><div class="field"><label>Oportunidade</label><select name="d" required>'+vs.map(d=>'<option value="'+esc(d.id)+'"'+(d.id===m.id?' selected':'')+'>'+esc(d.c.name)+' · '+esc(d.title||'')+'</option>').join('')+'</select></div><div class="field"><label>O que fazer</label><input name="t" required maxlength="120" value="Contacto de follow-up"></div><div class="field"><label>Data</label><input name="w" type="date" required value="'+def+'"></div><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Guardar</button></div></form>'}
+ else if(m.t==='deal'){const d=m.id?view().find(x=>x.id===m.id):null,c=d?d.c:{};
+  body='<h2>'+(d?'Editar':'Nova')+' oportunidade</h2><form data-ct-form="deal"><div class="ct-mg"><div class="field"><label>Nome do contacto</label><input name="n" required maxlength="80" value="'+esc(c.name||'')+'"></div><div class="field"><label>Telefone</label><input name="p" inputmode="tel" maxlength="30" value="'+esc(c.phone||'')+'"></div>'+
+  '<div class="field"><label>Origem</label><select name="o">'+ORIGINS.map(o=>'<option'+(o===c.source?' selected':'')+'>'+o+'</option>').join('')+'</select></div><div class="field"><label>Serviço / interesse</label><input name="s" maxlength="80" value="'+esc(d?d.title:'Turma de empreendedores')+'"></div>'+
+  '<div class="field"><label>Valor (Kz)</label><input name="v" inputmode="decimal" value="'+esc(d?d.value:'')+'" placeholder="0"></div><div class="field"><label>Fecho previsto</label><input name="f" type="date" value="'+esc(d&&d.expected_close||'')+'"></div>'+
+  (d?'':'<div class="field"><label>Etapa</label><select name="e">'+STAGES.filter(s=>OPEN(s.k)).map(s=>'<option value="'+s.k+'">'+s.l+'</option>').join('')+'</select></div>')+'</div><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Guardar</button></div></form>'}
+ h.innerHTML='<div class="ct-ov" data-ct-close-bg><div class="ct-mbox" role="dialog" aria-modal="true">'+body+'</div></div>';
+ const f=h.querySelector('input:not([type=hidden]),select');if(f&&m.t!=='lost')f.focus()}
+
+/* ---------- Acções ---------- */
+async function patchDeal(id,patch){const r=await SB.from('av_sim_deals').update(Object.assign({updated_at:new Date().toISOString()},patch)).eq('id',id);if(fail(r))return false;
+ const d=byId(CT.deals,id);if(d)Object.assign(d,patch);return true}
+async function move(id,stage,reason){
+ const d=byId(CT.deals,id);if(!d||d.stage===stage)return draw();
+ if(stage==='PERDIDO'&&reason==null){CT.modal={t:'lost',id};draw();return}
+ const patch={stage,last_activity:todayS(),lost_reason:stage==='PERDIDO'?reason:null};
+ if(!await patchDeal(id,patch))return draw();
+ if(stage==='GANHO'&&!CT.tasks.some(t=>t.deal_id===id&&!t.done)){
+  const rows=[['Contacto de acompanhamento (dia 7)',7],['Contacto de acompanhamento (dia 30)',30]].map(x=>({deal_id:id,mode:CT.mode,title:x[0],due:addDays(todayS(),x[1])}));
+  const r=await SB.from('av_sim_tasks').insert(rows).select();if(!fail(r,'Negócio ganho, mas não foi possível criar as tarefas de acompanhamento.')){(r.data||[]).forEach(t=>CT.tasks.push(t));toast('Ganho! Criei os contactos de acompanhamento do dia 7 e do dia 30.')}}
+ draw()}
+async function touch(id){if(await patchDeal(id,{last_activity:todayS()}))toast('Contacto registado.');draw()}
+async function del(id){const d=view().find(x=>x.id===id);if(!d||!confirm('Eliminar «'+d.c.name+'»? As tarefas desta oportunidade também são eliminadas.'))return;
+ const r=await SB.from('av_sim_contacts').delete().eq('id',d.contact_id);if(fail(r,'Não foi possível eliminar.'))return;
+ CT.contacts=CT.contacts.filter(c=>c.id!==d.contact_id);CT.deals=CT.deals.filter(x=>x.contact_id!==d.contact_id);CT.tasks=CT.tasks.filter(t=>CT.deals.some(x=>x.id===t.deal_id));draw()}
+async function toggleTask(id,on){const r=await SB.from('av_sim_tasks').update({done:on}).eq('id',id);if(fail(r))return draw();const t=byId(CT.tasks,id);if(t)t.done=on;draw()}
+async function saveDeal(f){
+ const e=CT.modal.id,n=f.n.value.trim();if(!n)return;const v=f.v.value.trim()===''?0:num(f.v.value);if(!isFinite(v)||v<0){toast('Valor inválido.');return}
+ const cp={name:n,phone:f.p.value.trim()||null,source:f.o.value},dp={title:f.s.value.trim(),value:v,expected_close:f.f.value||null};
+ if(e){const d=byId(CT.deals,e);let r=await SB.from('av_sim_contacts').update(cp).eq('id',d.contact_id);if(fail(r))return;Object.assign(byId(CT.contacts,d.contact_id),cp);if(!await patchDeal(e,dp))return}
+ else{let r=await SB.from('av_sim_contacts').insert(Object.assign({mode:CT.mode},cp)).select();if(fail(r)||!r.data||!r.data[0])return;const c=r.data[0];CT.contacts.push(c);
+  r=await SB.from('av_sim_deals').insert(Object.assign({mode:CT.mode,contact_id:c.id,stage:f.e.value,last_activity:todayS()},dp)).select();if(fail(r)||!r.data||!r.data[0])return;CT.deals.push(r.data[0]);toast('Oportunidade criada. Não se esqueça do follow-up.')}
+ CT.modal=null;draw()}
+async function saveTask(f){const r=await SB.from('av_sim_tasks').insert({mode:CT.mode,deal_id:f.d.value,title:f.t.value.trim(),due:f.w.value}).select();if(fail(r)||!r.data||!r.data[0])return;CT.tasks.push(r.data[0]);CT.modal=null;draw()}
+async function resetGuided(){if(!confirm('Repor o cenário guiado? Perde o que fez neste cenário e volta ao ponto de partida. O modo «Meu negócio» não é afectado.'))return;
+ const r=await SB.rpc('av_sim_reset',{p_mode:'guiado'});if(fail(r,'Não foi possível repor o cenário.'))return;CT.m4=null;CT.loaded=false;await load();toast('Cenário reposto.')}
+
+/* ---------- Eventos ---------- */
+async function onClick(e){
+ const bg=e.target.closest('[data-ct-close-bg]');if(bg&&e.target===bg){CT.modal=null;draw();return}
+ const t=e.target.closest('button,input[type=checkbox]');if(!t)return;const D=t.dataset;
+ if(D.ctMode){CT.mode=D.ctMode;CT.tab='quadro';CT.fa=null;CT.q='';CT.loaded=false;CT.deals=CT.contacts=CT.tasks=[];draw();await load();return}
+ if(D.ctTab){CT.tab=D.ctTab;draw();return}
+ if(D.ctFlt){CT.fa=CT.fa===D.ctFlt?null:D.ctFlt;draw();return}
+ if(t.hasAttribute('data-ct-new')){CT.modal={t:'deal'};draw();return}
+ if(t.hasAttribute('data-ct-reset')){resetGuided();return}
+ if(t.hasAttribute('data-ct-close')){CT.modal=null;draw();return}
+ if(D.ctTouch){touch(D.ctTouch);return}
+ if(D.ctTask){CT.modal={t:'task',id:D.ctTask};draw();return}
+ if(D.ctEdit){CT.modal={t:'deal',id:D.ctEdit};draw();return}
+ if(D.ctDel){del(D.ctDel);return}
+ if(D.ctDone!==undefined){toggleTask(D.ctDone,t.checked)}}
+function onChange(e){const t=e.target;if(t.dataset.ctMove){move(t.dataset.ctMove,t.value)}}
+function onInput(e){const t=e.target;if(t.id==='ctSearch'){CT.q=t.value;const p=g('ctPanel'),pos=t.selectionStart;p.innerHTML=boardHTML();const n=g('ctSearch');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}}}
+async function onSubmit(e){const f=e.target;
+ if(f.dataset.ctFc!==undefined){e.preventDefault();const v=num(f.elements.a.value);if(!isFinite(v)){g('ctFc').innerHTML='<div class="mk-note mk-bad">Escreva um número.</div>';return}
+  CT.m4=Math.abs(v-stats().wpn)<=1?'ok':'bad';draw();return}
+ const k=f.dataset.ctForm;if(!k)return;e.preventDefault();
+ if(k==='lost'){const id=CT.modal.id;CT.modal=null;await move(id,'PERDIDO',f.r.value)}
+ else if(k==='deal')await saveDeal(f);else if(k==='task')await saveTask(f)}
+function onKey(e){if(e.key==='Escape'&&CT.modal){CT.modal=null;draw()}}
+
+let WIRED=false;
+window.ctOpen=function(){const r=root();if(!r)return;
+ if(!WIRED){WIRED=true;r.addEventListener('click',onClick);r.addEventListener('change',onChange);r.addEventListener('input',onInput);r.addEventListener('submit',onSubmit);r.addEventListener('keydown',onKey)}
+ if(!r.firstChild)shell();if(!CT.loaded&&!CT.loading)load();else draw()};
+window.ctCalc={stats:()=>stats()};
 })();
 
 boot();
