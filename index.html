@@ -1131,6 +1131,7 @@ $('qCsvAdd').onclick=()=>{
 /* ===== Assistente «Nova sessão»: 1 Material → 2 Ligação → 3 Teste; e pedido de perguntas ao Claude (testes e Treino) ===== */
 var WIZ=null,NEWSID=null;
 let BANKQ=[],BANKOK=false;
+const bankCount=t=>BANKQ.filter(r=>r.theme&&trNorm(r.theme)===trNorm(t)).length;
 async function bankLoad(){try{const r=await SB.from('av_train_questions').select('theme,kind,statement,case_context,active,source_question_id').limit(5000);if(r.error)throw r.error;BANKQ=r.data||[];BANKOK=true}catch(e){BANKQ=[];BANKOK=false}}
 const WIZ_SINCE='2026-11-16T00:00:00';
 const WIZ_STEPS=[['Material','Carregue o material desta sessão (PDF ou PowerPoint).'],['Ligação','Tem uma ligação para esta sessão (vídeo, artigo, pasta partilhada)? Indique-a ou carregue em «Esta sessão não tem ligação».'],['Teste','Crie o teste desta sessão. O teste é obrigatório para concluir.']];
@@ -1138,11 +1139,11 @@ const WIZ_KINDS=['ficheiro','ligacao','teste'],WIZ_KL={ficheiro:'Material',ligac
 const WIZ_ACCEPT='.pdf,.ppt,.pptx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation';
 const wizHas=(sid,k)=>MAT.some(m=>m.sessionId===sid&&m.kind===k);
 const wizDiag=sid=>isDiagSession(sessionById(sid));
-function wizStart(sid){if(wizDiag(sid))return 3;if(!wizHas(sid,'ficheiro'))return 1;if(wizHas(sid,'teste'))return 3;return wizHas(sid,'ligacao')?3:2}
-function wizMissing(s){const o=[];if(!wizDiag(s.id))if(!wizHas(s.id,'ficheiro'))o.push('material');if(!wizHas(s.id,'teste'))o.push('teste');return o}
+function wizStart(sid){if(wizDiag(sid))return 3;if(!wizHas(sid,'ficheiro'))return 1;if(wizHas(sid,'teste'))return(BANKOK&&!bankCount((sessionById(sid)||{}).title))?4:3;return wizHas(sid,'ligacao')?3:2}
+function wizMissing(s){const o=[];if(!wizDiag(s.id))if(!wizHas(s.id,'ficheiro'))o.push('material');if(!wizHas(s.id,'teste'))o.push('teste');if(!wizDiag(s.id)&&BANKOK&&!bankCount(s.title))o.push('treino');return o}
 function wizIncomplete(s){return !!s&&MAT_OK&&(s.createdAt||'')>=WIZ_SINCE&&wizMissing(s).length>0}
 function wizBadge(s){return wizIncomplete(s)?' <span class="tag warn">Em construção · falta: '+wizMissing(s).join(', ')+'</span>':''}
-function wizOpen(sid,step){if(!sessionById(sid))return;openMatModal(sid);WIZ={sid:sid,step:step||wizStart(sid)};wizApply()}
+function wizOpen(sid,step){if(!sessionById(sid))return;if((step||wizStart(sid))===4)return sbOpen(sid);openMatModal(sid);WIZ={sid:sid,step:step||wizStart(sid)};wizApply()}
 function wizApply(){
  const s=sessionById(WIZ.sid),st=WIZ.step,t=s?s.title:'';
  $('matTitle').textContent='Nova sessão · '+t;
@@ -1165,9 +1166,37 @@ function wizSync(){
  $('matSave').textContent=st===3?(wizDiag(WIZ.sid)?'Adicionar teste':'Adicionar teste e continuar'):'Guardar e continuar'}
 function wizAfterSave(){
  if(!WIZ)return;const sid=WIZ.sid;
- if(WIZ.step>=3){WIZ=null;$('matModal').classList.remove('open');wizSync();renderSessions();toast(isDiagFicha(sessionById(sid))?'Diagnóstico criado. Já está disponível para todos os formandos.':'Sessão concluída. Crie agora as perguntas de treino no separador «Banco de treino», com o tema «'+((sessionById(sid)||{}).title||'')+'».');return}
+ if(WIZ.step>=3){WIZ=null;$('matModal').classList.remove('open');wizSync();renderSessions();if(!isDiagFicha(sessionById(sid))&&!wizDiag(sid)){sbOpen(sid);return}toast(isDiagFicha(sessionById(sid))?'Diagnóstico criado. Já está disponível para todos os formandos.':'Sessão concluída. Crie agora as perguntas de treino no separador «Banco de treino», com o tema «'+((sessionById(sid)||{}).title||'')+'».');return}
  WIZ.step=WIZ.step===1&&wizHas(sid,'ligacao')?3:WIZ.step+1;wizApply()}
 $('wizSkip').onclick=()=>{if(WIZ&&WIZ.step===2){WIZ.step=3;wizApply()}};
+
+/* --- passo 4: banco de treino da sessão (tema = título da sessão) --- */
+let SBX=null;
+async function sbOpen(sid){
+ const se=sessionById(sid);if(!se)return;await bankLoad();SBX={sid:sid,title:se.title,a:null,txt:''};sbDraw()}
+function sbHead(){return '<div class="wizsteps">'+WIZ_STEPS.concat([['Treino']]).map((x,i)=>'<span class="wizstep'+(i===3?' on':' done')+'"><b>'+(i===3?4:'✓')+'</b>'+x[0]+'</span>').join('')+'</div>'}
+function sbDraw(){
+ const n=bankCount(SBX.title);
+ trOpen('Nova sessão · '+SBX.title,sbHead()+'<p class="wiztitle">Passo 4 de 4 · Treino</p><p class="muted wizhint">Cria o banco de perguntas de treino desta sessão. O tema é sempre o título da sessão, e também o tema da aula. As perguntas não podem ser iguais às do teste.</p>'
+  +'<div class="field"><label>Tema</label><input value="'+esc(SBX.title)+'" readonly></div>'
+  +(n?'<p class="muted smalltext">Já existem <strong>'+n+'</strong> pergunta(s) deste tema no banco.</p>':'')
+  +claudeBlock('treino','sb')
+  +'<div class="field"><label for="sbFile">Ficheiro CSV</label><input type="file" id="sbFile" accept=".csv,.txt,text/csv"></div>'
+  +'<div class="field"><label for="sbText">… ou cole aqui o conteúdo</label><textarea id="sbText" rows="6">'+esc(SBX.txt||'')+'</textarea></div>',
+  [{label:'Saltar por agora',cls:'secondary',fn:()=>{renderSessions();toast('Sessão criada. Falta o treino: retome-o na lista de sessões.');return true}},
+   {label:'Analisar',fn:()=>{SBX.txt=$('sbText').value;const a=trCsvAnalyse(SBX.txt,SBX.title);if(a.err){alert(a.err);return false}SBX.a=a;sbPreview();return false}}]);
+ const th=$('sbSe');if(th){if(![...th.options].some(o=>o.value===SBX.title)){const o=document.createElement('option');o.value=SBX.title;o.textContent=SBX.title;th.appendChild(o)}th.value=SBX.title;th.disabled=true}
+ const f=$('sbFile');if(f)f.onchange=()=>{if(f.files&&f.files[0]){const fr=new FileReader();fr.onload=()=>{$('sbText').value=String(fr.result||'')};fr.readAsText(f.files[0])}}}
+function sbPreview(){
+ const a=SBX.a;
+ trOpen('Nova sessão · '+SBX.title,sbHead()+'<p><strong>'+a.ok.length+'</strong> pergunta(s) válida(s) · <strong>'+a.dup+'</strong> repetida(s) · <strong>'+(a.dupT||0)+'</strong> igual(is) a perguntas de teste (ignoradas) · <strong>'+a.errs.length+'</strong> com erro.</p>'
+  +(a.errs.length?'<div class="notice">'+a.errs.slice(0,8).map(esc).join('<br>')+'</div>':''),
+  [{label:'Voltar',cls:'secondary',fn:()=>{sbDraw();return false}},
+   {label:a.ok.length?'Importar '+a.ok.length+' e concluir':'Nada a importar',fn:async()=>{
+    if(!a.ok.length)return true;
+    try{for(let i=0;i<a.ok.length;i+=100){const r=await SB.from('av_train_questions').insert(a.ok.slice(i,i+100));if(r.error)throw r.error}
+     await bankLoad();renderSessions();toast('Sessão pronta: '+a.ok.length+' pergunta(s) de treino guardadas como rascunho. Active-as no Banco de treino.');return true}
+    catch(er){alert('Não foi possível importar: '+(er.message||er));return false}}}])}
 
 /* --- pedido ao Claude --- */
 const CL_BIAS=['Equilíbrio das respostas (obrigatório):',
@@ -2509,6 +2538,7 @@ function trThemeCheck(theme,levels){
   if(lv.length&&!n)return{k:'nivel',msg:'O tema existe no banco, mas sem perguntas activas para o nível desta turma.'};
   return{k:'ok',n:n}}
  const near=names.find(x=>trNorm(x)===trNorm(theme));
+ if(!near&&read(KEYS.sessions).some(x=>x.title===theme))return{k:'nao',msg:'A sessão existe, mas ainda não tem perguntas de treino no banco. Crie-as no passo «Treino» da criação da sessão.'};
  if(!near&&read(KEYS.sessions).some(x=>x.title===theme))return{k:'nao',msg:'A sessão existe, mas ainda não tem perguntas de treino no banco. Crie-as em Turmas e Treinos → Banco de treino, com o mesmo tema.'};
  if(near)return{k:'case',fix:near,msg:'Difere do banco só em maiúsculas ou acentos. No banco: «'+near+'».'};
  const part=names.filter(x=>trNorm(x).includes(trNorm(theme))||trNorm(theme).includes(trNorm(x))).slice(0,3);
