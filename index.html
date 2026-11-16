@@ -351,6 +351,22 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 #testModal .qtext{font-size:15px;font-weight:600}
 #testModal .testscore{font-size:16px}
 </style>
+<style id="mkStyle">
+.mk-tabs{display:flex;gap:6px;overflow-x:auto;margin:0 0 14px;padding-bottom:2px}.mk-tabs button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:700;white-space:nowrap}.mk-tabs button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.mk-g3{grid-template-columns:repeat(3,minmax(0,1fr))}.mk-two{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:start}
+.mk-in{display:flex;align-items:center;border:1px solid #d9dce1;border-radius:10px;background:#fff;overflow:hidden}.mk-in input{border:0!important;outline:0;flex:1;min-width:0;padding:10px 12px;background:transparent;box-shadow:none!important}.mk-in span{padding:0 12px;color:var(--muted);font-size:12px;font-weight:700;white-space:nowrap}.mk-in:focus-within{border-color:var(--red)}
+.mk-f.mk-drv .mk-in{border-color:var(--red);box-shadow:0 0 0 3px #c8101e14}.mk-sm{max-width:110px}.mk-sm input{padding:7px 9px}
+.mk-res{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}.mk-res>div{background:#faf6f6;border-top:3px solid var(--red);border-radius:10px;padding:12px}.mk-res span{display:block;font-size:11px;color:var(--muted);font-weight:600}.mk-res strong{display:block;margin-top:3px;font-size:18px;letter-spacing:-.02em;overflow-wrap:anywhere}
+.mk-note{background:#f6f7f9;border-radius:10px;padding:12px 14px;font-size:13px;margin:12px 0}.mk-good{background:#ecf8f1;color:#115c3b}.mk-bad{background:#fff0f0;color:#8c1822}.mk-badtxt{color:#a11c27;font-weight:700}
+.mk-h{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}.mk-row{display:grid;grid-template-columns:1fr 150px auto;gap:8px;align-items:center;margin-bottom:8px}.mk-row>input{border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;min-width:0}
+.mk-tbl{width:100%;border-collapse:collapse;font-size:13px}.mk-tbl td,.mk-tbl th{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left}.mk-tbl td:last-child{text-align:right;font-weight:700;white-space:nowrap}.mk-sc td:last-child,.mk-sc td{text-align:left;font-weight:500}.mk-sc th{font-size:11px;color:var(--muted)}.mk-sum td{font-weight:800}.mk-scroll{overflow-x:auto}
+.mk-act{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.mk-bar{height:8px;background:#eceef1;border-radius:99px;overflow:hidden;margin:6px 0 10px}.mk-bar i{display:block;height:100%;background:var(--green);border-radius:99px}
+.mk-exlist{display:grid;gap:8px}.mk-ex{border:1px solid var(--line);border-radius:12px;background:#fff}.mk-ex.ok{border-color:#bfe3d0;background:#f7fcf9}.mk-exh{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;text-align:left;padding:12px 14px;font-weight:700;font-size:13px}.mk-ck{display:grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;background:#eceef1;font-size:12px}.mk-ex.ok .mk-ck{background:var(--green);color:#fff}
+.mk-exb{padding:0 14px 14px 50px}.mk-exb p{margin:0 0 10px;font-size:13.5px}.mk-exf{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.mk-exf .mk-in{flex:1;min-width:160px;max-width:260px}
+.mk-flist{display:grid;gap:8px}.mk-fi{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:12px 14px}.mk-fa{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+@media(max-width:900px){.mk-two{grid-template-columns:1fr}.mk-res{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.mk-grid,.mk-g3{grid-template-columns:1fr}.mk-row{grid-template-columns:1fr 120px}.mk-row .linkdel{grid-column:1/-1;justify-self:start}.mk-exb{padding-left:14px}.mk-in input{font-size:16px}.mk-row>input{font-size:16px}}
+</style>
 </head><body>
 <style>[data-invite]{display:none!important}#loginBox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fcfbf9;z-index:50}#loginBox form{background:#fff;padding:28px;border-radius:12px;width:min(92vw,360px);box-shadow:0 8px 30px #0002;display:grid;gap:12px}#loginMsg{color:#b42318;font-size:.9rem;min-height:1.2em}#logoutBtn{position:fixed;top:10px;right:12px;z-index:20}/* v12: formatação, anexos estilo Facebook, edição */
 .rt strong{font-weight:800}.rt u{text-decoration:underline;text-underline-offset:2px}.rt s{opacity:.7}.rt mark{background:#fff2a8;color:inherit;padding:0 2px;border-radius:3px}
@@ -554,12 +570,13 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
 <section class="page hidden" id="page-treino"><div class="pagehead"><div><div class="eyebrow">Treino e níveis</div><h1>Turmas e Treinos</h1><p>Crie a turma e os níveis, construa as sessões e preencha o banco de treino com os mesmos temas.</p></div></div><div class="tr-tabs" id="trTabs"><button type="button" class="active" data-tr-tab="diag">1 · Diagnóstico inicial</button><button type="button" data-tr-tab="sessions">2 · Sessões e materiais</button><button type="button" data-tr-tab="levels">3 · Turmas e níveis</button><button type="button" data-tr-tab="bank">4 · Treino</button></div><div id="trAdminBody"></div><div id="trSessBody" class="hidden"><div class="notice" style="margin-bottom:12px">Passo 2: construa as sessões, cada uma ligada a um nível — materiais, testes e ligações. O <strong>título da sessão</strong> é o tema que depois usa no Banco de treino e nas aulas da turma. As perguntas dos testes não podem repetir-se no treino.</div><div class="actions" style="margin-bottom:12px"><button class="btn" id="addSessionBtn">+ Criar sessão</button></div><div class="card"><div class="toolbar"><select id="sessionFilter"><option value="">Todas as áreas</option></select><select id="sessionStatusFilter"><option value="">Todas as datas</option><option value="upcoming">Por realizar</option><option value="past">Realizadas</option></select></div><div id="sessionCards"></div></div></div><div id="trBankBody" class="hidden"></div><div id="trDiagBody" class="hidden"></div></section>
 <section class="page hidden" id="page-pay"><div class="pagehead"><div><div class="eyebrow">Controlo financeiro</div><h1>Pagamentos</h1><p>Parcelas, pedidos de pagamento, comprovativos e facturas internas dos formandos.</p></div><button class="btn" id="payGenBtn">+ Gerar parcelas</button></div><div id="payAdminMsg"></div><div class="paytabs" id="payTabs"><button type="button" data-pt="panel" class="active">Painel</button><button type="button" data-pt="confirm">A confirmar <span class="tag warn hidden" id="payCnt">0</span></button><button type="button" data-pt="pro">Parcelas</button><button type="button" data-pt="inv">Facturas</button><button type="button" data-pt="plans">Planos</button><button type="button" data-pt="set">Definições</button></div><div id="payBody"></div></section>
 </main></div></div>
-<div id="studentView" class="hidden"><header class="studenthead"><div class="student"><div class="studenttop"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>ESPAÇO DO FORMANDO</small></span></div><div class="topicons" data-topicons></div></div></div></header><nav class="stnav" id="stNav"><button type="button" class="active" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button><button type="button" data-st-tab="billing">Facturação</button><button type="button" data-st-tab="profile">Perfil</button></nav><main class="student"><div class="pagehead" style="margin-top:25px"><div><div class="eyebrow">Área reservada</div><h1 id="studentName">Bem-vindo</h1><p id="studentMeta"></p></div></div>
+<div id="studentView" class="hidden"><header class="studenthead"><div class="student"><div class="studenttop"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>ESPAÇO DO FORMANDO</small></span></div><div class="topicons" data-topicons></div></div></div></header><nav class="stnav" id="stNav"><button type="button" class="active" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="sim">Simulador</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button><button type="button" data-st-tab="billing">Facturação</button><button type="button" data-st-tab="profile">Perfil</button></nav><main class="student"><div class="pagehead" style="margin-top:25px"><div><div class="eyebrow">Área reservada</div><h1 id="studentName">Bem-vindo</h1><p id="studentMeta"></p></div></div>
 <section data-st-page="materials"><div class="grid stats"><div class="stat"><div class="label">Sessões</div><strong id="stSessionCount">0</strong></div><div class="stat"><div class="label">Presenças</div><strong id="stAttendance">0%</strong></div><div class="stat"><div class="label">Média prática (0–20)</div><strong id="stScore">—</strong></div><div class="stat"><div class="label">Materiais</div><strong id="stMaterials">0</strong></div></div><div class="card"><div class="cardhead"><h2>Materiais por área</h2><span class="muted smalltext" id="stMatHint">Abra uma pasta</span></div><div class="tilegrid" id="stTiles"></div><div class="matpanel hidden" id="stMatPanel"></div></div></section>
 <section data-st-page="diagnosis" class="hidden"><div class="card"><div class="cardhead"><h2>Diagnóstico de competências</h2><span class="muted smalltext">Separado da classificação oficial</span></div><p class="muted smalltext">O diagnóstico mostra evidências das respostas nos testes. Não altera a nota de certificação, calculada com 60% de testes automáticos e 40% de avaliação prática do formador.</p><div id="stDiagnosis"><div class="empty">O diagnóstico será apresentado quando existirem tentativas com perguntas associadas a competências e a migração estiver instalada.</div></div></div></section><section data-st-page="pauta" class="hidden"><div class="card"><div class="cardhead"><h2>Pauta</h2><span class="muted smalltext" id="studentPautaWeights">Escala 0–20 · Testes 60% / Prática 40%</span></div><div id="stPauta"></div></div></section>
 <section data-st-page="forum" class="hidden"><div class="grid feedgrid"><div class="card"><div class="cardhead"><h2>Publicações da formação</h2></div><form id="stForumForm" class="composer"><textarea id="stForumText" maxlength="1500" rows="2" placeholder="Escreva a sua dúvida, pergunta, contribuição ou anotação…" aria-label="Nova publicação"></textarea><div class="composerbar"><label class="attbtn" title="Anexar ficheiro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2l-8.6 8.6a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/></svg><input type="file" id="stForumFile" hidden></label><span class="attchip hidden" id="stForumChip"></span><button class="btn small">Publicar</button></div></form><div class="feed" id="stForumPosts"></div></div><div class="card"><div class="cardhead"><h2>Feedback da sessão</h2></div><form id="stFeedbackForm"><div class="field"><label>Sessão</label><select id="stFeedbackSession" required></select></div><div class="field" style="margin-top:12px"><label>Como avalia esta sessão?</label><select id="stFeedbackRating" required><option value="">Seleccione</option><option value="5">5 — Excelente</option><option value="4">4 — Muito boa</option><option value="3">3 — Boa</option><option value="2">2 — Precisa de melhorar</option><option value="1">1 — Insatisfatória</option></select></div><div class="field" style="margin-top:12px"><label>Comentário / sugestão</label><textarea id="stFeedbackText" maxlength="1200" placeholder="O que foi útil? O que poderia melhorar?"></textarea></div><button class="btn" style="margin-top:12px">Enviar feedback</button></form><div id="stFeedbackHistory" style="margin-top:15px"></div></div></div></section>
 <section data-st-page="billing" class="hidden"><div id="payStMsg"></div><div id="payStBody"></div></section>
-<section data-st-page="train" class="hidden"><div id="trStBody"></div></section><section data-st-page="profile" class="hidden"><div class="profgrid"><div class="card"><div class="cardhead"><h2>Os meus dados</h2></div><div class="kv" id="stProfile"></div></div><div class="card"><div class="cardhead"><h2>Participação</h2></div><div class="kv" id="stProfile2"></div></div><div class="card" id="trProfileCard" style="grid-column:1/-1;display:none"></div></div></section>
+<section data-st-page="train" class="hidden"><div id="trStBody"></div></section><section data-st-page="sim" class="hidden"><div id="mkRoot"></div></section>
+<section data-st-page="profile" class="hidden"><div class="profgrid"><div class="card"><div class="cardhead"><h2>Os meus dados</h2></div><div class="kv" id="stProfile"></div></div><div class="card"><div class="cardhead"><h2>Participação</h2></div><div class="kv" id="stProfile2"></div></div><div class="card" id="trProfileCard" style="grid-column:1/-1;display:none"></div></div></section>
 <p class="footer-note">Formação · Área do formando</p></main></div>
 <div id="msgPanel" class="dropdown hidden" role="dialog" aria-label="Mensagens privadas"><div class="ph"><button type="button" id="msgBack" class="hidden" aria-label="Voltar">←</button><strong id="msgTitle">Mensagens privadas</strong><button type="button" data-close-panels aria-label="Fechar">✕</button></div><div class="msgbody"><div class="chatlist" id="msgList"></div><div id="msgThread" class="hidden"><div class="chatmsgs" id="msgMsgs"></div><form id="msgForm" class="chatform"><input id="msgText" required maxlength="1200" autocomplete="off" placeholder="Escreva uma mensagem…" aria-label="Mensagem privada"><button class="btn small">Enviar</button></form></div></div></div>
 <div id="bellPanel" class="dropdown hidden" role="dialog" aria-label="Notificações"><div class="ph"><strong>Notificações</strong><button type="button" id="bellRead" class="btn secondary small">Marcar como lidas</button><button type="button" data-close-panels aria-label="Fechar">✕</button></div><div class="notifbody" id="bellList"></div></div>
@@ -1430,7 +1447,7 @@ function renderBell(){const ev=notifEvents().slice(0,25),seen=ts(SEEN.notif);$('
 function updateBadges(){const set=(k,n)=>document.querySelectorAll('[data-badge="'+k+'"]').forEach(el=>{el.textContent=n>9?'9+':String(n);el.classList.toggle('hidden',!n)});set('msg',unreadMsgs());set('bell',unreadNotifs())}
 
 /* --- topo: ícones, painéis e menu do utilizador --- */
-function renderTopIcons(){if(!PROFILE||!USER)return;const staff=isStaffUser(),me=staff?null:staffById(PROFILE.staff_id),name=staff?(PROFILE.display_name||USER.email||'Equipa'):(me?.name||PROFILE.display_name||USER.email||'Formando'),menu=staff?'':'<button type="button" data-st-tab="profile">Perfil</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button>';
+function renderTopIcons(){if(!PROFILE||!USER)return;const staff=isStaffUser(),me=staff?null:staffById(PROFILE.staff_id),name=staff?(PROFILE.display_name||USER.email||'Equipa'):(me?.name||PROFILE.display_name||USER.email||'Formando'),menu=staff?'':'<button type="button" data-st-tab="profile">Perfil</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="sim">Simulador</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button>';
 const html=`<button type="button" class="iconbtn" data-act="msg" aria-label="Mensagens privadas">${ICO_MSG}<span class="badge hidden" data-badge="msg"></span></button><button type="button" class="iconbtn" data-act="bell" aria-label="Notificações">${ICO_BELL}<span class="badge hidden" data-badge="bell"></span></button><div class="avwrap"><button type="button" class="avbtn" data-act="av" aria-label="Menu do utilizador">${esc(initials(name))}</button><div class="avmenu hidden"><div class="who"><strong>${esc(name)}</strong><br>${esc(USER.email||'')}<br>${esc(ROLE_LABEL[PROFILE.role]||'')}</div>${menu}<button type="button" data-act="logout">Sair</button></div></div>`;document.querySelectorAll('[data-topicons]').forEach(el=>{el.innerHTML=html});updateBadges()}
 function closePanels(){const wasBell=!$('bellPanel').classList.contains('hidden');$('msgPanel').classList.add('hidden');$('bellPanel').classList.add('hidden');document.querySelectorAll('.avmenu').forEach(m=>m.classList.add('hidden'));if(wasBell)markNotifSeen()}
 function toggleMsg(){const open=$('msgPanel').classList.contains('hidden');closePanels();if(open){$('msgPanel').classList.remove('hidden');if(isStaffUser())MSG_VIEW='list';renderMsgPanel()}}
@@ -1487,7 +1504,7 @@ function drawDiagNav(box){box=box||$('stDiagnosis');if(!box)return;const n=DIAG_
 document.addEventListener('click',e=>{const b=e.target.closest('[data-diag-nav]'),g=e.target.closest('[data-diag-go]');if(!b&&!g)return;DIAG_I=b?DIAG_I+Number(b.dataset.diagNav):Number(g.dataset.diagGo);drawDiagNav();$('stDiagnosis').scrollIntoView({block:'nearest'})});
 document.addEventListener('keydown',e=>{if(ST_TAB!=='diagnosis'||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;const t=e.target&&e.target.tagName;if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT'||document.querySelector('.modal.open'))return;if(DIAG_PANELS.length<2)return;DIAG_I+=e.key==='ArrowRight'?1:-1;drawDiagNav()});
 async function drawStudentDiagnosis(){const box=$('stDiagnosis');if(!box)return;const mine=ATT.filter(a=>a.staffId===PROFILE.staff_id).sort((a,b)=>ts(b.at)-ts(a.at));if(!mine.length){box.innerHTML='<div class="empty">Ainda não existem testes submetidos para gerar o diagnóstico.</div>';return}let out=[];for(const a of mine){const m=MAT.find(x=>x.id===a.materialId);if(!m)continue;if(m.testPurpose==='diagnostico'){try{const p=await fetchInitialProfile(a.materialId);if(p){out.push({label:(m.title||'Diagnóstico')+' · '+fmtDT(a.at),html:initialProfileHTML(p)});continue}}catch(e){out.push({label:(m.title||'Diagnóstico')+' · '+fmtDT(a.at),html:'<div class="notice">O diagnóstico inicial foi submetido, mas não foi possível reconstruir agora o perfil individual. Abra «Ver a minha resposta» e consulte o separador Diagnóstico.</div>'});continue}}if(!COMP_OK)continue;try{const comps=await fetchStudentDiagnosis(a.materialId);if(comps.length){DIAG_CACHE=comps;let items=[];try{const g=await SB.rpc('av_get_test',{p_material:a.materialId});if(!g.error&&g.data&&Array.isArray(g.data.review))items=g.data.review}catch(_){}const title=m.title||'Teste',when=fmtDT(a.at);out.push({label:title+' · '+when,html:`<div class="matpanel"><h3>${esc(title)} · ${esc(when)}</h3>${diagActionsHTML(a.id,comps,title,when,items)}${diagnosisRowsHTML(comps,items)}<h4>Recomendações</h4>${recommendationRowsHTML(comps,items)}</div>`})}}catch(e){}}out.reverse();const keep=DIAG_PANELS[DIAG_I]&&DIAG_PANELS[DIAG_I].key;DIAG_PANELS=out;const k=out.findIndex(x=>x.label===keep);DIAG_I=k>=0?k:out.length-1;drawDiagNav(box)}
- async function stTab(t){ST_TAB=t;document.querySelectorAll('[data-st-page]').forEach(p=>p.classList.toggle('hidden',p.dataset.stPage!==t));document.querySelectorAll('#stNav [data-st-tab]').forEach(b=>b.classList.toggle('active',b.dataset.stTab===t));if(t==='diagnosis')await drawStudentDiagnosis();if(t==='billing')payStudentOpen();if(t==='train')trStudentOpen();if(t==='forum'){const f=$('stForumPosts');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}window.scrollTo({top:0})}
+ async function stTab(t){ST_TAB=t;document.querySelectorAll('[data-st-page]').forEach(p=>p.classList.toggle('hidden',p.dataset.stPage!==t));document.querySelectorAll('#stNav [data-st-tab]').forEach(b=>b.classList.toggle('active',b.dataset.stTab===t));if(t==='diagnosis')await drawStudentDiagnosis();if(t==='billing')payStudentOpen();if(t==='train')trStudentOpen();if(t==='sim'&&window.mkOpen)mkOpen();if(t==='forum'){const f=$('stForumPosts');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}window.scrollTo({top:0})}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act]');if(a){const k=a.dataset.act;if(k==='msg')toggleMsg();else if(k==='bell')toggleBell();else if(k==='av'){const m=a.parentElement.querySelector('.avmenu'),open=m.classList.contains('hidden');closePanels();if(open)m.classList.remove('hidden')}else if(k==='logout')logout();return}
 if(e.target.closest('[data-close-panels]')){closePanels();return}
 const mo=e.target.closest('[data-msg-open]');if(mo){PRIV_ACTIVE=mo.dataset.msgOpen;MSG_VIEW='thread';renderMsgPanel();$('msgText').focus();return}
@@ -2650,6 +2667,220 @@ function trWzDraw(){
   if(b.hasAttribute('data-wz-bank')){trClose();trTab('bank');return}
   const f=document.querySelector('[data-wz-dt="1"]').value;if(!f){alert('Escolha primeiro a data da aula 1.');return}
   const d=new Date(f+'T12:00:00');[1,2,3,4].forEach(n=>{const x=new Date(d);x.setDate(d.getDate()+7*(n-1));const el=document.querySelector('[data-wz-dt="'+n+'"]');if(el)el.value=x.toISOString().slice(0,10)})}}
+
+/* ===== Simulador de Markup (Fase 1) — código isolado, prefixo mk ===== */
+(function(){
+'use strict';
+const LS_KEY='av_sim_state_v1',LS_FICHAS='av_sim_fichas_v1';
+const kz=v=>(v==null||!isFinite(v))?'—':new Intl.NumberFormat('pt-AO',{maximumFractionDigits:0}).format(Math.round(v))+' Kz';
+const pc=(v,d=1)=>(v==null||!isFinite(v))?'—':new Intl.NumberFormat('pt-PT',{maximumFractionDigits:d,minimumFractionDigits:0}).format(v)+'%';
+const un=v=>(v==null||!isFinite(v))?'—':new Intl.NumberFormat('pt-PT',{maximumFractionDigits:0}).format(Math.ceil(v-1e-9))+' un.';
+function num(s){s=String(s==null?'':s).trim().replace(/\s/g,'');if(!s)return NaN;
+ if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');
+ else if(/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,'');
+ const n=Number(s);return isFinite(n)?n:NaN}
+const n0=s=>{const n=num(s);return isFinite(n)?n:0};
+
+/* ---------- Cálculo (funções puras) ---------- */
+function calc(custo,driver,val){
+ if(!(custo>0)||!isFinite(val))return null;let preco;
+ if(driver==='markup'){if(val<=-100)return null;preco=custo*(1+val/100)}
+ else if(driver==='margem'){if(val>=100)return null;preco=custo/(1-val/100)}
+ else{if(!(val>0))return null;preco=val}
+ return{preco,lucro:preco-custo,markup:(preco/custo-1)*100,margem:(1-custo/preco)*100}}
+function model(m){
+ const direct=m.custos.reduce((a,c)=>a+n0(c.v),0),fixos=n0(m.fixos),units=n0(m.vendas),
+  imp=n0(m.imposto)/100,com=n0(m.comissao)/100,mg=n0(m.margem)/100,
+  fixUnit=units>0?fixos/units:0,base=direct+fixUnit,
+  dMin=1-imp-com,dTar=1-imp-com-mg,
+  pMin=dMin>0&&base>0?base/dMin:null,pTar=dTar>0&&base>0?base/dTar:null;
+ const out={direct,fixos,units,fixUnit,base,imp,com,mg,pMin,pTar,warn:null};
+ if(dTar<=0)out.warn='Impostos, comissão e margem somam '+pc((imp+com+mg)*100)+' do preço: não sobra nada para o custo. Reduza alguma das percentagens.';
+ if(pTar){out.markup=(pTar/base-1)*100;out.lucroUn=pTar*mg;out.lucroMes=units>0?out.lucroUn*units:null;
+  out.contrib=pTar*dMin-direct;out.be=out.contrib>0?fixos/out.contrib:null}
+ return out}
+function scenarios(m,mo){
+ if(!mo.pTar)return[];const imp=mo.imp,com=mo.com,cm0=mo.pTar*(1-imp-com)-mo.direct;
+ return m.desc.map(d=>{const dd=n0(d)/100,p=mo.pTar*(1-dd),cm=p*(1-imp-com)-mo.direct;
+  const be=cm>0?mo.fixos/cm:null,lucro=mo.units>0?cm*mo.units-mo.fixos:null,
+   need=(cm>0&&cm0>0&&mo.units>0)?mo.units*cm0/cm:null;
+  return{d:n0(d),p,cm,be,lucro,need,extra:need?(need/mo.units-1)*100:null}})}
+
+/* ---------- Estado ---------- */
+const DEF=()=>({tab:'calc',
+ calc:{custo:'',driver:'markup',markup:'',margem:'',preco:''},
+ m:{nome:'',custos:[{n:'Materiais',v:''},{n:'Mão-de-obra directa',v:''}],fixos:'',vendas:'',imposto:'',comissao:'',margem:'30',desc:['0','10','20']}});
+let S=DEF(),EX={list:null,att:{},cur:null,err:null,loading:false,failedAt:0},FICHAS=[],FDB=true;
+try{const x=JSON.parse(localStorage.getItem(LS_KEY)||'null');if(x&&x.calc&&x.m){S=Object.assign(DEF(),x);S.tab='calc'}}catch(e){}
+const save=()=>{try{localStorage.setItem(LS_KEY,JSON.stringify({calc:S.calc,m:S.m}))}catch(e){}};
+const root=()=>document.getElementById('mkRoot');
+const g=id=>document.getElementById(id);
+
+/* ---------- Estrutura ---------- */
+const TABS=[['calc','Calculadora'],['custo','Custo e preço'],['eq','Equilíbrio e cenários'],['ex','Exercícios'],['fichas','Fichas guardadas']];
+function shell(){
+ root().innerHTML='<div class="mk-tabs" role="tablist">'+TABS.map(t=>'<button type="button" role="tab" data-mk-tab="'+t[0]+'">'+t[1]+'</button>').join('')+'</div>'+
+ '<div id="mkPanel"></div>';draw()}
+function draw(){
+ root().querySelectorAll('[data-mk-tab]').forEach(b=>{const on=b.dataset.mkTab===S.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',on)});
+ const p=g('mkPanel');
+ if(S.tab==='calc'){p.innerHTML=calcHTML();calcOut()}
+ else if(S.tab==='custo'){p.innerHTML=custoHTML();custoOut()}
+ else if(S.tab==='eq'){p.innerHTML=eqHTML();eqOut()}
+ else if(S.tab==='ex'){p.innerHTML=exHTML();exLoad()}
+ else{p.innerHTML=fichasHTML();fichasLoad()}}
+
+/* ---------- 1. Calculadora ---------- */
+function calcHTML(){const c=S.calc;
+ const f=(k,l,h,suf)=>'<div class="field mk-f'+(c.driver===k?' mk-drv':'')+'"><label for="mkc_'+k+'">'+l+'</label><div class="mk-in"><input id="mkc_'+k+'" data-mk-c="'+k+'" inputmode="decimal" autocomplete="off" value="'+esc(c[k])+'" placeholder="'+h+'"><span>'+suf+'</span></div></div>';
+ return '<div class="card"><div class="cardhead"><h2>Calculadora de markup e margem</h2></div>'+
+ '<p class="muted smalltext">Escreva o custo e depois mude <strong>um</strong> dos três campos (markup, margem ou preço): os outros dois actualizam-se sozinhos. O campo que está a usar fica destacado.</p>'+
+ '<div class="mk-grid">'+f('custo','Custo por unidade','0','Kz')+f('markup','Markup (sobre o custo)','0','%')+f('margem','Margem (sobre o preço)','0','%')+f('preco','Preço de venda','0','Kz')+'</div>'+
+ '<div id="mkCalcOut"></div></div>'}
+function calcOut(){const c=S.calc,custo=num(c.custo),val=num(c[c.driver==='custo'?'markup':c.driver]);const o=g('mkCalcOut');
+ const r=calc(custo,c.driver==='custo'?'markup':c.driver,val);
+ if(!r){o.innerHTML='<div class="empty">Escreva o custo e um dos três valores para ver o resultado.</div>';return}
+ o.innerHTML='<div class="mk-res"><div><span>Preço de venda</span><strong>'+kz(r.preco)+'</strong></div><div><span>Lucro por unidade</span><strong>'+kz(r.lucro)+'</strong></div><div><span>Markup</span><strong>'+pc(r.markup)+'</strong></div><div><span>Margem</span><strong>'+pc(r.margem)+'</strong></div></div>'+
+ '<div class="mk-note"><strong>Não são a mesma coisa.</strong> Um markup de '+pc(r.markup)+' sobre o custo dá uma margem de '+pc(r.margem)+' sobre o preço.'+
+ (r.markup>0&&r.markup<100?' Para ter uma margem de '+pc(r.markup)+', teria de aplicar um markup de '+pc(r.markup/(100-r.markup)*100)+'.':'')+'</div>'}
+
+/* ---------- 2. Custo e preço ---------- */
+function custoHTML(){const m=S.m;
+ const row=(c,i)=>'<div class="mk-row"><input data-mk-cn="'+i+'" value="'+esc(c.n)+'" aria-label="Nome do custo" placeholder="Ex.: Embalagem"><div class="mk-in"><input data-mk-cv="'+i+'" inputmode="decimal" value="'+esc(c.v)+'" aria-label="Valor" placeholder="0"><span>Kz</span></div><button type="button" class="linkdel" data-mk-del="'+i+'" aria-label="Remover custo">Remover</button></div>';
+ const f=(k,l,suf,h)=>'<div class="field"><label for="mkm_'+k+'">'+l+'</label><div class="mk-in"><input id="mkm_'+k+'" data-mk-m="'+k+'" inputmode="decimal" autocomplete="off" value="'+esc(m[k])+'" placeholder="'+(h||'0')+'"><span>'+suf+'</span></div></div>';
+ return '<div class="grid mk-two"><div class="card"><div class="cardhead"><h2>O seu produto ou serviço</h2></div>'+
+ '<div class="field"><label for="mkm_nome">Nome</label><input id="mkm_nome" data-mk-m="nome" value="'+esc(m.nome)+'" placeholder="Ex.: Bolo de aniversário"></div>'+
+ '<h3 class="mk-h">Custos directos por unidade</h3><div id="mkRows">'+m.custos.map(row).join('')+'</div>'+
+ '<button type="button" class="btn secondary small" data-mk-add>+ Adicionar custo</button>'+
+ '<h3 class="mk-h">Custos fixos e vendas</h3><div class="mk-grid">'+f('fixos','Custos fixos por mês','Kz')+f('vendas','Unidades vendidas por mês','un.')+'</div>'+
+ '<h3 class="mk-h">Percentagens do preço</h3><div class="mk-grid mk-g3">'+f('imposto','Impostos e taxas','%')+f('comissao','Comissão de venda','%')+f('margem','Margem pretendida','%','30')+'</div></div>'+
+ '<div class="card" id="mkCustoOut"></div></div>'}
+function custoOut(){const m=S.m,mo=model(m),o=g('mkCustoOut');
+ let h='<div class="cardhead"><h2>Resultado</h2></div>';
+ if(mo.base<=0){o.innerHTML=h+'<div class="empty">Preencha pelo menos um custo directo para ver o preço.</div>';return}
+ h+='<table class="mk-tbl"><tbody>'+
+ '<tr><td>Custos directos por unidade</td><td>'+kz(mo.direct)+'</td></tr>'+
+ '<tr><td>Custos fixos por unidade'+(mo.units>0?'':' <em>(indique as unidades por mês)</em>')+'</td><td>'+kz(mo.fixUnit)+'</td></tr>'+
+ '<tr class="mk-sum"><td>Custo total por unidade</td><td>'+kz(mo.base)+'</td></tr></tbody></table>';
+ if(mo.warn)h+='<div class="mk-note mk-bad">'+esc(mo.warn)+'</div>';
+ else h+='<div class="mk-res"><div><span>Preço mínimo (margem 0%)</span><strong>'+kz(mo.pMin)+'</strong></div><div><span>Preço com a margem pretendida</span><strong>'+kz(mo.pTar)+'</strong></div><div><span>Markup sobre o custo total</span><strong>'+pc(mo.markup)+'</strong></div><div><span>Lucro por mês</span><strong>'+kz(mo.lucroMes)+'</strong></div></div>'+
+ '<p class="muted smalltext">Impostos, comissão e margem são percentagens do <strong>preço</strong>: por isso o preço é o custo dividido por (1 − '+pc((mo.imp+mo.com+mo.mg)*100)+'), e não o custo multiplicado por um markup.</p>'+
+ '<div class="mk-act"><button type="button" class="btn small" data-mk-save>Guardar ficha</button><button type="button" class="btn secondary small" data-mk-go="eq">Ver equilíbrio e cenários →</button></div>';
+ o.innerHTML=h}
+
+/* ---------- 3. Equilíbrio e cenários ---------- */
+function eqHTML(){return '<div class="card"><div class="cardhead"><h2>Ponto de equilíbrio e cenários de desconto</h2></div><div id="mkEqOut"></div></div>'}
+function eqOut(){const m=S.m,mo=model(m),o=g('mkEqOut');
+ if(!mo.pTar||mo.base<=0){o.innerHTML='<div class="empty">Preencha primeiro o separador <strong>Custo e preço</strong>. Os cenários usam esse preço.</div><button type="button" class="btn small" data-mk-go="custo">Ir para Custo e preço</button>';return}
+ const sc=scenarios(m,mo);
+ let h='<div class="mk-res"><div><span>Preço de referência</span><strong>'+kz(mo.pTar)+'</strong></div><div><span>Contribuição por unidade</span><strong>'+kz(mo.contrib)+'</strong></div><div><span>Equilíbrio (unid./mês)</span><strong>'+un(mo.be)+'</strong></div><div><span>Vendas actuais</span><strong>'+(mo.units>0?un(mo.units):'—')+'</strong></div></div>'+
+ '<p class="muted smalltext">Contribuição = preço − impostos e comissão − custos directos. É o que cada unidade deixa para pagar os custos fixos ('+kz(mo.fixos)+' por mês).</p>'+
+ '<h3 class="mk-h">E se der desconto?</h3><div class="mk-scroll"><table class="mk-tbl mk-sc"><thead><tr><th>Desconto</th><th>Preço</th><th>Contribuição/un.</th><th>Equilíbrio</th><th>Lucro/mês (mesmas vendas)</th><th>Unidades para igualar o lucro</th></tr></thead><tbody>'+
+ sc.map((s,i)=>'<tr><td><div class="mk-in mk-sm"><input data-mk-d="'+i+'" inputmode="decimal" value="'+esc(S.m.desc[i])+'" aria-label="Desconto '+(i+1)+'"><span>%</span></div></td><td>'+kz(s.p)+'</td><td>'+(s.cm>0?kz(s.cm):'<span class="mk-badtxt">negativa</span>')+'</td><td>'+(s.be==null?'<span class="mk-badtxt">nunca</span>':un(s.be))+'</td><td>'+(s.lucro==null?'—':'<span class="'+(s.lucro<0?'mk-badtxt':'')+'">'+kz(s.lucro)+'</span>')+'</td><td>'+(s.need==null?'—':un(s.need)+(s.d>0&&s.extra!=null?' <em>(+'+pc(s.extra,0)+')</em>':''))+'</td></tr>').join('')+'</tbody></table></div>'+
+ (mo.units>0?'':'<p class="muted smalltext">Indique as unidades vendidas por mês no separador Custo e preço para ver o lucro e as unidades necessárias.</p>')+
+ '<div class="mk-note">Um desconto parece pequeno no preço mas é grande na margem: reduz a contribuição de cada unidade, e é preciso vender muito mais para ganhar o mesmo.</div>';
+ o.innerHTML=h}
+
+/* ---------- 4. Exercícios ---------- */
+const exDone=id=>(EX.att[id]||{}).ok;
+function exHTML(){return '<div id="mkExBody"><div class="empty">A carregar exercícios…</div></div>'}
+async function exLoad(){
+ if((EX.list===null||(EX.err&&Date.now()-EX.failedAt>10000))&&!EX.loading){EX.loading=true;
+  try{const a=await SB.from('av_sim_exercises').select('id,code,level,position,title,statement,unit').eq('active',true).order('position');
+   if(a.error)throw a.error;EX.list=a.data||[];
+   let q=SB.from('av_sim_attempts').select('exercise_id,correct,created_at');if(USER&&USER.id)q=q.eq('user_id',USER.id);const b=await q.order('created_at');
+   EX.att={};(b.data||[]).forEach(r=>{const x=EX.att[r.exercise_id]||(EX.att[r.exercise_id]={n:0,ok:false});x.n++;if(r.correct)x.ok=true});EX.err=null}
+  catch(e){EX.err=String((e&&e.message)||e||'erro');EX.list=[];EX.failedAt=Date.now()}
+  EX.loading=false}
+ if(S.tab==='ex')exDraw()}
+function exDraw(){const b=g('mkExBody');if(!b)return;
+ if(EX.err&&!EX.list.length){b.innerHTML='<div class="card"><div class="cardhead"><h2>Exercícios</h2></div><div class="empty">Os exercícios ainda não estão disponíveis. Peça ao formador para activar o simulador.</div></div>';return}
+ if(!EX.list.length){b.innerHTML='<div class="card"><div class="cardhead"><h2>Exercícios</h2></div><div class="empty">Ainda não há exercícios publicados.</div></div>';return}
+ const done=EX.list.filter(e=>exDone(e.id)).length,L={1:'Nível 1 · Conceitos',2:'Nível 2 · Negócios reais',3:'Nível 3 · Decisões'};
+ let h='<div class="card"><div class="cardhead"><h2>Exercícios</h2><span class="muted smalltext">'+done+' de '+EX.list.length+' resolvidos</span></div><div class="mk-bar"><i style="width:'+Math.round(done/EX.list.length*100)+'%"></i></div>'+
+ '<p class="muted smalltext">Use as outras páginas do simulador para calcular. A resposta é verificada no servidor; pode tentar mais vezes. Os exercícios são treino e não contam para a nota.</p>';
+ [1,2,3].forEach(l=>{const xs=EX.list.filter(e=>e.level===l);if(!xs.length)return;
+  h+='<h3 class="mk-h">'+L[l]+'</h3><div class="mk-exlist">'+xs.map(e=>{const a=EX.att[e.id]||{},cur=EX.cur===e.id;
+   return '<div class="mk-ex'+(a.ok?' ok':'')+(cur?' open':'')+'"><button type="button" class="mk-exh" data-mk-ex="'+e.id+'" aria-expanded="'+cur+'"><span class="mk-ck">'+(a.ok?'✓':e.position)+'</span><span>'+esc(e.title)+'</span></button>'+
+   (cur?'<div class="mk-exb"><p>'+esc(e.statement)+'</p><form data-mk-form="'+e.id+'" class="mk-exf"><div class="mk-in"><input name="a" inputmode="decimal" autocomplete="off" placeholder="A sua resposta" aria-label="Resposta"><span>'+esc(e.unit)+'</span></div><button class="btn small">Verificar</button></form><div class="mk-fb" id="mkFb"></div></div>':'')+'</div>'}).join('')+'</div>'});
+ b.innerHTML=h+'</div>'}
+async function exCheck(id,raw,form){
+ const v=num(raw),fb=g('mkFb');if(!isFinite(v)){fb.innerHTML='<div class="mk-note mk-bad">Escreva um número.</div>';return}
+ const btn=form.querySelector('button');btn.disabled=true;fb.innerHTML='<div class="muted smalltext">A verificar…</div>';
+ try{const r=await SB.rpc('av_sim_check',{p_exercise:id,p_answer:v});if(r.error)throw r.error;const d=r.data||{};
+  const x=EX.att[id]||(EX.att[id]={n:0,ok:false});x.n=d.attempts||x.n+1;if(d.correct)x.ok=true;
+  let h;
+  if(d.correct)h='<div class="mk-note mk-good"><strong>Certo.</strong> '+esc(d.explanation||'')+'</div>';
+  else{h='<div class="mk-note mk-bad"><strong>Ainda não.</strong> '+esc(d.hint||'Reveja o cálculo.')+'</div>';
+   if(d.explanation)h+='<div class="mk-note"><strong>Resolução:</strong> '+esc(d.explanation)+'</div>'}
+  fb.innerHTML=h;
+  const done=EX.list.filter(e=>exDone(e.id)).length,hd=root().querySelector('.cardhead .muted');if(hd)hd.textContent=done+' de '+EX.list.length+' resolvidos';
+  const bar=root().querySelector('.mk-bar i');if(bar)bar.style.width=Math.round(done/EX.list.length*100)+'%';
+  const ex=root().querySelector('.mk-ex.open');if(ex&&d.correct){ex.classList.add('ok');const ck=ex.querySelector('.mk-ck');if(ck)ck.textContent='✓'}}
+ catch(e){fb.innerHTML='<div class="mk-note mk-bad">Não foi possível verificar agora. Tente de novo.</div>'}
+ btn.disabled=false}
+
+/* ---------- 5. Fichas ---------- */
+function fichasHTML(){return '<div class="card"><div class="cardhead"><h2>Fichas de preço guardadas</h2></div><div id="mkFichas"><div class="empty">A carregar…</div></div></div>'}
+function lsFichas(){try{const x=JSON.parse(localStorage.getItem(LS_FICHAS)||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
+async function fichasLoad(){
+ try{const r=await SB.from('av_sim_pricing').select('id,name,data,created_at').order('created_at',{ascending:false});if(r.error)throw r.error;FICHAS=r.data||[];FDB=true}
+ catch(e){FDB=false;FICHAS=lsFichas()}
+ if(S.tab==='fichas')fichasDraw()}
+function fichasDraw(){const b=g('mkFichas');if(!b)return;
+ if(!FICHAS.length){b.innerHTML='<div class="empty">Ainda não guardou nenhuma ficha. Preencha <strong>Custo e preço</strong> e use «Guardar ficha».</div>';return}
+ b.innerHTML=(FDB?'':'<p class="muted smalltext">As fichas estão guardadas só neste dispositivo.</p>')+'<div class="mk-flist">'+FICHAS.map(f=>{const mo=model(f.data.m||S.m);
+  return '<div class="mk-fi"><div><strong>'+esc(f.name)+'</strong><div class="muted smalltext">'+(mo.pTar?'Preço '+kz(mo.pTar)+' · margem '+pc(mo.mg*100,0)+' · custo '+kz(mo.base):'Ficha incompleta')+' · '+esc(fmt(String(f.created_at||'').slice(0,10)))+'</div></div><div class="mk-fa"><button type="button" class="btn secondary small" data-mk-load="'+esc(f.id)+'">Abrir</button><button type="button" class="btn secondary small" data-mk-print="'+esc(f.id)+'">PDF</button><button type="button" class="btn secondary small" data-mk-csv="'+esc(f.id)+'">CSV</button><button type="button" class="linkdel" data-mk-rm="'+esc(f.id)+'">Eliminar</button></div></div>'}).join('')+'</div>'}
+async function fichaSave(){
+ const m=S.m,mo=model(m);if(!mo.pTar){toast('Complete o custo e a margem antes de guardar.');return}
+ const name=(m.nome||'').trim()||('Ficha de '+new Date().toLocaleDateString('pt-PT'));const data={m:JSON.parse(JSON.stringify(m))};
+ try{const r=await SB.from('av_sim_pricing').insert({name,data});if(r.error)throw r.error;toast('Ficha guardada.')}
+ catch(e){const l=lsFichas();l.unshift({id:'L'+Date.now(),name,data,created_at:new Date().toISOString()});try{localStorage.setItem(LS_FICHAS,JSON.stringify(l.slice(0,50)));toast('Ficha guardada neste dispositivo.')}catch(_){toast('Não foi possível guardar a ficha.')}}}
+function fichaRows(f){const m=f.data.m,mo=model(m);return[['Ficha',f.name],['Data',String(f.created_at||'').slice(0,10)],['',''],['Custos directos por unidade',''],...m.custos.map(c=>[c.n,n0(c.v)]),['Total directos',mo.direct],['Custos fixos por mês',mo.fixos],['Unidades por mês',mo.units],['Custo fixo por unidade',Math.round(mo.fixUnit*100)/100],['Custo total por unidade',Math.round(mo.base*100)/100],['Impostos e taxas (%)',mo.imp*100],['Comissão (%)',mo.com*100],['Margem pretendida (%)',mo.mg*100],['Preço mínimo',mo.pMin?Math.round(mo.pMin):''],['Preço com margem',mo.pTar?Math.round(mo.pTar):''],['Markup sobre o custo (%)',mo.markup!=null?Math.round(mo.markup*10)/10:''],['Equilíbrio (unid./mês)',mo.be?Math.ceil(mo.be):'']]}
+function fichaCsv(f){const rows=fichaRows(f),nm='ficha_preco_'+String(f.name).replace(/[^\w]+/g,'_').slice(0,30);
+ if(typeof csvDownload==='function')csvDownload(nm+'.csv',rows);}
+function fichaPrint(f){const rows=fichaRows(f),w=window.open('','_blank');if(!w){toast('Permita janelas para exportar o PDF.');return}
+ w.document.write('<!doctype html><meta charset="utf-8"><title>'+esc(f.name)+'</title><style>body{font:14px/1.5 system-ui,sans-serif;margin:32px;color:#17191d}h1{font-size:20px}table{border-collapse:collapse;width:100%;max-width:560px}td{padding:6px 8px;border-bottom:1px solid #e5e7eb}td:last-child{text-align:right;font-weight:600}</style><h1>Ficha de preço: '+esc(f.name)+'</h1><table>'+rows.slice(2).map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td></tr>').join('')+'</table>');
+ w.document.close();w.focus();setTimeout(()=>w.print(),250)}
+
+/* ---------- Eventos ---------- */
+function onInput(e){const t=e.target;
+ if(t.dataset.mkC!==undefined){const k=t.dataset.mkC;S.calc[k]=t.value;
+  if(k==='custo'){/* mantém o campo que mandava */}else{S.calc.driver=k;
+   const r=calc(num(S.calc.custo),k,num(t.value));
+   if(r)['markup','margem','preco'].forEach(f=>{if(f!==k){const v=r[f],el=g('mkc_'+f);S.calc[f]=String(Math.round(v*100)/100).replace('.',',');if(el)el.value=S.calc[f]}});
+   root().querySelectorAll('.mk-f').forEach(x=>x.classList.remove('mk-drv'));t.closest('.mk-f').classList.add('mk-drv')}
+  if(k==='custo'){const d=S.calc.driver,r=calc(num(S.calc.custo),d==='custo'?'markup':d,num(S.calc[d==='custo'?'markup':d]));
+   if(r)['markup','margem','preco'].forEach(f=>{if(f!==d){const el=g('mkc_'+f);S.calc[f]=String(Math.round(r[f]*100)/100).replace('.',',');if(el)el.value=S.calc[f]}})}
+  save();calcOut();return}
+ if(t.dataset.mkM!==undefined){S.m[t.dataset.mkM]=t.value;save();custoOut();return}
+ if(t.dataset.mkCn!==undefined){S.m.custos[+t.dataset.mkCn].n=t.value;save();return}
+ if(t.dataset.mkCv!==undefined){S.m.custos[+t.dataset.mkCv].v=t.value;save();custoOut();return}
+ if(t.dataset.mkD!==undefined){S.m.desc[+t.dataset.mkD]=t.value;save();const a=document.activeElement,i=t.dataset.mkD,pos=t.selectionStart;eqOut();const n=root().querySelector('[data-mk-d="'+i+'"]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}}}
+async function onClick(e){const t=e.target.closest('button');if(!t)return;
+ if(t.dataset.mkTab){S.tab=t.dataset.mkTab;draw();return}
+ if(t.dataset.mkGo){S.tab=t.dataset.mkGo;draw();return}
+ if(t.hasAttribute('data-mk-add')){S.m.custos.push({n:'',v:''});save();draw();return}
+ if(t.dataset.mkDel!==undefined){if(S.m.custos.length>1)S.m.custos.splice(+t.dataset.mkDel,1);save();draw();return}
+ if(t.hasAttribute('data-mk-save')){fichaSave();return}
+ if(t.dataset.mkEx){EX.cur=EX.cur===t.dataset.mkEx?null:t.dataset.mkEx;exDraw();return}
+ const fid=t.dataset.mkLoad||t.dataset.mkPrint||t.dataset.mkCsv||t.dataset.mkRm;
+ if(fid){const f=FICHAS.find(x=>String(x.id)===fid);if(!f)return;
+  if(t.dataset.mkLoad){S.m=Object.assign(DEF().m,JSON.parse(JSON.stringify(f.data.m)));save();S.tab='custo';draw();toast('Ficha aberta.')}
+  else if(t.dataset.mkPrint)fichaPrint(f);
+  else if(t.dataset.mkCsv)fichaCsv(f);
+  else if(t.dataset.mkRm){if(!confirm('Eliminar a ficha «'+f.name+'»?'))return;
+   if(String(f.id).startsWith('L')){const l=lsFichas().filter(x=>x.id!==f.id);try{localStorage.setItem(LS_FICHAS,JSON.stringify(l))}catch(_){}}
+   else{const r=await SB.from('av_sim_pricing').delete().eq('id',f.id);if(r.error){toast('Não foi possível eliminar.');return}}
+   FICHAS=FICHAS.filter(x=>x.id!==f.id);fichasDraw()}}}
+function onSubmit(e){const f=e.target.closest('[data-mk-form]');if(!f)return;e.preventDefault();exCheck(f.dataset.mkForm,f.elements.a.value,f)}
+
+let WIRED=false;
+window.mkOpen=function(){const r=root();if(!r)return;
+ if(!WIRED){WIRED=true;r.addEventListener('input',onInput);r.addEventListener('click',onClick);r.addEventListener('submit',onSubmit)}
+ if(!r.firstChild)shell();else draw()};
+window.mkCalc={calc,model,scenarios,num};
+})();
 
 boot();
 })();
