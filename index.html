@@ -1058,7 +1058,7 @@ function matRowHTML(m,admin){if(m.kind==='teste')return testRowHTML(m,admin);con
 async function openMaterial(m){try{if(m.filePath){const nm=m.fileName||'',ext=(nm||m.filePath).split('.').pop().toLowerCase(),inl=['pdf','png','jpg','jpeg','gif','webp'].includes(ext),w=inl?window.open('','_blank'):null;const r=await SB.storage.from('av-materiais').createSignedUrl(m.filePath,3600,inl?undefined:{download:nm||true});if(r.error||!r.data){if(w)w.close();throw r.error||new Error('ligação indisponível')}if(inl){if(w){w.opener=null;w.location.href=r.data.signedUrl}else location.href=r.data.signedUrl}else{const a=document.createElement('a');a.href=r.data.signedUrl;a.download=nm;document.body.appendChild(a);a.click();a.remove()}}else if(m.url){window.open(safeUrl(m.url),'_blank','noopener')}}catch(e){alert('Não foi possível abrir o material: '+(e.message||e))}}
 
 /* --- editor (admin / formador) --- */
-function applyKindLimits(){const sel=$('matKind'),used=new Set()/* v9: vários materiais do mesmo tipo por sessão (ex.: um teste por tema) */,L={ficheiro:'Ficheiro (carregar)',ligacao:'Ligação externa',teste:'Teste (V/F, escolha múltipla e autodeclaradas)'};let free=0;[...sel.options].forEach(o=>{const u=used.has(o.value)&&!(EDIT_MAT&&o.value==='teste');o.disabled=u;o.textContent=(L[o.value]||o.value)+(u?' — já adicionado':'');if(!u)free++});const cur=sel.selectedOptions[0];if(cur&&cur.disabled){const f=[...sel.options].find(o=>!o.disabled);if(f)sel.value=f.value}const full=!free;$('matFull').classList.toggle('hidden',!full);$('matSave').disabled=full;['matName','matFile','matUrl','matOpens','matCloses','qAdd','qBulkToggle','qCsvToggle'].forEach(i=>{$(i).disabled=full});sel.disabled=!!EDIT_MAT||full}
+function applyKindLimits(){const dg=isDiagSession(sessionById(MAT_SESSION)),sel=$('matKind'),used=new Set()/* v9: vários materiais do mesmo tipo por sessão (ex.: um teste por tema) */,L={ficheiro:'Ficheiro (carregar)',ligacao:'Ligação externa',teste:'Teste (V/F, escolha múltipla e autodeclaradas)'};let free=0;[...sel.options].forEach(o=>{const u=(used.has(o.value)&&!(EDIT_MAT&&o.value==='teste'))||(dg&&o.value!=='teste');o.disabled=u;o.hidden=!!(dg&&o.value!=='teste');o.textContent=(L[o.value]||o.value)+(u&&!dg?' — já adicionado':'');if(!u)free++});const cur=sel.selectedOptions[0];if(cur&&cur.disabled){const f=[...sel.options].find(o=>!o.disabled);if(f)sel.value=f.value}const full=!free;$('matFull').classList.toggle('hidden',!full);$('matSave').disabled=full;['matName','matFile','matUrl','matOpens','matCloses','qAdd','qBulkToggle','qCsvToggle'].forEach(i=>{$(i).disabled=full});sel.disabled=!!EDIT_MAT||full}
 function syncMatKind(){applyKindLimits();const k=$('matKind').value,t=k==='teste';$('matFileWrap').classList.toggle('hidden',k!=='ficheiro');$('matUrlWrap').classList.toggle('hidden',k!=='ligacao');$('matTestWrap').classList.toggle('hidden',!t);$('matOpensWrap').classList.toggle('hidden',!t);$('matClosesWrap').classList.toggle('hidden',!t);$('matCancelEdit').classList.toggle('hidden',!EDIT_MAT);$('matSave').textContent=EDIT_MAT?'Guardar alterações':t?'Adicionar teste':'Adicionar';if(t)qRowsDraw();wizSync();diagClaudeSync()}
 function diagClaudeSync(){const el=$('wizClaudeT');if(!el||WIZ)return;el.innerHTML=($('matKind').value==='teste'&&isDiagSession(sessionById(MAT_SESSION)))?claudeBlock('diag','wzd'):''}
 function resetMatForm(){EDIT_MAT=null;QROWS=[];$('matForm').reset();$('matKind').disabled=false;$('qBulk').classList.add('hidden');qCsvReset();qRowsDraw();syncMatKind()}
@@ -1137,8 +1137,9 @@ const WIZ_STEPS=[['Material','Carregue o material desta sessão (PDF ou PowerPoi
 const WIZ_KINDS=['ficheiro','ligacao','teste'],WIZ_KL={ficheiro:'Material',ligacao:'Ligação',teste:'Teste'};
 const WIZ_ACCEPT='.pdf,.ppt,.pptx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation';
 const wizHas=(sid,k)=>MAT.some(m=>m.sessionId===sid&&m.kind===k);
-function wizStart(sid){if(!wizHas(sid,'ficheiro'))return 1;if(wizHas(sid,'teste'))return 3;return wizHas(sid,'ligacao')?3:2}
-function wizMissing(s){const o=[];if(!wizHas(s.id,'ficheiro'))o.push('material');if(!wizHas(s.id,'teste'))o.push('teste');return o}
+const wizDiag=sid=>isDiagSession(sessionById(sid));
+function wizStart(sid){if(wizDiag(sid))return 3;if(!wizHas(sid,'ficheiro'))return 1;if(wizHas(sid,'teste'))return 3;return wizHas(sid,'ligacao')?3:2}
+function wizMissing(s){const o=[];if(!wizDiag(s.id))if(!wizHas(s.id,'ficheiro'))o.push('material');if(!wizHas(s.id,'teste'))o.push('teste');return o}
 function wizIncomplete(s){return !!s&&MAT_OK&&(s.createdAt||'')>=WIZ_SINCE&&wizMissing(s).length>0}
 function wizBadge(s){return wizIncomplete(s)?' <span class="tag warn">Em construção · falta: '+wizMissing(s).join(', ')+'</span>':''}
 function wizOpen(sid,step){if(!sessionById(sid))return;openMatModal(sid);WIZ={sid:sid,step:step||wizStart(sid)};wizApply()}
@@ -1156,12 +1157,12 @@ function wizSync(){
  $('matClose').textContent=on?'Sair (retomar depois)':'Fechar';
  $('matFile').accept=on?WIZ_ACCEPT:'';
  if(!on){$('wizClaudeT').innerHTML='';return}
- const st=WIZ.step,done=MAT.filter(m=>m.sessionId===WIZ.sid&&WIZ_KINDS.indexOf(m.kind)>=0);
- w.innerHTML='<div class="wizsteps">'+WIZ_STEPS.map((x,i)=>'<span class="wizstep'+(i+1===st?' on':i+1<st?' done':'')+'"><b>'+(i+1<st?'✓':i+1)+'</b>'+x[0]+'</span>').join('')+'</div>'
-  +'<p class="wiztitle">Passo '+st+' de '+WIZ_STEPS.length+' · '+WIZ_STEPS[st-1][0]+'</p><p class="muted wizhint">'+esc(WIZ_STEPS[st-1][1])+'</p>'
+ const st=WIZ.step,dg=wizDiag(WIZ.sid),done=MAT.filter(m=>m.sessionId===WIZ.sid&&WIZ_KINDS.indexOf(m.kind)>=0),steps=dg?[['Teste','O diagnóstico inicial só leva teste: não tem ficheiros nem ligações. Crie o teste (perguntas autodeclaradas e de escolha múltipla). É obrigatório para concluir.']]:WIZ_STEPS,sn=dg?1:st;
+ w.innerHTML='<div class="wizsteps">'+steps.map((x,i)=>'<span class="wizstep'+(i+1===sn?' on':i+1<sn?' done':'')+'"><b>'+(i+1<sn?'✓':i+1)+'</b>'+x[0]+'</span>').join('')+'</div>'
+  +'<p class="wiztitle">Passo '+sn+' de '+steps.length+' · '+steps[sn-1][0]+'</p><p class="muted wizhint">'+esc(steps[sn-1][1])+'</p>'
   +(done.length?'<p class="muted smalltext" style="margin:0 0 8px">Já adicionado: '+done.map(m=>'<strong>'+esc(WIZ_KL[m.kind])+'</strong> '+esc(m.title)).join(' · ')+'</p>':'');
  if(st===3&&!$('wizClaudeT').innerHTML)$('wizClaudeT').innerHTML=claudeBlock(isDiagSession(sessionById(WIZ.sid))?'diag':'teste','wz');
- $('matSave').textContent=st===3?'Adicionar teste e continuar':'Guardar e continuar'}
+ $('matSave').textContent=st===3?(wizDiag(WIZ.sid)?'Adicionar teste':'Adicionar teste e continuar'):'Guardar e continuar'}
 function wizAfterSave(){
  if(!WIZ)return;const sid=WIZ.sid;
  if(WIZ.step>=3){WIZ=null;$('matModal').classList.remove('open');wizSync();renderSessions();toast(isDiagFicha(sessionById(sid))?'Diagnóstico criado. Já está disponível para todos os formandos.':'Sessão concluída. Crie agora as perguntas de treino no separador «Banco de treino», com o tema «'+((sessionById(sid)||{}).title||'')+'».');return}
