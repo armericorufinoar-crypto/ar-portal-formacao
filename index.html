@@ -3010,7 +3010,7 @@ function dupGroups(){const m={};CT.contacts.forEach(c=>{const p=String(c.phone||
 function missionsHTML(){const s=stats(),openN=s.open.length,withT=openN-s.noTask;
  const M=[
  {ok:s.noTask===0&&openN>0,t:'Nenhuma oportunidade aberta sem follow-up',d:'Cada negócio aberto precisa de uma próxima tarefa com data. Hoje faltam em <strong>'+s.noTask+'</strong> de '+openN+'.',p:withT+' de '+openN},
- {ok:s.stalled<=1,t:'Recuperar as oportunidades paradas',d:'Parada = aberta e sem contacto há mais de 14 dias. Contacte o cliente e use «Contactei». Objectivo: no máximo 1 parada. Agora: <strong>'+s.stalled+'</strong>.',p:s.stalled+' paradas'},
+ {ok:s.stalled===0,t:'Recuperar as oportunidades paradas',d:'Parada = aberta e sem contacto há mais de 14 dias. Contacte o cliente e use «Contactei». Objectivo: nenhuma parada. Agora: <strong>'+s.stalled+'</strong>.',p:s.stalled+' paradas'},
  {ok:s.dupGroups===0,t:'Eliminar os contactos duplicados',d:'Procure os cartões com «Possível duplicado» (mesmo telefone), mantenha um e elimine o outro. Faltam <strong>'+s.dupGroups+'</strong>.',p:s.dupGroups+' pares'}];
  const fc='<div class="ct-m'+(CT.m4==='ok'?' ok':'')+'"><div class="ct-mk">'+(CT.m4==='ok'?'✓':'4')+'</div><div class="ct-mb"><strong>Calcular a previsão de receita</strong><p>Some, só para as oportunidades em <strong>Proposta</strong> e <strong>Negociação</strong>, valor × probabilidade da etapa (50% e 75%). Qual é o total, em Kz, com os dados de agora?</p>'+
  '<form data-ct-fc class="mk-exf"><div class="mk-in"><input name="a" inputmode="decimal" autocomplete="off" placeholder="A sua resposta" aria-label="Previsão"><span>Kz</span></div><button class="btn small">Verificar</button></form><div id="ctFc">'+(CT.m4==='ok'?'<div class="mk-note mk-good"><strong>Certo.</strong> Proposta × 50% + Negociação × 75% = '+kz(s.wpn)+'.</div>':CT.m4==='bad'?'<div class="mk-note mk-bad">Ainda não. Lembre-se: só duas etapas, cada uma com a sua probabilidade.</div>':'')+'</div></div></div>';
@@ -3097,8 +3097,8 @@ window.ctCalc={stats:()=>stats()};
 'use strict';
 const g=id=>document.getElementById(id);
 const TOOLS=[
- {k:'mk',n:1,t:'Simulador de Markup',d:'Descubra o preço certo a partir do custo e treine com 12 exercícios.',time:'≈ 30 min',open:()=>window.mkOpen&&window.mkOpen(),root:'mkRoot'},
- {k:'ct',n:2,t:'CRM de treino',d:'Pratique contactos, follow-ups e negócios num cenário de treino, sem riscos.',time:'≈ 40 min',open:()=>window.ctOpen&&window.ctOpen(),root:'ctRoot'}];
+ {k:'mk',n:1,t:'Simulador de Markup',d:'Descubra o preço certo a partir do custo e treine com 5 exercícios.',time:'≈ 20 min',open:()=>window.mkOpen&&window.mkOpen(),root:'mkRoot'},
+ {k:'ct',n:2,t:'CRM de treino',d:'Pratique contactos, follow-ups e negócios num cenário de treino, sem riscos.',time:'≈ 25 min',open:()=>window.ctOpen&&window.ctOpen(),root:'ctRoot'}];
 let cur=null;
 function home(){
  g('prHome').innerHTML='<div class="pr-intro"><h2>Prática</h2><p>Duas ferramentas para treinar o que aprende na aula. Comece pela primeira. O seu progresso fica guardado: pode continuar em casa.</p></div>'+
