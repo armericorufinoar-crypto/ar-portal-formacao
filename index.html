@@ -572,12 +572,65 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
 @media(max-width:380px){.stat strong{font-size:21px}}
 @media(max-width:760px) and (max-height:520px){.msgbody{height:calc(100dvh - 90px)}}
 @media print{body *{visibility:hidden!important}#diagPrintRoot,#diagPrintRoot *{visibility:visible!important}#diagPrintRoot{position:absolute;left:0;top:0;width:100%;padding:18px;color:#111;background:#fff}#diagPrintRoot .qrow{break-inside:avoid;border-bottom:1px solid #ddd;padding:10px 0}#diagPrintRoot h1{font-size:22px}#diagPrintRoot h2{font-size:16px}.no-print{display:none!important}}
+/* ===== Simuladores guiados: formulário por passos à esquerda, informação e resultado à direita ===== */
+.sg{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);background:#fff;border:1px solid var(--line);border-radius:var(--r-lg,22px);box-shadow:var(--sh1,0 8px 22px #1018280d);overflow:hidden;margin-bottom:22px}
+.sg-l{padding:26px 28px;border-right:1px solid var(--line);min-width:0}
+.sg-r{padding:26px 30px;background:#fcfbfb;min-width:0}
+.sg-h{margin:0 0 14px;font-size:20px;letter-spacing:-.02em;text-align:center}
+.sg-r h3{margin:0 0 6px;font-size:15px}
+.sg-r p{margin:0 0 10px;font-size:14px;color:#3b3f47;max-width:46ch;margin-left:auto;margin-right:auto}
+.sg-f{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-weight:700;font-size:13px!important}
+.sg-eg{color:var(--muted)!important;font-size:13px!important}
+.sg-lbl{display:block;font-size:12.5px;font-weight:700;margin:0 0 7px;color:#2b2e35}
+.sg-seg{display:flex;gap:4px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:4px;box-shadow:0 1px 2px #1018280a}
+.sg-seg button{flex:1;border:0;background:transparent;border-radius:9px;padding:10px 6px;font-size:13px;font-weight:700;color:#3b3f47;transition:background .15s,color .15s}
+.sg-seg button:hover{background:#f4f5f7}.sg-seg button.on{background:#fbeaec;color:var(--red)}
+.sg-wait{display:grid;justify-items:center;gap:6px;margin:34px 0 22px;color:#17191d}.sg-wait p{margin:0;font-size:13px;color:var(--muted)}
+.sg-step{margin-top:18px;animation:sgIn .24s var(--ease,ease)}
+@keyframes sgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sg-in{display:flex;align-items:center;background:#f1f2f4;border:1px solid #e3e5e9;border-radius:10px;overflow:hidden;min-width:0}
+.sg-in:focus-within{background:#fff;border-color:var(--ink);box-shadow:0 0 0 3px #17191d14}
+.sg-in input{flex:1;min-width:0;border:0!important;outline:0;background:transparent;padding:11px 12px;text-align:right;box-shadow:none!important;font-size:14px}
+.sg-in:has(input[data-mk-f="m.nome"]) input{text-align:left}
+.sg-in span{padding:0 12px 0 2px;font-size:12px;font-weight:700;color:#6c7078;white-space:nowrap}
+.sg-sel{width:100%;border:1px solid #e3e5e9;background:#f1f2f4;border-radius:10px;padding:11px 10px;font-size:13px;color:#2b2e35;min-width:0}
+.sg-err{color:#c8101e;font-size:12px;margin-top:5px;line-height:1.35}.sg-err:empty{display:none}
+.sg-crow{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 34px;gap:8px;align-items:center;margin-bottom:8px}
+.sg-del{border:0;background:transparent;color:#c8101e;display:grid;place-items:center;width:34px;height:34px;border-radius:8px}.sg-del:hover{background:#fff0f0}
+.sg-add{border:0;background:var(--green);color:#fff;border-radius:8px;padding:9px 14px;font-size:12.5px;font-weight:700;float:right;margin-top:4px}.sg-add:hover{filter:brightness(.92)}
+.sg-step[data-step=custos]::after{content:"";display:block;clear:both}
+.sg-two>div,.sg-three>div{min-width:0}.sg-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.sg-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sg-go{display:block;width:100%;margin-top:24px;border:0;border-radius:10px;background:var(--ink);color:#fff;padding:13px;font-size:14px;font-weight:700;transition:background .15s,opacity .15s}
+.sg-go:hover{background:#000}.sg-go.off{opacity:.45}
+.sg-h3{margin:26px 0 12px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sg-ro{margin-bottom:12px}.sg-ro label{display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:#2b2e35}.sg-ro div{background:#f1f2f4;border:1px solid #e3e5e9;border-radius:10px;padding:11px 12px;font-size:14px;color:#4a4e57}
+.sg-res{display:grid;justify-items:center;text-align:center}
+.sg-ico{color:#9aa0ab;margin-bottom:6px}.sg-k{font-size:19px;font-weight:700;color:#2b2e35}
+.sg-big{font-size:38px;font-weight:800;letter-spacing:-.03em;color:var(--green);margin:4px 0 22px;line-height:1.1;overflow-wrap:anywhere}
+.sg-rows{width:100%;max-width:340px;display:grid;gap:10px;text-align:left}.sg-rows>div{display:flex;justify-content:space-between;gap:14px;font-size:14px}.sg-rows span{color:#3b3f47}.sg-rows strong{white-space:nowrap}
+.sg-note{margin:18px 0 0!important;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px!important;text-align:left}
+.sg-acts{display:grid;gap:8px;width:100%;max-width:340px;margin-top:20px}
+.sg-b2{border:0;border-radius:8px;background:var(--green);color:#fff;padding:12px;font-size:14px;font-weight:700}.sg-b2.alt{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.sg-load{position:absolute;inset:0;background:#17191d52;display:grid;place-items:center;z-index:5}
+.sg-load>div{background:#fff;border-radius:6px;width:min(300px,70%);height:76px;display:grid;place-items:center;box-shadow:0 8px 30px #10182840}
+.sg-load i{width:30px;height:30px;border-radius:50%;border:3px solid #dfe2e7;border-top-color:var(--ink);animation:sgSpin .7s linear infinite}
+@keyframes sgSpin{to{transform:rotate(360deg)}}
+.sg-h2{margin:6px 0 14px;font-size:19px;letter-spacing:-.02em}
+.sg-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:10px}
+.sg-c{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}.sg-c h4{margin:0 0 6px;font-size:14px}.sg-c p{margin:0;font-size:13px;color:#3b3f47}
+@media(max-width:900px){.sg{grid-template-columns:1fr}.sg-l{border-right:0;border-bottom:1px solid var(--line)}.sg-cards{grid-template-columns:1fr}}
+@media(max-width:560px){.sg-l,.sg-r{padding:20px 16px}.sg-in input,.sg-sel{font-size:16px}.sg-three{grid-template-columns:1fr 1fr}.sg-three>div:last-child{grid-column:1/-1}.sg-big{font-size:32px}}
+@media(max-width:560px){.sg-crow{grid-template-columns:minmax(0,1fr) 34px}.sg-crow .sg-sel{grid-column:1/-1}.sg-two{grid-template-columns:1fr}.sg-tabs-fix{}}.ct-mbox.wide{width:min(900px,100%)}.ct-gd{display:grid;grid-template-columns:1.1fr 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden}.ct-gl{padding:20px;min-width:0}.ct-gr{padding:22px;background:#fcfbfb;border-left:1px solid var(--line);text-align:center}.ct-gr h3{margin:0 0 6px}.ct-gl .sg-in input:not([name=v]){text-align:left}.ct-gl .ct-mf{margin-top:22px}.ct-gl input[type=date]{width:100%}.ct-fres{margin:12px 0 0;padding:14px;background:#fff;border:1px solid var(--line);border-radius:12px}.ct-fres .sg-big{font-size:30px;margin-bottom:12px}@media(max-width:760px){.ct-gd{grid-template-columns:1fr}.ct-gr{border-left:0;border-top:1px solid var(--line)}}
+/* dieta de texto: o título já diz o que a página é; a descrição só ocupa espaço */
+#adminContent .pagehead p{display:none}
+#adminContent .pagehead{margin-bottom:14px}
+@media(prefers-reduced-motion:reduce){.sg-step{animation:none}.sg-load i{animation-duration:1.6s}}
 </style>
 <div id="diagPrintRoot" class="hidden"></div>
 <div id="loginBox"><form id="loginForm" onsubmit="return false"><h2>Portal de Formação</h2><div class="field"><label for="lgEmail">E-mail</label><input id="lgEmail" type="email" required autocomplete="username"></div><div class="field"><label for="lgPass">Palavra-passe</label><input id="lgPass" type="password" required autocomplete="current-password"></div><div id="loginMsg"></div><button class="btn" type="submit">Entrar</button><button class="btn secondary small" type="button" id="lgForgot">Esqueci-me da palavra-passe</button></form></div>
 <button id="logoutBtn" class="btn secondary small hidden">Sair</button>
 <div id="appShell" class="shell hidden">
-<aside class="side" id="sidebar"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>O conhecimento que transforma.</small></span></div><div class="side-label">Gestão formativa</div><nav class="nav" id="mainNav"><button class="active" data-page="dashboard">◫ <span>Painel geral</span></button><button data-page="treino" id="navTreino" class="hidden">◐ <span>Turmas e Treinos</span></button><button data-page="attendance">☑ <span>Presenças</span></button><button data-page="performance">◈ <span>Exercícios e desempenho</span></button><button data-page="community">◎ <span>Dúvidas e feedback</span></button><button data-page="reports">▤ <span>Relatórios e certificação</span></button><button data-page="users" id="navUsers" class="hidden">⚿ <span>Utilizadores</span></button><div class="side-label" style="margin-top:12px">Gestão comercial</div><button data-page="staff">♙ <span>Formandos</span></button><button data-page="pay" id="navPay" class="hidden">₭ <span>Pagamentos</span></button><button data-page="crm-pipeline" id="navCrmPipeline" class="hidden">▥ <span>Pipeline</span></button></nav><div class="side-foot">Período Formativo<br><span id="sideYear"></span></div></aside>
+<aside class="side" id="sidebar"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>O conhecimento que transforma.</small></span></div><div class="side-label">Gestão formativa</div><nav class="nav" id="mainNav"><button class="active" data-page="dashboard"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Painel geral</span></button><button data-page="treino" id="navTreino" class="hidden"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><span>Turmas e Treinos</span></button><button data-page="attendance" id="navAtt"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg><span>Presenças</span></button><button data-page="performance"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>Exercícios e desempenho</span></button><button data-page="community"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12z"/></svg><span>Dúvidas e feedback</span></button><button data-page="reports"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg><span>Relatórios e certificação</span></button><button data-page="users" id="navUsers" class="hidden"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Utilizadores</span></button><div class="side-label" style="margin-top:12px">Gestão comercial</div><button data-page="staff"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg><span>Formandos</span></button><button data-page="pay" id="navPay" class="hidden"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg><span>Pagamentos</span></button><button data-page="crm-pipeline" id="navCrmPipeline" class="hidden"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg><span>Pipeline</span></button></nav><div class="side-foot">Período Formativo<br><span id="sideYear"></span></div></aside>
 <div class="main"><header class="top"><div style="display:flex;align-items:center;gap:12px"><button class="btn secondary mobilemenu" id="mobileMenu">☰</button><div><div class="top-title">Formação</div><strong id="topPage">Painel geral</strong></div></div><div class="top-right"><div class="topicons" data-topicons></div></div></header>
 <main class="content" id="adminContent">
 <section class="page" id="page-dashboard"><div class="pagehead"><div><div class="eyebrow">Visão global</div><h1>Período Formativo</h1><p>Organização, assiduidade e evolução prática dos formandos.</p></div><button class="btn" data-open="staff">+ Registar formando</button></div>
@@ -591,13 +644,13 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
  <div class="card"><div class="toolbar"><input id="crmSearch" placeholder="Pesquisar nome, código, telefone ou e-mail"><select id="crmOwnerFilter"><option value="">Todos os responsáveis</option></select><select id="crmOriginFilter"><option value="">Todas as origens</option></select></div><div id="crmBoard" class="crm-board"></div></div>
 </section>
 <section class="page hidden" id="page-staff"><div class="pagehead"><div><div class="eyebrow">Cadastro interno</div><h1>Formandos</h1><p>Registe os dados necessários para acompanhar a formação e preparar a certificação.</p></div><button class="btn" id="addStaffBtn">+ Novo formando</button></div><div class="notice" id="staffReadOnly" style="display:none">Consulta apenas: o cadastro de formandos é gerido pela administração.</div><div class="card"><div class="toolbar"><input id="staffSearch" placeholder="Pesquisar nome, cargo ou número…"><select id="staffAreaFilter"><option value="">Todas as áreas</option></select><select id="staffStatusFilter"><option value="">Todos os estados</option><option>Activo</option><option>Inactivo</option></select></div><div class="tablewrap"><table class="table"><thead><tr><th>N.º interno</th><th>Formando</th><th>Profissão / cargo</th><th>Áreas de acesso</th><th>Presença</th><th>Estado</th><th>Acções</th></tr></thead><tbody id="staffRows"></tbody></table></div><div class="empty hidden" id="staffEmpty">Ainda não existem formandos registados.</div></div></section>
-<section class="page hidden" id="page-attendance"><div class="pagehead"><div><div class="eyebrow">Controlo de participação</div><h1>Presenças por sessão</h1><p>Marque presença, falta ou falta justificada e mantenha o histórico de cada formando.</p></div></div><div class="card"><div class="formgrid"><div class="field"><label for="attendanceSession">Sessão</label><select id="attendanceSession"></select></div></div><div id="attendanceRoster" style="margin-top:18px"></div><div class="actions" style="margin-top:15px"><button class="btn" id="saveAttendance">Guardar presenças</button><button class="btn secondary" id="markAllPresent">Marcar todos presentes</button></div></div><div class="card"><div class="cardhead"><h2>Resumo de assiduidade</h2></div><div id="attendanceSummary"></div></div></section>
+<section class="page hidden" id="page-attendance"><div class="pagehead"><div><div class="eyebrow">Dia de aula</div><h1>Presenças da aula</h1><p>Marque presença, falta ou falta justificada e mantenha o histórico de cada formando.</p></div></div><div class="card"><div class="formgrid"><div class="field"><label for="attendanceSession">Sessão</label><select id="attendanceSession"></select></div></div><div id="attendanceRoster" style="margin-top:18px"></div><div class="actions" style="margin-top:15px"><button class="btn" id="saveAttendance">Guardar presenças</button><button class="btn secondary" id="markAllPresent">Marcar todos presentes</button><button class="btn secondary" data-page="performance">Registar avaliação</button><button class="btn secondary" data-page="treino">Sessões e treino</button></div></div><div class="card"><div class="cardhead"><h2>Resumo de assiduidade</h2></div><div id="attendanceSummary"></div></div></section>
 <section class="page hidden" id="page-performance"><div class="pagehead"><div><div class="eyebrow">Avaliação prática</div><h1>Exercícios e desempenho</h1><p>Registe resultados com critérios consistentes e comentários úteis para o desenvolvimento.</p></div><button class="btn" id="addScoreBtn">+ Registar avaliação</button></div><div class="card hidden" id="assessmentWeightSettings"><div class="cardhead"><h2>Ponderação da pauta</h2><span class="muted smalltext">Só administração</span></div><p class="muted smalltext">A ponderação oficial é fixa: 60% para testes automáticos e 40% para avaliação prática do formador. O diagnóstico de competências não altera esta classificação.</p><form id="assessmentWeightForm"><div class="formgrid"><div class="field"><label for="assessmentTestsWeight">Testes automáticos (%)</label><input id="assessmentTestsWeight" type="number" min="0" max="100" step="1" value="60" readonly disabled required></div><div class="field"><label for="assessmentPracticalWeight">Avaliações práticas do formador (%)</label><input id="assessmentPracticalWeight" type="number" min="0" max="100" step="1" value="40" readonly disabled required></div></div><div id="assessmentWeightStatus" class="muted smalltext" style="margin-top:10px"></div><div class="actions" style="margin-top:12px"><button class="btn" id="assessmentWeightSave" type="submit" disabled>Pesos oficiais fixos</button></div></form></div><div class="grid stats"><div class="stat"><div class="label">Avaliações registadas</div><strong id="scoreCount">0</strong></div><div class="stat"><div class="label">Média geral</div><strong id="scoreAverage">—</strong></div><div class="stat"><div class="label">Resultados positivos (≥ 10)</div><strong id="scorePassed">0</strong></div><div class="stat"><div class="label">Por avaliar</div><strong id="scorePending">0</strong></div></div><div class="card"><div class="toolbar"><select id="scoreAreaFilter"><option value="">Todas as áreas</option></select><input id="scoreSearch" placeholder="Pesquisar formando ou exercício…"></div><div class="tablewrap"><table class="table"><thead><tr><th>Data</th><th>Formando</th><th>Área / sessão</th><th>Exercício / teste</th><th>Resultado</th><th>Feedback do formador</th><th>Acções</th></tr></thead><tbody id="scoreRows"></tbody></table></div><div class="empty hidden" id="scoreEmpty">Ainda não existem avaliações.</div></div></section>
 <section class="page hidden" id="page-community"><div class="pagehead"><div><div class="eyebrow">Aprendizagem contínua</div><h1>Dúvidas, perguntas e feedback</h1><p>Acompanhe questões dos formandos, respostas e opiniões sobre cada sessão.</p></div></div><div class="grid feedgrid"><div class="card"><div class="cardhead"><h2>Publicações da formação</h2><span class="tag" id="forumCount">0 publicações</span></div><form id="forumAdminForm" class="composer"><textarea id="forumAdminText" maxlength="1500" rows="2" placeholder="Escreva uma publicação para todos…" aria-label="Nova publicação"></textarea><div class="composerbar"><label class="attbtn" title="Anexar ficheiro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2l-8.6 8.6a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"/></svg><input type="file" id="forumAdminFile" hidden></label><span class="attchip hidden" id="forumAdminChip"></span><button class="btn small">Publicar</button></div></form><div class="feed" id="forumAdmin"></div></div><div class="card"><div class="cardhead"><h2>Feedback das sessões</h2><span class="tag" id="feedbackCount">0 respostas</span></div><div id="feedbackAdmin"></div></div></div></section>
 <section class="page hidden" id="page-reports"><div class="pagehead"><div><div class="eyebrow">Acompanhamento e conclusão</div><h1>Relatórios e certificação</h1><p>Prepare o registo de participação e desempenho necessário à futura emissão de certificados.</p></div><button class="btn" id="exportReport">Exportar relatório CSV</button></div><div class="notice">A plataforma não emite certificados nesta versão. O relatório serve para conferir os dados e identificar quem cumpre os requisitos definidos pela empresa. Os critérios de certificação devem ser aprovados pela empresa.</div><div class="card"><div class="toolbar"><select id="reportArea"><option value="">Todas as áreas</option></select><input id="reportSearch" placeholder="Pesquisar formando…"></div><div class="tablewrap"><table class="table"><thead><tr><th>N.º interno</th><th>Formando</th><th>Áreas frequentadas</th><th>Sessões frequentadas</th><th>Assiduidade</th><th>Média (exercícios e testes)</th><th>Estado do registo</th></tr></thead><tbody id="reportRows"></tbody></table></div></div></section>
 <section class="page hidden" id="page-users"><div class="pagehead"><div><div class="eyebrow">Acesso ao portal</div><h1>Utilizadores</h1><p>Crie contas, ligue-as às fichas de formandos e controle quem pode entrar.</p></div><button class="btn" id="addUserBtn">+ Nova conta</button></div><div class="notice">A palavra-passe provisória é mostrada uma única vez. Entregue-a por um canal seguro: o utilizador terá de a trocar no primeiro acesso.</div><div class="card"><div class="tablewrap"><table class="table"><thead><tr><th>Utilizador</th><th>Papel</th><th>Ficha</th><th>Estado</th><th>Último acesso</th><th>Acções</th></tr></thead><tbody id="userRows"></tbody></table></div><div class="empty hidden" id="usersEmpty">Ainda não existem contas.</div></div></section>
 <section class="page hidden" id="page-treino"><div class="pagehead"><div><div class="eyebrow">Treino e níveis</div><h1>Turmas e Treinos</h1><p>Crie a turma e os níveis, construa as sessões e preencha o banco de treino com os mesmos temas.</p></div></div><div class="tr-tabs" id="trTabs"><button type="button" class="active" data-tr-tab="diag">1 · Diagnóstico inicial</button><button type="button" data-tr-tab="sessions">2 · Sessões e materiais</button><button type="button" data-tr-tab="levels">3 · Turmas e níveis</button><button type="button" data-tr-tab="bank">4 · Treino</button></div><div id="trAdminBody"></div><div id="trSessBody" class="hidden"><div class="notice" style="margin-bottom:12px">Passo 2: construa as sessões, cada uma ligada a um nível — materiais, testes e ligações. O <strong>título da sessão</strong> é o tema que depois usa no Banco de treino e nas aulas da turma. As perguntas dos testes não podem repetir-se no treino.</div><div class="actions" style="margin-bottom:12px"><button class="btn" id="addSessionBtn">+ Criar sessão</button></div><div class="card"><div class="toolbar"><select id="sessionFilter"><option value="">Todas as áreas</option></select><select id="sessionStatusFilter"><option value="">Todas as datas</option><option value="upcoming">Por realizar</option><option value="past">Realizadas</option></select></div><div id="sessionCards"></div></div></div><div id="trBankBody" class="hidden"></div><div id="trDiagBody" class="hidden"></div></section>
-<section class="page hidden" id="page-pay"><div class="pagehead"><div><div class="eyebrow">Controlo financeiro</div><h1>Pagamentos</h1><p>Parcelas, pedidos de pagamento, comprovativos e facturas internas dos formandos.</p></div><button class="btn" id="payGenBtn">+ Gerar parcelas</button></div><div id="payAdminMsg"></div><div class="paytabs" id="payTabs"><button type="button" data-pt="panel" class="active">Painel</button><button type="button" data-pt="confirm">A confirmar <span class="tag warn hidden" id="payCnt">0</span></button><button type="button" data-pt="pro">Parcelas</button><button type="button" data-pt="inv">Facturas</button><button type="button" data-pt="plans">Planos</button><button type="button" data-pt="set">Definições</button></div><div id="payBody"></div></section>
+<section class="page hidden" id="page-pay"><div class="pagehead"><div><div class="eyebrow">Controlo financeiro</div><h1>Pagamentos</h1><p>Parcelas, pedidos de pagamento, comprovativos e recibos internos dos formandos.</p></div><button class="btn" id="payGenBtn">+ Gerar parcelas</button></div><div id="payAdminMsg"></div><div class="paytabs" id="payTabs"><button type="button" data-pt="panel" class="active">Painel</button><button type="button" data-pt="confirm">A confirmar <span class="tag warn hidden" id="payCnt">0</span></button><button type="button" data-pt="pro">Parcelas</button><button type="button" data-pt="inv">Recibos internos</button><button type="button" data-pt="plans">Planos</button><button type="button" data-pt="set">Definições</button></div><div id="payBody"></div></section>
 </main></div></div>
 <div id="studentView" class="hidden"><header class="studenthead"><div class="student"><div class="studenttop"><div class="brand"><span class="mark" role="img" aria-label="Formação"></span><span>FORMAÇÃO<small>ESPAÇO DO FORMANDO</small></span></div><div class="topicons" data-topicons></div></div></div></header><nav class="stnav" id="stNav"><button type="button" class="active" data-st-tab="today"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/></svg><span>Hoje</span></button><button type="button" data-st-tab="train"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><span>Treino</span></button><button type="button" data-st-tab="pauta"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>Resultados</span></button><button type="button" data-st-tab="forum"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12z"/></svg><span>Comunidade</span></button></nav><div class="stsub hidden" id="stSub"></div><main class="student"><div class="pagehead" style="margin-top:25px"><div><h1 id="studentName">Bem-vindo</h1><p id="studentMeta"></p></div></div>
 <section data-st-page="today"><div id="stToday"></div></section><section data-st-page="materials" class="hidden"><div class="grid stats"><div class="stat"><div class="label">Sessões</div><strong id="stSessionCount">0</strong></div><div class="stat"><div class="label">Presenças</div><strong id="stAttendance">0%</strong></div><div class="stat"><div class="label">Média prática (0–20)</div><strong id="stScore">—</strong></div><div class="stat"><div class="label">Materiais</div><strong id="stMaterials">0</strong></div></div><div class="card"><div class="cardhead"><h2>Materiais por área</h2><span class="muted smalltext" id="stMatHint">Abra uma pasta</span></div><div class="tilegrid" id="stTiles"></div><div class="matpanel hidden" id="stMatPanel"></div></div></section>
@@ -880,7 +933,9 @@ box.querySelectorAll('[data-diag-results]').forEach(x=>x.onclick=()=>{openMatMod
 function renderSessions(){const area=$('sessionFilter').value,st=$('sessionStatusFilter').value;const list=read(KEYS.sessions).filter(s=>!isDiagSession(s)&&(!area||s.area===area)&&(!st||(st==='upcoming'?s.date>=today():s.date<today()))).sort((a,b)=>(a.date||'').localeCompare(b.date||''));$('sessionCards').innerHTML=list.length?list.map(s=>`<article class="post"><div class="cardhead" style="margin-bottom:6px"><div><strong>${esc(s.title)}</strong>${wizBadge(s)}<div class="muted smalltext">${esc(s.area)}${s.level?' · '+esc(trLv(s.level)):''} · ${fmt(s.date)} ${esc(s.startTime||'')} · Formador: ${esc(s.trainer||'—')}</div></div><div class="actions">${wizIncomplete(s)?`<button class="btn small" data-wiz="${s.id}">Continuar</button>`:''}<button class="btn secondary small" data-materials="${s.id}">Materiais (${MAT.filter(m=>m.sessionId===s.id).length})</button><button class="btn secondary small" data-edit-session="${s.id}">Editar</button><button class="btn danger small" data-del-session="${s.id}">Eliminar</button></div></div><p>${esc(s.description||'Sem descrição')}</p>${s.location?`<div class="smalltext">Local: ${esc(s.location)}</div>`:''}${s.materialTitle?`<div class="smalltext" style="margin-top:8px">Material: <strong>${esc(s.materialTitle)}</strong> ${s.materialUrl?`· <a href="${esc(safeUrl(s.materialUrl))}" target="_blank" rel="noopener">Abrir recurso ↗</a>`:''}</div>`:''}${s.exercise?`<div class="smalltext">Exercício: ${esc(s.exercise)}</div>`:''}</article>`).join(''):'<div class="empty">Não há sessões com estes filtros.</div>';populateSelect('sessionFilter',true);if($('trDiagBody')&&!$('trDiagBody').classList.contains('hidden')){try{renderDiagTab()}catch(e){}}}function safeUrl(v){try{const u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:'#'}catch{return '#'}}
 const ATT_ST=[['Presente','good'],['Falta','bad'],['Justificada','warn']];
 function setAtt(pid,v){const h=document.querySelector(`[data-att-status="${pid}"]`);if(!h)return;h.value=v;document.querySelectorAll(`[data-att-set="${pid}"]`).forEach(b=>{const on=b.dataset.v===v;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}
-function renderAttendance(){const sessions=read(KEYS.sessions).slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')),select=$('attendanceSession'),old=select.value;select.innerHTML=sessions.length?sessions.map(s=>`<option value="${esc(s.id)}">${esc(s.title)} · ${esc(s.area)} · ${fmt(s.date)}</option>`).join(''):'<option value="">Crie primeiro uma sessão</option>';if(sessions.some(s=>s.id===old))select.value=old;const sid=select.value||'',sess=sessions.find(s=>s.id===sid),staff=activeStaff().filter(x=>!sess||(x.areas||[]).includes(sess.area)),record=attendanceFor(sid),records=record?.records||{};$('attendanceRoster').innerHTML=sess?(staff.length?`<div class="attinfo"><strong>${esc(sess.title)}</strong><span class="muted smalltext"> · ${esc(sess.area)} · ${fmt(sess.date)}${sess.trainer?' · Formador: '+esc(sess.trainer):''}</span></div>`+staff.map(s=>{const cur=records[s.id]||'Presente';return `<div class="attrow"><div class="attname"><strong>${esc(s.name)}</strong><span class="muted smalltext">${esc(s.number)} · ${esc(s.department||'')}</span></div><input type="hidden" data-att-status="${s.id}" value="${cur}"><div class="seg" role="group" aria-label="Presença de ${esc(s.name)}">${ATT_ST.map(([v,c])=>`<button type="button" class="segbtn ${c}${v===cur?' on':''}" data-att-set="${s.id}" data-v="${v}" aria-pressed="${v===cur}">${v}</button>`).join('')}</div></div>`}).join(''):'<div class="empty">Não há formandos activos com acesso a esta área.</div>'):'<div class="empty">Seleccione uma sessão para registar as presenças.</div>';const att=read(KEYS.attendance).slice().sort((a,b)=>String(sessionById(b.sessionId)?.date||'').localeCompare(String(sessionById(a.sessionId)?.date||'')));$('attendanceSummary').innerHTML=att.length?att.map(a=>{const s=sessionById(a.sessionId),v=Object.values(a.records||{}).filter(Boolean),n=v.length,p=v.filter(x=>x==='Presente').length,f=v.filter(x=>x==='Falta').length,j=v.filter(x=>x==='Justificada').length,pc=n?Math.round(p/n*100):0;return `<div class="post"><div class="sumhead"><strong>${esc(s?.title||'Sessão eliminada')}</strong><span class="tag ${pc>=75?'good':pc>=50?'warn':'bad'}">${pc}%</span></div><div class="muted smalltext">${fmt(s?.date)}${s?' · '+esc(s.area):''}</div><div class="atrack"><span style="width:${pc}%"></span></div><div class="smalltext">${p} presentes · ${f} faltas · ${j} justificadas · ${n} registos</div></div>`}).join(''):'<div class="empty">Ainda não foram guardadas presenças.</div>'}
+function renderAttendance(){const sessions=read(KEYS.sessions).slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')),select=$('attendanceSession'),old=select.value;select.innerHTML=sessions.length?sessions.map(s=>`<option value="${esc(s.id)}">${esc(s.title)} · ${esc(s.area)} · ${fmt(s.date)}</option>`).join(''):'<option value="">Crie primeiro uma sessão</option>';if(sessions.some(s=>s.id===old))select.value=old;else{const td=new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10),pick=sessions.find(s=>(s.date||'')>=td)||sessions[sessions.length-1];if(pick)select.value=pick.id}const sid=select.value||'',sess=sessions.find(s=>s.id===sid),staff=activeStaff().filter(x=>!sess||(x.areas||[]).includes(sess.area)),record=attendanceFor(sid),records=record?.records||{};$('attendanceRoster').innerHTML=sess?(staff.length?`<div class="attinfo"><strong>${esc(sess.title)}</strong><span class="muted smalltext"> · ${esc(sess.area)} · ${fmt(sess.date)}${sess.trainer?' · Formador: '+esc(sess.trainer):''}</span> <span class="tag good" id="attCount"></span></div>`+staff.map(s=>{const cur=records[s.id]||'Presente';return `<div class="attrow"><div class="attname"><strong>${esc(s.name)}</strong><span class="muted smalltext">${esc(s.number)} · ${esc(s.department||'')}</span></div><input type="hidden" data-att-status="${s.id}" value="${cur}"><div class="seg" role="group" aria-label="Presença de ${esc(s.name)}">${ATT_ST.map(([v,c])=>`<button type="button" class="segbtn ${c}${v===cur?' on':''}" data-att-set="${s.id}" data-v="${v}" aria-pressed="${v===cur}">${v}</button>`).join('')}</div></div>`}).join(''):'<div class="empty">Não há formandos activos com acesso a esta área.</div>'):'<div class="empty">Seleccione uma sessão para registar as presenças.</div>';const att=read(KEYS.attendance).slice().sort((a,b)=>String(sessionById(b.sessionId)?.date||'').localeCompare(String(sessionById(a.sessionId)?.date||'')));attCount();$('attendanceSummary').innerHTML=att.length?att.map(a=>{const s=sessionById(a.sessionId),v=Object.values(a.records||{}).filter(Boolean),n=v.length,p=v.filter(x=>x==='Presente').length,f=v.filter(x=>x==='Falta').length,j=v.filter(x=>x==='Justificada').length,pc=n?Math.round(p/n*100):0;return `<div class="post"><div class="sumhead"><strong>${esc(s?.title||'Sessão eliminada')}</strong><span class="tag ${pc>=75?'good':pc>=50?'warn':'bad'}">${pc}%</span></div><div class="muted smalltext">${fmt(s?.date)}${s?' · '+esc(s.area):''}</div><div class="atrack"><span style="width:${pc}%"></span></div><div class="smalltext">${p} presentes · ${f} faltas · ${j} justificadas · ${n} registos</div></div>`}).join(''):'<div class="empty">Ainda não foram guardadas presenças.</div>'}
+function attCount(){const el=$('attCount');if(!el)return;const v=[...document.querySelectorAll('#attendanceRoster [data-att-status]')].map(x=>x.value);el.textContent=v.filter(x=>x==='Presente').length+' de '+v.length+' presentes'}
+$('attendanceRoster').addEventListener('click',()=>setTimeout(attCount,0));$('markAllPresent').addEventListener('click',()=>setTimeout(attCount,0));
 $('attendanceSession').onchange=renderAttendance;$('attendanceRoster').onclick=e=>{const b=e.target.closest('[data-att-set]');if(b)setAtt(b.dataset.attSet,b.dataset.v)};$('markAllPresent').onclick=()=>document.querySelectorAll('[data-att-status]').forEach(h=>setAtt(h.dataset.attStatus,'Presente'));$('saveAttendance').onclick=()=>{const sid=$('attendanceSession').value||'';if(!sid){toast('Seleccione uma sessão.');return}const a=read(KEYS.attendance),existing=a.find(x=>x.sessionId===sid),records={...(existing?.records||{})};document.querySelectorAll('[data-att-status]').forEach(s=>records[s.dataset.attStatus]=s.value);const item={id:existing?.id||id(),sessionId:sid,date:sessionById(sid)?.date||today(),records,updatedAt:new Date().toISOString()};put(KEYS.attendance,[...a.filter(x=>x.sessionId!==sid),item]);renderAll();renderAttendance();toast('Presenças guardadas.')};
 function renderScores(){const q=($('scoreSearch').value||'').toLowerCase(),area=$('scoreAreaFilter').value,ex=read(KEYS.scores),tt=testItems().map(x=>({isTest:true,id:'t-'+x.id,attId:x.id,date:x.date,staffId:x.staffId,area:x.area,sessionId:x.sessionId,exercise:x.title,score:x.score,comment:x.correct+'/'+x.total+' certas'})),a=ex.concat(tt).filter(s=>(!area||s.area===area)&&(!q||((staffById(s.staffId)?.name||'')+' '+s.exercise).toLowerCase().includes(q))).sort((x,y)=>String(y.date||'').localeCompare(String(x.date||'')));$('scoreRows').innerHTML=a.map(s=>`<tr><td>${s.isTest?esc(fmtDT(s.date)):fmt(s.date)}</td><td><strong>${esc(staffById(s.staffId)?.name||'Formando removido')}</strong></td><td>${esc(s.area||'—')}<div class="muted smalltext">${esc(sessionById(s.sessionId)?.title||'')}</div></td><td>${s.isTest?'<span class="tag blue">Teste</span> ':''}${esc(s.exercise)}</td><td><span class="tag ${s.score>=14?'good':s.score>=10?'warn':'bad'}">${g20(s.score)}</span></td><td>${s.isTest?esc(s.comment||'—'):fbSummary(s)}</td><td>${s.isTest?`<div class="actions"><button type="button" class="btn secondary small" data-view-attempt="${esc(s.attId)}">Ver</button></div>`:`<div class="actions"><button class="btn secondary small" data-edit-score="${s.id}">Editar</button><button class="btn danger small" data-del-score="${s.id}">Eliminar</button></div>`}</td></tr>`).join('');$('scoreEmpty').classList.toggle('hidden',a.length>0);const all=ex.concat(tt);$('scoreCount').textContent=all.length;$('scoreAverage').textContent=averageScore()===null?'—':g20(averageScore());$('scorePassed').textContent=all.filter(x=>x.score>=10).length;$('scorePending').textContent=Math.max(0,activeStaff().reduce((n,s)=>n+read(KEYS.sessions).filter(x=>(s.areas||[]).includes(x.area)).length,0)-ex.length);populateSelect('scoreAreaFilter',true)}
 /* ===== Chats: público (estilo Zoom) e privado (estilo Messenger) ===== */
@@ -1476,7 +1531,7 @@ function renderBell(){const ev=notifEvents().slice(0,25),seen=ts(SEEN.notif);$('
 function updateBadges(){const set=(k,n)=>document.querySelectorAll('[data-badge="'+k+'"]').forEach(el=>{el.textContent=n>9?'9+':String(n);el.classList.toggle('hidden',!n)});set('msg',unreadMsgs());set('bell',unreadNotifs())}
 
 /* --- topo: ícones, painéis e menu do utilizador --- */
-function renderTopIcons(){if(!PROFILE||!USER)return;const staff=isStaffUser(),me=staff?null:staffById(PROFILE.staff_id),name=staff?(PROFILE.display_name||USER.email||'Equipa'):(me?.name||PROFILE.display_name||USER.email||'Formando'),menu=staff?'':'<button type="button" data-st-tab="profile">Perfil</button><button type="button" data-st-tab="train">Treino</button><button type="button" data-st-tab="prat">Prática</button><button type="button" data-st-tab="diagnosis">Diagnóstico</button><button type="button" data-st-tab="pauta">Pauta</button><button type="button" data-st-tab="materials">Materiais</button><button type="button" data-st-tab="forum">Dúvidas e feedback</button>';
+function renderTopIcons(){if(!PROFILE||!USER)return;const staff=isStaffUser(),me=staff?null:staffById(PROFILE.staff_id),name=staff?(PROFILE.display_name||USER.email||'Equipa'):(me?.name||PROFILE.display_name||USER.email||'Formando'),menu=staff?'':'<button type="button" data-st-tab="profile">O meu perfil</button><button type="button" data-st-tab="billing">Pagamentos</button>';
 const html=`<button type="button" class="iconbtn" data-act="msg" aria-label="Mensagens privadas">${ICO_MSG}<span class="badge hidden" data-badge="msg"></span></button><button type="button" class="iconbtn" data-act="bell" aria-label="Notificações">${ICO_BELL}<span class="badge hidden" data-badge="bell"></span></button><div class="avwrap"><button type="button" class="avbtn" data-act="av" aria-label="Menu do utilizador">${esc(initials(name))}</button><div class="avmenu hidden"><div class="who"><strong>${esc(name)}</strong><br>${esc(USER.email||'')}<br>${esc(ROLE_LABEL[PROFILE.role]||'')}</div>${menu}<button type="button" data-act="logout">Sair</button></div></div>`;document.querySelectorAll('[data-topicons]').forEach(el=>{el.innerHTML=html});updateBadges()}
 function closePanels(){const wasBell=!$('bellPanel').classList.contains('hidden');$('msgPanel').classList.add('hidden');$('bellPanel').classList.add('hidden');document.querySelectorAll('.avmenu').forEach(m=>m.classList.add('hidden'));if(wasBell)markNotifSeen()}
 function toggleMsg(){const open=$('msgPanel').classList.contains('hidden');closePanels();if(open){$('msgPanel').classList.remove('hidden');if(isStaffUser())MSG_VIEW='list';renderMsgPanel()}}
@@ -1533,7 +1588,7 @@ function drawDiagNav(box){box=box||$('stDiagnosis');if(!box)return;const n=DIAG_
 document.addEventListener('click',e=>{const b=e.target.closest('[data-diag-nav]'),g=e.target.closest('[data-diag-go]');if(!b&&!g)return;DIAG_I=b?DIAG_I+Number(b.dataset.diagNav):Number(g.dataset.diagGo);drawDiagNav();$('stDiagnosis').scrollIntoView({block:'nearest'})});
 document.addEventListener('keydown',e=>{if(ST_TAB!=='diagnosis'||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;const t=e.target&&e.target.tagName;if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT'||document.querySelector('.modal.open'))return;if(DIAG_PANELS.length<2)return;DIAG_I+=e.key==='ArrowRight'?1:-1;drawDiagNav()});
 async function drawStudentDiagnosis(){const box=$('stDiagnosis');if(!box)return;const mine=ATT.filter(a=>a.staffId===PROFILE.staff_id).sort((a,b)=>ts(b.at)-ts(a.at));if(!mine.length){box.innerHTML='<div class="empty">Ainda não existem testes submetidos para gerar o diagnóstico.</div>';return}let out=[];for(const a of mine){const m=MAT.find(x=>x.id===a.materialId);if(!m)continue;if(m.testPurpose==='diagnostico'){try{const p=await fetchInitialProfile(a.materialId);if(p){out.push({label:(m.title||'Diagnóstico')+' · '+fmtDT(a.at),html:initialProfileHTML(p)});continue}}catch(e){out.push({label:(m.title||'Diagnóstico')+' · '+fmtDT(a.at),html:'<div class="notice">O diagnóstico inicial foi submetido, mas não foi possível reconstruir agora o perfil individual. Abra «Ver a minha resposta» e consulte o separador Diagnóstico.</div>'});continue}}if(!COMP_OK)continue;try{const comps=await fetchStudentDiagnosis(a.materialId);if(comps.length){DIAG_CACHE=comps;let items=[];try{const g=await SB.rpc('av_get_test',{p_material:a.materialId});if(!g.error&&g.data&&Array.isArray(g.data.review))items=g.data.review}catch(_){}const title=m.title||'Teste',when=fmtDT(a.at);out.push({label:title+' · '+when,html:`<div class="matpanel"><h3>${esc(title)} · ${esc(when)}</h3>${diagActionsHTML(a.id,comps,title,when,items)}${diagnosisRowsHTML(comps,items)}<h4>Recomendações</h4>${recommendationRowsHTML(comps,items)}</div>`})}}catch(e){}}out.reverse();const keep=DIAG_PANELS[DIAG_I]&&DIAG_PANELS[DIAG_I].key;DIAG_PANELS=out;const k=out.findIndex(x=>x.label===keep);DIAG_I=k>=0?k:out.length-1;drawDiagNav(box)}
- const ST_GROUPS={today:{tabs:[['today','Hoje']]},train:{tabs:[['train','Treino diário'],['prat','Prática'],['materials','Materiais']]},pauta:{tabs:[['pauta','Pauta'],['diagnosis','Diagnóstico'],['profile','Perfil'],['billing','Facturação']]},forum:{tabs:[['forum','Comunidade']]}};
+ const ST_GROUPS={today:{tabs:[['today','Hoje']]},train:{tabs:[['train','Treino diário'],['prat','Prática'],['materials','Materiais']]},pauta:{tabs:[['pauta','Pauta'],['diagnosis','Diagnóstico'],['profile','Perfil'],['billing','Pagamentos']]},forum:{tabs:[['forum','Comunidade']]}};
 const stGroupOf=t=>Object.keys(ST_GROUPS).find(g=>ST_GROUPS[g].tabs.some(x=>x[0]===t))||'today';
 async function stTab(t){ST_TAB=t;const gr=stGroupOf(t),sub=$('stSub');if(sub){const tb=ST_GROUPS[gr].tabs;sub.classList.toggle('hidden',tb.length<2);sub.innerHTML=tb.length<2?'':tb.map(x=>`<button type="button" class="${x[0]===t?'active':''}" data-st-tab="${x[0]}">${x[1]}</button>`).join('')}if(t==='today'&&window.__stDraw)window.__stDraw();document.querySelectorAll('[data-st-page]').forEach(p=>p.classList.toggle('hidden',p.dataset.stPage!==t));document.querySelectorAll('#stNav [data-st-tab]').forEach(b=>b.classList.toggle('active',stGroupOf(b.dataset.stTab)===gr));if(t==='diagnosis')await drawStudentDiagnosis();if(t==='billing')payStudentOpen();if(t==='train')trStudentOpen();if(t==='prat'&&window.prOpen)prOpen();if(t==='forum'){const f=$('stForumPosts');f.scrollTop=f.scrollHeight;initClamps(f);markNotifSeen()}window.scrollTo({top:0})}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act]');if(a){const k=a.dataset.act;if(k==='msg')toggleMsg();else if(k==='bell')toggleBell();else if(k==='av'){const m=a.parentElement.querySelector('.avmenu'),open=m.classList.contains('hidden');closePanels();if(open)m.classList.remove('hidden')}else if(k==='logout')logout();return}
@@ -1683,8 +1738,8 @@ async function payProofOpen(path){
 function payPrintInvoice(invId){
  const inv=PAY.inv.find(x=>x.id===invId);if(!inv)return;
  const s=PAY.set||{},st=payStf(inv.staff_id)||{},lines=payDocs(inv.request_id),req=PAY.req.find(r=>r.id===inv.request_id)||{};
- const h='<!doctype html><html lang="pt"><head><meta charset="utf-8"><title>Factura '+esc(inv.invoice_number)+'</title><style>body{font-family:Arial,sans-serif;color:#17191d;margin:40px;font-size:13px}h1{font-size:22px;margin:0 0 4px}table{border-collapse:collapse;width:100%;margin:18px 0}th,td{border-bottom:1px solid #ddd;padding:8px;text-align:left}th{background:#f4f4f2}.r{text-align:right}.tot{font-size:16px;font-weight:bold}.m{color:#666;font-size:12px}.top{display:flex;justify-content:space-between;gap:20px}.void{color:#a11c27;font-weight:bold;font-size:18px}@media print{button{display:none}}</style></head><body>'
- +'<div class="top"><div><h1>'+esc(s.issuer_name||'Formação')+'</h1><div class="m">'+(s.issuer_nif?'NIF: '+esc(s.issuer_nif)+'<br>':'')+esc(s.issuer_address||'')+'</div></div><div style="text-align:right"><h1>Factura n.º '+esc(inv.invoice_number)+'</h1><div class="m">Data: '+payDate(inv.issued_at)+'</div>'+(inv.status==='Anulada'?'<div class="void">ANULADA</div>':'')+'</div></div>'
+ const h='<!doctype html><html lang="pt"><head><meta charset="utf-8"><title>Recibo interno '+esc(inv.invoice_number)+'</title><style>body{font-family:Arial,sans-serif;color:#17191d;margin:40px;font-size:13px}h1{font-size:22px;margin:0 0 4px}table{border-collapse:collapse;width:100%;margin:18px 0}th,td{border-bottom:1px solid #ddd;padding:8px;text-align:left}th{background:#f4f4f2}.r{text-align:right}.tot{font-size:16px;font-weight:bold}.m{color:#666;font-size:12px}.top{display:flex;justify-content:space-between;gap:20px}.void{color:#a11c27;font-weight:bold;font-size:18px}@media print{button{display:none}}</style></head><body>'
+ +'<div class="top"><div><h1>'+esc(s.issuer_name||'Formação')+'</h1><div class="m">'+(s.issuer_nif?'NIF: '+esc(s.issuer_nif)+'<br>':'')+esc(s.issuer_address||'')+'</div></div><div style="text-align:right"><h1>Recibo interno n.º '+esc(inv.invoice_number)+'</h1><div class="m">Data: '+payDate(inv.issued_at)+'</div>'+(inv.status==='Anulada'?'<div class="void">ANULADA</div>':'')+'</div></div>'
  +'<p><b>Cliente:</b> '+esc(st.name||'—')+(st.number?' ('+esc(st.number)+')':'')+'<br><b>Método de pagamento:</b> '+esc(req.method||'—')+'</p>'
  +'<table><thead><tr><th>N.º doc.</th><th>Descrição</th><th class="r">Valor</th></tr></thead><tbody>'+lines.map(p=>'<tr><td>'+esc(p.doc_number)+'</td><td>'+esc(p.description)+'</td><td class="r">'+kz(p.amount)+'</td></tr>').join('')+'</tbody><tfoot><tr><td colspan="2" class="r tot">Total</td><td class="r tot">'+kz(inv.total)+'</td></tr></tfoot></table>'
  +'<p class="m">'+esc(s.invoice_footer||'Documento interno de controlo de pagamentos, sem valor fiscal.')+'</p><button onclick="print()">Imprimir / guardar PDF</button></body></html>';
@@ -1739,18 +1794,18 @@ function payTabPro(){
  +list.map(p=>'<tr><td>'+(p.status==='Por pagar'?'<input type="checkbox" data-sel="'+p.id+'" '+(PAY.sel.has(p.id)?'checked':'')+' aria-label="Seleccionar">':'')+'</td><td>'+esc(p.doc_number)+'</td><td>'+esc(payNm(p.staff_id))+'</td><td>'+esc(p.description)+'</td><td class="num">'+kz(p.amount)+'</td><td>'+fmt(p.due_date)+'</td><td>'+payPTag(p)+'</td><td>'+(p.status==='Por pagar'?'<button class="btn danger small" data-pa="pvoid" data-id="'+p.id+'">Anular</button>':'')+'</td></tr>').join('')
  +'</tbody></table></div>'+(list.length?'':'<div class="empty">Sem parcelas para mostrar.</div>')+'</div>'}
 function payTabInv(){
- return '<div class="card"><div class="cardhead"><h2>Facturas emitidas</h2></div><div class="tablewrap"><table class="table"><thead><tr><th>Factura n.º</th><th>Data</th><th>Formando</th><th class="num">Total</th><th>Estado</th><th>Acções</th></tr></thead><tbody>'
+ return '<div class="card"><div class="cardhead"><h2>Recibos internos emitidos</h2></div><div class="tablewrap"><table class="table"><thead><tr><th>Recibo n.º</th><th>Data</th><th>Formando</th><th class="num">Total</th><th>Estado</th><th>Acções</th></tr></thead><tbody>'
  +PAY.inv.map(i=>'<tr><td><b>'+esc(i.invoice_number)+'</b></td><td>'+payDate(i.issued_at)+'</td><td>'+esc(payNm(i.staff_id))+'</td><td class="num">'+kz(i.total)+'</td><td>'+(i.status==='Emitida'?'<span class="tag good">Emitida</span>':'<span class="tag bad">Anulada</span>'+(i.void_reason?'<div class="muted smalltext">'+esc(i.void_reason)+'</div>':''))+'</td><td><div class="actions"><button class="btn secondary small" data-pa="iprint" data-id="'+i.id+'">Imprimir</button>'+(i.status==='Emitida'?'<button class="btn danger small" data-pa="ivoid" data-id="'+i.id+'">Anular</button>':'')+'</div></td></tr>').join('')
- +'</tbody></table></div>'+(PAY.inv.length?'':'<div class="empty">Ainda não há facturas.</div>')+'<p class="muted smalltext">Documentos internos de controlo, sem valor fiscal.</p></div>'}
+ +'</tbody></table></div>'+(PAY.inv.length?'':'<div class="empty">Ainda não há recibos.</div>')+'<p class="muted smalltext">Documentos internos de controlo, sem valor fiscal.</p></div>'}
 function payTabPlans(){
  return '<div class="card"><div class="cardhead"><h2>Planos de parcelas</h2><button class="btn small" data-pa="plan-new">+ Novo plano</button></div><div class="tablewrap"><table class="table"><thead><tr><th>Plano</th><th>Área</th><th>Parcelas</th><th class="num">Valor / parcela</th><th class="num">Total</th><th>Estado</th><th>Acções</th></tr></thead><tbody>'
  +PAY.plans.map(p=>'<tr><td><b>'+esc(p.name)+'</b></td><td>'+esc(p.area||'Todas')+'</td><td>'+p.installments+'</td><td class="num">'+kz(p.installment_amount)+'</td><td class="num">'+kz(p.installments*p.installment_amount)+'</td><td>'+(p.active?'<span class="tag good">Activo</span>':'<span class="tag">Inactivo</span>')+'</td><td><div class="actions">'+(p.active?'<button class="btn small" data-pa="plan-gen" data-id="'+p.id+'">Gerar parcelas</button>':'')+'<button class="btn secondary small" data-pa="plan-edit" data-id="'+p.id+'">Editar</button><button class="btn secondary small" data-pa="plan-toggle" data-id="'+p.id+'">'+(p.active?'Desactivar':'Activar')+'</button></div></td></tr>').join('')
  +'</tbody></table></div>'+(PAY.plans.length?'':'<div class="empty">Crie o primeiro plano, por exemplo «Formação Gestão Financeira · 10 × 50 000,00 Kz».</div>')+'</div>'}
 function payTabSet(){
  const s=PAY.set||{},f=(k,l,t,full)=>'<div class="field '+(full?'full':'')+'"><label for="ps_'+k+'">'+l+'</label>'+(t==='area'?'<textarea id="ps_'+k+'" rows="3">'+esc(s[k]||'')+'</textarea>':'<input id="ps_'+k+'" value="'+esc(s[k]||'')+'">')+'</div>';
- return '<div class="card"><div class="cardhead"><h2>Dados de pagamento e da entidade</h2></div><div class="notice">Estes dados aparecem ao formando quando pede um pagamento, e na factura. Só a administração os pode alterar.</div><div class="formgrid">'
+ return '<div class="card"><div class="cardhead"><h2>Dados de pagamento e da entidade</h2></div><div class="notice">Estes dados aparecem ao formando quando pede um pagamento, e no recibo. Só a administração os pode alterar.</div><div class="formgrid">'
  +f('express_phone','Telemóvel Multicaixa Express')+f('iban','IBAN')+f('bank_name','Banco')+f('issuer_name','Titular / entidade emissora')+f('issuer_nif','NIF')+f('issuer_address','Morada')
- +f('instructions','Instruções ao formando (opcional)','area',true)+f('invoice_footer','Rodapé da factura','area',true)+'</div><div class="actions" style="margin-top:14px"><button class="btn" data-pa="saveset">Guardar</button></div></div>'}
+ +f('instructions','Instruções ao formando (opcional)','area',true)+f('invoice_footer','Rodapé do recibo','area',true)+'</div><div class="actions" style="margin-top:14px"><button class="btn" data-pa="saveset">Guardar</button></div></div>'}
 function payGenOpen(planId){
  const plans=PAY.plans.filter(p=>p.active),st=activeStaff();
  if(!plans.length){alert('Crie primeiro um plano de parcelas, no separador Planos.');return}
@@ -1802,11 +1857,11 @@ function payStRender(){
   return '<tr><td>'+payDate(r.created_at)+'</td><td class="smalltext">'+esc(docs)+'</td><td class="num">'+kz(r.total)+'</td><td>'+esc(r.method)+'</td><td>'+payRTag(r)+(r.status==='Rejeitado'&&r.review_note?'<div class="muted smalltext">Motivo: '+esc(r.review_note)+'</div>':'')+'</td><td><div class="actions">'
   +((r.status==='Aguarda pagamento'||r.status==='Comprovativo enviado')?'<button class="btn secondary small" data-sa="how" data-id="'+r.id+'">'+(r.status==='Aguarda pagamento'?'Como pagar / anexar comprovativo':'Ver dados / substituir comprovativo')+'</button>':'')
   +(r.status==='Aguarda pagamento'?'<button class="btn danger small" data-sa="cancel" data-id="'+r.id+'">Cancelar</button>':'')
-  +(i?'<button class="btn secondary small" data-pa="iprint" data-id="'+i.id+'">Factura</button>':'')+'</div></td></tr>'}).join('')
+  +(i?'<button class="btn secondary small" data-pa="iprint" data-id="'+i.id+'">Recibo</button>':'')+'</div></td></tr>'}).join('')
  +'</tbody></table></div>'+(req.length?'':'<div class="empty">Ainda não fez nenhum pedido.</div>')+'</div>'
- +'<div class="card"><div class="cardhead"><h2>Facturas</h2></div><div class="tablewrap"><table class="table"><thead><tr><th>Factura n.º</th><th>Data</th><th class="num">Total</th><th>Estado</th><th>Doc.</th></tr></thead><tbody>'
+ +'<div class="card"><div class="cardhead"><h2>Recibos internos</h2></div><div class="tablewrap"><table class="table"><thead><tr><th>Recibo n.º</th><th>Data</th><th class="num">Total</th><th>Estado</th><th>Doc.</th></tr></thead><tbody>'
  +inv.map(i=>'<tr><td>'+esc(i.invoice_number)+'</td><td>'+payDate(i.issued_at)+'</td><td class="num">'+kz(i.total)+'</td><td>'+(i.status==='Emitida'?'<span class="tag good">Emitida</span>':'<span class="tag bad">Anulada</span>')+'</td><td><button class="btn secondary small" data-pa="iprint" data-id="'+i.id+'">Imprimir</button></td></tr>').join('')
- +'</tbody></table></div>'+(inv.length?'':'<div class="empty">Ainda não há facturas.</div>')+'</div>'}
+ +'</tbody></table></div>'+(inv.length?'':'<div class="empty">Ainda não há recibos.</div>')+'</div>'}
 function payStGo(){
  const lines=PAY.pro.filter(p=>PAY.sel.has(p.id)&&p.staff_id===PROFILE.staff_id&&p.status==='Por pagar');if(!lines.length)return;
  const tot=lines.reduce((s,p)=>s+Number(p.amount),0);
@@ -1853,10 +1908,10 @@ document.addEventListener('click',async e=>{
  else if(k==='iprint')payPrintInvoice(id);
  else if(k==='proof'){const r=PAY.req.find(x=>x.id===id);if(r&&r.proof_path)payProofOpen(r.proof_path)}
  else if(k==='confirm'){const r=PAY.req.find(x=>x.id===id);if(!r)return;
-  if(await askConfirm({title:'Confirmar pagamento?',message:payNm(r.staff_id)+' · '+kz(r.total)+' · '+r.method,detail:'Confirme o valor e a data no extracto antes de continuar. Será emitida a factura.',confirmLabel:'Confirmar pagamento'}))payRpc('av_confirm_payment',{p_request:id},'Pagamento confirmado. Factura emitida.')}
+  if(await askConfirm({title:'Confirmar pagamento?',message:payNm(r.staff_id)+' · '+kz(r.total)+' · '+r.method,detail:'Confirme o valor e a data no extracto antes de continuar. Será emitido o recibo interno.',confirmLabel:'Confirmar pagamento'}))payRpc('av_confirm_payment',{p_request:id},'Pagamento confirmado. Factura emitida.')}
  else if(k==='reject')payReason('Rejeitar pagamento','Motivo (o formando vai vê-lo)',v=>payRpc('av_reject_payment',{p_request:id,p_reason:v},'Pagamento rejeitado.'),'Rejeitar');
  else if(k==='pvoid')payReason('Anular parcela','Motivo da anulação',v=>payRpc('av_void_proforma',{p_id:id,p_reason:v},'Parcela anulada.'),'Anular');
- else if(k==='ivoid')payReason('Anular factura','Motivo da anulação',v=>payRpc('av_void_invoice',{p_invoice:id,p_reason:v},'Factura anulada. As parcelas voltaram a «Por pagar».'),'Anular factura');
+ else if(k==='ivoid')payReason('Anular recibo','Motivo da anulação',v=>payRpc('av_void_invoice',{p_invoice:id,p_reason:v},'Recibo anulado. As parcelas voltaram a «Por pagar».'),'Anular factura');
  else if(k==='reg')payRegOpen();
  else if(k==='plan-new')payPlanOpen(null);
  else if(k==='plan-edit')payPlanOpen(PAY.plans.find(x=>x.id===id));
@@ -2126,14 +2181,14 @@ async function trTrailLoad(){
 async function trStudentOpen(){
  trLessonClose();
  const box=trStBox();if(!box)return;
- if(TR.missing){box.innerHTML='<div class="notice">O módulo de Treino ainda não está instalado no servidor.</div>';return}
+ if(TR.missing){box.innerHTML='<div class="notice">O Treino ainda não está disponível. Fale com o formador.</div>';return}
  if(TR.ready&&!TR.prof){box.innerHTML=trStDenied();return}
  box.innerHTML='<div class="empty">A carregar…</div>';
  try{const r=await SB.rpc('av_train_state');if(r.error)throw r.error;TRS.state=r.data||{};
   if(TRS.state.needs_profile){box.innerHTML=trStDenied();return}
   TRS.sess=null;TRS.fb=null;TRS.ord=null;TRS.sel=null;TRS.defer=[];
   await trTrailLoad();trStRender()}
- catch(e){box.innerHTML=trMiss(e)?'<div class="notice">As funções do Treino ainda não estão instaladas no servidor (falta a migração 017_treino_sessao.sql).</div>':'<div class="notice">Não foi possível carregar o Treino: '+esc(trErr(e))+'</div>'}}
+ catch(e){box.innerHTML='<div class="notice">O Treino não está disponível neste momento. Tente de novo daqui a pouco ou fale com o formador.</div>'}}
 
 function trGoalCard(s){const cw=s.cohort_week;
  if(!s.cohort)return '<div class="card"><p class="muted smalltext" style="margin:0">Ainda sem turma: treina só com o seu nível. A meta de turma aparece quando o formador o colocar numa turma.</p></div>';
@@ -2743,76 +2798,121 @@ function scenarios(m,mo){
   return{d:n0(d),p,cm,be,lucro,need,extra:need?(need/mo.units-1)*100:null}})}
 
 /* ---------- Estado ---------- */
-const DEF=()=>({tab:'calc',
- calc:{custo:'',driver:'markup',markup:'',margem:'',preco:''},
- m:{nome:'',custos:[{n:'Materiais',v:''},{n:'Mão-de-obra directa',v:''}],fixos:'',vendas:'',imposto:'',comissao:'',margem:'30',desc:['0','10','20']}});
-let S=DEF(),EX={list:null,att:{},cur:null,err:null,loading:false,failedAt:0},FICHAS=[],FDB=true;
-try{const x=JSON.parse(localStorage.getItem(LS_KEY)||'null');if(x&&x.calc&&x.m){S=Object.assign(DEF(),x);S.tab='calc'}}catch(e){}
-const save=()=>{try{localStorage.setItem(LS_KEY,JSON.stringify({calc:S.calc,m:S.m}))}catch(e){}};
+const CUSTOS=['Materiais','Mão-de-obra directa','Embalagem','Transporte','Comissão fixa','Outro custo'];
+const MODES=[['markup','Markup'],['margem','Margem'],['completo','Preço completo']];
+const DEF=()=>({tab:'sim',mode:'',
+ calc:{custo:'',val:''},
+ m:{nome:'',custos:[{n:'Materiais',v:''}],fixos:'',vendas:'',imposto:'',comissao:'',margem:'30',desc:['0','10','20']}});
+let S=DEF(),RES=null,BUSY=false,EX={list:null,att:{},cur:null,err:null,loading:false,failedAt:0},FICHAS=[],FDB=true;
+try{const x=JSON.parse(localStorage.getItem(LS_KEY)||'null');
+ if(x&&x.m){const d=DEF();S.mode=['markup','margem','completo'].includes(x.mode)?x.mode:'';S.calc.custo=(x.calc&&x.calc.custo)||'';S.m=Object.assign(d.m,x.m);if(!Array.isArray(S.m.custos)||!S.m.custos.length)S.m.custos=d.m.custos}}catch(e){}
+const save=()=>{try{localStorage.setItem(LS_KEY,JSON.stringify({mode:S.mode,calc:S.calc,m:S.m}))}catch(e){}};
 const root=()=>document.getElementById('mkRoot');
 const g=id=>document.getElementById(id);
+const fnum=(v,d=2)=>{const s=Math.abs(v).toFixed(d),p=s.split('.');return(v<0?'-':'')+p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.')+(d?','+p[1]:'')};
+const kz2=v=>(v==null||!isFinite(v))?'—':fnum(v,2)+' Kz';
+const ICON_CALC='<svg viewBox="0 0 48 48" width="54" height="54" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><rect x="14" y="10" width="20" height="8" rx="1.5"/><path d="M15 25h2M23 25h2M31 25h2M15 31h2M23 31h2M31 31h2M15 37h2M23 37h10"/></svg>';
+const ICON_TRASH='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>';
+const ICON_UP='<svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V4M5 11l7-7 7 7"/></svg>';
 
 /* ---------- Estrutura ---------- */
-const TABS=[['calc','1 · Calcular'],['custo','2 · O meu produto'],['ex','3 · Exercícios']];
+const TABS=[['sim','Simulador'],['ex','Exercícios']];
 function shell(){
  root().innerHTML='<div class="mk-tabs" role="tablist">'+TABS.map(t=>'<button type="button" role="tab" data-mk-tab="'+t[0]+'">'+t[1]+'</button>').join('')+'<button type="button" class="mk-flink" data-mk-tab="fichas">Fichas guardadas</button></div>'+
  '<div id="mkPanel"></div>';draw()}
 function draw(){
  root().querySelectorAll('[data-mk-tab]').forEach(b=>{const on=b.dataset.mkTab===S.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',on)});
  const p=g('mkPanel');
- if(S.tab==='calc'){p.innerHTML=calcHTML();calcOut()}
- else if(S.tab==='custo'){p.innerHTML=custoHTML();custoOut();eqOut()}
+ if(S.tab==='sim'){p.innerHTML=simHTML();drawSim()}
  else if(S.tab==='ex'){p.innerHTML=exHTML();exLoad()}
  else{p.innerHTML=fichasHTML();fichasLoad()}}
 
-/* ---------- 1. Calculadora ---------- */
-function calcHTML(){const c=S.calc;
- const f=(k,l,h,suf)=>'<div class="field mk-f'+(c.driver===k?' mk-drv':'')+'"><label for="mkc_'+k+'">'+l+'</label><div class="mk-in"><input id="mkc_'+k+'" data-mk-c="'+k+'" inputmode="decimal" autocomplete="off" value="'+esc(c[k])+'" placeholder="'+h+'"><span>'+suf+'</span></div></div>';
- return '<div class="card"><div class="cardhead"><h2>Calculadora de markup e margem</h2></div>'+
- '<p class="muted smalltext">Escreva o custo e mude <strong>um</strong> dos outros três campos: os restantes actualizam-se.</p>'+
- '<div class="mk-grid">'+f('custo','Custo por unidade','0','Kz')+f('markup','Markup (sobre o custo)','0','%')+f('margem','Margem (sobre o preço)','0','%')+f('preco','Preço de venda','0','Kz')+'</div>'+
- '<div id="mkCalcOut"></div></div>'}
-function calcOut(){const c=S.calc,custo=num(c.custo),val=num(c[c.driver==='custo'?'markup':c.driver]);const o=g('mkCalcOut');
- const r=calc(custo,c.driver==='custo'?'markup':c.driver,val);
- if(!r){o.innerHTML='<div class="empty">Escreva o custo e um dos três valores para ver o resultado.</div>';return}
- o.innerHTML='<div class="mk-res"><div><span>Preço de venda</span><strong>'+kz(r.preco)+'</strong></div><div><span>Lucro por unidade</span><strong>'+kz(r.lucro)+'</strong></div><div><span>Markup</span><strong>'+pc(r.markup)+'</strong></div><div><span>Margem</span><strong>'+pc(r.margem)+'</strong></div></div>'+
- '<div class="mk-note"><strong>Não são a mesma coisa.</strong> Um markup de '+pc(r.markup)+' sobre o custo dá uma margem de '+pc(r.margem)+' sobre o preço.'+
- (r.markup>0&&r.markup<100?' Para ter uma margem de '+pc(r.markup)+', teria de aplicar um markup de '+pc(r.markup/(100-r.markup)*100)+'.':'')+'</div>'}
+/* ---------- 1. Simulador guiado (formulário à esquerda, informação e resultado à direita) ---------- */
+function simHTML(){return '<div class="sg" id="mkSg"><div class="sg-l" id="mkForm"></div><div class="sg-r" id="mkSide"></div></div><div id="mkExtra"></div>'+
+ '<h2 class="sg-h2">Markup, margem ou preço completo?</h2><div class="sg-cards"><div class="sg-c"><h4>Markup</h4><p>Lucro sobre o custo. Custo 100 + 50% = preço 150.</p></div><div class="sg-c"><h4>Margem</h4><p>Lucro sobre o preço. Preço 150 e custo 100 = margem de 33%.</p></div><div class="sg-c"><h4>Preço completo</h4><p>Junta custos fixos, impostos e comissão.</p></div></div>'}
+function drawSim(){const f=g('mkForm');if(!f)return;f.innerHTML=formHTML();renderSide();sync()}
+function money(id,key,val){return '<div class="sg-in"><input id="'+id+'" data-mk-money data-mk-f="'+key+'" inputmode="decimal" autocomplete="off" placeholder="0,00" value="'+esc(val)+'"><span>KZ</span></div>'}
+function pct(id,key,val,ph){return '<div class="sg-in"><input id="'+id+'" data-mk-f="'+key+'" inputmode="decimal" autocomplete="off" placeholder="'+(ph||'0')+'" value="'+esc(val)+'"><span>%</span></div>'}
+function costRow(c,i){const names=(!c.n||CUSTOS.includes(c.n))?CUSTOS:CUSTOS.concat([c.n]);
+ return '<div class="sg-crow"><select class="sg-sel" data-mk-cn="'+i+'" aria-label="Tipo de custo">'+names.map(n=>'<option'+(n===c.n?' selected':'')+'>'+esc(n)+'</option>').join('')+'</select><div class="sg-in"><input data-mk-money data-mk-cv="'+i+'" inputmode="decimal" autocomplete="off" placeholder="0,00" value="'+esc(c.v)+'" aria-label="Valor"><span>KZ</span></div><button type="button" class="sg-del" data-mk-del="'+i+'" aria-label="Remover custo">'+ICON_TRASH+'</button></div>'}
+function formHTML(){
+ let h='<label class="sg-lbl">Seleccione o que quer calcular*</label><div class="sg-seg" role="tablist">'+MODES.map(m=>'<button type="button" role="tab" data-mk-mode="'+m[0]+'" aria-selected="'+(S.mode===m[0])+'" class="'+(S.mode===m[0]?'on':'')+'">'+m[1]+'</button>').join('')+'</div>';
+ if(!S.mode)return h+'<div class="sg-wait">'+ICON_UP+'<p>Aguardamos a sua escolha</p></div>';
+ if(S.mode==='completo'){
+  h+='<div class="sg-step" data-step="nome"><label class="sg-lbl" for="mkm_nome">Nome do produto ou serviço</label><div class="sg-in"><input id="mkm_nome" data-mk-f="m.nome" autocomplete="off" placeholder="Ex.: Bolo de aniversário" value="'+esc(S.m.nome)+'"></div></div>'+
+  '<div class="sg-step" data-step="custos"><label class="sg-lbl">Custos directos por unidade*</label><div id="mkRows">'+S.m.custos.map(costRow).join('')+'</div><div class="sg-err" data-err="custos"></div><button type="button" class="sg-add" data-mk-add>Adicionar custo</button></div>'+
+  '<div class="sg-step" data-step="fixos"><div class="sg-two"><div><label class="sg-lbl" for="mkm_fixos">Custos fixos por mês</label>'+money('mkm_fixos','m.fixos',S.m.fixos)+'</div><div><label class="sg-lbl" for="mkm_vendas">Vendas por mês</label><div class="sg-in"><input id="mkm_vendas" data-mk-f="m.vendas" inputmode="decimal" autocomplete="off" placeholder="0" value="'+esc(S.m.vendas)+'"><span>UN.</span></div></div></div><div class="sg-err" data-err="vendas"></div></div>'+
+  '<div class="sg-step" data-step="pct"><div class="sg-three"><div><label class="sg-lbl" for="mkm_imposto">Impostos</label>'+pct('mkm_imposto','m.imposto',S.m.imposto)+'</div><div><label class="sg-lbl" for="mkm_comissao">Comissão</label>'+pct('mkm_comissao','m.comissao',S.m.comissao)+'</div><div><label class="sg-lbl" for="mkm_margem">Margem*</label>'+pct('mkm_margem','m.margem',S.m.margem,'30')+'</div></div><div class="sg-err" data-err="pct"></div></div>'}
+ else{
+  h+='<div class="sg-step" data-step="custo"><label class="sg-lbl" for="mkq_custo">Custo por unidade*</label>'+money('mkq_custo','q.custo',S.calc.custo)+'<div class="sg-err" data-err="custo"></div></div>'+
+  '<div class="sg-step" data-step="val"><label class="sg-lbl" for="mkq_val">'+(S.mode==='markup'?'Markup pretendido (sobre o custo)*':'Margem pretendida (sobre o preço)*')+'</label>'+pct('mkq_val','q.val',S.calc.val,S.mode==='markup'?'50':'30')+'<div class="sg-err" data-err="val"></div></div>'}
+ return h+'<button type="button" class="sg-go" data-mk-go>Simular</button><div id="mkDetail"></div>'}
 
-/* ---------- 2. Custo e preço ---------- */
-function custoHTML(){const m=S.m;
- const row=(c,i)=>'<div class="mk-row"><input data-mk-cn="'+i+'" value="'+esc(c.n)+'" aria-label="Nome do custo" placeholder="Ex.: Embalagem"><div class="mk-in"><input data-mk-cv="'+i+'" inputmode="decimal" value="'+esc(c.v)+'" aria-label="Valor" placeholder="0"><span>Kz</span></div><button type="button" class="linkdel" data-mk-del="'+i+'" aria-label="Remover custo">Remover</button></div>';
- const f=(k,l,suf,h)=>'<div class="field"><label for="mkm_'+k+'">'+l+'</label><div class="mk-in"><input id="mkm_'+k+'" data-mk-m="'+k+'" inputmode="decimal" autocomplete="off" value="'+esc(m[k])+'" placeholder="'+(h||'0')+'"><span>'+suf+'</span></div></div>';
- return '<div class="grid mk-two"><div class="card"><div class="cardhead"><h2>O seu produto ou serviço</h2></div>'+
- '<div class="field"><label for="mkm_nome">Nome</label><input id="mkm_nome" data-mk-m="nome" value="'+esc(m.nome)+'" placeholder="Ex.: Bolo de aniversário"></div>'+
- '<h3 class="mk-h">Custos directos por unidade</h3><div id="mkRows">'+m.custos.map(row).join('')+'</div>'+
- '<button type="button" class="btn secondary small" data-mk-add>+ Adicionar custo</button>'+
- '<h3 class="mk-h">Custos fixos e vendas</h3><div class="mk-grid">'+f('fixos','Custos fixos por mês','Kz')+f('vendas','Unidades vendidas por mês','un.')+'</div>'+
- '<h3 class="mk-h">Percentagens do preço</h3><div class="mk-grid mk-g3">'+f('imposto','Impostos e taxas','%')+f('comissao','Comissão de venda','%')+f('margem','Margem pretendida','%','30')+'</div></div>'+
- '<div><div class="card" id="mkCustoOut"></div><details class="card mk-det"><summary>E se der desconto? Ponto de equilíbrio</summary><div id="mkEqOut"></div></details></div></div>'}
-function custoOut(){const m=S.m,mo=model(m),o=g('mkCustoOut');
- let h='<div class="cardhead"><h2>Resultado</h2></div>';
- if(mo.base<=0){o.innerHTML=h+'<div class="empty">Preencha pelo menos um custo directo para ver o preço.</div>';return}
- h+='<table class="mk-tbl"><tbody>'+
- '<tr><td>Custos directos por unidade</td><td>'+kz(mo.direct)+'</td></tr>'+
- '<tr><td>Custos fixos por unidade'+(mo.units>0?'':' <em>(indique as unidades por mês)</em>')+'</td><td>'+kz(mo.fixUnit)+'</td></tr>'+
- '<tr class="mk-sum"><td>Custo total por unidade</td><td>'+kz(mo.base)+'</td></tr></tbody></table>';
- if(mo.warn)h+='<div class="mk-note mk-bad">'+esc(mo.warn)+'</div>';
- else h+='<div class="mk-res"><div><span>Preço mínimo (margem 0%)</span><strong>'+kz(mo.pMin)+'</strong></div><div><span>Preço com a margem pretendida</span><strong>'+kz(mo.pTar)+'</strong></div><div><span>Markup sobre o custo total</span><strong>'+pc(mo.markup)+'</strong></div><div><span>Lucro por mês</span><strong>'+kz(mo.lucroMes)+'</strong></div></div>'+
- '<p class="muted smalltext">Impostos, comissão e margem são percentagens do <strong>preço</strong>: por isso o preço é o custo dividido por (1 − '+pc((mo.imp+mo.com+mo.mg)*100)+'), e não o custo multiplicado por um markup.</p>'+
- '<div class="mk-act"><button type="button" class="btn small" data-mk-save>Guardar ficha</button></div>';
- o.innerHTML=h}
+/* o que se mostra, e o que está errado, depende só do estado */
+function steps(){const v={};
+ if(S.mode==='completo'){const d=model(S.m).direct;v.nome=v.custos=true;v.fixos=v.pct=d>0}
+ else{v.custo=true;v.val=num(S.calc.custo)>0}
+ return v}
+function errs(){const e={};
+ if(S.mode==='completo'){const mo=model(S.m);
+  if(!(mo.direct>0))e.custos='Adicione pelo menos um custo superior a 0';
+  else{if(mo.fixos>0&&!(mo.units>0))e.vendas='Indique as vendas por mês para repartir os custos fixos';
+   if(!isFinite(num(S.m.margem)))e.pct='Indique a margem pretendida';else if(mo.warn)e.pct=mo.warn}}
+ else if(S.mode){
+  if(!(num(S.calc.custo)>0))e.custo='Adicione um valor superior a 0';
+  else{const v=num(S.calc.val);
+   if(!isFinite(v))e.val=S.mode==='markup'?'Indique o markup (ex.: 50)':'Indique a margem (ex.: 30)';
+   else if(v<0)e.val='O valor não pode ser negativo';
+   else if(S.mode==='margem'&&v>=100)e.val='A margem tem de ser inferior a 100%'}}
+ return e}
+function sync(){const f=g('mkForm');if(!f||!S.mode)return;const v=steps(),e=errs(),map={vendas:'fixos'};
+ f.querySelectorAll('[data-step]').forEach(s=>s.classList.toggle('hidden',!v[s.dataset.step]));
+ f.querySelectorAll('[data-err]').forEach(x=>{const k=x.dataset.err;x.textContent=(e[k]&&v[map[k]||k])?e[k]:''});
+ const go=f.querySelector('[data-mk-go]');if(go)go.classList.toggle('off',Object.keys(e).length>0)}
 
-/* ---------- 3. Equilíbrio e cenários ---------- */
+/* ---------- Painel da direita: informação geral → resultado ---------- */
+const INFO={
+ '':'<p>O <strong>markup</strong> mede o lucro sobre o <strong>custo</strong>. A <strong>margem</strong> mede-o sobre o <strong>preço</strong>. Não são a mesma coisa.</p><p>Escolha à esquerda o que quer calcular.</p>',
+ markup:'<h3>Markup</h3><p>Percentagem somada ao <strong>custo</strong>.</p><p class="sg-f">Preço = custo × (1 + markup)</p><p class="sg-eg">Custo 1.000 Kz com markup de 50% dá um preço de 1.500 Kz.</p>',
+ margem:'<h3>Margem</h3><p>Parte do <strong>preço</strong> que fica como lucro.</p><p class="sg-f">Preço = custo ÷ (1 − margem)</p><p class="sg-eg">Custo 1.000 Kz com margem de 50% dá um preço de 2.000 Kz.</p>',
+ completo:'<h3>Preço completo</h3><p>Cobre custos directos, custos fixos, impostos e comissão, e ainda deixa a sua margem.</p><p class="sg-f">Preço = custo total ÷ (1 − impostos − comissão − margem)</p>'};
+function renderSide(){const s=g('mkSide');if(!s)return;
+ s.innerHTML=RES?resultHTML():'<h2 class="sg-h">Informação Geral</h2>'+INFO[S.mode||''];
+ const d=g('mkDetail');if(d)d.innerHTML=RES?detailHTML():'';
+ const x=g('mkExtra');if(x){x.innerHTML=(RES&&RES.mode==='completo')?'<details class="card mk-det" open><summary>E se der desconto?</summary><div id="mkEqOut"></div></details>':'';if(RES&&RES.mode==='completo')eqOut()}}
+function resultHTML(){const R=RES,c=R.mode==='completo';let k,big,rows,note='';
+ if(!c){const r=R.r;k='Preço de venda';big=kz2(r.preco);
+  rows=[['Lucro por unidade',kz2(r.lucro)],['Markup (sobre o custo)',pc(r.markup)],['Margem (sobre o preço)',pc(r.margem)]];
+  note='Um markup de '+pc(r.markup)+' dá uma margem de '+pc(r.margem)+'.'+(r.markup>0&&r.markup<100?' Para ter uma margem de '+pc(r.markup)+', precisaria de um markup de '+pc(r.markup/(100-r.markup)*100)+'.':'')}
+ else{const mo=R.mo;k='Preço com a margem pretendida';big=kz2(mo.pTar);
+  rows=[['Preço mínimo (margem 0%)',kz2(mo.pMin)],['Markup sobre o custo total',pc(mo.markup)],['Lucro por mês',mo.units>0?kz2(mo.lucroMes):'Indique as vendas'],['Equilíbrio (unid./mês)',mo.be?un(mo.be):'—']]}
+ return '<div class="sg-res"><div class="sg-ico">'+ICON_CALC+'</div><div class="sg-k">'+k+'</div><div class="sg-big">'+big+'</div><div class="sg-rows">'+rows.map(r=>'<div><span>'+r[0]+'</span><strong>'+r[1]+'</strong></div>').join('')+'</div>'+(note?'<p class="sg-note">'+note+'</p>':'')+
+ '<div class="sg-acts"><button type="button" class="sg-b2" data-mk-clear>Limpar</button>'+(c?'<button type="button" class="sg-b2 alt" data-mk-save>Guardar ficha</button>':'')+'</div></div>'}
+function detailHTML(){const R=RES,ro=(l,v)=>'<div class="sg-ro"><label>'+l+'</label><div>'+v+'</div></div>';let h='<h3 class="sg-h3">Passo a passo</h3>';
+ if(R.mode==='markup')h+=ro('Custo por unidade',kz2(R.custo))+ro('Acréscimo (custo × markup)',kz2(R.custo*R.val/100))+ro('Preço (custo + acréscimo)',kz2(R.r.preco));
+ else if(R.mode==='margem')h+=ro('Custo por unidade',kz2(R.custo))+ro('Divisor (1 − margem)',fnum(1-R.val/100,4))+ro('Preço (custo ÷ divisor)',kz2(R.r.preco));
+ else{const mo=R.mo;h+=ro('Custos directos por unidade',kz2(mo.direct))+ro('Custos fixos por unidade',kz2(mo.fixUnit))+ro('Custo total por unidade',kz2(mo.base))+ro('Divisor (1 − impostos − comissão − margem)',fnum(1-mo.imp-mo.com-mo.mg,4))+ro('Preço (custo total ÷ divisor)',kz2(mo.pTar))}
+ return h}
+function compute(){if(S.mode==='completo')return{mode:'completo',mo:model(S.m)};
+ const custo=num(S.calc.custo),val=num(S.calc.val);return{mode:S.mode,custo,val,r:calc(custo,S.mode,val)}}
+function simulate(){if(BUSY)return;
+ if(Object.keys(errs()).length){const x=g('mkForm').querySelector('.sg-err:not(:empty)');toast('Complete os campos assinalados.');if(x&&x.scrollIntoView)x.scrollIntoView({block:'center',behavior:'smooth'});return}
+ BUSY=true;g('mkSg').insertAdjacentHTML('beforeend','<div class="sg-load" id="mkLoad" role="status" aria-label="A calcular"><div><i></i></div></div>');
+ setTimeout(()=>{BUSY=false;const l=g('mkLoad');if(l)l.remove();RES=compute();renderSide();
+  if(window.innerWidth<=900){const s=g('mkSide');if(s&&s.scrollIntoView)s.scrollIntoView({block:'start',behavior:'smooth'})}},450)}
+function setMode(m){if(S.mode===m)return;S.mode=m;S.calc.val='';RES=null;save();drawSim()}
+function clearAll(){S.calc={custo:'',val:''};S.m=DEF().m;RES=null;save();drawSim()}
+function addCost(){const used=S.m.custos.map(c=>c.n),n=CUSTOS.find(x=>!used.includes(x))||'Outro custo';S.m.custos.push({n,v:''});save();const r=g('mkRows');if(r){r.innerHTML=S.m.custos.map(costRow).join('');const l=r.querySelectorAll('[data-mk-cv]');if(l.length)l[l.length-1].focus()}if(RES){RES=null;renderSide()}sync()}
+function delCost(i){if(S.m.custos.length>1)S.m.custos.splice(i,1);else S.m.custos[0].v='';save();const r=g('mkRows');if(r)r.innerHTML=S.m.custos.map(costRow).join('');if(RES){RES=null;renderSide()}sync()}
+
+/* ---------- Equilíbrio e cenários (aparece depois de simular o preço completo) ---------- */
 function eqOut(){const m=S.m,mo=model(m),o=g('mkEqOut');if(!o)return;
- if(!mo.pTar||mo.base<=0){o.innerHTML='<div class="empty">Preencha os custos acima para ver o equilíbrio e o efeito dos descontos.</div>';return}
+ if(!mo.pTar||mo.base<=0){o.innerHTML='<div class="empty">Simule primeiro o preço completo.</div>';return}
  const sc=scenarios(m,mo);
  let h='<div class="mk-res"><div><span>Preço de referência</span><strong>'+kz(mo.pTar)+'</strong></div><div><span>Contribuição por unidade</span><strong>'+kz(mo.contrib)+'</strong></div><div><span>Equilíbrio (unid./mês)</span><strong>'+un(mo.be)+'</strong></div><div><span>Vendas actuais</span><strong>'+(mo.units>0?un(mo.units):'—')+'</strong></div></div>'+
- '<p class="muted smalltext">Contribuição = preço − impostos e comissão − custos directos. É o que cada unidade deixa para pagar os custos fixos ('+kz(mo.fixos)+' por mês).</p>'+
- '<h3 class="mk-h">E se der desconto?</h3><div class="mk-scroll"><table class="mk-tbl mk-sc"><thead><tr><th>Desconto</th><th>Preço</th><th>Equilíbrio</th><th>Lucro/mês</th><th>Vender para igualar o lucro</th></tr></thead><tbody>'+
+ '<div class="mk-scroll"><table class="mk-tbl mk-sc"><thead><tr><th>Desconto</th><th>Preço</th><th>Equilíbrio</th><th>Lucro/mês</th><th>Vender para igualar o lucro</th></tr></thead><tbody>'+
  sc.map((s,i)=>'<tr><td><div class="mk-in mk-sm"><input data-mk-d="'+i+'" inputmode="decimal" value="'+esc(S.m.desc[i])+'" aria-label="Desconto '+(i+1)+'"><span>%</span></div></td><td>'+kz(s.p)+'</td><td>'+(s.be==null?'<span class="mk-badtxt">nunca</span>':un(s.be))+'</td><td>'+(s.lucro==null?'—':'<span class="'+(s.lucro<0?'mk-badtxt':'')+'">'+kz(s.lucro)+'</span>')+'</td><td>'+(s.need==null?'—':un(s.need)+(s.d>0&&s.extra!=null?' <em>(+'+pc(s.extra,0)+')</em>':''))+'</td></tr>').join('')+'</tbody></table></div>'+
- (mo.units>0?'':'<p class="muted smalltext">Indique as unidades vendidas por mês no separador Custo e preço para ver o lucro e as unidades necessárias.</p>')+
- '<div class="mk-note">Um desconto parece pequeno no preço mas é grande na margem: reduz a contribuição de cada unidade, e é preciso vender muito mais para ganhar o mesmo.</div>';
+ '<div class="mk-note">Um desconto parece pequeno no preço mas é grande na margem: é preciso vender muito mais para ganhar o mesmo.</div>';
  o.innerHTML=h}
 
 /* ---------- 4. Exercícios ---------- */
@@ -2832,7 +2932,7 @@ function exDraw(){const b=g('mkExBody');if(!b)return;
  if(!EX.list.length){b.innerHTML='<div class="card"><div class="cardhead"><h2>Exercícios</h2></div><div class="empty">Ainda não há exercícios publicados.</div></div>';return}
  const done=EX.list.filter(e=>exDone(e.id)).length,L={1:'Nível 1 · Conceitos',2:'Nível 2 · Negócios reais',3:'Nível 3 · Decisões'};
  let h='<div class="card"><div class="cardhead"><h2>Exercícios</h2><span class="muted smalltext">'+done+' de '+EX.list.length+' resolvidos</span></div><div class="mk-bar"><i style="width:'+Math.round(done/EX.list.length*100)+'%"></i></div>'+
- '<p class="muted smalltext">Pode tentar as vezes que quiser. É treino e não conta para a nota.</p>';
+ '<p class="muted smalltext">Treino livre: não conta para a nota.</p>';
  [1,2,3].forEach(l=>{const xs=EX.list.filter(e=>e.level===l);if(!xs.length)return;
   h+='<h3 class="mk-h">'+L[l]+'</h3><div class="mk-exlist">'+xs.map(e=>{const a=EX.att[e.id]||{},cur=EX.cur===e.id;
    return '<div class="mk-ex'+(a.ok?' ok':'')+(cur?' open':'')+'"><button type="button" class="mk-exh" data-mk-ex="'+e.id+'" aria-expanded="'+cur+'"><span class="mk-ck">'+(a.ok?'✓':e.position)+'</span><span>'+esc(e.title)+'</span></button>'+
@@ -2855,14 +2955,14 @@ async function exCheck(id,raw,form){
  btn.disabled=false}
 
 /* ---------- 5. Fichas ---------- */
-function fichasHTML(){return '<div class="card"><div class="cardhead"><h2>Fichas guardadas</h2><button type="button" class="btn secondary small" data-mk-tab="custo">← Voltar</button></div><div id="mkFichas"><div class="empty">A carregar…</div></div></div>'}
+function fichasHTML(){return '<div class="card"><div class="cardhead"><h2>Fichas guardadas</h2><button type="button" class="btn secondary small" data-mk-tab="sim">← Voltar</button></div><div id="mkFichas"><div class="empty">A carregar…</div></div></div>'}
 function lsFichas(){try{const x=JSON.parse(localStorage.getItem(LS_FICHAS)||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
 async function fichasLoad(){
  try{const r=await SB.from('av_sim_pricing').select('id,name,data,created_at').order('created_at',{ascending:false});if(r.error)throw r.error;FICHAS=r.data||[];FDB=true}
  catch(e){FDB=false;FICHAS=lsFichas()}
  if(S.tab==='fichas')fichasDraw()}
 function fichasDraw(){const b=g('mkFichas');if(!b)return;
- if(!FICHAS.length){b.innerHTML='<div class="empty">Ainda não guardou nenhuma ficha. Preencha <strong>Custo e preço</strong> e use «Guardar ficha».</div>';return}
+ if(!FICHAS.length){b.innerHTML='<div class="empty">Ainda não guardou nenhuma ficha. Simule o <strong>Preço completo</strong> e use «Guardar ficha».</div>';return}
  b.innerHTML=(FDB?'':'<p class="muted smalltext">As fichas estão guardadas só neste dispositivo.</p>')+'<div class="mk-flist">'+FICHAS.map(f=>{const mo=model(f.data.m||S.m);
   return '<div class="mk-fi"><div><strong>'+esc(f.name)+'</strong><div class="muted smalltext">'+(mo.pTar?'Preço '+kz(mo.pTar)+' · margem '+pc(mo.mg*100,0)+' · custo '+kz(mo.base):'Ficha incompleta')+' · '+esc(fmt(String(f.created_at||'').slice(0,10)))+'</div></div><div class="mk-fa"><button type="button" class="btn secondary small" data-mk-load="'+esc(f.id)+'">Abrir</button><button type="button" class="btn secondary small" data-mk-print="'+esc(f.id)+'">PDF</button><button type="button" class="btn secondary small" data-mk-csv="'+esc(f.id)+'">CSV</button><button type="button" class="linkdel" data-mk-rm="'+esc(f.id)+'">Eliminar</button></div></div>'}).join('')+'</div>'}
 async function fichaSave(){
@@ -2878,29 +2978,26 @@ function fichaPrint(f){const rows=fichaRows(f),w=window.open('','_blank');if(!w)
  w.document.close();w.focus();setTimeout(()=>w.print(),250)}
 
 /* ---------- Eventos ---------- */
+function setF(key,v){const p=key.split('.');if(p[0]==='q')S.calc[p[1]]=v;else S.m[p[1]]=v}
+function touched(){save();if(RES){RES=null;renderSide()}sync()}
 function onInput(e){const t=e.target;
- if(t.dataset.mkC!==undefined){const k=t.dataset.mkC;S.calc[k]=t.value;
-  if(k==='custo'){/* mantém o campo que mandava */}else{S.calc.driver=k;
-   const r=calc(num(S.calc.custo),k,num(t.value));
-   if(r)['markup','margem','preco'].forEach(f=>{if(f!==k){const v=r[f],el=g('mkc_'+f);S.calc[f]=String(Math.round(v*100)/100).replace('.',',');if(el)el.value=S.calc[f]}});
-   root().querySelectorAll('.mk-f').forEach(x=>x.classList.remove('mk-drv'));t.closest('.mk-f').classList.add('mk-drv')}
-  if(k==='custo'){const d=S.calc.driver,r=calc(num(S.calc.custo),d==='custo'?'markup':d,num(S.calc[d==='custo'?'markup':d]));
-   if(r)['markup','margem','preco'].forEach(f=>{if(f!==d){const el=g('mkc_'+f);S.calc[f]=String(Math.round(r[f]*100)/100).replace('.',',');if(el)el.value=S.calc[f]}})}
-  save();calcOut();return}
- if(t.dataset.mkM!==undefined){S.m[t.dataset.mkM]=t.value;save();custoOut();eqOut();return}
- if(t.dataset.mkCn!==undefined){S.m.custos[+t.dataset.mkCn].n=t.value;save();return}
- if(t.dataset.mkCv!==undefined){S.m.custos[+t.dataset.mkCv].v=t.value;save();custoOut();eqOut();return}
- if(t.dataset.mkD!==undefined){S.m.desc[+t.dataset.mkD]=t.value;save();const a=document.activeElement,i=t.dataset.mkD,pos=t.selectionStart;eqOut();const n=root().querySelector('[data-mk-d="'+i+'"]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}}}
+ if(t.dataset.mkF!==undefined){setF(t.dataset.mkF,t.value);touched();return}
+ if(t.dataset.mkCv!==undefined){S.m.custos[+t.dataset.mkCv].v=t.value;touched();return}
+ if(t.dataset.mkD!==undefined){S.m.desc[+t.dataset.mkD]=t.value;save();const i=t.dataset.mkD,pos=t.selectionStart;eqOut();const n=root().querySelector('[data-mk-d="'+i+'"]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}}}
+function onChange(e){const t=e.target;if(t.dataset&&t.dataset.mkCn!==undefined){S.m.custos[+t.dataset.mkCn].n=t.value;touched()}}
+function onBlur(e){const t=e.target;if(t&&t.hasAttribute&&t.hasAttribute('data-mk-money')&&t.value.trim()!==''){const v=num(t.value);if(isFinite(v)){t.value=fnum(v,2);t.dispatchEvent(new Event('input',{bubbles:true}))}}}
 async function onClick(e){const t=e.target.closest('button');if(!t)return;
  if(t.dataset.mkTab){S.tab=t.dataset.mkTab;draw();return}
- if(t.dataset.mkGo){S.tab=t.dataset.mkGo;draw();return}
- if(t.hasAttribute('data-mk-add')){S.m.custos.push({n:'',v:''});save();draw();return}
- if(t.dataset.mkDel!==undefined){if(S.m.custos.length>1)S.m.custos.splice(+t.dataset.mkDel,1);save();draw();return}
+ if(t.dataset.mkMode){setMode(t.dataset.mkMode);return}
+ if(t.hasAttribute('data-mk-go')){simulate();return}
+ if(t.hasAttribute('data-mk-clear')){clearAll();return}
+ if(t.hasAttribute('data-mk-add')){addCost();return}
+ if(t.dataset.mkDel!==undefined){delCost(+t.dataset.mkDel);return}
  if(t.hasAttribute('data-mk-save')){fichaSave();return}
  if(t.dataset.mkEx){EX.cur=EX.cur===t.dataset.mkEx?null:t.dataset.mkEx;exDraw();return}
  const fid=t.dataset.mkLoad||t.dataset.mkPrint||t.dataset.mkCsv||t.dataset.mkRm;
  if(fid){const f=FICHAS.find(x=>String(x.id)===fid);if(!f)return;
-  if(t.dataset.mkLoad){S.m=Object.assign(DEF().m,JSON.parse(JSON.stringify(f.data.m)));save();S.tab='custo';draw();toast('Ficha aberta.')}
+  if(t.dataset.mkLoad){S.m=Object.assign(DEF().m,JSON.parse(JSON.stringify(f.data.m)));S.mode='completo';RES=null;save();S.tab='sim';draw();toast('Ficha aberta.')}
   else if(t.dataset.mkPrint)fichaPrint(f);
   else if(t.dataset.mkCsv)fichaCsv(f);
   else if(t.dataset.mkRm){if(!confirm('Eliminar a ficha «'+f.name+'»?'))return;
@@ -2911,7 +3008,7 @@ function onSubmit(e){const f=e.target.closest('[data-mk-form]');if(!f)return;e.p
 
 let WIRED=false;
 window.mkOpen=function(){const r=root();if(!r)return;
- if(!WIRED){WIRED=true;r.addEventListener('input',onInput);r.addEventListener('click',onClick);r.addEventListener('submit',onSubmit)}
+ if(!WIRED){WIRED=true;r.addEventListener('input',onInput);r.addEventListener('change',onChange);r.addEventListener('focusout',onBlur);r.addEventListener('click',onClick);r.addEventListener('submit',onSubmit)}
  if(!r.firstChild)shell();else draw()};
 window.mkCalc={calc,model,scenarios,num};
 })();
@@ -2971,7 +3068,7 @@ function draw(){
  const reset=r.querySelector('[data-ct-reset]');if(reset)reset.classList.toggle('hidden',CT.mode!=='guiado');
  const tabs=TABS.concat(CT.mode==='guiado'?[['missoes','Missões']]:[]);if(!tabs.some(t=>t[0]===CT.tab))CT.tab='quadro';
  g('ctTabs').innerHTML=tabs.map(t=>'<button type="button" role="tab" data-ct-tab="'+t[0]+'" class="'+(t[0]===CT.tab?'active':'')+'">'+t[1]+'</button>').join('');
- g('ctNote').innerHTML=CT.mode==='negocio'?'<p class="muted smalltext ct-note">Só você e o formador veem estes contactos. Não escreva dados sensíveis (documentos, contas bancárias, saúde).</p>':'<p class="muted smalltext ct-note">Dados fictícios. Há tarefas esquecidas, duplicados e negócios parados: resolva-os na aba Missões.</p>';
+ g('ctNote').innerHTML=CT.mode==='negocio'?'<p class="muted smalltext ct-note">Só você e o formador veem estes contactos. Não escreva dados sensíveis (documentos, contas bancárias, saúde).</p>':'<p class="muted smalltext ct-note">Dados fictícios. Resolva os alertas na aba Missões.</p>';
  const p=g('ctPanel');
  if(CT.err){p.innerHTML='<div class="card"><div class="empty">O CRM de treino ainda não está disponível. Peça ao formador para activar o simulador.</div></div>';return}
  if(!CT.loaded){p.innerHTML='<div class="empty">A carregar…</div>';return}
@@ -3024,23 +3121,31 @@ function missionsHTML(){const s=stats(),openN=s.open.length,withT=openN-s.noTask
  {ok:s.stalled===0,t:'Recuperar as oportunidades paradas',d:'Parada = aberta e sem contacto há mais de 14 dias. Contacte o cliente e use «Contactei». Objectivo: nenhuma parada. Agora: <strong>'+s.stalled+'</strong>.',p:s.stalled+' paradas'},
  {ok:s.dupGroups===0,t:'Eliminar os contactos duplicados',d:'Procure os cartões com «Possível duplicado» (mesmo telefone), mantenha um e elimine o outro. Faltam <strong>'+s.dupGroups+'</strong>.',p:s.dupGroups+' pares'}];
  const fc='<div class="ct-m'+(CT.m4==='ok'?' ok':'')+'"><div class="ct-mk">'+(CT.m4==='ok'?'✓':'4')+'</div><div class="ct-mb"><strong>Calcular a previsão de receita</strong><p>Some, só para as oportunidades em <strong>Proposta</strong> e <strong>Negociação</strong>, valor × probabilidade da etapa (50% e 75%). Qual é o total, em Kz, com os dados de agora?</p>'+
- '<form data-ct-fc class="mk-exf"><div class="mk-in"><input name="a" inputmode="decimal" autocomplete="off" placeholder="A sua resposta" aria-label="Previsão"><span>Kz</span></div><button class="btn small">Verificar</button></form><div id="ctFc">'+(CT.m4==='ok'?'<div class="mk-note mk-good"><strong>Certo.</strong> Proposta × 50% + Negociação × 75% = '+kz(s.wpn)+'.</div>':CT.m4==='bad'?'<div class="mk-note mk-bad">Ainda não. Lembre-se: só duas etapas, cada uma com a sua probabilidade.</div>':'')+'</div></div></div>';
+ '<form data-ct-fc class="mk-exf"><div class="mk-in"><input name="a" inputmode="decimal" autocomplete="off" placeholder="A sua resposta" aria-label="Previsão"><span>Kz</span></div><button class="btn small">Verificar</button></form><div id="ctFc">'+(CT.m4==='ok'?'<div class="sg-res ct-fres"><div class="sg-k">Previsão de receita</div><div class="sg-big">'+kz(s.wpn)+'</div><div class="sg-rows"><div><span>Proposta × 50%</span><strong>'+kz(s.by('PROPOSTA').reduce((a,d)=>a+Number(d.value||0)*.5,0))+'</strong></div><div><span>Negociação × 75%</span><strong>'+kz(s.by('NEGOCIACAO').reduce((a,d)=>a+Number(d.value||0)*.75,0))+'</strong></div></div></div>':CT.m4==='bad'?'<div class="mk-note mk-bad">Ainda não. Lembre-se: só duas etapas, cada uma com a sua probabilidade.</div>':'')+'</div></div></div>';
  const done=M.filter(m=>m.ok).length+(CT.m4==='ok'?1:0);
- return '<div class="card"><div class="cardhead"><h2>Missões</h2><span class="muted smalltext">'+done+' de 4 cumpridas</span></div><div class="mk-bar"><i style="width:'+(done*25)+'%"></i></div><p class="muted smalltext">Trabalhe no quadro e volte aqui: o progresso actualiza-se sozinho. São treino e não contam para a nota.</p>'+
+ return '<div class="card"><div class="cardhead"><h2>Missões</h2><span class="muted smalltext">'+done+' de 4 cumpridas</span></div><div class="mk-bar"><i style="width:'+(done*25)+'%"></i></div><p class="muted smalltext">O progresso actualiza-se sozinho. Não conta para a nota.</p>'+
  M.map((m,i)=>'<div class="ct-m'+(m.ok?' ok':'')+'"><div class="ct-mk">'+(m.ok?'✓':(i+1))+'</div><div class="ct-mb"><strong>'+m.t+'</strong><p>'+m.d+'</p></div></div>').join('')+fc+'</div>'}
 
+const SINFO={NOVO:'O contacto acabou de chegar. Registe-o e marque o primeiro contacto.',CONTACTADO:'Já falou com a pessoa. Descubra a necessidade e marque a próxima conversa.',QUALIFICADO:'Tem necessidade, orçamento e decisor. Prepare a proposta.',PROPOSTA:'Proposta enviada. Marque o follow-up para daqui a 2 dias.',NEGOCIACAO:'O cliente pondera preço ou condições. Responda depressa.'};
+function stgInfo(k,val){const s=ST(k),v=num(val);return '<h2 class="sg-h">Informação Geral</h2><h3>'+s.l+'</h3><p>'+(SINFO[k]||'')+'</p><p class="sg-f">Probabilidade de fecho: '+s.p+'%</p>'+(isFinite(v)&&v>0?'<p class="sg-eg">Valor ponderado: '+kz(v*s.p/100)+'</p>':'')}
 /* ---------- Janelas (modal) ---------- */
 function modalDraw(){const m=CT.modal,h=g('ctModal');if(!h)return;if(!m){h.innerHTML='';return}
  let body='';
  if(m.t==='lost'){body='<h2>Porque se perdeu?</h2><p class="muted smalltext">Registar o motivo é o que permite aprender com as perdas.</p><form data-ct-form="lost"><div class="field"><label>Motivo</label><select name="r" required>'+LOST.map(r=>'<option>'+r+'</option>').join('')+'</select></div><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Marcar como perdido</button></div></form>'}
  else if(m.t==='task'){const vs=view().filter(d=>d.open||d.id===m.id),def=addDays(todayS(),2);
   body='<h2>Nova tarefa de follow-up</h2><form data-ct-form="task"><div class="field"><label>Oportunidade</label><select name="d" required>'+vs.map(d=>'<option value="'+esc(d.id)+'"'+(d.id===m.id?' selected':'')+'>'+esc(d.c.name)+' · '+esc(d.title||'')+'</option>').join('')+'</select></div><div class="field"><label>O que fazer</label><input name="t" required maxlength="120" value="Contacto de follow-up"></div><div class="field"><label>Data</label><input name="w" type="date" required value="'+def+'"></div><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Guardar</button></div></form>'}
- else if(m.t==='deal'){const d=m.id?view().find(x=>x.id===m.id):null,c=d?d.c:{};
-  body='<h2>'+(d?'Editar':'Nova')+' oportunidade</h2><form data-ct-form="deal"><div class="ct-mg"><div class="field"><label>Nome do contacto</label><input name="n" required maxlength="80" value="'+esc(c.name||'')+'"></div><div class="field"><label>Telefone</label><input name="p" inputmode="tel" maxlength="30" value="'+esc(c.phone||'')+'"></div>'+
-  '<div class="field"><label>Origem</label><select name="o">'+ORIGINS.map(o=>'<option'+(o===c.source?' selected':'')+'>'+o+'</option>').join('')+'</select></div><div class="field"><label>Serviço / interesse</label><input name="s" maxlength="80" value="'+esc(d?d.title:'Turma de empreendedores')+'"></div>'+
-  '<div class="field"><label>Valor (Kz)</label><input name="v" inputmode="decimal" value="'+esc(d?d.value:'')+'" placeholder="0"></div><div class="field"><label>Fecho previsto</label><input name="f" type="date" value="'+esc(d&&d.expected_close||'')+'"></div>'+
-  (d?'':'<div class="field"><label>Etapa</label><select name="e">'+STAGES.filter(s=>OPEN(s.k)).map(s=>'<option value="'+s.k+'">'+s.l+'</option>').join('')+'</select></div>')+'</div><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Guardar</button></div></form>'}
- h.innerHTML='<div class="ct-ov" data-ct-close-bg><div class="ct-mbox" role="dialog" aria-modal="true">'+body+'</div></div>';
+ else if(m.t==='deal'){const d=m.id?view().find(x=>x.id===m.id):null,c=d?d.c:{},st0=d?d.stage:'NOVO',op=STAGES.filter(s=>OPEN(s.k));
+  const fl=(l,id,inner)=>'<div class="sg-step"><label class="sg-lbl" for="'+id+'">'+l+'</label>'+inner+'</div>',inp=(id,n,v,x)=>'<div class="sg-in"><input id="'+id+'" name="'+n+'" value="'+esc(v)+'" '+(x||'')+'></div>';
+  body='<h2>'+(d?'Editar':'Nova')+' oportunidade</h2><div class="ct-gd"><form data-ct-form="deal" class="ct-gl">'+
+  (d?'':'<label class="sg-lbl">Etapa*</label><div class="sg-seg ct-stgs">'+op.map(s=>'<button type="button" data-ct-stg="'+s.k+'" class="'+(s.k===st0?'on':'')+'">'+s.l+'</button>').join('')+'</div><input type="hidden" name="e" value="'+st0+'">')+
+  fl('Nome do contacto*','ctN',inp('ctN','n',c.name||'','required maxlength="80" autocomplete="off"'))+
+  '<div id="ctRev" class="'+(c.name?'':'hidden')+'">'+fl('Telefone','ctP',inp('ctP','p',c.phone||'','inputmode="tel" maxlength="30"'))+
+  fl('Origem','ctO','<select id="ctO" name="o" class="sg-sel">'+ORIGINS.map(o=>'<option'+(o===c.source?' selected':'')+'>'+o+'</option>').join('')+'</select>')+
+  fl('Serviço / interesse','ctS',inp('ctS','s',d?d.title:'Turma de empreendedores','maxlength="80"'))+
+  fl('Valor (Kz)','ctV','<div class="sg-in"><input id="ctV" name="v" inputmode="decimal" placeholder="0,00" value="'+esc(d?d.value:'')+'"><span>KZ</span></div>')+
+  fl('Fecho previsto','ctF','<div class="sg-in"><input id="ctF" name="f" type="date" value="'+esc(d&&d.expected_close||'')+'"></div>')+'</div>'+
+  '<div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Registar</button></div></form><aside class="ct-gr" id="ctInfo">'+stgInfo(st0,d?d.value:'')+'</aside></div>'}
+ h.innerHTML='<div class="ct-ov" data-ct-close-bg><div class="ct-mbox'+(m.t==='deal'?' wide':'')+'" role="dialog" aria-modal="true">'+body+'</div></div>';
  const f=h.querySelector('input:not([type=hidden]),select');if(f&&m.t!=='lost')f.focus()}
 
 /* ---------- Acções ---------- */
@@ -3075,6 +3180,7 @@ async function resetGuided(){if(!confirm('Repor o cenário guiado? Perde o que f
 async function onClick(e){
  const bg=e.target.closest('[data-ct-close-bg]');if(bg&&e.target===bg){CT.modal=null;draw();return}
  const t=e.target.closest('button,input[type=checkbox]');if(!t)return;const D=t.dataset;
+ if(D.ctStg){const f=t.closest('form');f.elements.e.value=D.ctStg;t.parentNode.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));g('ctInfo').innerHTML=stgInfo(D.ctStg,f.elements.v.value);return}
  if(D.ctMode){CT.mode=D.ctMode;CT.tab='quadro';CT.fa=null;CT.q='';CT.loaded=false;CT.deals=CT.contacts=CT.tasks=[];draw();await load();return}
  if(D.ctTab){CT.tab=D.ctTab;draw();return}
  if(D.ctFlt){CT.fa=CT.fa===D.ctFlt?null:D.ctFlt;draw();return}
@@ -3087,7 +3193,8 @@ async function onClick(e){
  if(D.ctDel){del(D.ctDel);return}
  if(D.ctDone!==undefined){toggleTask(D.ctDone,t.checked)}}
 function onChange(e){const t=e.target;if(t.dataset.ctMove){move(t.dataset.ctMove,t.value)}}
-function onInput(e){const t=e.target;if(t.id==='ctSearch'){CT.q=t.value;const p=g('ctPanel'),pos=t.selectionStart;p.innerHTML=boardHTML();const n=g('ctSearch');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}}}
+function onInput(e){const t=e.target;const fm=t.form;if(fm&&fm.dataset&&fm.dataset.ctForm==='deal'){if(t.name==='n'){const r=g('ctRev');if(r)r.classList.toggle('hidden',!t.value.trim())}if(t.name==='v'){const st=fm.elements.e?fm.elements.e.value:(byId(CT.deals,CT.modal&&CT.modal.id)||{}).stage||'NOVO';g('ctInfo').innerHTML=stgInfo(st,t.value)}return}
+ if(t.id==='ctSearch'){CT.q=t.value;const p=g('ctPanel'),pos=t.selectionStart;p.innerHTML=boardHTML();const n=g('ctSearch');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}}}
 async function onSubmit(e){const f=e.target;
  if(f.dataset.ctFc!==undefined){e.preventDefault();const v=num(f.elements.a.value);if(!isFinite(v)){g('ctFc').innerHTML='<div class="mk-note mk-bad">Escreva um número.</div>';return}
   CT.m4=Math.abs(v-stats().wpn)<=1?'ok':'bad';draw();return}
@@ -3112,7 +3219,7 @@ const TOOLS=[
  {k:'ct',n:2,t:'CRM de treino',d:'Pratique contactos, follow-ups e negócios num cenário de treino, sem riscos.',time:'≈ 25 min',open:()=>window.ctOpen&&window.ctOpen(),root:'ctRoot'}];
 let cur=null;
 function home(){
- g('prHome').innerHTML='<div class="pr-intro"><h2>Prática</h2><p>Duas ferramentas para treinar o que aprende na aula. Comece pela primeira. O seu progresso fica guardado: pode continuar em casa.</p></div>'+
+ g('prHome').innerHTML='<div class="pr-intro"><h2>Prática</h2><p>Treine o que aprende na aula. O progresso fica guardado.</p></div>'+
  '<div class="pr-cards">'+TOOLS.map(t=>'<button type="button" class="pr-card" data-pr-open="'+t.k+'"><span class="pr-n">'+t.n+'</span><span class="pr-b"><strong>'+t.t+'</strong><span>'+t.d+'</span><em>Tempo indicativo em aula: '+t.time+'</em></span><span class="pr-go" aria-hidden="true">Abrir →</span></button>').join('')+'</div>'}
 function show(k){
  cur=k;const t=TOOLS.find(x=>x.k===k);
