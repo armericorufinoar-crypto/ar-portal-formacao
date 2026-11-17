@@ -425,6 +425,31 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 .pr-bar{display:flex;align-items:center;gap:12px;margin:0 0 14px}.pr-bar button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:700}.pr-bar strong{font-size:15px}
 @media(max-width:560px){.pr-card{padding:14px}.pr-go{display:none}}
 </style>
+<style id="ds-unify">
+/* ===== Sistema único: separadores, pílulas, filtros e cartões iguais em toda a plataforma ===== */
+.tr-tabs,.paytabs,.mk-tabs{display:flex;gap:8px;margin:0 0 16px}
+.tr-tabs,.paytabs{flex-wrap:wrap}.mk-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}
+.tr-tabs button,.paytabs button,.mk-tabs button:not(.mk-flink){border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:0 16px;min-height:38px;font-size:13px;font-weight:700;font-family:inherit;white-space:nowrap;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.tr-tabs button:hover,.paytabs button:hover,.mk-tabs button:not(.mk-flink):hover{background:#f4f5f7}
+.tr-tabs button.active,.paytabs button.active,.mk-tabs button.active:not(.mk-flink){background:var(--red);border-color:var(--red);color:#fff}
+.ct-chip{min-height:32px;padding:0 13px;border:1px solid var(--line);background:#fff;border-radius:999px;font-size:12px;font-weight:700;color:#42464e;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.ct-chip:hover{background:#f4f5f7}.ct-chip.on{background:#fbeaec;border-color:#f1c3c8;color:var(--red)}
+.pr-bar button{min-height:34px;padding:0 14px}
+/* CRM de treino: mesma estrutura do simulador de markup */
+.ct-top{margin-bottom:16px}
+.ct-mode.sg-seg{display:inline-flex;width:auto}.ct-mode.sg-seg button{flex:none;padding:9px 18px}
+.ct-card{padding:22px 24px;margin-bottom:22px}
+.ct-note{font-size:13px;color:var(--muted);margin:0 0 14px}
+.ct-card .ct-strip{margin:0 0 18px}
+.ct-card .ct-strip>div{background:#fcfbfb;border-radius:14px;padding:14px 16px}
+.ct-strip span{font-size:12px;font-weight:700;color:#6c7078}
+.ct-strip strong{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-top:4px}
+.ct-bar{margin:0 0 18px;gap:8px}
+.ct-bar input{background:#f1f2f4;border:1px solid #e3e5e9;border-radius:10px;padding:11px 12px;font-size:14px}
+.ct-bar input:focus{background:#fff;border-color:var(--ink);box-shadow:0 0 0 3px #17191d14;outline:0}
+.ct-card .pd-board{margin-top:2px}
+@media(max-width:640px){.ct-card{padding:16px 14px}.tr-tabs button,.paytabs button,.mk-tabs button:not(.mk-flink){padding:0 13px}}
+</style>
 </head><body>
 <style>[data-invite]{display:none!important}#loginBox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fcfbf9;z-index:50}#loginBox form{background:#fff;padding:28px;border-radius:12px;width:min(92vw,360px);box-shadow:0 8px 30px #0002;display:grid;gap:12px}#loginMsg{color:#b42318;font-size:.9rem;min-height:1.2em}#logoutBtn{position:fixed;top:10px;right:12px;z-index:20}/* v12: formatação, anexos estilo Facebook, edição */
 .rt strong{font-weight:800}.rt u{text-decoration:underline;text-underline-offset:2px}.rt s{opacity:.7}.rt mark{background:#fff2a8;color:inherit;padding:0 2px;border-radius:3px}
@@ -3134,14 +3159,14 @@ const fail=(r,msg)=>{if(r&&r.error){toast(msg||'Não foi possível guardar. Tent
 /* ---------- Estrutura ---------- */
 const TABS=[['quadro','Quadro'],['tarefas','Tarefas']];
 function shell(){
- root().innerHTML='<div class="ct-top"><div class="ct-seg" role="tablist" aria-label="Modo">'+
+ root().innerHTML='<div class="ct-top"><div class="sg-seg ct-mode" role="tablist" aria-label="Modo">'+
  '<button type="button" data-ct-mode="guiado">Cenário guiado</button><button type="button" data-ct-mode="negocio">Meu negócio</button></div>'+
  '<div class="ct-topr"><button type="button" class="btn small pd-btn" data-ct-new>+ Negócio</button><button type="button" class="linkdel" data-ct-reset>Repor cenário</button></div></div>'+
  '<div class="mk-tabs" id="ctTabs" role="tablist"></div><div id="ctNote"></div><div id="ctPanel"></div><div id="ctModal"></div>';
  draw()}
 function draw(){
  const r=root();if(!r||!r.firstChild)return;
- r.querySelectorAll('[data-ct-mode]').forEach(b=>b.classList.toggle('active',b.dataset.ctMode===CT.mode));
+ r.querySelectorAll('[data-ct-mode]').forEach(b=>b.classList.toggle('on',b.dataset.ctMode===CT.mode));
  const reset=r.querySelector('[data-ct-reset]');if(reset)reset.classList.toggle('hidden',CT.mode!=='guiado');
  const tabs=TABS.concat(CT.mode==='guiado'?[['missoes','Missões']]:[]);if(!tabs.some(t=>t[0]===CT.tab))CT.tab='quadro';
  g('ctTabs').innerHTML=tabs.map(t=>'<button type="button" role="tab" data-ct-tab="'+t[0]+'" class="'+(t[0]===CT.tab?'active':'')+'">'+t[1]+'</button>').join('');
@@ -3149,7 +3174,7 @@ function draw(){
  const p=g('ctPanel');
  if(CT.err){p.innerHTML='<div class="card"><div class="empty">O CRM de treino ainda não está disponível. Peça ao formador para activar o simulador.</div></div>';return}
  if(!CT.loaded){p.innerHTML='<div class="empty">A carregar…</div>';return}
- if(CT.tab==='quadro')p.innerHTML=boardHTML();
+ if(CT.tab==='quadro')p.innerHTML='<div class="card ct-card">'+boardHTML()+'</div>';
  else if(CT.tab==='tarefas')p.innerHTML=tasksHTML();
 
  else p.innerHTML=missionsHTML();
@@ -3271,7 +3296,7 @@ async function onClick(e){
  if(D.ctDone!==undefined){toggleTask(D.ctDone,t.checked)}}
 function onChange(e){const t=e.target;if(t.dataset.ctMove){CT.pop=null;move(t.dataset.ctMove,t.value)}}
 function onInput(e){const t=e.target;const fm=t.form;if(fm&&fm.dataset&&fm.dataset.ctForm==='deal'){if(t.name==='n'){const r=g('ctRev');if(r)r.classList.toggle('hidden',!t.value.trim())}if(t.name==='v'){const st=fm.elements.e?fm.elements.e.value:(byId(CT.deals,CT.modal&&CT.modal.id)||{}).stage||'NOVO';g('ctInfo').innerHTML=stgInfo(st,t.value)}return}
- if(t.id==='ctSearch'){CT.q=t.value;const p=g('ctPanel'),pos=t.selectionStart;p.innerHTML=boardHTML();const n=g('ctSearch');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}}}
+ if(t.id==='ctSearch'){CT.q=t.value;const p=g('ctPanel'),pos=t.selectionStart;p.innerHTML='<div class="card ct-card">'+boardHTML()+'</div>';const n=g('ctSearch');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}}}
 async function onSubmit(e){const f=e.target;
  if(f.dataset.ctFc!==undefined){e.preventDefault();const v=num(f.elements.a.value);if(!isFinite(v)){g('ctFc').innerHTML='<div class="mk-note mk-bad">Escreva um número.</div>';return}
   CT.m4=Math.abs(v-stats().wpn)<=1?'ok':'bad';draw();return}
