@@ -3286,9 +3286,9 @@ function stripHTML(){const s=stats();
  return '<div class="ct-strip"><div><span>Abertas</span><strong>'+s.open.length+'</strong></div><div><span>Valor em aberto</span><strong>'+kz(s.val(s.open))+'</strong></div><div><span>Conversão</span><strong>'+(s.conv==null?'—':Math.round(s.conv)+'%')+'</strong></div></div>'}
 function boardHTML(){
  const q=CT.q.trim().toLowerCase(),vs=view().filter(d=>!q||(d.c.name+' '+(d.title||'')+' '+(d.c.phone||'')).toLowerCase().includes(q));
- const fa=CT.fa,fl=[['stalled','Paradas'],['noTask','Sem follow-up'],['dup','Duplicados']];
+ const fa=CT.fa,fl=[['open','Abertas'],['stalled','Paradas'],['noTask','Sem follow-up'],['dup','Duplicados']];
  const list=vs.filter(d=>!fa||d[fa]);
- return stripHTML()+'<div class="ct-bar"><input type="search" id="ctSearch" placeholder="Pesquisar nome, serviço ou telefone" value="'+esc(CT.q)+'" aria-label="Pesquisar"><div class="ct-flt">'+fl.map(f=>'<button type="button" class="ct-chip'+(fa===f[0]?' on':'')+'" data-ct-flt="'+f[0]+'">'+f[1]+' ('+vs.filter(d=>d[f[0]]).length+')</button>').join('')+'</div></div>'+
+ return '<div class="ct-bar"><input type="search" id="ctSearch" placeholder="Pesquisar nome, serviço ou telefone" value="'+esc(CT.q)+'" aria-label="Pesquisar"><div class="ct-flt">'+fl.map(f=>'<button type="button" class="ct-chip'+(fa===f[0]?' on':'')+'" data-ct-flt="'+f[0]+'">'+f[1]+' ('+vs.filter(d=>d[f[0]]).length+')</button>').join('')+'</div></div>'+
  (CT.deals.length?'':'<div class="empty">Ainda não tem oportunidades. Crie a primeira com «+ Nova oportunidade».</div>')+
  '<div class="pd-board">'+STAGES.map(s=>{const it=list.filter(d=>d.stage===s.k),tot=it.reduce((a,d)=>a+Number(d.value||0),0);return '<div class="pd-col" data-ct-col="'+s.k+'"><div class="pd-colh"><b>'+s.l+'</b><span>'+kz(tot)+' · '+it.length+(it.length===1?' negócio':' negócios')+'</span></div>'+(it.length?it.map(cardHTML).join(''):'<div class="pd-empty">Vazio</div>')+'</div>'}).join('')+'</div>'}
 
