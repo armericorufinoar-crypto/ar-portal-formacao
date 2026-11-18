@@ -330,7 +330,7 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 #page-crm-pipeline .crm-slim.off:before{background:#d9962b}
 .crm-sum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 16px}
 .pd-bar{display:flex;align-items:center;gap:12px}.pd-tot{font-size:13px;color:#4b4f58;font-weight:700}
-.pd-btn{background:#1f9d63!important;border-color:#1f9d63!important;color:#fff!important}
+
 .pd-board{display:flex;gap:10px;overflow-x:auto;align-items:flex-start;padding:2px 2px 14px}
 .pd-col{flex:0 0 248px;min-width:248px;border-radius:8px;padding:2px;min-height:120px}.pd-col.over{background:#e4f5ec;outline:2px dashed #1f9d63}
 .pd-colh{background:#eceef1;padding:9px 22px 9px 12px;margin-bottom:8px;border-radius:6px 0 0 6px;clip-path:polygon(0 0,calc(100% - 13px) 0,100% 50%,calc(100% - 13px) 100%,0 100%)}
@@ -512,6 +512,89 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 @media(max-width:640px){.ct-card{padding:16px 14px}.tr-tabs button,.paytabs button,.mk-tabs button:not(.mk-flink){padding:0 13px}}
 </style>
 <style id="crm-wa-style">.crm-wa{color:inherit;text-decoration:underline;text-decoration-color:#25d366;text-underline-offset:2px;white-space:nowrap}.crm-wa::before{content:"";display:inline-block;width:.55em;height:.55em;border-radius:50%;background:#25d366;margin-right:.35em;vertical-align:baseline}.crm-wa:hover{color:#128c7e}</style>
+<style id="staff-polish">
+/* Formandos · mesmo critério visual do Markup: cartão com borda fina, etiquetas em maiúsculas, linhas limpas, estados em etiquetas */
+#page-staff .card{border:1px solid var(--line);border-radius:14px;box-shadow:none}
+#page-staff .toolbar input,#page-staff .toolbar select{border:1px solid #d9dce1;border-radius:10px;background-color:#fff}
+#page-staff .tablewrap{border:0;box-shadow:none;border-radius:0;background:transparent}
+#page-staff .table{border-collapse:collapse;font-size:13px}
+#page-staff .table th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;background:transparent;border-bottom:1px solid var(--line);padding:9px 8px}
+#page-staff .table td{padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+#page-staff .table tbody tr:hover{background:#faf6f6}
+#page-staff .table tbody tr:last-child td{border-bottom:0}
+#page-staff .notice{background:#f6f7f9;border:0;border-radius:10px;color:var(--ink);font-size:13px}
+#page-staff .empty{border-radius:12px;font-size:13px}
+#staffRows .tag.blue{white-space:nowrap}
+@media(max-width:760px){
+#page-staff .table tbody tr{border-radius:12px;border:1px solid var(--line);border-top:3px solid var(--red);box-shadow:none;background:#fff}
+#page-staff .table tbody tr:hover{background:#fff}
+#page-staff .table tbody td{border-bottom:0}
+#staffRows td[data-label="Áreas de acesso"]{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:6px}
+#staffRows td[data-label="Áreas de acesso"]::before{margin-right:auto}
+}
+</style>
+<style id="results-polish">
+/* Pauta e Resultados (Exercícios e desempenho · Relatórios e certificação) · critério visual do Markup */
+#page-performance .stats,#page-reports .stats{gap:10px}
+#page-performance .stat{padding:14px 16px;background:#faf6f6;border:0;border-top:3px solid var(--red);border-radius:12px;box-shadow:none}
+#page-performance .stat::after{display:none}
+#page-performance .stat:hover{transform:none;box-shadow:none}
+#page-performance .stat .label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+#page-performance .stat strong{display:block;font-size:24px;letter-spacing:-.03em;margin:4px 0 2px}
+#page-performance .card,#page-reports .card{border:1px solid var(--line);border-radius:14px;box-shadow:none}
+#page-performance .toolbar input,#page-performance .toolbar select,#page-reports .toolbar input,#page-reports .toolbar select{border:1px solid #d9dce1;border-radius:10px;background-color:#fff}
+#page-performance .tablewrap,#page-reports .tablewrap{border:0;box-shadow:none;border-radius:0;background:transparent}
+#page-performance .table,#page-reports .table{border-collapse:collapse;font-size:13px}
+#page-performance .table th,#page-reports .table th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;background:transparent;border-bottom:1px solid var(--line);padding:9px 8px}
+#page-performance .table td,#page-reports .table td{padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+#page-performance .table tbody tr:hover,#page-reports .table tbody tr:hover{background:#faf6f6}
+#page-performance .table tbody tr:last-child td,#page-reports .table tbody tr:last-child td{border-bottom:0}
+#page-performance .notice,#page-reports .notice,#page-reports [data-hlp-src]{background:#f6f7f9;border:0;border-radius:10px;color:var(--ink);font-size:13px}
+#page-performance .empty,#page-reports .empty{border-radius:12px;font-size:13px}
+#assessmentWeightSettings .field>label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+@media(min-width:761px){
+#scoreRows .fbsum{flex-wrap:wrap;gap:6px;max-width:190px}
+#scoreRows td[data-label="Acções"] .actions{flex-direction:column;align-items:stretch;gap:6px;flex-wrap:nowrap}
+#scoreRows td[data-label="Acções"] .btn{width:100%}
+}
+@media(max-width:760px){
+#page-performance .table tbody tr,#page-reports .table tbody tr{border-radius:12px;border:1px solid var(--line);border-top:3px solid var(--red);box-shadow:none;background:#fff}
+#page-performance .table tbody tr:hover,#page-reports .table tbody tr:hover{background:#fff}
+#page-performance .table tbody td,#page-reports .table tbody td{border-bottom:0}
+#page-performance .stat strong{font-size:20px}
+}
+</style>
+<style id="sessions-polish">
+/* Sessões e materiais (dentro de Turmas e Treinos) · critério visual do Markup */
+#trSessBody .card{border:1px solid var(--line);border-radius:14px;box-shadow:none}
+#trSessBody .toolbar input,#trSessBody .toolbar select{border:1px solid #d9dce1;border-radius:10px;background-color:#fff}
+#sessionCards{display:grid;gap:10px}
+#sessionCards .post{background:#fff;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:12px;box-shadow:none;padding:14px 16px;margin:0}
+#sessionCards .post:hover{background:#faf6f6}
+#sessionCards .post>.cardhead{align-items:flex-start;gap:12px;flex-wrap:wrap}
+#sessionCards .post>.cardhead>div:first-child{min-width:0;flex:1 1 240px}
+#sessionCards .post strong{font-size:15px;letter-spacing:-.01em}
+#sessionCards .sess-meta{margin-top:3px;font-size:12px;letter-spacing:.02em}
+#sessionCards .post>p{margin:8px 0 0;font-size:13px;color:var(--ink)}
+#sessionCards .post .actions{gap:6px;flex-wrap:wrap}
+#sessionCards .post .smalltext{margin-top:6px;color:var(--muted)}
+#sessionCards .post .smalltext strong{color:var(--ink);font-size:13px}
+#sessionCards .empty{border-radius:12px;font-size:13px}
+#trSessBody [data-hlp-src]{background:#f6f7f9;border:0;border-radius:10px;color:var(--ink);font-size:13px}
+@media(max-width:640px){#sessionCards .post{padding:12px 14px}#sessionCards .post .actions{width:100%}#sessionCards .post .actions .btn{flex:1 1 auto}}
+</style>
+<style id="crm-polish">
+/* CRM (Pipeline) · critério visual do Markup: resumo em blocos com filete vermelho, botão principal vermelho, cartão e filtros iguais aos outros módulos */
+#page-crm-pipeline .crm-sum{gap:10px}
+#page-crm-pipeline .crm-sum>div{display:block;padding:14px 16px;background:#faf6f6;border:0;border-top:3px solid var(--red);border-radius:12px;box-shadow:none}
+#page-crm-pipeline .crm-sum span{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+#page-crm-pipeline .crm-sum strong{display:block;font-size:24px;letter-spacing:-.03em;margin:4px 0 2px;white-space:nowrap}
+#page-crm-pipeline>.card,#page-crm-pipeline .card{border:1px solid var(--line);border-radius:14px;box-shadow:none}
+#page-crm-pipeline .toolbar input,#page-crm-pipeline .toolbar select{border:1px solid #d9dce1;border-radius:10px;background-color:#fff}
+#page-crm-pipeline .pd-tot{font-size:12px;letter-spacing:.04em;color:var(--muted);font-weight:700}
+@media(min-width:761px){#page-crm-pipeline .crm-sum{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:760px){#page-crm-pipeline .crm-sum{grid-template-columns:repeat(2,minmax(0,1fr))}#page-crm-pipeline .crm-sum strong{font-size:20px}}
+</style>
 </head><body>
 <style>[data-invite]{display:none!important}#loginBox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fcfbf9;z-index:50}#loginBox form{background:#fff;padding:28px;border-radius:12px;width:min(92vw,360px);box-shadow:0 8px 30px #0002;display:grid;gap:12px}#loginMsg{color:#b42318;font-size:.9rem;min-height:1.2em}#logoutBtn{position:fixed;top:10px;right:12px;z-index:20}/* v12: formatação, anexos estilo Facebook, edição */
 .rt strong{font-weight:800}.rt u{text-decoration:underline;text-underline-offset:2px}.rt s{opacity:.7}.rt mark{background:#fff2a8;color:inherit;padding:0 2px;border-radius:3px}
@@ -1146,7 +1229,7 @@ function renderDiagTab(){const box=$('trDiagBody');if(!box)return;const list=rea
 box.innerHTML=hlpHTML('diag','O <strong>diagnóstico inicial</strong> não tem nota e define o ponto de partida de cada formando. Crie a sessão, adicione o teste (pode ter perguntas autodeclaradas) e acompanhe quem já respondeu.','margin-bottom:12px')+'<div class="actions" style="margin-bottom:12px"><button class="btn" id="addDiagBtn">+ Criar diagnóstico inicial</button></div><div class="card">'+(list.length?list.map(s=>{const tests=MAT.filter(m=>m.sessionId===s.id&&m.kind==='teste');const rows=tests.map(m=>{let c={done:0,left:0,open:0,none:0};try{testStatusRows(m).forEach(r=>c[r.k]++)}catch(e){}return `<div class="smalltext" style="margin-top:6px"><strong>${esc(m.title)}</strong> · ${c.done} submeteram · ${c.left} saíram sem submeter · ${c.open} abriram sem submissão · ${c.none} não abriram <button type="button" class="btn secondary small" data-diag-results="${esc(m.id)}" data-diag-sess="${esc(s.id)}" style="margin-left:6px">Resultados</button></div>`}).join('');return `<article class="post"><div class="cardhead" style="margin-bottom:6px"><div><strong>${esc(s.title)}</strong><div class="muted smalltext">${s.area?esc(s.area)+' · ':'Todos os formandos · '}${fmt(s.date)} ${esc(s.startTime||'')}</div></div><div class="actions"><button class="btn secondary small" data-materials="${s.id}">Teste e materiais (${MAT.filter(m=>m.sessionId===s.id).length})</button><button class="btn secondary small" data-edit-session="${s.id}">Editar</button><button class="btn danger small" data-del-session="${s.id}">Eliminar</button></div></div>${rows||'<div class="smalltext muted">Ainda sem teste de diagnóstico: abra «Teste e materiais» para o criar.</div>'}</article>`}).join(''):'<div class="empty">Ainda não há diagnóstico inicial. Clique em «Criar diagnóstico inicial».</div>')+'</div>';
 const b=$('addDiagBtn');if(b)b.onclick=()=>openDiagSession(null,{title:'DIAGNÓSTICO INICIAL'});
 box.querySelectorAll('[data-diag-results]').forEach(x=>x.onclick=()=>{openMatModal(x.dataset.diagSess);RES_MAT=x.dataset.diagResults;drawResults()})}
-function renderSessions(){const area=$('sessionFilter').value,st=$('sessionStatusFilter').value;const list=read(KEYS.sessions).filter(s=>!isDiagSession(s)&&(!area||s.area===area)&&(!st||(st==='upcoming'?s.date>=today():s.date<today()))).sort((a,b)=>(a.date||'').localeCompare(b.date||''));$('sessionCards').innerHTML=list.length?list.map(s=>`<article class="post"><div class="cardhead" style="margin-bottom:6px"><div><strong>${esc(s.title)}</strong>${wizBadge(s)}<div class="muted smalltext">${esc(s.area)}${s.level?' · '+esc(trLv(s.level)):''} · ${fmt(s.date)} ${esc(s.startTime||'')} · Formador: ${esc(s.trainer||'—')}</div></div><div class="actions">${wizIncomplete(s)?`<button class="btn small" data-wiz="${s.id}">Continuar</button>`:''}<button class="btn secondary small" data-materials="${s.id}">Materiais (${MAT.filter(m=>m.sessionId===s.id).length})</button><button class="btn secondary small" data-edit-session="${s.id}">Editar</button><button class="btn danger small" data-del-session="${s.id}">Eliminar</button></div></div><p>${esc(s.description||'Sem descrição')}</p>${s.location?`<div class="smalltext">Local: ${esc(s.location)}</div>`:''}${s.materialTitle?`<div class="smalltext" style="margin-top:8px">Material: <strong>${esc(s.materialTitle)}</strong> ${s.materialUrl?`· <a href="${esc(safeUrl(s.materialUrl))}" target="_blank" rel="noopener">Abrir recurso ↗</a>`:''}</div>`:''}${s.exercise?`<div class="smalltext">Exercício: ${esc(s.exercise)}</div>`:''}</article>`).join(''):'<div class="empty">Não há sessões com estes filtros.</div>';populateSelect('sessionFilter',true);if($('trDiagBody')&&!$('trDiagBody').classList.contains('hidden')){try{renderDiagTab()}catch(e){}}}function safeUrl(v){try{const u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:'#'}catch{return '#'}}
+function renderSessions(){const area=$('sessionFilter').value,st=$('sessionStatusFilter').value;const list=read(KEYS.sessions).filter(s=>!isDiagSession(s)&&(!area||s.area===area)&&(!st||(st==='upcoming'?s.date>=today():s.date<today()))).sort((a,b)=>(a.date||'').localeCompare(b.date||''));$('sessionCards').innerHTML=list.length?list.map(s=>`<article class="post"><div class="cardhead" style="margin-bottom:6px"><div><strong>${esc(s.title)}</strong>${wizBadge(s)}<div class="muted smalltext sess-meta"><span title="${esc(s.area)}">${esc(areaShort(s.area))}</span>${s.level?' · '+esc(trLv(s.level)):''} · ${fmt(s.date)} ${esc(s.startTime||'')} · Formador: ${esc(s.trainer||'—')}</div></div><div class="actions">${wizIncomplete(s)?`<button class="btn small" data-wiz="${s.id}">Continuar</button>`:''}<button class="btn secondary small" data-materials="${s.id}">Materiais (${MAT.filter(m=>m.sessionId===s.id).length})</button><button class="btn secondary small" data-edit-session="${s.id}">Editar</button><button class="btn danger small" data-del-session="${s.id}">Eliminar</button></div></div><p>${esc(s.description||'Sem descrição')}</p>${s.location?`<div class="smalltext">Local: ${esc(s.location)}</div>`:''}${s.materialTitle?`<div class="smalltext" style="margin-top:8px">Material: <strong>${esc(s.materialTitle)}</strong> ${s.materialUrl?`· <a href="${esc(safeUrl(s.materialUrl))}" target="_blank" rel="noopener">Abrir recurso ↗</a>`:''}</div>`:''}${s.exercise?`<div class="smalltext">Exercício: ${esc(s.exercise)}</div>`:''}</article>`).join(''):'<div class="empty">Não há sessões com estes filtros.</div>';populateSelect('sessionFilter',true);if($('trDiagBody')&&!$('trDiagBody').classList.contains('hidden')){try{renderDiagTab()}catch(e){}}}function safeUrl(v){try{const u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:'#'}catch{return '#'}}
 const ATT_ST=[['Presente','good'],['Falta','bad'],['Justificada','warn']];
 function setAtt(pid,v){const h=document.querySelector(`[data-att-status="${pid}"]`);if(!h)return;h.value=v;document.querySelectorAll(`[data-att-set="${pid}"]`).forEach(b=>{const on=b.dataset.v===v;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}
 /* --- Diagnóstico único: perfil (6 perguntas) → teste inicial → resultado --- */
@@ -1169,7 +1252,7 @@ $('attendanceRoster').addEventListener('click',()=>setTimeout(attCount,0));$('ma
 {const _ra=renderAttendance;renderAttendance=function(){const r=_ra.apply(this,arguments);try{dgAdminDraw()}catch(_){}return r}}
 $('satRoster').onclick=()=>{const r=$('attendanceRoster');if(r.scrollIntoView)r.scrollIntoView({behavior:'smooth',block:'start'})};$('satMat').onclick=()=>{const sid=$('attendanceSession').value;if(!sid){toast('Seleccione uma sessão.');return}openMatModal(sid)};$('satScore').onclick=()=>openScore();
 $('attendanceSession').onchange=renderAttendance;$('attendanceRoster').onclick=e=>{const b=e.target.closest('[data-att-set]');if(b)setAtt(b.dataset.attSet,b.dataset.v)};$('markAllPresent').onclick=()=>document.querySelectorAll('[data-att-status]').forEach(h=>setAtt(h.dataset.attStatus,'Presente'));$('saveAttendance').onclick=()=>{const sid=$('attendanceSession').value||'';if(!sid){toast('Seleccione uma sessão.');return}const a=read(KEYS.attendance),existing=a.find(x=>x.sessionId===sid),records={...(existing?.records||{})};document.querySelectorAll('[data-att-status]').forEach(s=>records[s.dataset.attStatus]=s.value);const item={id:existing?.id||id(),sessionId:sid,date:sessionById(sid)?.date||today(),records,updatedAt:new Date().toISOString()};put(KEYS.attendance,[...a.filter(x=>x.sessionId!==sid),item]);renderAll();renderAttendance();toast('Presenças guardadas.')};
-function renderScores(){const q=($('scoreSearch').value||'').toLowerCase(),area=$('scoreAreaFilter').value,ex=read(KEYS.scores),tt=testItems().map(x=>({isTest:true,id:'t-'+x.id,attId:x.id,date:x.date,staffId:x.staffId,area:x.area,sessionId:x.sessionId,exercise:x.title,score:x.score,comment:x.correct+'/'+x.total+' certas'})),a=ex.concat(tt).filter(s=>(!area||s.area===area)&&(!q||((staffById(s.staffId)?.name||'')+' '+s.exercise).toLowerCase().includes(q))).sort((x,y)=>String(y.date||'').localeCompare(String(x.date||'')));$('scoreRows').innerHTML=a.map(s=>`<tr><td>${s.isTest?esc(fmtDT(s.date)):fmt(s.date)}</td><td><strong>${esc(staffById(s.staffId)?.name||'Formando removido')}</strong></td><td>${esc(s.area||'—')}<div class="muted smalltext">${esc(sessionById(s.sessionId)?.title||'')}</div></td><td>${s.isTest?'<span class="tag blue">Teste</span> ':''}${esc(s.exercise)}</td><td><span class="tag ${s.score>=14?'good':s.score>=10?'warn':'bad'}">${g20(s.score)}</span></td><td>${s.isTest?esc(s.comment||'—'):fbSummary(s)}</td><td>${s.isTest?`<div class="actions"><button type="button" class="btn secondary small" data-view-attempt="${esc(s.attId)}">Ver</button></div>`:`<div class="actions"><button class="btn secondary small" data-edit-score="${s.id}">Editar</button><button class="btn danger small" data-del-score="${s.id}">Eliminar</button></div>`}</td></tr>`).join('');$('scoreEmpty').classList.toggle('hidden',a.length>0);const all=ex.concat(tt);$('scoreCount').textContent=all.length;$('scoreAverage').textContent=averageScore()===null?'—':g20(averageScore());$('scorePassed').textContent=all.filter(x=>x.score>=10).length;$('scorePending').textContent=Math.max(0,activeStaff().reduce((n,s)=>n+read(KEYS.sessions).filter(x=>(s.areas||[]).includes(x.area)).length,0)-ex.length);populateSelect('scoreAreaFilter',true)}
+function renderScores(){const q=($('scoreSearch').value||'').toLowerCase(),area=$('scoreAreaFilter').value,ex=read(KEYS.scores),tt=testItems().map(x=>({isTest:true,id:'t-'+x.id,attId:x.id,date:x.date,staffId:x.staffId,area:x.area,sessionId:x.sessionId,exercise:x.title,score:x.score,comment:x.correct+'/'+x.total+' certas'})),a=ex.concat(tt).filter(s=>(!area||s.area===area)&&(!q||((staffById(s.staffId)?.name||'')+' '+s.exercise).toLowerCase().includes(q))).sort((x,y)=>String(y.date||'').localeCompare(String(x.date||'')));$('scoreRows').innerHTML=a.map(s=>`<tr><td>${s.isTest?esc(fmtDT(s.date)):fmt(s.date)}</td><td><strong>${esc(staffById(s.staffId)?.name||'Formando removido')}</strong></td><td title="${esc(s.area||'')}">${esc(s.area?areaShort(s.area):'—')}<div class="muted smalltext">${esc(sessionById(s.sessionId)?.title||'')}</div></td><td>${s.isTest?'<span class="tag blue">Teste</span> ':''}${esc(s.exercise)}</td><td><span class="tag ${s.score>=14?'good':s.score>=10?'warn':'bad'}">${g20(s.score)}</span></td><td>${s.isTest?esc(s.comment||'—'):fbSummary(s)}</td><td>${s.isTest?`<div class="actions"><button type="button" class="btn secondary small" data-view-attempt="${esc(s.attId)}">Ver</button></div>`:`<div class="actions"><button class="btn secondary small" data-edit-score="${s.id}">Editar</button><button class="btn danger small" data-del-score="${s.id}">Eliminar</button></div>`}</td></tr>`).join('');$('scoreEmpty').classList.toggle('hidden',a.length>0);const all=ex.concat(tt);$('scoreCount').textContent=all.length;$('scoreAverage').textContent=averageScore()===null?'—':g20(averageScore());$('scorePassed').textContent=all.filter(x=>x.score>=10).length;$('scorePending').textContent=Math.max(0,activeStaff().reduce((n,s)=>n+read(KEYS.sessions).filter(x=>(s.areas||[]).includes(x.area)).length,0)-ex.length);populateSelect('scoreAreaFilter',true)}
 /* ===== Chats: público (estilo Zoom) e privado (estilo Messenger) ===== */
 let FREPLY=null,PRIV_ACTIVE=null;
 const tmf=d=>d?new Date(d).toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'}):'',dtf=d=>d?new Date(d).toLocaleDateString('pt-PT'):'';
