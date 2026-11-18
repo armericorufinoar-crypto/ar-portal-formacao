@@ -949,6 +949,55 @@ input[type=checkbox],input[type=radio]{width:18px!important;height:18px!importan
 #crmModal .pf-h,.ct-mbox .pf-h{font-size:11px;font-weight:700}
 @media(max-width:760px){#modal .modalbox h2,#crmModal .crm-modalbox h2,.ct-mbox h2{font-size:18px}#crmModal .crm-modalbox{border-radius:18px 18px 12px 12px}#crmModal .pf-box .crm-modal-foot{flex-direction:column;align-items:stretch}#crmModal .pf-box .crm-modal-foot .actions{justify-content:flex-end}#crmModal .crm-stage-info{border-top:1px solid var(--line)}}
 </style>
+<style id="treino-polish">
+/* Turmas e Treinos (níveis, Treino, Diagnóstico) e modal do assistente · critério visual do Markup */
+#trAdminBody .tr-lv,#trBankBody .tr-lv,#trDiagBody .tr-lv{gap:10px}
+#trAdminBody .tr-lv>.card,#trBankBody .tr-lv>.card,#trDiagBody .tr-lv>.card{display:block;padding:14px 16px;background:#faf6f6;border:0;border-top:3px solid var(--red);border-radius:12px;box-shadow:none}
+#trAdminBody .tr-lv>.card .muted,#trBankBody .tr-lv>.card .muted,#trDiagBody .tr-lv>.card .muted{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+#trAdminBody .tr-lv>.card strong,#trBankBody .tr-lv>.card strong,#trDiagBody .tr-lv>.card strong{display:block;font-size:24px;letter-spacing:-.03em;margin:4px 0 2px}
+#trAdminBody .tr-lv>.card .tr-sv+.muted,#trBankBody .tr-lv>.card .tr-sv+.muted,#trDiagBody .tr-lv>.card .tr-sv+.muted{text-transform:none;letter-spacing:0;font-size:12px;font-weight:500}
+#trAdminBody .card,#trBankBody .card,#trDiagBody .card{border:1px solid var(--line);border-radius:14px;box-shadow:none}
+#trAdminBody .cardhead h2,#trBankBody .cardhead h2,#trDiagBody .cardhead h2{font-size:16px;letter-spacing:-.01em}
+#trAdminBody .toolbar input,#trBankBody .toolbar input,#trDiagBody .toolbar input,#trAdminBody .toolbar select,#trBankBody .toolbar select,#trDiagBody .toolbar select,#trAdminBody .tr-filters input,#trBankBody .tr-filters input,#trDiagBody .tr-filters input,#trAdminBody .tr-filters select,#trBankBody .tr-filters select,#trDiagBody .tr-filters select,#trAdminBody .clnote .clrow input,#trBankBody .clnote .clrow input,#trDiagBody .clnote .clrow input,#trAdminBody .clnote .clrow select,#trBankBody .clnote .clrow select,#trDiagBody .clnote .clrow select{border:1px solid #d9dce1;border-radius:10px;background-color:#fff}
+#trAdminBody .tablewrap,#trBankBody .tablewrap,#trDiagBody .tablewrap{border:0;box-shadow:none;border-radius:0;background:transparent}
+#trAdminBody .table,#trBankBody .table,#trDiagBody .table{border-collapse:collapse;font-size:13px}
+#trAdminBody .table th,#trBankBody .table th,#trDiagBody .table th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;background:transparent;border-bottom:1px solid var(--line);padding:9px 8px}
+#trAdminBody .table td,#trBankBody .table td,#trDiagBody .table td{padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+#trAdminBody .table tbody tr:hover,#trBankBody .table tbody tr:hover,#trDiagBody .table tbody tr:hover{background:#faf6f6}
+#trAdminBody .table tbody tr:last-child td,#trBankBody .table tbody tr:last-child td,#trDiagBody .table tbody tr:last-child td{border-bottom:0}
+#trAdminBody .table select,#trBankBody .table select,#trDiagBody .table select{border:1px solid #d9dce1;border-radius:10px;background-color:#fff}
+#trAdminBody .empty,#trBankBody .empty,#trDiagBody .empty{border-radius:12px;font-size:13px}
+#trAdminBody .clnote,#trBankBody .clnote,#trDiagBody .clnote{background:#f6f7f9;border:0;border-radius:12px;color:var(--ink)}
+#trAdminBody .clnote-d>summary,#trBankBody .clnote-d>summary,#trDiagBody .clnote-d>summary{font-size:12px;letter-spacing:.04em;font-weight:700}
+#trDiagBody .hlpn{background:#f6f7f9;border:0;border-radius:10px}
+#trAdminBody .post,#trDiagBody .post{background:#fff;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:12px;box-shadow:none;padding:14px 16px}
+#trModal .modalbox{border-radius:18px}
+#trModal .modalbox h2{font-size:19px;letter-spacing:-.02em;margin:0 0 16px}
+#trModal .modalbox h2::before{content:"";display:block;width:32px;height:3px;border-radius:2px;background:var(--red);margin:0 0 10px}
+#trModal .field>label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px}
+#trModal .field>label .smalltext,#trModal .field>label .muted{text-transform:none;letter-spacing:0;font-weight:500;font-size:11px}
+#trModal .field input:not([type=checkbox]):not([type=radio]),#trModal .field select,#trModal .field textarea{border:1px solid #d9dce1;border-radius:10px;background-color:#fff}
+#trModal .field{margin:0 0 14px}#trModal .field>.tr-opts{margin-top:2px}
+#trModal .modalactions{margin-top:20px;padding-top:14px;border-top:1px solid var(--line)}
+#trModal .tr-cad{background:#faf6f6;border:0;border-top:3px solid var(--red);border-radius:12px}
+#trModal .tr-ctx,#trModal .tr-ord li,#trModal .tr-opt{border-radius:10px}
+@media(max-width:760px){
+#trAdminBody .table.stack td,#trBankBody .table.stack td,#trDiagBody .table.stack td{padding:0;border:0}
+#trAdminBody .table.stack td:not([data-label]),#trBankBody .table.stack td:not([data-label]),#trDiagBody .table.stack td:not([data-label]){text-align:left}
+#trAdminBody .table.stack tbody tr:hover,#trBankBody .table.stack tbody tr:hover,#trDiagBody .table.stack tbody tr:hover{background:#fff}
+#trAdminBody .table.stack select{max-width:60%}
+#trAdminBody .cardhead,#trBankBody .cardhead{flex-wrap:wrap;gap:10px}#trAdminBody .cardhead h2,#trBankBody .cardhead h2{flex:1 1 100%}#trBankBody .tr-filters{grid-template-columns:1fr}
+#trAdminBody .table.stack td:first-child{display:block;text-align:left;font-weight:700}#trAdminBody .table.stack td:first-child::before{display:none}#trAdminBody .table.stack td:first-child .smalltext{font-weight:500}
+#trAdminBody .tr-lv>.card strong,#trBankBody .tr-lv>.card strong,#trDiagBody .tr-lv>.card strong{font-size:20px}
+#trModal .modalbox h2{font-size:18px}}
+</style>
+<style id="crm-cols-polish">
+/* CRM · em ecrã largo as 5 colunas repartem a largura disponível (sem deslocar o quadro); abaixo disso mantém-se o deslocamento */
+@media(min-width:1000px){#page-crm-pipeline .pd-board,.ct-card .pd-board{gap:8px}
+#page-crm-pipeline .pd-col,.ct-card .pd-col{flex:1 1 0;min-width:172px}
+#page-crm-pipeline .pd-col .pd-colh{padding-right:20px}
+#page-crm-pipeline .pd-card,.ct-card .pd-card{min-width:0}}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (()=>{'use strict';
@@ -2291,6 +2340,8 @@ async function sessEnd(msg){if(ENDING)return;ENDING=true;try{sessionStorage.setI
 function sessLoginMsg(){try{const m=sessionStorage.getItem('av_logout_msg');sessionStorage.removeItem('av_logout_msg');return m||''}catch{return ''}}
 function sessWatch(){if(SESS_T)return;['pointerdown','mousemove','keydown','scroll','touchstart'].forEach(ev=>window.addEventListener(ev,sessMark,{passive:true,capture:true}));sessMark(true);const chk=()=>{const m=sessExpiredMsg();if(m)sessEnd(m)};SESS_T=setInterval(chk,30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});setInterval(()=>{if(document.hidden||!PROFILE||PROFILE.role==='collaborator')return;loadTests().then(()=>{renderScores();renderReports();renderDashboard()}).catch(()=>{})},60000)}
 (function(){const L=tb=>{const t=tb.closest('table');if(!t)return;t.classList.add('stack');const h=[...t.querySelectorAll('thead th')].map(x=>x.textContent.trim());tb.querySelectorAll('tr').forEach(tr=>{if(tr.children.length!==h.length)return;[...tr.children].forEach((td,i)=>{if(td.dataset.label===undefined&&h[i])td.setAttribute('data-label',h[i])})})};['staffRows','scoreRows','reportRows','userRows'].forEach(i=>{const tb=$(i);if(!tb)return;new MutationObserver(()=>L(tb)).observe(tb,{childList:true});L(tb)})})();
+/* Turmas e Treinos: tabelas em cartões no telemóvel (o tbody é recriado a cada desenho, por isso observa-se o contentor) */
+(function(){const stk=el=>{el.querySelectorAll('table.table').forEach(t=>{const hs=[...t.querySelectorAll('thead th')].map(h=>h.textContent.trim());t.classList.add('stack');t.querySelectorAll('tbody tr').forEach(tr=>{if(tr.children.length!==hs.length)return;[...tr.children].forEach((td,i)=>{if(hs[i]&&td.getAttribute('data-label')===null)td.setAttribute('data-label',hs[i])})})})};['trAdminBody','trBankBody','trDiagBody'].forEach(id=>{const n=document.getElementById(id);if(n){new MutationObserver(()=>stk(n)).observe(n,{childList:true,subtree:true});stk(n)}})})();
 /* ===== TR · Treino e níveis (fase 1: perfil de entrada, níveis e turmas) =====
    Módulo isolado. Não toca nos testes, na pauta nem no diagnóstico de competências.
    Depende da migração 015_treino_niveis.sql. Sem ela, o formando não vê nada e a página
