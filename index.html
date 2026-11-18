@@ -451,6 +451,7 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 .ct-tk{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);cursor:pointer}.ct-tk input{width:18px;height:18px}.ct-tk strong{display:block;font-size:13px}.ct-tk em{font-style:normal;font-size:12px;color:#6c7078}.ct-tk.done strong{text-decoration:line-through;color:#8a8f99}.ct-tdue{font-size:12px;font-weight:700;color:#42464e;white-space:nowrap}.ct-tdue.late{color:#a11c27}
 .ct-fun{display:grid;gap:8px;margin:10px 0}.ct-fr{display:grid;grid-template-columns:130px 1fr 28px 110px;gap:10px;align-items:center;font-size:12px}.ct-fr em{font-style:normal;color:#8a8f99;font-size:12px}.ct-ft{height:12px;background:#eceef1;border-radius:99px;overflow:hidden}.ct-ft i{display:block;height:100%;border-radius:99px}.ct-fv{text-align:right;color:#6c7078;font-size:12px}.ct-rs{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
 .ct-m{display:flex;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;margin:10px 0;background:#fff}.ct-m.ok{border-color:#bfe3d0;background:#f7fcf9}.ct-mk{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#eceef1;font-size:12px;font-weight:800}.ct-m.ok .ct-mk{background:var(--green);color:#fff}.ct-mb{min-width:0;flex:1}.ct-mb p{margin:4px 0 8px;font-size:13px;color:#42464e}
+.ct-note-ta{width:100%;box-sizing:border-box;font:15px/1.6 ui-monospace,Menlo,Consolas,monospace;padding:12px;border:1px solid var(--line,#ddd);border-radius:10px;background:var(--card,#fff);color:inherit;resize:vertical}
 .ct-ov{position:fixed;inset:0;background:#101114a8;z-index:80;display:flex;align-items:center;justify-content:center;padding:16px}.ct-mbox{width:min(560px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:16px;padding:22px}.ct-mbox h2{margin:0 0 6px;font-size:19px}.ct-mg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ct-mbox .field{margin-bottom:12px}.ct-mbox .field input,.ct-mbox .field select{width:100%;border:1px solid #d9dce1;border-radius:10px;padding:10px 12px;background:#fff}.ct-mf{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
 @media(max-width:760px){.ct-board{grid-auto-columns:84%}.ct-mg{grid-template-columns:1fr}.ct-fr{grid-template-columns:96px 1fr 24px}.ct-fv{display:none}.ct-bar input{max-width:none}.ct-mbox .field input,.ct-mbox .field select,.ct-sel,.ct-bar input{font-size:16px}}
 .ct-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 12px}.ct-strip>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}.ct-strip span{display:block;font-size:12px;color:var(--muted);font-weight:600}.ct-strip strong{display:block;font-size:16px;letter-spacing:-.01em;margin-top:2px;overflow-wrap:anywhere}
@@ -599,7 +600,7 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 .emogrid button{border:0;background:transparent;font-size:23px;line-height:1;height:38px;border-radius:8px;cursor:pointer;padding:0;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}.emogrid button:hover{background:#f1f2f4}.emogrid button:active{transform:scale(1.2)}
 .emoempty{grid-column:1/-1;text-align:center;color:var(--muted);font-size:13px;padding:24px 8px}
 @media(max-width:760px){.emojipop{left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto;max-width:none;height:min(46dvh,360px);border-radius:16px 16px 0 0;border-width:1px 0 0;padding-bottom:env(safe-area-inset-bottom)}.emogrid{grid-template-columns:repeat(8,1fr)}.emogrid button{height:42px;font-size:24px}.emojibtn.in{height:36px;width:36px}.emo-open body,.emo-open .lbside{padding-bottom:min(46dvh,360px)}}
-@media(max-width:360px){.emogrid{grid-template-columns:repeat(7,1fr)}}
+@media(max-width:360px){.emogrid{grid-template-columns:repeat(5,1fr)}}
 /* --- v14: mobile / experiência de utilização --- */
 .fmtbar .fmthint{display:none!important}
 @media(max-width:760px){
@@ -879,11 +880,10 @@ function populateSelect(idn,areas=false,includeAll=true){const el=$(idn);if(!el)
 */
 const CRM_KEYS={deals:'av_crm_deals_v1',leads:'av_crm_leads_v1',opps:'av_crm_opportunities_v1'};
 const CRM_STAGES=[
- {key:'NOVO',label:'Novo',prob:10,color:'#a9aeb8'},{key:'CONTACTADO',label:'Contactado',prob:20,color:'#8a93a3'},
- {key:'QUALIFICADO',label:'Qualificado',prob:35,color:'#7c8594'},{key:'PROPOSTA',label:'Proposta',prob:50,color:'#d9962b'},
- {key:'NEGOCIACAO',label:'Negociação',prob:75,color:'#c8101e'},{key:'GANHO',label:'Ganho',prob:100,color:'#1f9d63'},
- {key:'PERDIDO',label:'Perdido',prob:0,color:'#3f4450'}
+ {key:'NOVO',label:'Novo',prob:10,color:'#a9aeb8'},{key:'CONTACTADO',label:'Contactado',prob:25,color:'#8a93a3'},
+ {key:'PROPOSTA',label:'Proposta',prob:50,color:'#d9962b'},{key:'GANHO',label:'Ganho',prob:100,color:'#1f9d63'},{key:'PERDIDO',label:'Perdido',prob:0,color:'#3f4450'}
 ];
+const CRM_ALIAS={QUALIFICADO:'CONTACTADO',NEGOCIACAO:'PROPOSTA'},crmEt=k=>CRM_ALIAS[k]||k;
 const PDI=n=>'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+({eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>',trash:'<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/>',x:'<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',prev:'<path d="M15 5l-7 7 7 7"/>',next:'<path d="M9 5l7 7-7 7"/>'}[n]||'')+'</svg>';
 const CRM_LOSS=['Preço / sem orçamento','Sem resposta','Escolheu outra formação','Sem tempo / agora não','Fora do perfil','Outro'];
 const CRM_ORIGINS=['Indicação','WhatsApp','Facebook','Instagram','Telefone','Presencial / Evento','Outro'];
@@ -896,23 +896,23 @@ const crmCodeNum=c=>{const m=/^CRM-(\d+)$/.exec(c||'');return m?parseInt(m[1],10
 const crmNextCode=()=>'CRM-'+String(Math.max(0,...CRM_DEALS.map(d=>crmCodeNum(d.codigo)))+1).padStart(4,'0');
 const crmMoney=v=>new Intl.NumberFormat('pt-AO',{maximumFractionDigits:0}).format(Number(v)||0)+' Kz';
 const crmDate=v=>v?new Date(v+'T12:00:00').toLocaleDateString('pt-PT'):'—';
-const crmStage=k=>CRM_STAGES.find(x=>x.key===k)||CRM_STAGES[0];
+const crmStage=k=>CRM_STAGES.find(x=>x.key===crmEt(k))||CRM_STAGES[0];
 const crmEscape=esc;
 const crmIsOpen=d=>!['GANHO','PERDIDO'].includes(d.etapa);
 /* Alerta de seguimento: só para negócios em aberto */
 const crmAlert=d=>{if(!crmIsOpen(d))return null;if(!d.proximoPasso||!d.dataProximoContacto)return{k:'none',t:'Sem próximo passo'};const t=today();if(d.dataProximoContacto<t){const n=Math.round((new Date(t+'T12:00:00')-new Date(d.dataProximoContacto+'T12:00:00'))/864e5);return{k:'late',t:'Atrasado · '+n+(n===1?' dia':' dias')}}if(d.dataProximoContacto===t)return{k:'today',t:'Contactar hoje'};return null};
 const crmNextHTML=x=>{const a=crmAlert(x);let h='';if(a)h+=`<div class="crm-alert ${a.k}">${a.t}</div>`;if(crmIsOpen(x)&&x.proximoPasso)h+=`<div class="crm-next"><b>Próximo:</b> ${crmEscape(x.proximoPasso)}${x.dataProximoContacto?' · '+crmDate(x.dataProximoContacto):''}</div>`;if(x.etapa==='PERDIDO'&&x.motivoPerda)h+=`<div class="crm-next"><b>Motivo:</b> ${crmEscape(x.motivoPerda)}</div>`;return h};
 /* Junta os leads e as oportunidades antigos (guardados no navegador) num só registo por interessado. */
-const CRM_OPP2DEAL={QUALIFICACAO:'QUALIFICADO',CONTACTO:'CONTACTADO',PROPOSTA:'PROPOSTA',NEGOCIACAO:'NEGOCIACAO',GANHA:'GANHO',PERDIDA:'PERDIDO','ABERTA':'QUALIFICADO','EM NEGOCIAÇÃO':'NEGOCIACAO','PROPOSTA ENVIADA':'PROPOSTA'};
+const CRM_OPP2DEAL={QUALIFICACAO:'CONTACTADO',CONTACTO:'CONTACTADO',PROPOSTA:'PROPOSTA',NEGOCIACAO:'PROPOSTA',GANHA:'GANHO',PERDIDA:'PERDIDO','ABERTA':'CONTACTADO','EM NEGOCIAÇÃO':'PROPOSTA','PROPOSTA ENVIADA':'PROPOSTA'};
 function crmMergeLegacy(L,O){
  const used=new Set(),out=[];
  L.forEach(l=>{
   const o=O.find(x=>x.leadId===l.id&&!used.has(x.id));if(o)used.add(o.id);
-  const etapa=o?(CRM_OPP2DEAL[o.etapa]||'QUALIFICADO'):(crmStage(l.etapa).key===l.etapa?l.etapa:'NOVO');
+  const etapa=o?(CRM_OPP2DEAL[o.etapa]||'CONTACTADO'):(crmStage(l.etapa).key===l.etapa?l.etapa:'NOVO');
   const obs=[...new Set([l.observacoes,o&&o.observacoes,l.interesse?'Interesse: '+l.interesse:''].filter(Boolean))].join(' · ');
   out.push({id:l.id,nome:l.nome||'',telefone:l.telefone||'',email:l.email||'',origem:l.origem==='Telemóvel'?'Telefone':(l.origem||''),profissao:'',vendedorResponsavel:(o&&o.vendedorResponsavel)||l.vendedorResponsavel||'',etapa,valorEstimado:Number((o&&o.valorEstimado)||l.valorEstimado)||0,dataPrevistaFecho:(o&&o.dataPrevistaFecho)||'',dataCriacao:l.dataCriacao||(o&&o.dataCriacao)||'',observacoes:obs,datasEtapas:l.datasEtapas||{},formandoId:null});
  });
- O.filter(o=>!used.has(o.id)).forEach(o=>out.push({id:o.id,nome:o.cliente||'',telefone:o.telefone||'',email:o.email||'',origem:'',profissao:'',vendedorResponsavel:o.vendedorResponsavel||'',etapa:CRM_OPP2DEAL[o.etapa]||'QUALIFICADO',valorEstimado:Number(o.valorEstimado)||0,dataPrevistaFecho:o.dataPrevistaFecho||'',dataCriacao:o.dataCriacao||'',observacoes:o.observacoes||'',datasEtapas:{},formandoId:null}));
+ O.filter(o=>!used.has(o.id)).forEach(o=>out.push({id:o.id,nome:o.cliente||'',telefone:o.telefone||'',email:o.email||'',origem:'',profissao:'',vendedorResponsavel:o.vendedorResponsavel||'',etapa:CRM_OPP2DEAL[o.etapa]||'CONTACTADO',valorEstimado:Number(o.valorEstimado)||0,dataPrevistaFecho:o.dataPrevistaFecho||'',dataCriacao:o.dataCriacao||'',observacoes:o.observacoes||'',datasEtapas:{},formandoId:null}));
  /* ordem cronológica estável: por data de entrada; sem data, no fim */
  return out.map((d,i)=>[d,i]).sort((a,b)=>((a[0].dataCriacao||'9999')<(b[0].dataCriacao||'9999')?-1:(a[0].dataCriacao||'9999')>(b[0].dataCriacao||'9999')?1:a[1]-b[1])).map(p=>p[0]);
 }
@@ -920,7 +920,7 @@ const crmLegacyDeals=()=>crmMergeLegacy(crmRead(CRM_KEYS.leads),crmRead(CRM_KEYS
 function crmInit(){
  CRM_DEALS=crmRead(CRM_KEYS.deals).map(d=>{if(d.interesse){const o=[d.observacoes,'Interesse: '+d.interesse].filter(Boolean).join(' · ');const {interesse,...r}=d;return {...r,observacoes:o}}return d});
  if(!CRM_DEALS.length){const lg=crmLegacyDeals();if(lg.length){CRM_DEALS=lg.map((d,i)=>({...d,codigo:'CRM-'+String(i+1).padStart(4,'0')}))}}
- CRM_DEALS.forEach(d=>{if(!d.codigo)d.codigo=crmNextCode()});
+ CRM_DEALS.forEach(d=>{d.etapa=crmEt(d.etapa);if(!d.codigo)d.codigo=crmNextCode()});
  crmSave();
 }
 function crmOpenModal(item){CRM_EDIT=item?item.id:null;const x=item||{};const content=$('crmModalContent');
@@ -966,7 +966,7 @@ const crmIni=n=>(String(n||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join
 const crmWhen=d=>{if(!d)return '';const n=Math.round((new Date(d+'T12:00:00')-new Date(today()+'T12:00:00'))/864e5);return n===0?'Hoje':n===1?'Amanhã':n===-1?'Ontem':crmDate(d)};
 /* Cartão no modelo Pipedrive: nome, organização, avatar do responsável, valor e ícone de estado da próxima atividade */
 function crmCardHTML(x,isAdmin,staff){const a=crmAlert(x),op=crmIsOpen(x),f=x.formandoId&&staff.find(s=>s.id===x.formandoId),id=crmEscape(x.id),k=a&&(a.k==='late'||a.k==='none')?a.k:'ok',i=CRM_STAGES.findIndex(y=>y.key===x.etapa),
- pv=i>0?(i===6?CRM_STAGES[0]:CRM_STAGES[i-1]):null,nx=i>=0&&i<5?CRM_STAGES[i+1]:null,
+ pv=i>0?(i===4?CRM_STAGES[0]:CRM_STAGES[i-1]):null,nx=i>=0&&i<3?CRM_STAGES[i+1]:null,
  ico=op?`<button type="button" class="pd-st ${k}" data-crm-pop="${id}" aria-label="Atividades" title="${a?a.t:'Próximo passo agendado'}">${k==='none'?'⚠':k==='late'?'!':'➜'}</button>`:(x.etapa==='GANHO'?'<span class="pd-pill won">GANHO</span>':'<span class="pd-pill lost">PERDIDO</span>'),
  chips=(a&&a.k==='none'?'<span class="pd-chip bad">Sem próximo passo</span>':'')+(a&&a.k==='late'?`<span class="pd-chip bad">${a.t}</span>`:'')+(a&&a.k==='today'?'<span class="pd-chip ok">Contactar hoje</span>':'')+(x.etapa==='GANHO'&&f?`<span class="pd-chip ok">✓ Formando ${crmEscape(f.number||'')}</span>`:''),
  meta=[x.origem,x.telefone].filter(Boolean).map(crmEscape).join(' · '),
@@ -986,7 +986,7 @@ function crmRenderBoard(){if(!$('crmBoard'))return;const q=($('crmSearch')?.valu
  const fill=(id,vals,all)=>{const el=$(id),v=el.value;el.innerHTML=`<option value="">${all}</option>`+vals.map(x=>`<option value="${crmEscape(x)}">${crmEscape(x)}</option>`).join('');el.value=v};
  fill('crmOwnerFilter',[...new Set(CRM_DEALS.map(x=>x.vendedorResponsavel).filter(Boolean))],'Todos os responsáveis');fill('crmOriginFilter',CRM_ORIGINS,'Todas as origens');
  const isAdmin=PROFILE&&PROFILE.role==='admin',staff=read(KEYS.staff);
- $('crmBoard').innerHTML=CRM_STAGES.map(st=>{const items=rows.filter(x=>x.etapa===st.key),tot=items.reduce((a,x)=>a+(Number(x.valorEstimado)||0),0);return `<div class="pd-col" data-crm-col="${st.key}" data-ct-col="${st.key}" style="--c:${st.color}"><div class="pd-colh"><b>${st.label}</b><span>${crmMoney(tot)} · ${items.length} ${items.length===1?'negócio':'negócios'}</span></div>${items.length?items.map(x=>crmCardHTML(x,isAdmin,staff)).join(''):'<div class="pd-empty">Sem registos</div>'}</div>`}).join('');
+ $('crmBoard').innerHTML=CRM_STAGES.map(st=>{const items=rows.filter(x=>crmEt(x.etapa)===st.key),tot=items.reduce((a,x)=>a+(Number(x.valorEstimado)||0),0);return `<div class="pd-col" data-crm-col="${st.key}" data-ct-col="${st.key}" style="--c:${st.color}"><div class="pd-colh"><b>${st.label}</b><span>${crmMoney(tot)} · ${items.length} ${items.length===1?'negócio':'negócios'}</span></div>${items.length?items.map(x=>crmCardHTML(x,isAdmin,staff)).join(''):'<div class="pd-empty">Sem registos</div>'}</div>`}).join('');
  if($('crmTot')){const o=rows.filter(crmIsOpen);$('crmTot').textContent=crmMoney(o.reduce((a,x)=>a+(Number(x.valorEstimado)||0),0))+' · '+o.length+(o.length===1?' negócio':' negócios')}}
 function crmRenderAll(){crmRenderBoard()}
 function crmWire(){$('crmAdd').onclick=()=>crmOpenModal();$('crmExport').onclick=()=>crmExport();['crmSearch','crmOwnerFilter','crmOriginFilter','crmAlertFilter'].forEach(id=>$(id).addEventListener('input',crmRenderBoard));$('crmModal').addEventListener('click',e=>{if(e.target===$('crmModal'))crmCloseModal()});
@@ -1003,8 +1003,8 @@ function crmWire(){$('crmAdd').onclick=()=>crmOpenModal();$('crmExport').onclick
    Se não existir, o CRM continua a funcionar só neste navegador. */
 const CRM_SYNC={remote:null,snap:{},busy:false,again:false,dirty:false};
 const crmNull=v=>(v===''||v==null)?null:v;
-const crmRow=x=>({id:x.id,code:x.codigo||null,name:x.nome||'',phone:crmNull(x.telefone),email:crmNull(x.email),origin:crmNull(x.origem),profession:crmNull(x.profissao),owner:crmNull(x.vendedorResponsavel),stage:x.etapa||'NOVO',est_value:Number(x.valorEstimado)||0,probability:crmStage(x.etapa).prob,expected_close:crmNull(x.dataPrevistaFecho),entered_on:crmNull(x.dataCriacao),notes:crmNull(x.observacoes),next_step:crmNull(x.proximoPasso),next_contact_on:crmNull(x.dataProximoContacto),lost_reason:crmNull(x.motivoPerda),stage_dates:x.datasEtapas||{},formando_id:crmNull(x.formandoId)});
-const crmObj=r=>({id:r.id,codigo:r.code,nome:r.name,telefone:r.phone||'',email:r.email||'',origem:r.origin||'',profissao:r.profession||'',vendedorResponsavel:r.owner||'',etapa:r.stage,valorEstimado:Number(r.est_value)||0,dataPrevistaFecho:r.expected_close||'',dataCriacao:r.entered_on||'',observacoes:r.notes||'',proximoPasso:r.next_step||'',dataProximoContacto:r.next_contact_on||'',motivoPerda:r.lost_reason||'',datasEtapas:r.stage_dates||{},formandoId:r.formando_id||null});
+const crmRow=x=>({id:x.id,code:x.codigo||null,name:x.nome||'',phone:crmNull(x.telefone),email:crmNull(x.email),origin:crmNull(x.origem),profession:crmNull(x.profissao),owner:crmNull(x.vendedorResponsavel),stage:crmEt(x.etapa)||'NOVO',est_value:Number(x.valorEstimado)||0,probability:crmStage(x.etapa).prob,expected_close:crmNull(x.dataPrevistaFecho),entered_on:crmNull(x.dataCriacao),notes:crmNull(x.observacoes),next_step:crmNull(x.proximoPasso),next_contact_date:crmNull(x.dataProximoContacto),lost_reason:crmNull(x.motivoPerda),stage_dates:x.datasEtapas||{},formando_id:crmNull(x.formandoId)});
+const crmObj=r=>({id:r.id,codigo:r.code,nome:r.name,telefone:r.phone||'',email:r.email||'',origem:r.origin||'',profissao:r.profession||'',vendedorResponsavel:r.owner||'',etapa:crmEt(r.stage),valorEstimado:Number(r.est_value)||0,dataPrevistaFecho:r.expected_close||'',dataCriacao:r.entered_on||'',observacoes:r.notes||'',proximoPasso:r.next_step||'',dataProximoContacto:r.next_contact_date||'',motivoPerda:r.lost_reason||'',datasEtapas:r.stage_dates||{},formandoId:r.formando_id||null});
 const crmImported=()=>{try{return localStorage.getItem('av_crm_imported_v1')==='1'}catch{return true}};
 function crmNote(){
  let h;
@@ -1034,7 +1034,7 @@ async function crmSync(){
    if(del.length){r=await SB.from('av_crm_deals').delete().in('id',del);if(r.error)throw r.error;del.forEach(id=>{delete CRM_SYNC.snap[id]})}
    CRM_SYNC.dirty=false;
   }while(CRM_SYNC.again);
- }catch(e){CRM_SYNC.dirty=true;toast('Não foi possível sincronizar o CRM: '+((e&&e.message)||e)+(/next_step|next_contact_on|lost_reason/.test((e&&e.message)||'')?' (execute a migração 024_crm_proximo_passo.sql)':''))}
+ }catch(e){CRM_SYNC.dirty=true;toast('Não foi possível sincronizar o CRM: '+((e&&e.message)||e)+(/next_step|next_contact_date|lost_reason/.test((e&&e.message)||'')?' (execute a migração 024_crm_proximo_passo.sql)':''))}
  finally{CRM_SYNC.busy=false;crmRenderAll()}
 }
 async function crmLoad(){
@@ -3208,10 +3208,10 @@ window.mkCalc={calc,model,scenarios,num};
 /* ===== CRM de treino (Fase 2) — código isolado, prefixo ct. Usa só tabelas av_sim_*; nunca av_crm_deals ===== */
 (function(){
 'use strict';
-const STAGES=[{k:'NOVO',l:'Novo',p:10,c:'#a9aeb8'},{k:'CONTACTADO',l:'Contactado',p:20,c:'#8a93a3'},{k:'QUALIFICADO',l:'Qualificado',p:35,c:'#7c8594'},{k:'PROPOSTA',l:'Proposta',p:50,c:'#d9962b'},{k:'NEGOCIACAO',l:'Negociação',p:75,c:'#c8101e'},{k:'GANHO',l:'Ganho',p:100,c:'#1f9d63'},{k:'PERDIDO',l:'Perdido',p:0,c:'#3f4450'}];
+const STAGES=[{k:'NOVO',l:'Novo',p:10,c:'#a9aeb8'},{k:'CONTACTADO',l:'Contactado',p:25,c:'#8a93a3'},{k:'PROPOSTA',l:'Proposta',p:50,c:'#d9962b'},{k:'GANHO',l:'Ganho',p:100,c:'#1f9d63'},{k:'PERDIDO',l:'Perdido',p:0,c:'#3f4450'}],ALIAS={QUALIFICADO:'CONTACTADO',NEGOCIACAO:'PROPOSTA'};
 const ORIGINS=['Indicação','WhatsApp','Facebook','Instagram','Telefone','Presencial / Evento','Outro'];
 const LOST=['Preço','Sem resposta','Escolheu a concorrência','Sem orçamento agora','Outro motivo'];
-const ST=k=>STAGES.find(s=>s.k===k)||STAGES[0];
+const ST=k=>STAGES.find(s=>s.k===(ALIAS[k]||k))||STAGES[0];
 const OPEN=s=>s!=='GANHO'&&s!=='PERDIDO';
 const kz=v=>(v==null||!isFinite(v))?'—':new Intl.NumberFormat('pt-AO',{maximumFractionDigits:0}).format(Math.round(v))+' Kz';
 const pad=n=>String(n).padStart(2,'0');
@@ -3242,7 +3242,7 @@ async function load(){
   const e=d.error||c.error||t.error;if(e)throw e;
   if(CT.mode==='guiado'&&!(d.data||[]).length){const r=await SB.rpc('av_sim_seed',{p_mode:'guiado'});if(r.error)throw r.error;
    [d,c,t]=await Promise.all([q('av_sim_deals'),q('av_sim_contacts'),q('av_sim_tasks')]);const e2=d.error||c.error||t.error;if(e2)throw e2}
-  CT.deals=d.data||[];CT.contacts=c.data||[];CT.tasks=t.data||[];CT.loaded=true}
+  CT.deals=(d.data||[]).map(x=>({...x,stage:ALIAS[x.stage]||x.stage}));CT.contacts=c.data||[];CT.tasks=t.data||[];CT.loaded=true}
  catch(e){CT.err=String((e&&e.message)||e||'erro');CT.loaded=false}
  CT.loading=false;draw()}
 const fail=(r,msg)=>{if(r&&r.error){toast(msg||'Não foi possível guardar. Tente de novo.');return true}return false};
@@ -3252,7 +3252,7 @@ const TABS=[['quadro','Quadro'],['tarefas','Tarefas']];
 function shell(){
  root().innerHTML='<div class="ct-top"><div class="sg-seg ct-mode" role="tablist" aria-label="Modo">'+
  '<button type="button" data-ct-mode="guiado">Cenário guiado</button><button type="button" data-ct-mode="negocio">Meu negócio</button></div>'+
- '<div class="ct-topr"><button type="button" class="btn small pd-btn" data-ct-new>+ Negócio</button><button type="button" class="linkdel" data-ct-reset>Repor cenário</button></div></div>'+
+ '<div class="ct-topr"><button type="button" class="btn small pd-btn" data-ct-new>+ Negócio</button><button type="button" class="btn secondary small" data-ct-note="">Ficha para notas</button><button type="button" class="linkdel" data-ct-reset>Repor cenário</button></div></div>'+
  '<div class="mk-tabs" id="ctTabs" role="tablist"></div><div id="ctNote"></div><div id="ctPanel"></div><div id="ctModal"></div>';
  draw()}
 function draw(){
@@ -3275,13 +3275,13 @@ function draw(){
 function cardHTML(d){ /* cartão premium: nome, serviço, valor, contacto, próximo passo, alertas e barra de acções */
  const t0=todayS(),late=!!(d.next&&d.next.due<t0),warn=d.noTask||d.stalled,k=late?'late':warn?'none':'ok',id=esc(d.id),
  when=x=>{const n=diffDays(x,t0);return n===0?'Hoje':n===1?'Amanhã':n===-1?'Ontem':fd(x)},
- i=STAGES.findIndex(s=>s.k===d.stage),pv=i>0?(i===6?STAGES[0]:STAGES[i-1]):null,nx=i>=0&&i<5?STAGES[i+1]:null,
+ i=STAGES.findIndex(s=>s.k===d.stage),pv=i>0?(i===4?STAGES[0]:STAGES[i-1]):null,nx=i>=0&&i<3?STAGES[i+1]:null,
  ico=d.open?'<button type="button" class="pd-st '+k+'" data-ct-pop="'+id+'" aria-label="Atividades" title="Atividades">'+(late?'!':warn?'⚠':'➜')+'</button>':(d.stage==='GANHO'?'<span class="pd-pill won">GANHO</span>':'<span class="pd-pill lost">PERDIDO</span>'),
  chips=(d.stalled?'<span class="pd-chip warn">Parado há '+d.idle+' dias</span>':'')+(d.noTask?'<span class="pd-chip bad">Sem follow-up</span>':'')+(late?'<span class="pd-chip bad">Follow-up atrasado</span>':'')+(d.dup?'<span class="pd-chip info">Possível duplicado</span>':''),
  meta=[d.c.source,d.c.phone].filter(Boolean).map(esc).join(' · '),
  pop=CT.pop===d.id?'<div class="pd-pop">'+(d.pend.length?d.pend.map(t=>'<label class="pd-pr"><input type="checkbox" data-ct-done="'+esc(t.id)+'"><span><b>'+esc(t.title)+'</b><small'+(t.due<t0?' class="late"':'')+'>'+when(t.due)+(t.due<t0?' · atrasado':'')+'</small></span></label>').join(''):'<div class="pd-pr"><span><b>Sem atividades</b><small>Agende o próximo follow-up</small></span></div>')+(d.open?'<button type="button" class="pd-pa" data-ct-task="'+id+'">+ Agendar atividade</button>':'')+'</div>':'';
  return '<div class="pd-card'+(late?' late':d.stage==='GANHO'?' won':'')+'" draggable="true" data-id="'+id+'"><div class="pd-top"><div style="min-width:0"><h4>'+esc(d.c.name)+'</h4><p class="pd-sub">'+esc(d.title||'')+'</p></div>'+ico+'</div><div class="pd-vrow"><span class="pd-money">'+(Number(d.value)>0?kz(d.value):'—')+'</span><span class="pd-av">'+esc(ini(d.c.name))+'</span></div>'+(meta?'<div class="pd-meta">'+meta+'</div>':'')+(d.expected_close&&d.open?'<div class="pd-meta">Fecho previsto: '+fd(d.expected_close)+'</div>':'')+(d.open&&d.next?'<div class="pd-next">Próximo: '+esc(d.next.title)+' · '+when(d.next.due)+'</div>':'')+(d.stage==='PERDIDO'&&d.lost_reason?'<div class="pd-next">Motivo: '+esc(d.lost_reason)+'</div>':'')+(chips?'<div class="pd-chips">'+chips+'</div>':'')+(d.open?'<div class="pd-qa"><button type="button" class="pd-qb primary" data-ct-touch="'+id+'">Contactei</button><button type="button" class="pd-qb" data-ct-task="'+id+'">+ Tarefa</button></div>':'')+
- '<div class="pd-tools">'+(pv?'<button type="button" class="pd-arr" title="'+(i===6?'Reabrir em ':'Voltar a ')+pv.l+'" aria-label="Voltar a '+pv.l+'" data-ct-go="'+id+'|'+pv.k+'">'+PDI('prev')+'</button>':'<span class="pd-arr off"></span>')+'<span class="pd-mid"><button type="button" class="pd-ic" title="Ver resumo do perfil" aria-label="Ver resumo do perfil" data-ct-view="'+id+'">'+PDI('eye')+'</button><button type="button" class="pd-ic" title="Editar" aria-label="Editar" data-ct-edit="'+id+'">'+PDI('edit')+'</button>'+(d.open?'<button type="button" class="pd-ic" title="Marcar como perdido" aria-label="Marcar como perdido" data-ct-go="'+id+'|PERDIDO">'+PDI('x')+'</button>':'')+'<button type="button" class="pd-ic danger" title="Eliminar" aria-label="Eliminar" data-ct-del="'+id+'">'+PDI('trash')+'</button></span>'+(nx?'<button type="button" class="pd-arr go" title="Avançar para '+nx.l+'" aria-label="Avançar para '+nx.l+'" data-ct-go="'+id+'|'+nx.k+'">'+PDI('next')+'</button>':'<span class="pd-arr off"></span>')+'</div>'+pop+'</div>'}
+ '<div class="pd-tools">'+(pv?'<button type="button" class="pd-arr" title="'+(i===4?'Reabrir em ':'Voltar a ')+pv.l+'" aria-label="Voltar a '+pv.l+'" data-ct-go="'+id+'|'+pv.k+'">'+PDI('prev')+'</button>':'<span class="pd-arr off"></span>')+'<span class="pd-mid"><button type="button" class="pd-ic" title="Ver resumo do perfil" aria-label="Ver resumo do perfil" data-ct-view="'+id+'">'+PDI('eye')+'</button><button type="button" class="pd-ic" title="Editar" aria-label="Editar" data-ct-edit="'+id+'">'+PDI('edit')+'</button>'+(d.open?'<button type="button" class="pd-ic" title="Marcar como perdido" aria-label="Marcar como perdido" data-ct-go="'+id+'|PERDIDO">'+PDI('x')+'</button>':'')+'<button type="button" class="pd-ic danger" title="Eliminar" aria-label="Eliminar" data-ct-del="'+id+'">'+PDI('trash')+'</button></span>'+(nx?'<button type="button" class="pd-arr go" title="Avançar para '+nx.l+'" aria-label="Avançar para '+nx.l+'" data-ct-go="'+id+'|'+nx.k+'">'+PDI('next')+'</button>':'<span class="pd-arr off"></span>')+'</div>'+pop+'</div>'}
 function stripHTML(){const s=stats();
  return '<div class="ct-strip"><div><span>Abertas</span><strong>'+s.open.length+'</strong></div><div><span>Valor em aberto</span><strong>'+kz(s.val(s.open))+'</strong></div><div><span>Previsão</span><strong>'+kz(s.w)+'</strong></div><div><span>Conversão</span><strong>'+(s.conv==null?'—':Math.round(s.conv)+'%')+'</strong></div></div>'}
 function boardHTML(){
@@ -3304,7 +3304,7 @@ function tasksHTML(){
 function stats(){const vs=view(),by=k=>vs.filter(d=>d.stage===k),open=vs.filter(d=>d.open),
  val=a=>a.reduce((s,d)=>s+Number(d.value||0),0),w=open.reduce((s,d)=>s+Number(d.value||0)*ST(d.stage).p/100,0),
  won=by('GANHO'),lost=by('PERDIDO'),conv=won.length+lost.length?won.length/(won.length+lost.length)*100:null;
- const wpn=['PROPOSTA','NEGOCIACAO'].reduce((s,k)=>s+by(k).reduce((a,d)=>a+Number(d.value||0)*ST(k).p/100,0),0);
+ const wpn=['PROPOSTA'].reduce((s,k)=>s+by(k).reduce((a,d)=>a+Number(d.value||0)*ST(k).p/100,0),0);
  return{vs,by,open,val,w,won,lost,conv,wpn,stalled:vs.filter(d=>d.stalled).length,noTask:vs.filter(d=>d.noTask).length,dupGroups:dupGroups()}}
 function dupGroups(){const m={};CT.contacts.forEach(c=>{const p=String(c.phone||'').replace(/\D/g,'');if(p)m[p]=(m[p]||0)+1});return Object.values(m).filter(n=>n>1).length}
 
@@ -3314,24 +3314,35 @@ function missionsHTML(){const s=stats(),openN=s.open.length,withT=openN-s.noTask
  {ok:s.noTask===0&&openN>0,t:'Nenhuma oportunidade aberta sem follow-up',d:'Cada negócio aberto precisa de uma próxima tarefa com data. Hoje faltam em <strong>'+s.noTask+'</strong> de '+openN+'.',p:withT+' de '+openN},
  {ok:s.stalled===0,t:'Recuperar as oportunidades paradas',d:'Parada = aberta e sem contacto há mais de 14 dias. Contacte o cliente e use «Contactei». Objectivo: nenhuma parada. Agora: <strong>'+s.stalled+'</strong>.',p:s.stalled+' paradas'},
  {ok:s.dupGroups===0,t:'Eliminar os contactos duplicados',d:'Procure os cartões com «Possível duplicado» (mesmo telefone), mantenha um e elimine o outro. Faltam <strong>'+s.dupGroups+'</strong>.',p:s.dupGroups+' pares'}];
- const fc='<div class="ct-m'+(CT.m4==='ok'?' ok':'')+'"><div class="ct-mk">'+(CT.m4==='ok'?'✓':'4')+'</div><div class="ct-mb"><strong>Calcular a previsão de receita</strong><p>Some, só para as oportunidades em <strong>Proposta</strong> e <strong>Negociação</strong>, valor × probabilidade da etapa (50% e 75%). Qual é o total, em Kz, com os dados de agora?</p>'+
- '<form data-ct-fc class="mk-exf"><div class="mk-in"><input name="a" inputmode="decimal" autocomplete="off" placeholder="A sua resposta" aria-label="Previsão"><span>Kz</span></div><button class="btn small">Verificar</button></form><div id="ctFc">'+(CT.m4==='ok'?'<div class="sg-res ct-fres"><div class="sg-k">Previsão de receita</div><div class="sg-big">'+kz(s.wpn)+'</div><div class="sg-rows"><div><span>Proposta × 50%</span><strong>'+kz(s.by('PROPOSTA').reduce((a,d)=>a+Number(d.value||0)*.5,0))+'</strong></div><div><span>Negociação × 75%</span><strong>'+kz(s.by('NEGOCIACAO').reduce((a,d)=>a+Number(d.value||0)*.75,0))+'</strong></div></div></div>':CT.m4==='bad'?'<div class="mk-note mk-bad">Ainda não. Lembre-se: só duas etapas, cada uma com a sua probabilidade.</div>':'')+'</div></div></div>';
+ const fc='<div class="ct-m'+(CT.m4==='ok'?' ok':'')+'"><div class="ct-mk">'+(CT.m4==='ok'?'✓':'4')+'</div><div class="ct-mb"><strong>Calcular a previsão de receita</strong><p>Some, só para as oportunidades em <strong>Proposta</strong>, valor × probabilidade da etapa (50%). Qual é o total, em Kz, com os dados de agora?</p>'+
+ '<form data-ct-fc class="mk-exf"><div class="mk-in"><input name="a" inputmode="decimal" autocomplete="off" placeholder="A sua resposta" aria-label="Previsão"><span>Kz</span></div><button class="btn small">Verificar</button></form><div id="ctFc">'+(CT.m4==='ok'?'<div class="sg-res ct-fres"><div class="sg-k">Previsão de receita</div><div class="sg-big">'+kz(s.wpn)+'</div><div class="sg-rows"><div><span>Proposta × 50%</span><strong>'+kz(s.by('PROPOSTA').reduce((a,d)=>a+Number(d.value||0)*.5,0))+'</strong></div></div></div>':CT.m4==='bad'?'<div class="mk-note mk-bad">Ainda não. Lembre-se: só a etapa Proposta, multiplicada pela sua probabilidade (50%).</div>':'')+'</div></div></div>';
  const done=M.filter(m=>m.ok).length+(CT.m4==='ok'?1:0);
  return '<div class="card"><div class="cardhead"><h2>Missões</h2><span class="muted smalltext">'+done+' de 4 cumpridas</span></div><div class="mk-bar"><i style="width:'+(done*25)+'%"></i></div><p class="muted smalltext">O progresso actualiza-se sozinho. Não conta para a nota.</p>'+
  M.map((m,i)=>'<div class="ct-m'+(m.ok?' ok':'')+'"><div class="ct-mk">'+(m.ok?'✓':(i+1))+'</div><div class="ct-mb"><strong>'+m.t+'</strong><p>'+m.d+'</p></div></div>').join('')+fc+'</div>'}
 
-const SINFO={NOVO:'O contacto acabou de chegar. Registe-o e marque o primeiro contacto.',CONTACTADO:'Já falou com a pessoa. Descubra a necessidade e marque a próxima conversa.',QUALIFICADO:'Tem necessidade, orçamento e decisor. Prepare a proposta.',PROPOSTA:'Proposta enviada. Marque o follow-up para daqui a 2 dias.',NEGOCIACAO:'O cliente pondera preço ou condições. Responda depressa.'};
+const SINFO={NOVO:'O contacto acabou de chegar. Registe-o e marque o primeiro contacto.',CONTACTADO:'Já falou com a pessoa. Descubra a necessidade e marque a próxima conversa.',PROPOSTA:'Proposta enviada. Marque o follow-up para daqui a 2 dias.'};
 function stgInfo(k,val){const s=ST(k),v=num(val);return '<h2 class="sg-h">Informação Geral</h2><h3>'+s.l+'</h3><p>'+(SINFO[k]||'')+'</p><p class="sg-f">Probabilidade de fecho: '+s.p+'%</p>'+(isFinite(v)&&v>0?'<p class="sg-eg">Valor ponderado: '+kz(v*s.p/100)+'</p>':'')}
+/* ---------- Ficha para as Notas do telemóvel ---------- */
+function noteText(d){const L=(k,v)=>k+': '+(v||''),n=d&&d.open&&d.next?d.next:null;
+ return ['LEAD: '+(d?d.c.name:''),L('Serviço',d?d.title:''),L('Origem',d?d.c.source:''),L('Telefone',d?d.c.phone:''),L('Valor',d&&d.value?kz(d.value):''),
+  'Etapa ('+STAGES.map(x=>x.l).join(' / ')+'): '+(d?ST(d.stage).l:'Novo'),
+  L('Próximo passo',n?n.title:''),L('Data do próximo contacto',n?fd(n.due):''),L('Último contacto',d&&d.last_activity?fd(d.last_activity):''),
+  L('Motivo de perda (se perdido)',d&&d.stage==='PERDIDO'?d.lost_reason:''),'Notas:'].join('\n')}
+async function copyNote(){const ta=g('ctNoteTa');if(!ta)return;const t=ta.value;let ok=false;
+ try{await navigator.clipboard.writeText(t);ok=true}catch(_){try{ta.select();ok=document.execCommand('copy')}catch(__){}}
+ toast(ok?'Ficha copiada. Cole-a nas Notas do telemóvel.':'Seleccione o texto e copie.')}
+async function shareNote(){const ta=g('ctNoteTa');if(!ta)return;if(navigator.share){try{await navigator.share({text:ta.value});return}catch(_){return}}copyNote()}
 /* ---------- Janelas (modal) ---------- */
 function modalDraw(){const m=CT.modal,h=g('ctModal');if(!h)return;if(!m){h.innerHTML='';return}
  let body='';
- if(m.t==='lost'){body='<h2>Porque se perdeu?</h2><p class="muted smalltext">Registar o motivo é o que permite aprender com as perdas.</p><form data-ct-form="lost"><div class="field"><label>Motivo</label><select name="r" required>'+LOST.map(r=>'<option>'+r+'</option>').join('')+'</select></div><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Marcar como perdido</button></div></form>'}
+ if(m.t==='note'){const d=m.id?view().find(x=>x.id===m.id):null;body='<h2>Ficha para as Notas</h2><p class="muted smalltext">Copie esta ficha para a app Notas do telemóvel. Serve para registar contactos fora da formação, sem precisar do portal. Mantenha-a actualizada a cada contacto.</p><textarea id="ctNoteTa" class="ct-note-ta" rows="12" spellcheck="false">'+esc(noteText(d))+'</textarea><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Fechar</button><button type="button" class="btn secondary small" data-ct-share>Partilhar</button><button type="button" class="btn small" data-ct-copy>Copiar</button></div>'}
+ else if(m.t==='lost'){body='<h2>Porque se perdeu?</h2><p class="muted smalltext">Registar o motivo é o que permite aprender com as perdas.</p><form data-ct-form="lost"><div class="field"><label>Motivo</label><select name="r" required>'+LOST.map(r=>'<option>'+r+'</option>').join('')+'</select></div><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Marcar como perdido</button></div></form>'}
  else if(m.t==='view'){const d=view().find(x=>x.id===m.id);if(!d){CT.modal=null;return}const t0=todayS(),when=x=>{const n=diffDays(x,t0);return n===0?'Hoje':n===1?'Amanhã':n===-1?'Ontem':fd(x)},st=ST(d.stage);
   body='<div class="pf-box"><div class="pf-head"><span class="pf-av">'+esc(ini(d.c.name))+'</span><div><h2>'+esc(d.c.name)+'</h2><p>'+esc(d.title||'Serviço não indicado')+'</p></div><span class="pd-chip '+(d.stage==='GANHO'?'ok':d.stage==='PERDIDO'?'':'info')+'">'+st.l+'</span></div>'+
   '<div class="pf-grid"><div><label>Telefone</label><b>'+esc(d.c.phone||'—')+'</b></div><div><label>Origem</label><b>'+esc(d.c.source||'—')+'</b></div><div><label>Valor em mesa</label><b class="pf-val">'+(Number(d.value)>0?kz(d.value):'—')+'</b></div><div><label>Fecho previsto</label><b>'+(d.expected_close?fd(d.expected_close):'—')+'</b></div></div>'+
   (d.stage==='PERDIDO'?'<h3 class="pf-h">Motivo de perda</h3><p style="margin:0">'+esc(d.lost_reason||'Sem motivo registado')+'</p>':'')+
   '<h3 class="pf-h">Actividades e conversa</h3><div class="pf-obs">'+(d.pend.length?d.pend.map(t=>'<div><b>'+esc(t.title)+'</b> · '+when(t.due)+(t.due<t0?' (atrasado)':'')+'</div>').join(''):'<span class="muted">Sem tarefas pendentes. Último contacto: '+fd(d.last_activity)+'.</span>')+'</div>'+
-  '<div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Fechar</button><button type="button" class="btn small" data-ct-edit="'+esc(d.id)+'">Editar</button></div></div>'}
+  '<div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Fechar</button><button type="button" class="btn secondary small" data-ct-note="'+esc(d.id)+'">Ficha para notas</button><button type="button" class="btn small" data-ct-edit="'+esc(d.id)+'">Editar</button></div></div>'}
   else if(m.t==='task'){const vs=view().filter(d=>d.open||d.id===m.id),def=addDays(todayS(),2);
   body='<h2>Nova tarefa de follow-up</h2><form data-ct-form="task"><div class="field"><label>Oportunidade</label><select name="d" required>'+vs.map(d=>'<option value="'+esc(d.id)+'"'+(d.id===m.id?' selected':'')+'>'+esc(d.c.name)+' · '+esc(d.title||'')+'</option>').join('')+'</select></div><div class="field"><label>O que fazer</label><input name="t" required maxlength="120" value="Contacto de follow-up"></div><div class="field"><label>Data</label><input name="w" type="date" required value="'+def+'"></div><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Guardar</button></div></form>'}
  else if(m.t==='deal'){const d=m.id?view().find(x=>x.id===m.id):null,c=d?d.c:{},st0=d?d.stage:'NOVO',op=STAGES.filter(s=>OPEN(s.k));
@@ -3382,6 +3393,9 @@ async function onClick(e){
  const t=e.target.closest('button,input[type=checkbox]');
  if(!t){if(e.target.closest('.pd-pop'))return;const cd=e.target.closest('.pd-card');if(cd){if(!cd.classList.contains('is-expanded')){root().querySelectorAll('.pd-card.is-expanded').forEach(n=>n.classList.remove('is-expanded'));cd.classList.add('is-expanded')}else{CT.pop=null;CT.modal={t:'deal',id:cd.dataset.id};draw()}return}if(CT.pop){CT.pop=null;draw()}return}
  const D=t.dataset;if(D.ctPop){CT.pop=CT.pop===D.ctPop?null:D.ctPop;draw();return}if(D.ctDone===undefined)CT.pop=null;
+ if(t.hasAttribute('data-ct-copy')){copyNote();return}
+ if(t.hasAttribute('data-ct-share')){shareNote();return}
+ if(D.ctNote!==undefined){CT.modal={t:'note',id:D.ctNote||null};draw();return}
  if(D.ctStg){const f=t.closest('form');f.elements.e.value=D.ctStg;t.parentNode.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));g('ctInfo').innerHTML=stgInfo(D.ctStg,f.elements.v.value);return}
  if(D.ctMode){CT.mode=D.ctMode;CT.tab='quadro';CT.fa=null;CT.q='';CT.loaded=false;CT.deals=CT.contacts=CT.tasks=[];draw();await load();return}
  if(D.ctTab){CT.tab=D.ctTab;draw();return}
