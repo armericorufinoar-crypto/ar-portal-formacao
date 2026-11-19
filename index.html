@@ -2693,7 +2693,7 @@ function trEvoHTML(s){
  const pct=total?Math.round(100*done/total):0,acc=ans?Math.round(100*cor/ans)+'%':'—',aulaNo=(()=>{let n=0;for(const u of us){if(td>=u.date)n=u.no;else break}return n})();
  return '<div class="card tr-evo"><div class="cardhead"><h2>A minha evolução</h2><span class="tag">'+esc(trLv(s.level))+'</span></div>'
  +(total?'<div class="tr-evo-top"><strong>'+done+' de '+total+' sessões da meta</strong>'+(bonus?'<span class="muted smalltext"> · +'+bonus+' bónus</span>':'')+'<span class="muted smalltext">'+(aulaNo?'Aula '+aulaNo+' de '+us.length:'O ciclo começa na aula 1')+'</span></div><div class="tr-pbar tr-pbar-s"><i style="width:'+pct+'%"></i></div>':'<p class="muted smalltext" style="margin:0 0 10px">A trilha completa aparece quando o formador definir a cadência, as datas e os temas das aulas da sua turma.</p>')
- +'<div class="tr-evo-grid"><div><span>Sequência</span><strong>'+(s.streak||0)+' dia(s)</strong></div><div><span>Precisão</span><strong>'+acc+'</strong></div><div><span>Erros por rever</span><strong>'+(er.due||0)+'</strong></div><div><span>Meta desta semana</span><strong>'+(wk.days_done||0)+' de '+need+'</strong></div>'+(TRS.xpMe?'<div class="tr-evo-xp"><span>XP</span><strong>⭐ '+TRS.xpMe.total+' no total · '+TRS.xpMe.today+' de '+TRS.xpMe.cap+' hoje</strong></div>':'')+'</div></div>'}
+ +'<div class="tr-evo-grid"><div><span>Sequência</span><strong>'+(s.streak||0)+' dia(s)</strong></div><div><span>Precisão</span><strong>'+acc+'</strong></div><div><span>Erros por rever</span><strong>'+(er.due||0)+'</strong></div>'+(TRS.xpMe&&TRS.xpMe.freeze?'<div><span>Proteções da sequência</span><strong>'+(TRS.xpMe.freeze.stock||0)+' de '+(TRS.xpMe.freeze.max||2)+'</strong><small class="muted" style="display:block">Ganhas 1 a cada 7 sessões completas ('+TRS.xpMe.freeze.next_in+' para a próxima). Cobre 1 dia falhado.</small></div>':'')+'<div style="display:none"></div><div><span>Meta desta semana</span><strong>'+(wk.days_done||0)+' de '+need+'</strong></div>'+(TRS.xpMe?'<div class="tr-evo-xp"><span>XP</span><strong>⭐ '+TRS.xpMe.total+' no total · '+TRS.xpMe.today+' de '+TRS.xpMe.cap+' hoje</strong></div>':'')+'</div></div>'}
 
 function trTodayHTML(s){
  const se=s.session||{},er=s.errors||{},td=TRT.today||trToday(),us=TRT.units||[],DN=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
@@ -2882,7 +2882,7 @@ async function trAnswer(val){
  try{let r=await SB.rpc('av_train_answer_xp',{p_question:it.id,p_answer:val});
   if(r.error&&/av_train_answer_xp|schema cache|does not exist/i.test(r.error.message||''))r=await SB.rpc('av_train_answer',{p_question:it.id,p_answer:val});
   if(r.error)throw r.error;const d=r.data||{};
-  if(d.xp_today!=null){TRS.xp=d.xp_today;TRS.combo=d.combo||0;TRS.gainSum+=(d.xp_gain||0)+(d.xp_bonus||0);TRS.fx='xp'}
+  if(d.xp_review)toast('+5 XP por rever um erro');if(d.xp_today!=null){TRS.xp=d.xp_today;TRS.combo=d.combo||0;TRS.gainSum+=(d.xp_gain||0)+(d.xp_bonus||0);TRS.fx='xp'}
   else TRS.fx=null;
   trFx(d.correct?'ok':'bad');if(d.completed&&d.correct_total===d.answered)trConfetti();
   it.answered=true;it.correct=d.correct;TRS.fb={val:val,res:d};TRS.sess.answered=d.answered;TRS.sess.correct=d.correct_total;TRS.sess.completed=d.completed}
