@@ -113,6 +113,7 @@
 .btn.secondary.small.on{background:var(--ink,#17191d);color:#fff;border-color:var(--ink,#17191d)}
 .mk-tabs .mk-flink{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;text-decoration:none;border-radius:10px}.mk-tabs .mk-flink:hover{color:var(--ink)}
 .sg-acts.sg-acts2{grid-template-columns:1fr auto;align-items:stretch}.sg-acts .sg-ib{display:inline-grid;place-items:center;width:46px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);cursor:pointer}.sg-acts .sg-ib:hover{background:#f1f2f4}
+.tr-today-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.tr-today-txt{min-width:0;flex:1 1 220px}.tr-today h2.tr-big{margin:0}.tr-today-go{min-height:44px;padding:0 26px;font-size:16px}@media(max-width:520px){.tr-today-go{width:100%}}
 </style><style id="payCss">.diagnav{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:10px;align-items:start}.diagarrow{position:sticky;top:90px;height:44px;width:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:28px;line-height:1;padding:0 0 4px;box-shadow:0 2px 8px #1018281a}.diagarrow:hover:not([disabled]){background:var(--red);color:#fff;border-color:var(--red)}.diagarrow[disabled]{opacity:.3;cursor:default}.diagmain{min-width:0}.diaghead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}.diagdots{display:flex;gap:6px;flex-wrap:wrap}.diagdot{height:9px;width:9px;padding:0;border-radius:50%;border:0;background:#d4d7dc}.diagdot.on{background:var(--red)}@media(max-width:760px){.diagnav{grid-template-columns:34px minmax(0,1fr) 34px;gap:6px}.diagarrow{height:34px;width:34px;font-size:22px;top:70px}}#matModal .modalbox{width:min(1100px,100%)}#matModal .table{min-width:0;width:100%}#matModal .table th,#matModal .table td{white-space:nowrap}#matModal .table td:first-child{white-space:normal;min-width:150px}#matModal .actions{flex-wrap:nowrap}.paytabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}.paytabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:12px;font-weight:700;color:var(--ink);cursor:pointer}.paytabs button.active{background:var(--red);border-color:var(--red);color:#fff}.paytabs .tag{margin-left:4px}.paybox{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--soft);margin:12px 0}.paybox .row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px;flex-wrap:wrap}.paybox .row:last-child{border:0}.num{text-align:right;white-space:nowrap}.paybar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}.paybar strong{font-size:20px}.paylist{display:grid;gap:6px;max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:10px}.paylist label{font-size:12px;display:flex;gap:8px;align-items:center}.btn[disabled]{opacity:.45;cursor:not-allowed}#payModal{z-index:40}</style>
 <style id="polish">
 /* ===== acabamento visual v18 — só forma, sombras e movimento; as cores não mudam ===== */
@@ -2645,12 +2646,22 @@ function trEvoHTML(s){
  +'<div class="tr-evo-grid"><div><span>Sequência</span><strong>'+(s.streak||0)+' dia(s)</strong></div><div><span>Precisão</span><strong>'+acc+'</strong></div><div><span>Erros por rever</span><strong>'+(er.due||0)+'</strong></div><div><span>Esta semana</span><strong>'+(wk.days_done||0)+' de '+(wk.needed||3)+'</strong></div></div></div>'}
 
 function trTodayHTML(s){
- const se=s.session||{},er=s.errors||{};let main;
- if(s.rest)main='<p class="tr-big">Hoje é sábado: aula presencial.</p><p class="muted smalltext">Ao sábado não há sessão de treino. Volte amanhã.</p>';
- else if(se.completed)main='<p class="tr-big">Sessão de hoje concluída ✓</p><p class="muted smalltext">Acertou '+se.correct+' de '+se.total+'. Volte amanhã para manter a sequência.</p>';
- else main='<p class="tr-big">'+(se.started?'Continue a sessão de hoje':'Sessão de hoje')+'</p><p class="muted smalltext">Cerca de '+(se.minutes||3)+' minutos · '+(se.total||5)+' perguntas'+(er.due?' · tem '+er.due+' erro(s) por rever':'')+'.</p><button type="button" class="btn" data-tr-start>'+(se.started?'Continuar':'Começar')+'</button>';
- return '<div class="card"><div class="cardhead"><h2>Treino de hoje</h2></div>'+main
-  +(s.theme?'<p class="muted smalltext" style="margin:10px 0 0">Tema da semana: <strong>'+esc(s.theme)+'</strong></p>':'')+'</div>'}
+ const se=s.session||{},er=s.errors||{},td=TRT.today||trToday(),us=TRT.units||[],DN=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+ let nx=trAdd(td,1);if(trDowN(nx)===6)nx=trAdd(nx,1);
+ const nextDay=DN[trDowN(nx)]+(trDowN(nx)===0?'':'-feira');
+ /* ligação à aula: aula de hoje, ou a próxima aula por número (a primeira que ainda não começou) */
+ let aula='';
+ if(us.length){const hoje=us.find(u=>u.date===td),prox=us.find(u=>u.date>td);
+  if(hoje)aula='Hoje é a aula '+hoje.no+' de '+us.length+': <strong>'+esc(hoje.theme||'tema por definir')+'</strong>.';
+  else if(prox)aula='Próxima aula: <strong>Aula '+prox.no+' · '+trDow(prox.date)+' '+trDm(prox.date)+'</strong>, '+esc(prox.theme||'tema por definir')+'. Treine já para chegar preparado.'}
+ else if(s.theme)aula='Tema da semana: <strong>'+esc(s.theme)+'</strong>';
+ let head,sub,btn='',cls='';
+ if(s.rest){head='Hoje não há sessão';cls=' tr-today-rest';sub='Sábado é dia de aula presencial. Próxima sessão: <strong>'+nextDay+'</strong>.'}
+ else if(se.completed){head='Sessão de hoje concluída ✓';cls=' tr-today-done';sub='Acertou '+se.correct+' de '+se.total+'. Próxima sessão: <strong>'+nextDay+'</strong>.'}
+ else{head='Hoje: sessão de '+(se.minutes||3)+' min';sub=(se.total||5)+' perguntas'+(er.due?' · '+er.due+' erro(s) por rever':'')+(se.started?' · já começou':'')+'.';
+  btn='<button type="button" class="btn tr-today-go" data-tr-start>'+(se.started?'Continuar':'Começar')+'</button>'}
+ return '<div class="card tr-today'+cls+'"><div class="tr-today-row"><div class="tr-today-txt"><h2 class="tr-big">'+head+'</h2><p class="muted smalltext" style="margin:2px 0 0">'+sub+'</p></div>'+btn+'</div>'
+  +(aula?'<p class="smalltext" style="margin:10px 0 0">'+aula+'</p>':'')+'</div>'}
 
 /* trilha: uma unidade por aula (sábado) com a aula presencial e 6 sessões (dom a sex) */
 function trNodes(u,td){
@@ -2692,7 +2703,7 @@ function trGapHTML(s){let m='';if(!s.cohort)m='ainda não está numa turma';else
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-tr-gap]');if(!b||b.disabled)return;b.disabled=true;b.textContent='A enviar…';const r=await trGapAlert(b.dataset.trGap);b.textContent=r==='ok'?'Formador avisado':r==='dup'?'Já avisado hoje':'Não enviado · tentar de novo';b.disabled=r!=='fail'});
 function trStRender(){
  const box=trStBox(),s=TRS.state||{};
- box.innerHTML=trGapHTML(s)+trEvoHTML(s)+(TRT.units.length?'':trTodayHTML(s)+trJourneyPendingHTML(s))+trTrailHTML(s)+trGoalCard(s)
+ box.innerHTML=trTodayHTML(s)+trGapHTML(s)+trEvoHTML(s)+(TRT.units.length?'':trJourneyPendingHTML(s))+trTrailHTML(s)+trGoalCard(s)
   +'<p class="muted smalltext">O Treino não tem nota e não altera a pauta nem os testes.</p>';
  const c=box.querySelector('.tr-node.cur');if(c)setTimeout(()=>{try{c.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}},120)}
 
