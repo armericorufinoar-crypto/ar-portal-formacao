@@ -219,7 +219,7 @@ html{scroll-behavior:smooth}body{-webkit-font-smoothing:antialiased;text-renderi
 /* fase 4: liga da turma */
 .tr-lg{display:flex;flex-direction:column;gap:6px}
 .tr-lr{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;background:#f6f7f8;font-size:14px}
-.tr-lr.me{background:#dcfce7;font-weight:800;outline:2px solid #58cc02}
+.tr-lr.me{background:#fdeceb;font-weight:800;outline:2px solid #C8101E}
 .tr-lr .p{font-weight:900;text-align:center}.tr-lr.r1 .p{color:#d28d00}.tr-lr small{color:var(--muted);font-weight:600}
 .tr-tier{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:middle}.tr-tier.t1{background:#fde7d3;color:#8a4b12}.tr-tier.t2{background:#e5e7eb;color:#374151}.tr-tier.t3{background:#fef3c7;color:#92400e}.tr-mv{margin:0 0 10px;padding:8px 12px;border-radius:12px;font-size:14px;font-weight:700}.tr-mv.up{background:#dcfce7;color:#166534}.tr-mv.down{background:#fee2e2;color:#991b1b}.tr-mv.same{background:#f3f4f6;color:#374151}.tr-mas{display:flex;align-items:center;gap:12px;border-left:4px solid #C8101E}.tr-av{vertical-align:middle;flex:0 0 auto}.tr-lr .tr-av{margin-right:6px}.tr-avp{position:fixed;inset:0;background:rgba(15,17,20,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px}.tr-avbox{background:#fff;border-radius:16px;padding:18px;max-width:440px;width:100%;max-height:92vh;overflow:auto}.tr-avrow{display:grid;grid-template-columns:64px 1fr;gap:8px;align-items:center;margin-top:8px;font-size:13px;font-weight:700}.tr-avrow div{display:flex;gap:6px;flex-wrap:wrap}.tr-avopt{border:1.5px solid #E5E7EB;background:#fff;border-radius:999px;padding:4px 10px;font-size:13px;cursor:pointer}.tr-avopt.on{border-color:#C8101E;background:#fdeceb;font-weight:800}.tr-mas svg{flex:0 0 64px;width:64px;height:64px}.tr-mas p{margin:0;font-weight:700}.tr-lr b{font-weight:800;color:#b45309}.tr-lgf{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
 /* fase 3: missões e medalhas */
@@ -249,7 +249,7 @@ html{scroll-behavior:smooth}body{-webkit-font-smoothing:antialiased;text-renderi
 .tr-conf i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:trFall 1.8s ease-in forwards}
 .tr-xpbig{font-size:34px;font-weight:900;color:#b45309;margin:6px 0 2px;animation:trPop .6s}
 @keyframes trPop{0%{transform:scale(1)}50%{transform:scale(1.25)}100%{transform:scale(1)}}
-@keyframes trGlow{0%,100%{filter:none}40%{filter:brightness(1.25) drop-shadow(0 0 6px #58cc02)}}
+@keyframes trGlow{0%,100%{filter:none}40%{filter:brightness(1.25) drop-shadow(0 0 6px #C8101E)}}
 @keyframes trFly{0%{opacity:0;transform:translateY(8px)}20%{opacity:1}100%{opacity:0;transform:translateY(-22px)}}
 @keyframes trFall{to{transform:translateY(105vh) rotate(540deg);opacity:.9}}
 @media (prefers-reduced-motion:reduce){.tr-xp.pop,.tr-combo.hot,.tr-pbar.glow i,.tr-gain,.tr-xpbig{animation:none}.tr-conf{display:none}}
@@ -2852,7 +2852,7 @@ function trAnsHTML(it,fb){
  return h}
 function trCanCheck(it){if(TRS.busy||TRS.fb)return false;if(it.kind==='order')return true;if(it.kind==='num')return Number.isFinite(TRS.sel);return TRS.sel!=null&&TRS.sel!==''}
 function trFx(kind){try{if(navigator.vibrate)navigator.vibrate(kind==='ok'?25:[40,40,40])}catch(_){}}
-function trConfetti(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const w=document.createElement('div');w.className='tr-conf';const c=['#58cc02','#1cb0f6','#ffc800','#ff4b4b','#ce82ff'];let h='';for(let i=0;i<40;i++)h+='<i style="left:'+Math.random()*100+'%;background:'+c[i%5]+';animation-delay:'+(Math.random()*.4).toFixed(2)+'s"></i>';w.innerHTML=h;document.body.appendChild(w);setTimeout(()=>w.remove(),2500)}
+function trConfetti(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const w=document.createElement('div');w.className='tr-conf';const c=['#C8101E','#A50D18','#17191D','#9CA3AF','#E5E7EB'];let h='';for(let i=0;i<40;i++)h+='<i style="left:'+Math.random()*100+'%;background:'+c[i%5]+';animation-delay:'+(Math.random()*.4).toFixed(2)+'s"></i>';w.innerHTML=h;document.body.appendChild(w);setTimeout(()=>w.remove(),2500)}
 function trComboMsg(c){return c>=5?'Em chamas! '+c+' seguidas (XP ×1,5)':c>=3?'Combo '+c+'! XP ×1,2':''}
 function trSessionDraw(){
  const e=trLessonEl(),S=TRS.sess,it=S.items[TRS.idx],n=S.items.length,fb=TRS.fb;
