@@ -2572,6 +2572,12 @@ function trStDenied(){return '<div class="card"><div class="cardhead"><h2>Treino
 const TRT={units:[],days:{},today:''};
 const trToday=()=>{try{return new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Luanda'}).format(new Date())}catch(_){return new Date().toISOString().slice(0,10)}};
 const trAdd=(iso,n)=>{const d=new Date(iso+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
+/* valida as datas das aulas: ordem crescente e pelo menos 7 dias entre aulas consecutivas (dates[0]=aula 1…) */
+function trDatesCheck(dates,count){let prev=null,pn=0;for(let n=1;n<=(count||4);n++){const d=dates[n-1];if(!d)continue;
+ if(prev){if(d<=prev)return 'A aula '+n+' ('+d+') tem de ser depois da aula '+pn+' ('+prev+').';
+  const gap=Math.round((new Date(d+'T00:00:00Z')-new Date(prev+'T00:00:00Z'))/864e5);
+  if(gap<7)return 'Entre a aula '+pn+' e a aula '+n+' tem de haver pelo menos 7 dias (agora: '+gap+').'}
+ prev=d;pn=n}return ''}
 const TR_DOW=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 const trDowN=iso=>new Date(iso+'T00:00:00Z').getUTCDay();
 const trDow=iso=>TR_DOW[trDowN(iso)];
@@ -2633,7 +2639,7 @@ function trEvoHTML(s){
  const us=TRT.units,td=TRT.today,er=s.errors||{},wk=s.week||{},total=us.length*6;
  let done=0,ans=0,cor=0;
  us.forEach(u=>{for(let k=1;k<=6;k++){const r=TRT.days[trAdd(u.date,k)];if(r&&r.completed){done++;ans+=Number(r.answered)||0;cor+=Number(r.correct)||0}}});
- const pct=total?Math.round(100*done/total):0,acc=ans?Math.round(100*cor/ans)+'%':'—',aulaNo=Math.min(us.length,us.filter(u=>td>=u.date).length);
+ const pct=total?Math.round(100*done/total):0,acc=ans?Math.round(100*cor/ans)+'%':'—',aulaNo=(()=>{let n=0;for(const u of us){if(td>=u.date)n=u.no;else break}return n})();
  return '<div class="card tr-evo"><div class="cardhead"><h2>A minha evolução</h2><span class="tag">'+esc(trLv(s.level))+'</span></div>'
  +(total?'<div class="tr-evo-top"><strong>'+done+' de '+total+' sessões</strong><span class="muted smalltext">'+(aulaNo?'Aula '+aulaNo+' de '+us.length:'O ciclo começa na aula 1')+'</span></div><div class="tr-pbar tr-pbar-s"><i style="width:'+pct+'%"></i></div>':'<p class="muted smalltext" style="margin:0 0 10px">A trilha completa aparece quando o formador definir a cadência, as datas e os temas das aulas da sua turma.</p>')
  +'<div class="tr-evo-grid"><div><span>Sequência</span><strong>'+(s.streak||0)+' dia(s)</strong></div><div><span>Precisão</span><strong>'+acc+'</strong></div><div><span>Erros por rever</span><strong>'+(er.due||0)+'</strong></div><div><span>Esta semana</span><strong>'+(wk.days_done||0)+' de '+(wk.needed||3)+'</strong></div></div></div>'}
@@ -3053,6 +3059,7 @@ async function trCohortForm(c){
    if(!name){alert('Indique o nome da turma.');return false}
    if(!levels.length){alert('Escolha pelo menos um nível.');return false}
    const kc=Number($('trCCnt').value)||0;if(!kc){alert('Escolha a cadência das aulas presenciais (1 a 4).');return false}
+   {const ds=[1,2,3,4].map(n=>document.querySelector('[data-trc-dt="'+n+'"]').value),e=trDatesCheck(ds,kc);if(e){alert(e);return false}}
    const cadOK=await trCadProbe(),cx=cadOK?{lessons_count:kc}:{};
    try{
     let cid=c?c.id:null;
@@ -3144,6 +3151,7 @@ function trWzRead(){
  if(WZT.step===5){WZT.pick={};document.querySelectorAll('[data-wz-st]').forEach(x=>{if(x.checked)WZT.pick[x.dataset.wzSt]=true})}}
 async function trWzSave(){
  const st=WZT.step;
+
  if(st===2){
   if(!WZT.name){alert('Indique o nome da turma.');return false}
   if(!WZT.level){alert('Escolha o nível da turma.');return false}
@@ -3172,6 +3180,7 @@ function trWzDraw(){
  acts.push({label:st===5?'Concluir':'Guardar e continuar',fn:async()=>{
   trWzRead();
   if(st===3){if(!WZT.count){alert('Escolha a cadência das aulas presenciais (1, 2, 3 ou 4).');return false}
+   {const e=trDatesCheck(WZT.dates,WZT.count);if(e){alert(e);return false}}
    const lost=[1,2,3,4].filter(n=>n>WZT.count&&(WZT.dates[n-1]||WZT.themes[n-1]));
    if(lost.length&&!confirm('Com esta cadência, as aulas '+lost.join(' e ')+' deixam de existir e perdem a data e o tema. Continuar?'))return false}
   try{await trWzSave()}catch(er){alert('Não foi possível guardar: '+trErr(er));return false}
