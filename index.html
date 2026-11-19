@@ -114,6 +114,7 @@
 .mk-tabs .mk-flink{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;text-decoration:none;border-radius:10px}.mk-tabs .mk-flink:hover{color:var(--ink)}
 .sg-acts.sg-acts2{grid-template-columns:1fr auto;align-items:stretch}.sg-acts .sg-ib{display:inline-grid;place-items:center;width:46px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);cursor:pointer}.sg-acts .sg-ib:hover{background:#f1f2f4}
 .tr-today-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.tr-today-txt{min-width:0;flex:1 1 220px}.tr-today h2.tr-big{margin:0}.tr-today-go{min-height:44px;padding:0 26px;font-size:16px}@media(max-width:520px){.tr-today-go{width:100%}}
+.tr-dr{display:block;font-weight:800;font-size:12px;color:#1b6b3a;margin-top:1px;text-align:center}.tr-dr-off{color:#9aa0a8;font-weight:600}.tr-dl{text-align:center;line-height:1.25}.tr-node.miss{border-style:solid;border-width:2px;border-color:#e3e6ea;background:#f6f7f9}
 </style><style id="payCss">.diagnav{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:10px;align-items:start}.diagarrow{position:sticky;top:90px;height:44px;width:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:28px;line-height:1;padding:0 0 4px;box-shadow:0 2px 8px #1018281a}.diagarrow:hover:not([disabled]){background:var(--red);color:#fff;border-color:var(--red)}.diagarrow[disabled]{opacity:.3;cursor:default}.diagmain{min-width:0}.diaghead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}.diagdots{display:flex;gap:6px;flex-wrap:wrap}.diagdot{height:9px;width:9px;padding:0;border-radius:50%;border:0;background:#d4d7dc}.diagdot.on{background:var(--red)}@media(max-width:760px){.diagnav{grid-template-columns:34px minmax(0,1fr) 34px;gap:6px}.diagarrow{height:34px;width:34px;font-size:22px;top:70px}}#matModal .modalbox{width:min(1100px,100%)}#matModal .table{min-width:0;width:100%}#matModal .table th,#matModal .table td{white-space:nowrap}#matModal .table td:first-child{white-space:normal;min-width:150px}#matModal .actions{flex-wrap:nowrap}.paytabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}.paytabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:12px;font-weight:700;color:var(--ink);cursor:pointer}.paytabs button.active{background:var(--red);border-color:var(--red);color:#fff}.paytabs .tag{margin-left:4px}.paybox{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--soft);margin:12px 0}.paybox .row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px;flex-wrap:wrap}.paybox .row:last-child{border:0}.num{text-align:right;white-space:nowrap}.paybar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}.paybar strong{font-size:20px}.paylist{display:grid;gap:6px;max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:10px}.paylist label{font-size:12px;display:flex;gap:8px;align-items:center}.btn[disabled]{opacity:.45;cursor:not-allowed}#payModal{z-index:40}</style>
 <style id="polish">
 /* ===== acabamento visual v18 — só forma, sombras e movimento; as cores não mudam ===== */
@@ -2637,13 +2638,13 @@ function trGoalCard(s){const cw=s.cohort_week;
 
 /* cartão "A minha evolução": progresso do ciclo, precisão, sequência e erros */
 function trEvoHTML(s){
- const us=TRT.units,td=TRT.today,er=s.errors||{},wk=s.week||{},total=us.length*6;
- let done=0,ans=0,cor=0;
- us.forEach(u=>{for(let k=1;k<=6;k++){const r=TRT.days[trAdd(u.date,k)];if(r&&r.completed){done++;ans+=Number(r.answered)||0;cor+=Number(r.correct)||0}}});
+ const us=TRT.units,td=TRT.today,er=s.errors||{},wk=s.week||{},need=trNeed(s),total=us.length*need;
+ let done=0,ans=0,cor=0,bonus=0;
+ us.forEach(u=>{let c=0;for(let k=1;k<=6;k++){const r=TRT.days[trAdd(u.date,k)];if(r&&r.completed){c++;ans+=Number(r.answered)||0;cor+=Number(r.correct)||0}}done+=Math.min(c,need);bonus+=Math.max(0,c-need)});
  const pct=total?Math.round(100*done/total):0,acc=ans?Math.round(100*cor/ans)+'%':'—',aulaNo=(()=>{let n=0;for(const u of us){if(td>=u.date)n=u.no;else break}return n})();
  return '<div class="card tr-evo"><div class="cardhead"><h2>A minha evolução</h2><span class="tag">'+esc(trLv(s.level))+'</span></div>'
- +(total?'<div class="tr-evo-top"><strong>'+done+' de '+total+' sessões</strong><span class="muted smalltext">'+(aulaNo?'Aula '+aulaNo+' de '+us.length:'O ciclo começa na aula 1')+'</span></div><div class="tr-pbar tr-pbar-s"><i style="width:'+pct+'%"></i></div>':'<p class="muted smalltext" style="margin:0 0 10px">A trilha completa aparece quando o formador definir a cadência, as datas e os temas das aulas da sua turma.</p>')
- +'<div class="tr-evo-grid"><div><span>Sequência</span><strong>'+(s.streak||0)+' dia(s)</strong></div><div><span>Precisão</span><strong>'+acc+'</strong></div><div><span>Erros por rever</span><strong>'+(er.due||0)+'</strong></div><div><span>Esta semana</span><strong>'+(wk.days_done||0)+' de '+(wk.needed||3)+'</strong></div></div></div>'}
+ +(total?'<div class="tr-evo-top"><strong>'+done+' de '+total+' sessões da meta</strong>'+(bonus?'<span class="muted smalltext"> · +'+bonus+' bónus</span>':'')+'<span class="muted smalltext">'+(aulaNo?'Aula '+aulaNo+' de '+us.length:'O ciclo começa na aula 1')+'</span></div><div class="tr-pbar tr-pbar-s"><i style="width:'+pct+'%"></i></div>':'<p class="muted smalltext" style="margin:0 0 10px">A trilha completa aparece quando o formador definir a cadência, as datas e os temas das aulas da sua turma.</p>')
+ +'<div class="tr-evo-grid"><div><span>Sequência</span><strong>'+(s.streak||0)+' dia(s)</strong></div><div><span>Precisão</span><strong>'+acc+'</strong></div><div><span>Erros por rever</span><strong>'+(er.due||0)+'</strong></div><div><span>Meta desta semana</span><strong>'+(wk.days_done||0)+' de '+need+'</strong></div></div></div>'}
 
 function trTodayHTML(s){
  const se=s.session||{},er=s.errors||{},td=TRT.today||trToday(),us=TRT.units||[],DN=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
@@ -2664,33 +2665,36 @@ function trTodayHTML(s){
   +(aula?'<p class="smalltext" style="margin:10px 0 0">'+aula+'</p>':'')+'</div>'}
 
 /* trilha: uma unidade por aula (sábado) com a aula presencial e 6 sessões (dom a sex) */
-function trNodes(u,td){
+const trNeed=s=>Number(s&&s.week&&s.week.needed)||3;
+function trNodes(u,td,need){
  const n=[{t:'aula',iso:u.date,st:u.date<td?'done':(u.date===td?'now':'lock'),label:'Aula presencial · '+trDow(u.date)+' '+trDm(u.date)}];
  for(let k=1;k<=6;k++){const iso=trAdd(u.date,k),r=TRT.days[iso],ok=!!(r&&r.completed);
   if(trDowN(iso)===6&&!ok){n.push({t:'aula',iso,st:iso<td?'done':(iso===td?'now':'lock'),label:'Sábado · sem sessão de treino'});continue}
   n.push({t:'day',iso,st:ok?'done':(iso===td?'cur':(iso<td?'miss':'lock')),rec:r,label:trDow(iso)+' '+trDm(iso)})}
+ need=need||3;let c=0;n.forEach(x=>{if(x.t!=='day')return;if(x.st==='done'){c++;if(c>need)x.bonus=true}});
+ n.forEach(x=>{if(x.t==='day'&&x.st==='miss'&&c>=need)x.free=true});
  return n}
 function trNodeHTML(nd,i,s){
  const off=[0,34,52,34,0,-34,-52,-34][i%8],se=(s&&s.session)||{};
  let ic=TR_IC.lock,tip=nd.label,extra='';
  if(nd.t==='aula')ic=TR_IC.book;
- else if(nd.st==='done'){ic=TR_IC.check;if(nd.rec)tip+=' · acertou '+(nd.rec.correct||0)+' de '+(nd.rec.answered||0)}
+ else if(nd.st==='done'){ic=TR_IC.check;if(nd.rec)tip+=' · acertou '+(nd.rec.correct||0)+' de '+(nd.rec.answered||0);if(nd.bonus)tip+=' · bónus'}
  else if(nd.st==='cur'){ic=TR_IC.star;tip+=' · hoje'}
- else if(nd.st==='miss'){ic='';tip+=' · sem sessão'}
+ else if(nd.st==='miss'){ic='';tip+=nd.free?' · sem sessão (meta da semana já cumprida)':' · sem sessão'}
  const cls='tr-node '+nd.t+' '+nd.st;
  let core;
  if(nd.st==='cur')core='<button type="button" class="'+cls+'" data-tr-start aria-label="'+esc(se.started?'Continuar a sessão de hoje':'Começar a sessão de hoje')+'">'+ic+'</button>';
  else core='<div class="'+cls+'" role="img" aria-label="'+esc(tip)+'" title="'+esc(tip)+'">'+ic+'</div>';
  if(nd.st==='cur')extra='<div class="tr-bubble">'+(se.started?'CONTINUAR':'COMEÇAR')+'</div>';
  else if(nd.t==='aula'&&nd.st==='now')extra='<div class="tr-bubble amber">AULA HOJE</div>';
- return '<div class="tr-wrap" style="--x:'+off+'px">'+extra+core+'<span class="tr-dl">'+esc(nd.t==='aula'?'Aula':trDow(nd.iso))+'</span></div>'}
+ return '<div class="tr-wrap" style="--x:'+off+'px">'+extra+core+'<span class="tr-dl">'+esc(nd.t==='aula'?'Aula':trDow(nd.iso))+' '+esc(trDm(nd.iso))+(nd.st==='done'&&nd.rec?'<span class="tr-dr">'+(nd.rec.correct||0)+'/'+(nd.rec.answered||0)+(nd.bonus?' · bónus':'')+'</span>':(nd.st==='miss'?'<span class="tr-dr tr-dr-off">—</span>':''))+'</span></div>'}
 function trTrailHTML(s){
  const us=TRT.units,td=TRT.today;
  if(!us.length)return '';
  let h='<div class="tr-trail">',i=0;
- us.forEach(u=>{const nodes=trNodes(u,td),days=nodes.filter(x=>x.t==='day'),done=days.filter(x=>x.st==='done').length,
+ us.forEach(u=>{const need=trNeed(s),nodes=trNodes(u,td,need),days=nodes.filter(x=>x.t==='day'),done=days.filter(x=>x.st==='done').length,
    state=td>trAdd(u.date,6)?'past':(td>=u.date?'now':'next');
-  h+='<section class="tr-unit '+state+'"><div class="tr-uhead"><div><small>AULA '+u.no+' DE '+us.length+' · '+trDow(u.date)+' '+trDm(u.date)+'</small><b>'+esc(u.theme||'Tema por definir')+'</b></div><span class="tr-upct">'+done+'/'+days.length+'</span></div><div class="tr-path">';
+  h+='<section class="tr-unit '+state+'"><div class="tr-uhead"><div><small>AULA '+u.no+' DE '+us.length+' · '+trDow(u.date)+' '+trDm(u.date)+'</small><b>'+esc(u.theme||'Tema por definir')+'</b></div><span class="tr-upct" title="Meta: '+need+' sessões por semana; as restantes contam como bónus">'+(done>=need?'Meta ✓'+(done>need?' +'+(done-need):''):done+' de '+need)+'</span></div><div class="tr-path">';
   nodes.forEach(nd=>{h+=trNodeHTML(nd,i++,s)});
   h+='</div></section>'});
  const last=us[us.length-1],fin=td>trAdd(last.date,6);
