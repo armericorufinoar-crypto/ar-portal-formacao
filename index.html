@@ -227,6 +227,9 @@ html{scroll-behavior:smooth}body{-webkit-font-smoothing:antialiased;text-renderi
 .tr-qi{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;font-size:14px}
 .tr-qi b{font-weight:700}.tr-qi.done b{color:#1b6b3a}.tr-qi small{font-weight:800;color:var(--muted)}
 .tr-qi .tr-pbar{grid-column:1/-1;height:10px}
+.tr-chestc{display:flex;gap:14px;align-items:center}.tr-chestc p{margin:0 0 6px;font-size:14px}.tr-chestc.off .tr-chest-ic{opacity:.4}.tr-win{font-weight:800;font-size:18px;color:var(--red)}
+.tr-inv{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.tr-inv span{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700}
+.tr-chestres{margin:14px 0 4px;padding:14px;border:1px solid var(--line);border-radius:14px}
 .tr-bd{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px}
 .tr-bdi{text-align:center;font-size:12px;padding:10px 6px;border-radius:14px;background:#fef3c7;line-height:1.25}
 .tr-bdi i{display:block;font-style:normal;font-size:28px}.tr-bdi.off{background:#f1f2f4;color:#9aa0a8}.tr-bdi.off i{filter:grayscale(1);opacity:.5}
@@ -2755,6 +2758,31 @@ function trJourneyPendingHTML(s){if(!s.cohort)return '';
 async function trGapAlert(msg){try{const k='trgap:'+new Date().toISOString().slice(0,10)+':'+msg;if(localStorage.getItem(k))return 'dup';if(!USER||!PROFILE||!PROFILE.staff_id)return 'fail';const mid=id(),a=read(KEYS.messages);a.push({id:mid,staffId:PROFILE.staff_id,area:'AR',text:'Alerta de treino: '+msg,createdAt:new Date().toISOString(),senderUserId:USER.id,replies:[]});if(!put(KEYS.messages,a))return 'fail';refreshChats();await queue;if(read(KEYS.messages).some(x=>x.id===mid)){localStorage.setItem(k,'1');return 'ok'}}catch(_){}return 'fail'}
 function trGapHTML(s){let m='';if(!s.cohort)m='ainda não está numa turma';else if(!TRT.units.length)m=TRT.cad?'faltam datas e temas das aulas ('+TRT.ready+' de '+TRT.cad+' definidas)':'falta definir a cadência, as datas e os temas das aulas';if(!m)return '';return '<div class="notice trgap"><strong>O seu treino está incompleto.</strong> O que falta: '+esc(m)+'. Pode treinar já; a jornada completa aparece quando isto estiver definido.<div style="margin-top:8px"><button type="button" class="btn secondary small" data-tr-gap="'+esc(m)+'">Avisar o formador</button></div></div>'}
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-tr-gap]');if(!b||b.disabled)return;b.disabled=true;b.textContent='A enviar…';const r=await trGapAlert(b.dataset.trGap);b.textContent=r==='ok'?'Formador avisado':r==='dup'?'Já avisado hoje':'Não enviado · tentar de novo';b.disabled=r!=='fail'});
+/* baú diário (migração 035): 1 por dia ao concluir a sessão; o prémio é sorteado no servidor */
+const TR_CHEST='<svg class="tr-chest-ic" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true"><path d="M6 22V18a10 10 0 0 1 10-10h16a10 10 0 0 1 10 10v4z" fill="#17191D"/><rect x="6" y="22" width="36" height="20" rx="3" fill="#2B2E36"/><rect x="6" y="22" width="36" height="4" fill="#C8101E"/><rect x="20" y="24" width="8" height="9" rx="1.5" fill="#E5E7EB"/><circle cx="24" cy="28.5" r="1.5" fill="#17191D"/></svg>';
+const TR_COIN='<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#C8101E"/><circle cx="12" cy="12" r="7.5" fill="none" stroke="#E5E7EB" stroke-width="1.2"/><text x="12" y="16" text-anchor="middle" font-size="11" font-weight="800" fill="#FFFFFF">%</text></svg>';
+const TR_PB='<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="#E5E7EB"/><rect x="9" y="1.5" width="6" height="3.5" rx="1" fill="#2B2E36"/><path d="M8.5 10h7M8.5 13.5h7M8.5 17h4" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round"/></svg>';
+async function trChestLoad(){try{const r=await SB.rpc('av_train_chest_state');if(!r.error&&r.data){const o=JSON.stringify(TRS.ch);TRS.ch=r.data;if(o!==JSON.stringify(r.data)&&!TRS.result&&!(TRS.sess&&$('trLesson')&&$('trLesson').classList.contains('open')))trStRender()}}catch(_){}}
+const trChestPrize=o=>!o?'':o.kind==='xp'?'+'+o.amount+' XP':o.kind==='coins'?'+'+o.amount+' moedas de desconto':o.kind==='freeze'?'+1 proteção da sequência':'1 Playbook (em preparação)';
+function trInvHTML(c){return '<div class="tr-inv"><span>'+TR_COIN+(c.coins||0)+' moedas de desconto</span><span>'+TR_PB+(c.playbooks||0)+' Playbook</span></div>'}
+function trChestResHTML(){const c=TRS.ch;if(!c)return '';
+ if(c.opened)return '<div class="tr-chestc">'+TR_CHEST+'<div><p>Do baú saiu:</p><span class="tr-win">'+esc(trChestPrize(c.opened))+'</span></div></div>';
+ if(c.available)return '<div class="tr-chestc">'+TR_CHEST+'<div><p>Ganhaste o baú de hoje.</p><button type="button" class="btn small" data-tr-chest>Abrir baú</button></div></div>';
+ return ''}
+function trChestHTML(){const c=TRS.ch;if(!c)return '';let b;
+ if(c.opened)b='<p>Hoje saiu: <span class="tr-win">'+esc(trChestPrize(c.opened))+'</span></p><small class="muted">Amanhã há outro baú.</small>';
+ else if(c.available)b='<p>O baú de hoje está pronto.</p><button type="button" class="btn small" data-tr-chest>Abrir baú</button>';
+ else b='<p>Conclui a sessão de hoje para abrir o baú.</p><small class="muted">Sai XP, moedas de desconto, proteção da sequência ou Playbook.</small>';
+ return '<div class="card"><div class="cardhead"><h2>Baú de hoje</h2></div><div class="tr-chestc'+(c.opened||c.available?'':' off')+'">'+TR_CHEST+'<div>'+b+'</div></div>'+trInvHTML(c)+'</div>'}
+document.addEventListener('click',async e=>{const b=e.target.closest&&e.target.closest('[data-tr-chest]');if(!b||b.disabled)return;b.disabled=true;
+ try{const r=await SB.rpc('av_train_chest_open');if(r.error)throw r.error;const d=r.data||{};
+  if(!d.opened){toast(d.reason||'Baú indisponível');await trChestLoad();b.disabled=false;return}
+  trConfetti();TRS.ch=Object.assign({},TRS.ch,{available:false,opened:{kind:d.kind,amount:d.amount},coins:d.coins,playbooks:d.playbooks});
+  toast('Baú: '+trChestPrize(d));
+  const rs=$('trChestRes');if(rs)rs.innerHTML=trChestResHTML();
+  trXpLoad();trQuestLoad();trLeagueLoad();
+  if(!(TRS.sess&&$('trLesson')&&$('trLesson').classList.contains('open')))trStRender()}
+ catch(err){b.disabled=false;alert('Não foi possível abrir o baú (migração 035 aplicada?): '+trErr(err))}});
 async function trQuestLoad(){try{const r=await SB.rpc('av_train_quests');if(!r.error&&r.data){const o=JSON.stringify(TRS.q);TRS.q=r.data;if(o!==JSON.stringify(r.data)&&!(TRS.sess&&$('trLesson')&&$('trLesson').classList.contains('open')))trStRender()}}catch(_){}}
 function trQuestHTML(){const q=TRS.q;if(!q)return '';
  const IC={first:'🌱',xp100:'⭐',xp500:'🌟',xp1000:'🏆',combo10:'🔥',days7:'📅',cap:'💪'};
@@ -2819,8 +2847,8 @@ document.addEventListener('click',async e=>{const b=e.target.closest&&e.target.c
  trConfetti();toast('+'+r.data.xp+' XP da missão!');TRS.xpMe=null;trQuestLoad();trXpLoad()});
 async function trXpLoad(){try{const r=await SB.rpc('av_train_xp_me');if(!r.error&&r.data){const o=JSON.stringify(TRS.xpMe);TRS.xpMe=r.data;if(o!==JSON.stringify(r.data)&&!TRS.result&&!(TRS.sess&&TRS.sess.items&&$('trLesson')&&$('trLesson').classList.contains('open')))trStRender()}}catch(_){}}
 function trStRender(){
- const box=trStBox(),s=TRS.state||{};if(!TRS.xpLoading){TRS.xpLoading=1;trXpLoad().finally(()=>{TRS.xpLoading=0});trQuestLoad();trLeagueLoad()}
- box.innerHTML=trMascotHTML()+trTodayHTML(s)+trGapHTML(s)+trEvoHTML(s)+trQuestHTML()+trLeagueHTML()+(TRT.units.length?'':trJourneyPendingHTML(s))+trTrailHTML(s)+trGoalCard(s)
+ const box=trStBox(),s=TRS.state||{};if(!TRS.xpLoading){TRS.xpLoading=1;trXpLoad().finally(()=>{TRS.xpLoading=0});trQuestLoad();trLeagueLoad();trChestLoad()}
+ box.innerHTML=trMascotHTML()+trTodayHTML(s)+trGapHTML(s)+trEvoHTML(s)+trChestHTML()+trQuestHTML()+trLeagueHTML()+(TRT.units.length?'':trJourneyPendingHTML(s))+trTrailHTML(s)+trGoalCard(s)
   +'<p class="muted smalltext">O Treino não tem nota e não altera a pauta nem os testes.</p>';
  const c=box.querySelector('.tr-node.cur');if(c)setTimeout(()=>{try{c.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}},120)}
 
@@ -2892,9 +2920,11 @@ function trNext(){const j=trPick();TRS.fb=null;TRS.ord=null;TRS.sel=null;TRS.num
 async function trSessionClose(){
  const e=trLessonEl();TRS.result=true;trConfetti();e.innerHTML='<div class="tr-lbody"><div class="tr-lin"><div class="empty">A fechar a sessão…</div></div></div>';
  try{const r=await SB.rpc('av_train_state');if(!r.error&&r.data)TRS.state=r.data}catch(_){}
+ await trChestLoad();
  const S=TRS.sess,s=TRS.state||{},n=S.items.length,c=S.correct==null?S.items.filter(x=>x.correct).length:S.correct,p=n?Math.round(100*c/n):0;
  e.innerHTML='<div class="tr-lbody"><div class="tr-lin tr-res"><h2>Sessão concluída!</h2>'+(TRS.gainSum?'<div class="tr-xpbig">+'+TRS.gainSum+' XP</div><p class="muted" style="margin:0 0 10px">Hoje: '+TRS.xp+' XP</p>':'')
   +'<div class="tr-rgrid"><div class="a"><small>CERTAS</small><b>'+c+'/'+n+'</b></div><div class="b"><small>PRECISÃO</small><b>'+p+'%</b></div><div class="c"><small>SEQUÊNCIA</small><b>'+(s.streak||0)+' dia(s)</b></div></div>'
+  +'<div id="trChestRes" class="tr-chestres">'+trChestResHTML()+'</div>'
   +'<p class="muted">Os erros voltam amanhã e depois ao fim de 3 dias, até acertar duas vezes seguidas.</p></div></div>'
   +'<div class="tr-lfoot ok"><div class="tr-lfin"><span></span><button type="button" class="tr-btn ok" data-tr-end>Continuar</button></div></div>'}
 
