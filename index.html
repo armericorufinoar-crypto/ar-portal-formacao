@@ -230,6 +230,14 @@ html{scroll-behavior:smooth}body{-webkit-font-smoothing:antialiased;text-renderi
 .tr-chestc{display:flex;gap:14px;align-items:center}.tr-chestc p{margin:0 0 6px;font-size:14px}.tr-chestc.off .tr-chest-ic{opacity:.4}.tr-win{font-weight:800;font-size:18px;color:var(--red)}
 .tr-inv{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.tr-inv span{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700}
 .tr-chestres{margin:14px 0 4px;padding:14px;border:1px solid var(--line);border-radius:14px}
+.tr-mas3d{flex:none;width:132px;height:150px;display:grid;place-items:center;cursor:pointer}.tr-mas-cv{display:block;width:100%;height:100%}
+.tr-mas-r{min-width:0;flex:1}.tr-bub{position:relative;display:inline-block;background:#fff;border:1.5px solid #E5E7EB;border-radius:14px;padding:10px 14px;font-weight:700;font-size:14px;line-height:1.35}
+.tr-bub::before{content:"";position:absolute;left:-7px;top:50%;width:10px;height:10px;background:#fff;border-left:1.5px solid #E5E7EB;border-bottom:1.5px solid #E5E7EB;transform:translateY(-50%) rotate(45deg)}
+.tr-resmas{display:flex;align-items:center;gap:10px;justify-content:center;margin:8px 0}.tr-resmas .tr-mas3d{width:110px;height:124px}
+.tr-stabs{display:flex;gap:4px;margin:4px 0 16px;border-bottom:1px solid var(--line)}
+.tr-stabs button{border:0;background:transparent;padding:10px 16px;font-weight:700;font-size:14px;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-1px;border-radius:0}
+.tr-stabs button.on{color:var(--ink);border-bottom-color:#C8101E}.tr-stabs button:focus-visible{outline:2px solid #C8101E;outline-offset:-2px}
+@media(max-width:520px){.tr-mas3d{width:104px;height:124px}.tr-stabs button{flex:1;padding:10px 6px}}
 .tr-bd{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px}
 .tr-bdi{text-align:center;font-size:12px;padding:10px 6px;border-radius:14px;background:#fef3c7;line-height:1.25}
 .tr-bdi i{display:block;font-style:normal;font-size:28px}.tr-bdi.off{background:#f1f2f4;color:#9aa0a8}.tr-bdi.off i{filter:grayscale(1);opacity:.5}
@@ -2668,7 +2676,7 @@ async function trTrailLoad(){
  (d.days||[]).forEach(x=>{TRT.days[String(x.day).slice(0,10)]=x})}
 
 async function trStudentOpen(){
- trLessonClose();
+ trLessonClose();TRS.stab='hoje';
  const box=trStBox();if(!box)return;
  if(TR.missing){box.innerHTML='<div class="notice">O Treino ainda não está disponível. Fale com o formador.</div>';return}
  if(TR.ready&&!TR.prof){box.innerHTML=trStDenied();return}
@@ -2758,6 +2766,83 @@ function trJourneyPendingHTML(s){if(!s.cohort)return '';
 async function trGapAlert(msg){try{const k='trgap:'+new Date().toISOString().slice(0,10)+':'+msg;if(localStorage.getItem(k))return 'dup';if(!USER||!PROFILE||!PROFILE.staff_id)return 'fail';const mid=id(),a=read(KEYS.messages);a.push({id:mid,staffId:PROFILE.staff_id,area:'AR',text:'Alerta de treino: '+msg,createdAt:new Date().toISOString(),senderUserId:USER.id,replies:[]});if(!put(KEYS.messages,a))return 'fail';refreshChats();await queue;if(read(KEYS.messages).some(x=>x.id===mid)){localStorage.setItem(k,'1');return 'ok'}}catch(_){}return 'fail'}
 function trGapHTML(s){let m='';if(!s.cohort)m='ainda não está numa turma';else if(!TRT.units.length)m=TRT.cad?'faltam datas e temas das aulas ('+TRT.ready+' de '+TRT.cad+' definidas)':'falta definir a cadência, as datas e os temas das aulas';if(!m)return '';return '<div class="notice trgap"><strong>O seu treino está incompleto.</strong> O que falta: '+esc(m)+'. Pode treinar já; a jornada completa aparece quando isto estiver definido.<div style="margin-top:8px"><button type="button" class="btn secondary small" data-tr-gap="'+esc(m)+'">Avisar o formador</button></div></div>'}
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-tr-gap]');if(!b||b.disabled)return;b.disabled=true;b.textContent='A enviar…';const r=await trGapAlert(b.dataset.trGap);b.textContent=r==='ok'?'Formador avisado':r==='dup'?'Já avisado hoje':'Não enviado · tentar de novo';b.disabled=r!=='fail'});
+/* mascote 3D do Treino: Three.js r128 só carrega quando o Treino abre; se falhar, fica o símbolo em SVG */
+const TRM={base:'ola',want:'ola'};
+const TRM_MOODS={ola:{e:'dots',m:'smile'},certo:{e:'happy',m:'grin',a:'hop'},errado:{e:'dots',b:1,m:'frown',a:'shake'},combo:{e:'happy',m:'grin',a:'spin',lg:1},xp100:{e:'happy',m:'smile'},cheio:{e:'happy',m:'smile',lg:1},prot:{e:'big',m:'surprise',a:'hop'},dorme:{e:'closed',m:'sleep'}};
+function trMascotLoad(){if(TRM.p)return TRM.p;
+ TRM.p=new Promise((ok,no)=>{if(window.THREE)return ok();const e=document.createElement('script');e.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';e.onload=ok;e.onerror=no;document.head.appendChild(e)}).then(trMascotBuild).catch(()=>{TRM.fail=1});
+ return TRM.p}
+function trMascotBuild(){
+ const T=window.THREE,RM=matchMedia('(prefers-reduced-motion:reduce)').matches;let rd;
+ try{rd=new T.WebGLRenderer({antialias:true,alpha:true})}catch(_){TRM.fail=1;return}
+ const cv=rd.domElement;cv.className='tr-mas-cv';cv.setAttribute('role','img');cv.setAttribute('aria-label','Mascote do Treino');
+ rd.setPixelRatio(Math.min(window.devicePixelRatio||1,2));rd.setClearColor(0x000000,0);
+ const sc=new T.Scene(),cam=new T.PerspectiveCamera(35,1,.1,100);
+ sc.add(new T.AmbientLight(0xffffff,.62));
+ [[.85,4,6,8],[.55,-5,3,-6],[.25,-6,-2,6]].forEach(l=>{const d=new T.DirectionalLight(0xffffff,l[0]);d.position.set(l[1],l[2],l[3]);sc.add(d)});
+ const X=a=>(a-32)*.1,Y=a=>(32-a)*.1,V=(a,b)=>new T.Vector3(X(a),Y(b),0),FL=-2.95;
+ const mat=(c,r,m)=>new T.MeshStandardMaterial({color:c,roughness:r==null?.5:r,metalness:m==null?.12:m});
+ const ext=(p,d,c,b)=>{const h=new T.Shape();p.forEach((q,i)=>i?h.lineTo(X(q[0]),Y(q[1])):h.moveTo(X(q[0]),Y(q[1])));h.closePath();
+  const g=new T.ExtrudeGeometry(h,{depth:d,bevelEnabled:b>0,bevelThickness:b,bevelSize:b,bevelSegments:2,steps:1});g.translate(0,0,-d/2);return new T.Mesh(g,mat(c))};
+ const pv=(m,cx,cy)=>{const g=new T.Group();g.position.set(X(cx),Y(cy),0);m.position.x-=X(cx);m.position.y-=Y(cy);g.add(m);return g};
+ const sph=(x,y,r,c,z,zs)=>{const m=new T.Mesh(new T.SphereGeometry(1,24,16),mat(c,.35,0));m.scale.set(r,r,r*(zs==null?.35:zs));m.position.set(x,y,z||0);return m};
+ const bar=(x,y,len,rad,c,rot)=>{const m=new T.Mesh(new T.CylinderGeometry(rad,rad,len,12),mat(c,.35,0));m.rotation.z=rot==null?Math.PI/2:rot;m.position.set(x,y,0);return m};
+ const arc=(a,b,c,rad,col)=>{const g=new T.Group();g.add(new T.Mesh(new T.TubeGeometry(new T.QuadraticBezierCurve3(V(a[0],a[1]),V(b[0],b[1]),V(c[0],c[1])),24,rad,8,false),mat(col,.4,0)));g.add(sph(X(a[0]),Y(a[1]),rad,col,0,1));g.add(sph(X(c[0]),Y(c[1]),rad,col,0,1));return g};
+ const ring=new T.Mesh(new T.RingGeometry(2.55,2.62,72),new T.MeshBasicMaterial({color:0xC8101E,side:T.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.y=FL;sc.add(ring);
+ const sk=document.createElement('canvas');sk.width=sk.height=128;const sx=sk.getContext('2d'),gr=sx.createRadialGradient(64,64,0,64,64,64);
+ gr.addColorStop(0,'rgba(23,25,29,.55)');gr.addColorStop(1,'rgba(23,25,29,0)');sx.fillStyle=gr;sx.fillRect(0,0,128,128);
+ const shadow=new T.Mesh(new T.PlaneGeometry(5.4,5.4),new T.MeshBasicMaterial({map:new T.CanvasTexture(sk),transparent:true,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.y=FL+.01;sc.add(shadow);
+ /* mascote único: Obsidian + Crimson, igual para todos */
+ const PD=1.5,B=.07,front=PD/2+B,INK='#FFFFFF',MC='#E5E7EB',PC='#17191D';
+ const root=new T.Group(),inner=new T.Group();inner.position.x=-.3;root.add(inner);
+ inner.add(ext([[8,8],[26,8],[26,56],[8,56]],PD,PC,B));
+ const apex=pv(ext([[30,8],[56,8],[50,16],[30,16]],.7,'#C8101E',.05),30,12);inner.add(apex);
+ const bA=pv(ext([[30,26],[50,26],[45,34],[30,34]],.8,'#2B2E36',.06),38,30);inner.add(bA);
+ const bB=pv(ext([[30,46],[54,46],[47,56],[30,56]],.8,'#2B2E36',.06),42,51);inner.add(bB);sc.add(root);
+ const E={},M={};
+ const grp=y=>{const g=new T.Group();g.position.set(0,y,front+.02);g.visible=false;inner.add(g);return g};
+ E.dots=grp(Y(25));E.dots.add(sph(X(13.5),0,.26,INK));E.dots.add(sph(X(20.5),0,.26,INK));
+ E.big=grp(Y(25));[13.5,20.5].forEach(a=>{E.big.add(sph(X(a),0,.36,INK));E.big.add(sph(X(a),-.04,.15,PC,.03))});
+ E.happy=grp(0);E.happy.add(arc([11,26.5],[13.5,21.5],[16,26.5],.1,INK));E.happy.add(arc([18,26.5],[20.5,21.5],[23,26.5],.1,INK));
+ E.closed=grp(Y(25));E.closed.add(bar(X(13.5),0,.5,.1,INK));E.closed.add(bar(X(20.5),0,.5,.1,INK));
+ const brows=grp(0);brows.add(bar(X(13.5),Y(20.5),.6,.08,INK,Math.PI/2+.35));brows.add(bar(X(20.5),Y(20.5),.6,.08,INK,Math.PI/2-.35));
+ M.smile=grp(0);M.smile.add(arc([13,36],[17,40],[21,36],.1,MC));
+ M.grin=grp(0);M.grin.add(arc([12.5,35.5],[17,42],[21.5,35.5],.15,MC));
+ M.frown=grp(0);M.frown.add(arc([13,38.5],[17,34.5],[21,38.5],.1,MC));
+ M.sleep=grp(0);M.sleep.add(bar(X(17),Y(37),.4,.09,MC));
+ M.surprise=grp(0);const tor=new T.Mesh(new T.TorusGeometry(.24,.09,10,24),mat(MC,.4,0));tor.scale.y=1.25;tor.position.set(X(17),Y(37),0);M.surprise.add(tor);
+ let lgT=1,act=null,last=0,t=0,blinkAt=2;
+ TRM.apply=(k,quiet)=>{const d=TRM_MOODS[k]||TRM_MOODS.ola;TRM.mood=k;
+  Object.keys(E).forEach(n=>{E[n].visible=n===d.e});Object.keys(M).forEach(n=>{M[n].visible=n===d.m});brows.visible=!!d.b;lgT=d.lg?1.23:1;
+  if(d.a&&!quiet&&!RM)act={a:d.a,t0:performance.now()}};
+ TRM.fit=h=>{const w=h.clientWidth,hh=h.clientHeight;if(!w||!hh)return;rd.setSize(w,hh,false);cam.aspect=w/hh;
+  const dd=Math.max(10.5,3.5/(.3153*cam.aspect));cam.position.set(0,.2,dd);cam.lookAt(0,-.1,0);cam.updateProjectionMatrix()};
+ const ease=c=>c<.5?2*c*c:1-Math.pow(-2*c+2,2)/2;
+ function frame(now){
+  if(!cv.isConnected||document.hidden){TRM.run=0;return}
+  const dt=Math.min((now-last)/1000,.05);last=now;t+=dt;const m=RM?0:1,sl=TRM.mood==='dorme'?.4:1;
+  let hop=0,spin=0,rz=0;
+  if(act&&!RM){const dur=act.a==='spin'?1500:700,c=Math.min((now-act.t0)/dur,1);
+   if(act.a==='hop')hop=Math.sin(c*Math.PI)*.7;else if(act.a==='spin'){hop=Math.sin(c*Math.PI)*1.1;spin=ease(c)*Math.PI*2}else rz=Math.sin(c*Math.PI*6)*(1-c)*.12;
+   if(c>=1)act=null}
+  const bob=Math.sin(t*1.6*sl)*.08*m*sl;
+  root.position.y=bob+hop;root.rotation.y=-.38+Math.sin(t*.55)*.32*m*sl+spin;root.rotation.z=rz;
+  bA.position.y=Y(30)+Math.sin(t*1.3)*.07*m*sl;bA.rotation.y=Math.sin(t*1.1)*.18*m*sl;
+  bB.position.y=Y(51)+Math.sin(t*1.1+1.7)*.07*m*sl;bB.rotation.y=Math.sin(t*.9+1.2)*.18*m*sl;
+  apex.scale.x+=(lgT-apex.scale.x)*(1-Math.exp(-dt*6));
+  const d=t-blinkAt;let by=1;if(d>=0&&d<.16)by=1-Math.sin(d/.16*Math.PI)*.9;else if(d>=.16)blinkAt=t+2.2+Math.random()*3;
+  E.dots.scale.y=by;E.big.scale.y=by;
+  const h=bob+hop;shadow.scale.setScalar(Math.max(.55,1-h*.16));shadow.material.opacity=Math.max(.45,1-h*.25);
+  rd.render(sc,cam);requestAnimationFrame(frame)}
+ TRM.start=()=>{if(TRM.run)return;TRM.run=1;last=performance.now();requestAnimationFrame(frame)};
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&cv.isConnected)TRM.start()});
+ TRM.cv=cv;TRM.ok=1;TRM.apply('ola',true)}
+function trMascotMood(k,temp){TRM.want=k;if(!TRM.ok)return;TRM.apply(k,false);clearTimeout(TRM.tm);if(temp)TRM.tm=setTimeout(()=>{TRM.apply(TRM.base,true)},2800)}
+function trMascotMount(id,mood,anim){TRM.base=mood||'ola';TRM.want=TRM.base;if(!$(id))return;
+ trMascotLoad().then(()=>{if(!TRM.ok)return;const h=$(id);if(!h)return;if(TRM.cv.parentNode!==h){h.textContent='';h.appendChild(TRM.cv)}
+  TRM.fit(h);TRM.apply(TRM.want,!anim);TRM.start()})}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-tr-stab]');if(b){TRS.stab=b.dataset.trStab;return trStRender(1)}
+ if(e.target.closest&&e.target.closest('#trMas3d'))trMascotMood('certo',1)});
 /* baú diário (migração 035): 1 por dia ao concluir a sessão; o prémio é sorteado no servidor */
 const TR_CHEST='<svg class="tr-chest-ic" viewBox="0 0 48 48" width="56" height="56" aria-hidden="true"><path d="M6 22V18a10 10 0 0 1 10-10h16a10 10 0 0 1 10 10v4z" fill="#17191D"/><rect x="6" y="22" width="36" height="20" rx="3" fill="#2B2E36"/><rect x="6" y="22" width="36" height="4" fill="#C8101E"/><rect x="20" y="24" width="8" height="9" rx="1.5" fill="#E5E7EB"/><circle cx="24" cy="28.5" r="1.5" fill="#17191D"/></svg>';
 const TR_COIN='<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#C8101E"/><circle cx="12" cy="12" r="7.5" fill="none" stroke="#E5E7EB" stroke-width="1.2"/><text x="12" y="16" text-anchor="middle" font-size="11" font-weight="800" fill="#FFFFFF">%</text></svg>';
@@ -2777,21 +2862,22 @@ function trChestHTML(){const c=TRS.ch;if(!c)return '';let b;
 document.addEventListener('click',async e=>{const b=e.target.closest&&e.target.closest('[data-tr-chest]');if(!b||b.disabled)return;b.disabled=true;
  try{const r=await SB.rpc('av_train_chest_open');if(r.error)throw r.error;const d=r.data||{};
   if(!d.opened){toast(d.reason||'Baú indisponível');await trChestLoad();b.disabled=false;return}
-  trConfetti();TRS.ch=Object.assign({},TRS.ch,{available:false,opened:{kind:d.kind,amount:d.amount},coins:d.coins,playbooks:d.playbooks});
+  trConfetti();trMascotMood(d.kind==='freeze'?'prot':'certo',1);TRS.ch=Object.assign({},TRS.ch,{available:false,opened:{kind:d.kind,amount:d.amount},coins:d.coins,playbooks:d.playbooks});
   toast('Baú: '+trChestPrize(d));
   const rs=$('trChestRes');if(rs)rs.innerHTML=trChestResHTML();
   trXpLoad();trQuestLoad();trLeagueLoad();
   if(!(TRS.sess&&$('trLesson')&&$('trLesson').classList.contains('open')))trStRender()}
  catch(err){b.disabled=false;alert('Não foi possível abrir o baú (migração 035 aplicada?): '+trErr(err))}});
 async function trQuestLoad(){try{const r=await SB.rpc('av_train_quests');if(!r.error&&r.data){const o=JSON.stringify(TRS.q);TRS.q=r.data;if(o!==JSON.stringify(r.data)&&!(TRS.sess&&$('trLesson')&&$('trLesson').classList.contains('open')))trStRender()}}catch(_){}}
-function trQuestHTML(){const q=TRS.q;if(!q)return '';
+function trQuestHTML(part){const q=TRS.q;if(!q)return '';
  const IC={first:'🌱',xp100:'⭐',xp500:'🌟',xp1000:'🏆',combo10:'🔥',days7:'📅',cap:'💪'};
  const qs=(q.quests||[]).map(x=>{const d=x.cur>=x.goal;const act=d&&x.bonus&&!x.claimed?'<button type="button" class="btn small" data-tr-claim="'+esc(x.id)+'">Receber +'+x.bonus+' XP</button>':(x.bonus?'<small>'+(x.claimed?'+'+x.bonus+' XP recebido':'+'+x.bonus+' XP')+'</small>':'');
   return '<div class="tr-qi'+(d?' done':'')+'"><b>'+(d?'✓ ':'')+esc(x.title)+'</b>'+(act||'<small>'+x.cur+'/'+x.goal+'</small>')+'<div class="tr-pbar"><i style="width:'+Math.round(100*x.cur/x.goal)+'%"></i></div></div>'}).join('');
  const bd=(q.badges||[]).map(b=>'<div class="tr-bdi'+(b.ok?'':' off')+'" title="'+esc(b.desc)+'"><i>'+(IC[b.id]||'🎖️')+'</i><b>'+esc(b.title)+'</b></div>').join('');
  const n=(q.badges||[]).filter(b=>b.ok).length;
- return '<div class="card"><div class="cardhead"><h2>Missões de hoje</h2></div><div class="tr-q">'+qs+'</div></div>'
-  +'<div class="card"><div class="cardhead"><h2>Medalhas</h2><span class="tag">'+n+' de '+(q.badges||[]).length+'</span></div><div class="tr-bd">'+bd+'</div></div>'}
+ const cq='<div class="card"><div class="cardhead"><h2>Missões de hoje</h2></div><div class="tr-q">'+qs+'</div></div>',
+  cb='<div class="card"><div class="cardhead"><h2>Medalhas</h2><span class="tag">'+n+' de '+(q.badges||[]).length+'</span></div><div class="tr-bd">'+bd+'</div></div>';
+ return part==='q'?cq:part==='b'?cb:cq+cb}
 async function trLeagueLoad(){try{const r=await SB.rpc('av_train_league');if(!r.error&&r.data){const o=JSON.stringify(TRS.lg);TRS.lg=r.data;if(o!==JSON.stringify(r.data)&&!(TRS.sess&&$('trLesson')&&$('trLesson').classList.contains('open')))trStRender()}}catch(_){}}
 const TR_TIER=['','Bronze','Prata','Ouro'];
 const trTierChip=t=>'<span class="tr-tier t'+(t||1)+'">'+TR_TIER[t||1]+'</span>';
@@ -2809,9 +2895,11 @@ function trAvatarSVG(code,size,long){const v=trAvNorm(code).split('').map(Number
  const acc2=v[4]===3?'<path d="M8 21Q17 7 26 21" fill="none" stroke="'+ac+'" stroke-width="2.2"/><rect x="5.5" y="21" width="4" height="9" rx="1.5" fill="'+ac+'"/><rect x="24.5" y="21" width="4" height="9" rx="1.5" fill="'+ac+'"/>':v[4]===4?'<path d="M8 18.5H26" stroke="'+ac+'" stroke-width="3"/>':v[4]===5?'<path d="M18.5 43l-5.5 8.5h4L15.5 59l7-10h-4.2z" fill="'+ac+'"/>':'';
  const apex=long?'M30 8H62L55 16H30Z':'M30 8H56L50 16H30Z';
  return '<svg class="tr-av" width="'+size+'" height="'+size+'" viewBox="0 0 64 64" role="img" aria-label="Avatar"><path d="M8 8H26V56H8Z" fill="'+pc+'"'+(light?' stroke="#D1D5DB" stroke-width="1"':'')+'/>'+eyes+mouth+acc+acc2+'<path d="'+apex+'" fill="'+ac+'"'+(v[1]===1?' stroke="#D1D5DB" stroke-width="1"':'')+'/><path d="M30 26H50L45 34H30Z" fill="'+bl+'"/><path d="M30 46H54L47 56H30Z" fill="'+bl+'"/></svg>'}
-function trMascotHTML(){const x=TRS.xpMe,t=x?Number(x.today)||0:0,cap=x?Number(x.cap)||300:300,g=TRS.lg;
- const m=t>=cap?['Dia cheio! Descansa, voltamos amanhã.',1]:t>=100?['Que ritmo! Já passaste dos 100 XP.',1]:t>0?['Bom arranque. Mais umas perguntas?',0]:['Olá! Vamos treinar um bocadinho?',0];
- return '<div class="card tr-mas">'+trAvatarSVG(g&&g.avatar,64,m[1])+'<div><p>'+esc(m[0])+'</p><button type="button" class="btn secondary small" data-tr-avp style="margin-top:6px">Personalizar avatar</button></div></div>'}
+function trMascotHTML(){const x=TRS.xpMe,st=TRS.state||{},t=x?Number(x.today)||0:0,cap=x?Number(x.cap)||300:300;
+ const m=t>=cap?['cheio','Dia cheio! Descansa, voltamos amanhã.']:t>=100?['xp100','Que ritmo! Já passaste dos 100 XP.']:t>0?['ola','Bom arranque. Mais umas perguntas?']:['ola','Olá! Vamos treinar um bocadinho?'];
+ TRS.masMood=m[0];
+ return '<div class="card tr-mas"><div class="tr-mas3d" id="trMas3d">'+trAvatarSVG('00000',110,m[0]==='cheio')+'</div><div class="tr-mas-r"><div class="tr-bub">'+esc(m[1])+'</div>'
+  +'<div class="tr-inv"><span>Sequência '+(st.streak||0)+' dia(s)</span><span>XP hoje '+t+'/'+cap+'</span></div></div></div>'}
 const TRAV={v:null};
 function trAvPickDraw(){let e=document.getElementById('trAvp');if(!e){e=document.createElement('div');e.id='trAvp';e.className='tr-avp';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');e.setAttribute('aria-label','Personalizar avatar');document.body.appendChild(e)}
  const code=TRAV.v.join('');
@@ -2844,13 +2932,19 @@ document.addEventListener('click',async e=>{const b=e.target.closest&&e.target.c
 document.addEventListener('click',async e=>{const b=e.target.closest&&e.target.closest('[data-tr-claim]');if(!b||b.disabled)return;b.disabled=true;
  const r=await SB.rpc('av_train_quest_claim',{p_id:b.dataset.trClaim});
  if(r.error||!r.data||!r.data.claimed){b.disabled=false;if(r.error)alert('Não foi possível receber o XP: '+(r.error.message||''));else TRS.q=null;trQuestLoad();return}
- trConfetti();toast('+'+r.data.xp+' XP da missão!');TRS.xpMe=null;trQuestLoad();trXpLoad()});
+ trConfetti();trMascotMood('certo',1);toast('+'+r.data.xp+' XP da missão!');TRS.xpMe=null;trQuestLoad();trXpLoad()});
 async function trXpLoad(){try{const r=await SB.rpc('av_train_xp_me');if(!r.error&&r.data){const o=JSON.stringify(TRS.xpMe);TRS.xpMe=r.data;if(o!==JSON.stringify(r.data)&&!TRS.result&&!(TRS.sess&&TRS.sess.items&&$('trLesson')&&$('trLesson').classList.contains('open')))trStRender()}}catch(_){}}
-function trStRender(){
- const box=trStBox(),s=TRS.state||{};if(!TRS.xpLoading){TRS.xpLoading=1;trXpLoad().finally(()=>{TRS.xpLoading=0});trQuestLoad();trLeagueLoad();trChestLoad()}
- box.innerHTML=trMascotHTML()+trTodayHTML(s)+trGapHTML(s)+trEvoHTML(s)+trChestHTML()+trQuestHTML()+trLeagueHTML()+(TRT.units.length?'':trJourneyPendingHTML(s))+trTrailHTML(s)+trGoalCard(s)
+function trStRender(noload){
+ const box=trStBox(),s=TRS.state||{};
+ if(!noload&&!TRS.xpLoading){TRS.xpLoading=1;trXpLoad().finally(()=>{TRS.xpLoading=0});trQuestLoad();trLeagueLoad();trChestLoad()}
+ const tab=TRS.stab||'hoje',TB=[['hoje','Hoje'],['percurso','Percurso'],['liga','Liga']];
+ const pane=tab==='percurso'?trEvoHTML(s)+(TRT.units.length?'':trJourneyPendingHTML(s))+trTrailHTML(s)+trGoalCard(s)
+  :tab==='liga'?trLeagueHTML()+trQuestHTML('b')
+  :trTodayHTML(s)+trGapHTML(s)+trChestHTML()+trQuestHTML('q');
+ box.innerHTML=trMascotHTML()+'<div class="tr-stabs" role="tablist">'+TB.map(x=>'<button type="button" role="tab" aria-selected="'+(x[0]===tab)+'" class="'+(x[0]===tab?'on':'')+'" data-tr-stab="'+x[0]+'">'+x[1]+'</button>').join('')+'</div>'+pane
   +'<p class="muted smalltext">O Treino não tem nota e não altera a pauta nem os testes.</p>';
- const c=box.querySelector('.tr-node.cur');if(c)setTimeout(()=>{try{c.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}},120)}
+ trMascotMount('trMas3d',TRS.masMood);
+ if(tab==='percurso'){const c=box.querySelector('.tr-node.cur');if(c)setTimeout(()=>{try{c.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}},120)}}
 
 /* --- lição em ecrã inteiro --- */
 function trLessonEl(){let e=$('trLesson');if(!e){e=document.createElement('div');e.id='trLesson';e.className='tr-lesson';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');e.setAttribute('aria-label','Sessão de treino');document.body.appendChild(e)}return e}
@@ -2921,12 +3015,12 @@ async function trSessionClose(){
  const e=trLessonEl();TRS.result=true;trConfetti();e.innerHTML='<div class="tr-lbody"><div class="tr-lin"><div class="empty">A fechar a sessão…</div></div></div>';
  try{const r=await SB.rpc('av_train_state');if(!r.error&&r.data)TRS.state=r.data}catch(_){}
  await trChestLoad();
- const S=TRS.sess,s=TRS.state||{},n=S.items.length,c=S.correct==null?S.items.filter(x=>x.correct).length:S.correct,p=n?Math.round(100*c/n):0;
- e.innerHTML='<div class="tr-lbody"><div class="tr-lin tr-res"><h2>Sessão concluída!</h2>'+(TRS.gainSum?'<div class="tr-xpbig">+'+TRS.gainSum+' XP</div><p class="muted" style="margin:0 0 10px">Hoje: '+TRS.xp+' XP</p>':'')
+ const S=TRS.sess,s=TRS.state||{},n=S.items.length,c=S.correct==null?S.items.filter(x=>x.correct).length:S.correct,p=n?Math.round(100*c/n):0,mk=p===100?'combo':p>=70?'certo':'ola',mt=p===100?'Sessão perfeita! Todas certas.':p>=70?'Boa sessão! Continua assim.':'Errar faz parte. Vais rever estas perguntas.';
+ e.innerHTML='<div class="tr-lbody"><div class="tr-lin tr-res"><h2>Sessão concluída!</h2><div class="tr-resmas"><div class="tr-mas3d" id="trMasRes">'+trAvatarSVG('00000',96,p===100)+'</div><div class="tr-bub">'+esc(mt)+'</div></div>'+(TRS.gainSum?'<div class="tr-xpbig">+'+TRS.gainSum+' XP</div><p class="muted" style="margin:0 0 10px">Hoje: '+TRS.xp+' XP</p>':'')
   +'<div class="tr-rgrid"><div class="a"><small>CERTAS</small><b>'+c+'/'+n+'</b></div><div class="b"><small>PRECISÃO</small><b>'+p+'%</b></div><div class="c"><small>SEQUÊNCIA</small><b>'+(s.streak||0)+' dia(s)</b></div></div>'
   +'<div id="trChestRes" class="tr-chestres">'+trChestResHTML()+'</div>'
   +'<p class="muted">Os erros voltam amanhã e depois ao fim de 3 dias, até acertar duas vezes seguidas.</p></div></div>'
-  +'<div class="tr-lfoot ok"><div class="tr-lfin"><span></span><button type="button" class="tr-btn ok" data-tr-end>Continuar</button></div></div>'}
+  +'<div class="tr-lfoot ok"><div class="tr-lfin"><span></span><button type="button" class="tr-btn ok" data-tr-end>Continuar</button></div></div>';trMascotMount('trMasRes',mk,1)}
 
 /* eventos da trilha e da lição (o clique em Continuar/Ver resumo/Fechar usa os atributos já existentes) */
 document.addEventListener('click',e=>{
