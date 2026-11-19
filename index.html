@@ -2758,7 +2758,8 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-tr-g
 async function trQuestLoad(){try{const r=await SB.rpc('av_train_quests');if(!r.error&&r.data){const o=JSON.stringify(TRS.q);TRS.q=r.data;if(o!==JSON.stringify(r.data)&&!(TRS.sess&&$('trLesson')&&$('trLesson').classList.contains('open')))trStRender()}}catch(_){}}
 function trQuestHTML(){const q=TRS.q;if(!q)return '';
  const IC={first:'🌱',xp100:'⭐',xp500:'🌟',xp1000:'🏆',combo10:'🔥',days7:'📅',cap:'💪'};
- const qs=(q.quests||[]).map(x=>{const d=x.cur>=x.goal;return '<div class="tr-qi'+(d?' done':'')+'"><b>'+(d?'✓ ':'')+esc(x.title)+'</b><small>'+x.cur+'/'+x.goal+'</small><div class="tr-pbar"><i style="width:'+Math.round(100*x.cur/x.goal)+'%"></i></div></div>'}).join('');
+ const qs=(q.quests||[]).map(x=>{const d=x.cur>=x.goal;const act=d&&x.bonus&&!x.claimed?'<button type="button" class="btn small" data-tr-claim="'+esc(x.id)+'">Receber +'+x.bonus+' XP</button>':(x.bonus?'<small>'+(x.claimed?'+'+x.bonus+' XP recebido':'+'+x.bonus+' XP')+'</small>':'');
+  return '<div class="tr-qi'+(d?' done':'')+'"><b>'+(d?'✓ ':'')+esc(x.title)+'</b>'+(act||'<small>'+x.cur+'/'+x.goal+'</small>')+'<div class="tr-pbar"><i style="width:'+Math.round(100*x.cur/x.goal)+'%"></i></div></div>'}).join('');
  const bd=(q.badges||[]).map(b=>'<div class="tr-bdi'+(b.ok?'':' off')+'" title="'+esc(b.desc)+'"><i>'+(IC[b.id]||'🎖️')+'</i><b>'+esc(b.title)+'</b></div>').join('');
  const n=(q.badges||[]).filter(b=>b.ok).length;
  return '<div class="card"><div class="cardhead"><h2>Missões de hoje</h2></div><div class="tr-q">'+qs+'</div></div>'
@@ -2778,6 +2779,10 @@ function trLeagueHTML(){const g=TRS.lg;if(!g)return '';
 document.addEventListener('click',async e=>{const b=e.target.closest&&e.target.closest('[data-tr-nick]');if(!b)return;
  const v=prompt('Alcunha para a liga (2 a 20 caracteres). Deixe vazio para mostrar o seu nome.',(TRS.lg&&TRS.lg.nick)||'');if(v===null)return;
  const r=await SB.rpc('av_train_set_nick',{p_nick:v});if(r.error){alert('Não foi possível guardar: '+(r.error.message||''));return}TRS.lg=null;trLeagueLoad()});
+document.addEventListener('click',async e=>{const b=e.target.closest&&e.target.closest('[data-tr-claim]');if(!b||b.disabled)return;b.disabled=true;
+ const r=await SB.rpc('av_train_quest_claim',{p_id:b.dataset.trClaim});
+ if(r.error||!r.data||!r.data.claimed){b.disabled=false;if(r.error)alert('Não foi possível receber o XP: '+(r.error.message||''));else TRS.q=null;trQuestLoad();return}
+ trConfetti();toast('+'+r.data.xp+' XP da missão!');TRS.xpMe=null;trQuestLoad();trXpLoad()});
 async function trXpLoad(){try{const r=await SB.rpc('av_train_xp_me');if(!r.error&&r.data){const o=JSON.stringify(TRS.xpMe);TRS.xpMe=r.data;if(o!==JSON.stringify(r.data)&&!TRS.result&&!(TRS.sess&&TRS.sess.items&&$('trLesson')&&$('trLesson').classList.contains('open')))trStRender()}}catch(_){}}
 function trStRender(){
  const box=trStBox(),s=TRS.state||{};if(!TRS.xpLoading){TRS.xpLoading=1;trXpLoad().finally(()=>{TRS.xpLoading=0});trQuestLoad();trLeagueLoad()}
