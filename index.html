@@ -37,7 +37,7 @@
 .qrow.ok{background:#f6fbf8;border-radius:0 8px 8px 0;padding-right:10px}.qrow.ko{background:#fef7f7;border-radius:0 8px 8px 0;padding-right:10px}.ans-ok{background:#e3f4e9;border-radius:6px;padding:1px 6px}.ans-ko{background:#fbe5e5;border-radius:6px;padding:1px 6px}
 .modal.dlg{z-index:50}.dlgbox{width:min(440px,100%);padding:24px}.dlgbox h2{margin:0 0 8px;font-size:18px}.dlgbox p{margin:0 0 6px;font-size:14px;line-height:1.5;white-space:pre-line}.dlgbox p.smalltext{font-size:12px}.dlgicon{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;margin-bottom:12px;background:#fdecec;color:#a11c27}.dlgicon.warn{background:#fff6e0;color:#8a5a00}.dlgicon.info{background:#eaf1fd;color:#1f4fa3}.dlgbox .modalactions{margin-top:18px}.btn.dlgdanger{background:#a11c27}
 .areachecks{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.areacheck{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid #d9dce1;border-radius:999px;background:#fff;font-size:13px;cursor:pointer}.areacheck input{width:16px;height:16px;accent-color:var(--red);margin:0}.areacheck:has(input:checked){background:#fdecec;border-color:#e8b4b8}
-.linkdel{border:0;background:transparent;color:var(--red);font-size:12px;font-weight:700;padding:0;cursor:pointer}.linkdel:hover{text-decoration:underline}.field .areachecks{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.linkdel{border:0;background:transparent;color:var(--red);font-size:12px;font-weight:700;padding:0;cursor:pointer}.linkdel:hover{text-decoration:underline}.ct-ico{display:inline-grid;place-items:center;padding:0;width:36px;min-width:36px}.field .areachecks{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .field .areacheck{display:inline-flex;align-items:center;gap:9px;margin:0;padding:8px 15px 8px 10px;border:1.5px solid #d9dce1;border-radius:999px;background:#fff;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;user-select:none;transition:background .12s,border-color .12s,color .12s}
 .field .areacheck:hover{border-color:#c9a0a5;background:#fdf8f8}
 .field .areacheck input{appearance:none;-webkit-appearance:none;flex:none;display:grid;place-content:center;width:18px;height:18px;min-height:0;padding:0;margin:0;border:1.5px solid #b8bcc4;border-radius:5px;background:#fff;cursor:pointer;transition:background .12s,border-color .12s}
@@ -2426,7 +2426,7 @@ function payTabInv(){
  +'</tbody></table></div>'+(PAY.inv.length?'':'<div class="empty">Ainda não há notas de pagamento.</div>')+'<p class="muted smalltext">Documentos internos de controlo, sem valor fiscal.</p></div>'}
 function payTabPlans(){
  return '<div class="card"><div class="cardhead"><h2>Planos de parcelas</h2><button class="btn small" data-pa="plan-new">+ Novo plano</button></div><div class="tablewrap"><table class="table"><thead><tr><th>Plano</th><th>Área</th><th>Parcelas</th><th class="num">Valor / parcela</th><th class="num">Total</th><th>Estado</th><th>Acções</th></tr></thead><tbody>'
- +PAY.plans.map(p=>'<tr><td><b>'+esc(p.name)+'</b></td><td title="'+esc(p.area||'')+'">'+esc(p.area?areaShort(p.area):'Todas')+'</td><td>'+p.installments+'</td><td class="num">'+kz(p.installment_amount)+'</td><td class="num">'+kz(p.installments*p.installment_amount)+'</td><td>'+(p.active?'<span class="tag good">Activo</span>':'<span class="tag">Inactivo</span>')+'</td><td><div class="actions">'+(p.active?'<button class="btn small" data-pa="plan-gen" data-id="'+p.id+'">Gerar parcelas</button>':'')+'<button class="btn secondary small" data-pa="plan-edit" data-id="'+p.id+'">Editar</button><button class="btn secondary small" data-pa="plan-toggle" data-id="'+p.id+'">'+(p.active?'Desactivar':'Activar')+'</button></div></td></tr>').join('')
+ +PAY.plans.map(p=>'<tr><td><b>'+esc(p.name)+'</b></td><td title="'+esc(p.area||'')+'">'+esc(p.area?areaShort(p.area):'Todas')+'</td><td>'+p.installments+'</td><td class="num">'+kz(p.installment_amount)+'</td><td class="num">'+kz(p.installments*p.installment_amount)+'</td><td>'+(p.active?'<span class="tag good">Activo</span>':'<span class="tag">Inactivo</span>')+'</td><td><div class="actions">'+(p.active?'<button class="btn small" data-pa="plan-gen" data-id="'+p.id+'">Gerar parcelas</button>':'')+'<button class="btn secondary small" data-pa="plan-edit" data-id="'+p.id+'">Editar</button><button class="btn secondary small" data-pa="plan-toggle" data-id="'+p.id+'">'+(p.active?'Desactivar':'Activar')+'</button><button class="btn danger small" data-pa="plan-del" data-id="'+p.id+'">Apagar</button></div></td></tr>').join('')
  +'</tbody></table></div>'+(PAY.plans.length?'':'<div class="empty">Crie o primeiro plano, por exemplo «Formação Gestão Financeira · 10 × 50 000,00 Kz».</div>')+'</div>'}
 function payTabSet(){
  const s=PAY.set||{},f=(k,l,t,full)=>'<div class="field '+(full?'full':'')+'"><label for="ps_'+k+'">'+l+'</label>'+(t==='area'?'<textarea id="ps_'+k+'" rows="3">'+esc(s[k]||'')+'</textarea>':'<input id="ps_'+k+'" value="'+esc(s[k]||'')+'">')+'</div>';
@@ -2549,6 +2549,13 @@ document.addEventListener('click',async e=>{
  else if(k==='plan-new')payPlanOpen(null);
  else if(k==='plan-edit')payPlanOpen(PAY.plans.find(x=>x.id===id));
  else if(k==='plan-gen')payGenOpen(id);
+ else if(k==='plan-del'){const p=PAY.plans.find(x=>x.id===id);if(!p)return;
+  if(PAY.pro.some(x=>x.plan_id===id)){alert('Este plano já tem parcelas geradas e não pode ser apagado. Desactive-o.');return}
+  if(!(await askConfirm({title:'Apagar este plano?',message:p.name+' · '+p.installments+' × '+kz(p.installment_amount),detail:'Esta acção não pode ser desfeita.',confirmLabel:'Apagar',danger:true})))return;
+  const r=await SB.from('av_fee_plans').delete().eq('id',id).select();
+  if(r.error){const m=String(r.error.message||'');alert(/foreign key|violates/i.test(m)?'Este plano já tem parcelas geradas e não pode ser apagado. Desactive-o.':'Não foi possível apagar o plano: '+m)}
+  else if(!(r.data||[]).length){alert('O plano não foi apagado: o servidor não permitiu a operação. Falta a regra de apagar planos no Supabase.')}
+  else{await payLoad();payRender();toast('Plano apagado.')}}
  else if(k==='plan-toggle'){const p=PAY.plans.find(x=>x.id===id);if(!p)return;const r=await SB.from('av_fee_plans').update({active:!p.active}).eq('id',id);if(r.error)alert('Não foi possível alterar o plano: '+r.error.message);else{await payLoad();payRender()}}
  else if(k==='saveset')paySaveSet()});
 document.addEventListener('input',e=>{const t=e.target;if(t.id==='payQ'){PAY.f.q=t.value;payAdminRender()}});
@@ -3901,7 +3908,7 @@ const TABS=[['quadro','Quadro'],['tarefas','Tarefas']];
 function shell(){
  root().innerHTML='<div class="ct-top"><div class="sg-seg ct-mode" role="tablist" aria-label="Modo">'+
  '<button type="button" data-ct-mode="guiado">Cenário guiado</button><button type="button" data-ct-mode="negocio">Meu negócio</button></div>'+
- '<div class="ct-topr"><button type="button" class="btn small pd-btn" data-ct-new>+ Negócio</button><button type="button" class="btn secondary small" data-ct-note="">Ficha para notas</button><button type="button" class="linkdel" data-ct-reset>Repor cenário</button></div></div>'+
+ '<div class="ct-topr"><button type="button" class="btn small pd-btn" data-ct-new>+ Negócio</button><button type="button" class="btn secondary small" data-ct-note="">Ficha para notas</button><button type="button" class="btn secondary small ct-ico" data-ct-reset title="Repor cenário" aria-label="Repor cenário"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button></div></div>'+
  '<div class="mk-tabs" id="ctTabs" role="tablist"></div><div id="ctNote"></div><div id="ctPanel"></div><div id="ctModal"></div>';
  draw()}
 function draw(){
@@ -4105,6 +4112,43 @@ window.prProject=pjOpen;
 window.prOpen=function(){const r=g('prRoot');if(!r)return;
  if(!r.dataset.wired){r.dataset.wired='1';r.addEventListener('click',e=>{const o=e.target.closest('[data-pr-open]');if(o){show(o.dataset.prOpen);return}if(e.target.closest('[data-pr-back]'))show(null)})}
  show(cur)};
+})();
+
+/* ---------- Botões de acção: palavras trocadas por ícones (com dica e rótulo de acessibilidade) ---------- */
+(()=>{
+ const SV=d=>'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d+'</svg>';
+ const IC={
+  eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>',
+  trash:'<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/>',
+  lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',
+  unlock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 017.5-1.5"/>',
+  power:'<path d="M12 3v9"/><path d="M6.4 6.4a8 8 0 1011.2 0"/>',
+  pause:'<circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/>',
+  ban:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',
+  copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/>',
+  print:'<path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/>',
+  clip:'<path d="M21 11.5l-8.6 8.6a5.5 5.5 0 01-7.8-7.8l8.6-8.6a3.7 3.7 0 015.2 5.2l-8.6 8.6a1.8 1.8 0 01-2.6-2.6l7.9-7.9"/>',
+  file:'<path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>'
+ };
+ const MAP={'ver':['eye','Ver'],'editar':['edit','Editar'],'eliminar':['trash','Eliminar',1],'apagar':['trash','Apagar',1],'remover':['trash','Remover',1],
+  'bloquear':['lock','Bloquear'],'desbloquear':['unlock','Desbloquear'],'activar':['power','Activar'],'desactivar':['pause','Desactivar'],
+  'anular':['ban','Anular',1],'copiar':['copy','Copiar'],'imprimir':['print','Imprimir'],'comprovativo':['clip','Comprovativo'],'nota de pagamento':['file','Nota de pagamento']};
+ const st=document.createElement('style');
+ st.textContent='.pd-ic.sm{width:24px;height:24px;border-radius:6px;vertical-align:middle;margin:0 1px}.pd-ic.sm svg{width:14px;height:14px}td .pd-ic+.pd-ic,.actions .pd-ic+.pd-ic{margin-left:0}';
+ document.head.appendChild(st);
+ function conv(b){
+  if(!b||b.dataset.ico||b.querySelector('svg,img'))return;
+  if(b.closest('#payMActs,#dlgModal'))return;
+  const m=MAP[(b.textContent||'').trim().toLowerCase()];if(!m)return;
+  const sm=b.classList.contains('linkdel'),danger=b.classList.contains('danger')||!!m[2];
+  b.dataset.ico='1';b.title=m[1];b.setAttribute('aria-label',m[1]);
+  b.className='pd-ic'+(danger?' danger':'')+(sm?' sm':'');
+  b.innerHTML=SV(IC[m[0]]);
+ }
+ const scan=n=>{if(n.nodeType!==1)return;if(n.tagName==='BUTTON')conv(n);n.querySelectorAll&&n.querySelectorAll('button').forEach(conv)};
+ new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(scan);if(m.target&&m.target.tagName==='BUTTON')conv(m.target)}}).observe(document.body,{childList:true,subtree:true,characterData:true});
+ scan(document.body);
 })();
 
 hlpInit();boot();
