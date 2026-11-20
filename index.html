@@ -3597,6 +3597,8 @@ function trWzDraw(){
 (function(){
 'use strict';
 const LS_KEY='av_sim_state_v1',LS_FICHAS='av_sim_fichas_v1';
+const lsk=b=>b+'_'+((typeof USER!=='undefined'&&USER&&USER.id)||'anon');
+try{localStorage.removeItem(LS_KEY);localStorage.removeItem(LS_FICHAS)}catch(e){}
 const kz=v=>(v==null||!isFinite(v))?'—':new Intl.NumberFormat('pt-AO',{maximumFractionDigits:0}).format(Math.round(v))+' Kz';
 const pc=(v,d=1)=>(v==null||!isFinite(v))?'—':new Intl.NumberFormat('pt-PT',{maximumFractionDigits:d,minimumFractionDigits:0}).format(v)+'%';
 const un=v=>(v==null||!isFinite(v))?'—':new Intl.NumberFormat('pt-PT',{maximumFractionDigits:0}).format(Math.ceil(v-1e-9))+' un.';
@@ -3638,9 +3640,11 @@ const DEF=()=>({tab:'sim',mode:'',
  calc:{custo:'',val:''},
  m:{nome:'',custos:[{n:'Materiais',v:''}],fixos:'',vendas:'',imposto:'',comissao:'',margem:'30',desc:['0','10','20']}});
 let S=DEF(),RES=null,BUSY=false,EX={list:null,att:{},cur:null,err:null,loading:false,failedAt:0},FICHAS=[],FDB=true;
-try{const x=JSON.parse(localStorage.getItem(LS_KEY)||'null');
- if(x&&x.m){const d=DEF();S.mode=['markup','margem','completo'].includes(x.mode)?x.mode:'';S.calc.custo=(x.calc&&x.calc.custo)||'';S.m=Object.assign(d.m,x.m);if(!Array.isArray(S.m.custos)||!S.m.custos.length)S.m.custos=d.m.custos}}catch(e){}
-const save=()=>{try{localStorage.setItem(LS_KEY,JSON.stringify({mode:S.mode,calc:S.calc,m:S.m}))}catch(e){}};
+let LS_USER=null;
+function lsLoad(){S=DEF();RES=null;try{const x=JSON.parse(localStorage.getItem(lsk(LS_KEY))||'null');
+ if(x&&x.m){const d=DEF();S.mode=['markup','margem','completo'].includes(x.mode)?x.mode:'';S.calc.custo=(x.calc&&x.calc.custo)||'';S.m=Object.assign(d.m,x.m);if(!Array.isArray(S.m.custos)||!S.m.custos.length)S.m.custos=d.m.custos}}catch(e){}}
+function lsEnsure(){const u=(typeof USER!=='undefined'&&USER&&USER.id)||'anon';if(LS_USER===u)return;LS_USER=u;FICHAS=[];lsLoad()}
+const save=()=>{try{localStorage.setItem(lsk(LS_KEY),JSON.stringify({mode:S.mode,calc:S.calc,m:S.m}))}catch(e){}};
 const root=()=>document.getElementById('mkRoot');
 const g=id=>document.getElementById(id);
 const fnum=(v,d=2)=>{const s=Math.abs(v).toFixed(d),p=s.split('.');return(v<0?'-':'')+p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.')+(d?','+p[1]:'')};
@@ -3654,10 +3658,10 @@ const ICON_SAVE='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" str
 const ICON_FOLDER='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
 const TABS=[['sim','Simulador'],['ex','Exercícios']];
 function shell(){
- root().innerHTML='<div class="mk-tabs" role="tablist">'+TABS.map(t=>'<button type="button" role="tab" data-mk-tab="'+t[0]+'">'+t[1]+'</button>').join('')+'<button type="button" class="mk-flink" data-mk-tab="fichas" aria-label="Fichas guardadas" title="Fichas guardadas">'+ICON_FOLDER+'</button></div>'+
+ lsEnsure();root().innerHTML='<div class="mk-tabs" role="tablist">'+TABS.map(t=>'<button type="button" role="tab" data-mk-tab="'+t[0]+'">'+t[1]+'</button>').join('')+'<button type="button" class="mk-flink" data-mk-tab="fichas" aria-label="Fichas guardadas" title="Fichas guardadas">'+ICON_FOLDER+'</button></div>'+
  '<div id="mkPanel"></div>';draw()}
 function draw(){
- root().querySelectorAll('[data-mk-tab]').forEach(b=>{const on=b.dataset.mkTab===S.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',on)});
+ lsEnsure();root().querySelectorAll('[data-mk-tab]').forEach(b=>{const on=b.dataset.mkTab===S.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',on)});
  const p=g('mkPanel');
  if(S.tab==='sim'){p.innerHTML=simHTML();drawSim()}
  else if(S.tab==='ex'){p.innerHTML=exHTML();exLoad()}
@@ -3792,9 +3796,9 @@ async function exCheck(id,raw,form){
 
 /* ---------- 5. Fichas ---------- */
 function fichasHTML(){return '<div class="card"><div class="cardhead"><h2>Fichas guardadas</h2><button type="button" class="btn secondary small" data-mk-tab="sim">← Voltar</button></div><div id="mkFichas"><div class="empty">A carregar…</div></div></div>'}
-function lsFichas(){try{const x=JSON.parse(localStorage.getItem(LS_FICHAS)||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
+function lsFichas(){try{const x=JSON.parse(localStorage.getItem(lsk(LS_FICHAS))||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
 async function fichasLoad(){
- try{const r=await SB.from('av_sim_pricing').select('id,name,data,created_at').order('created_at',{ascending:false});if(r.error)throw r.error;FICHAS=r.data||[];FDB=true}
+ try{const r=await (()=>{let x=SB.from('av_sim_pricing').select('id,name,data,created_at');if(USER&&USER.id)x=x.eq('user_id',USER.id);return x.order('created_at',{ascending:false})})();if(r.error)throw r.error;FICHAS=r.data||[];FDB=true}
  catch(e){FDB=false;FICHAS=lsFichas()}
  if(S.tab==='fichas')fichasDraw()}
 function fichasDraw(){const b=g('mkFichas');if(!b)return;
@@ -3806,7 +3810,7 @@ async function fichaSave(){
  if(RES&&RES.mode!=='completo'&&RES.r){const md=MODES.find(x=>x[0]===RES.mode);name=(md?md[1]:'Simulação')+' '+fnum(RES.val,Number.isInteger(RES.val)?0:2)+'% sobre '+kz2(RES.custo);data={k:'s',mode:RES.mode,c:String(S.calc.custo),v:String(S.calc.val),r:RES.r}}
  else{const m=S.m,mo=model(m);if(!mo.pTar){toast('Complete o custo e a margem antes de guardar.');return}name=(m.nome||'').trim()||('Ficha de '+new Date().toLocaleDateString('pt-PT'));data={m:JSON.parse(JSON.stringify(m))}}
  try{const r=await SB.from('av_sim_pricing').insert({name,data});if(r.error)throw r.error;toast('Ficha guardada.')}
- catch(e){const l=lsFichas();l.unshift({id:'L'+Date.now(),name,data,created_at:new Date().toISOString()});try{localStorage.setItem(LS_FICHAS,JSON.stringify(l.slice(0,50)));toast('Ficha guardada neste dispositivo.')}catch(_){toast('Não foi possível guardar a ficha.')}}}
+ catch(e){const l=lsFichas();l.unshift({id:'L'+Date.now(),name,data,created_at:new Date().toISOString()});try{localStorage.setItem(lsk(LS_FICHAS),JSON.stringify(l.slice(0,50)));toast('Ficha guardada neste dispositivo.')}catch(_){toast('Não foi possível guardar a ficha.')}}}
 function fichaRows(f){if(f.data&&f.data.k==='s'){const d=f.data,md=MODES.find(x=>x[0]===d.mode);return[['Ficha',f.name],['Data',String(f.created_at||'').slice(0,10)],['',''],['Tipo',md?md[1]:d.mode],['Custo por unidade',n0(d.c)],[d.mode==='margem'?'Margem (%)':'Markup (%)',n0(d.v)],['Preço',Math.round(d.r.preco*100)/100],['Lucro por unidade',Math.round(d.r.lucro*100)/100],['Markup sobre o custo (%)',Math.round(d.r.markup*10)/10],['Margem sobre o preço (%)',Math.round(d.r.margem*10)/10]]}const m=f.data.m,mo=model(m);return[['Ficha',f.name],['Data',String(f.created_at||'').slice(0,10)],['',''],['Custos directos por unidade',''],...m.custos.map(c=>[c.n,n0(c.v)]),['Total directos',mo.direct],['Custos fixos por mês',mo.fixos],['Unidades por mês',mo.units],['Custo fixo por unidade',Math.round(mo.fixUnit*100)/100],['Custo total por unidade',Math.round(mo.base*100)/100],['Impostos e taxas (%)',mo.imp*100],['Comissão (%)',mo.com*100],['Margem pretendida (%)',mo.mg*100],['Preço mínimo',mo.pMin?Math.round(mo.pMin):''],['Preço com margem',mo.pTar?Math.round(mo.pTar):''],['Markup sobre o custo (%)',mo.markup!=null?Math.round(mo.markup*10)/10:''],['Equilíbrio (unid./mês)',mo.be?Math.ceil(mo.be):'']]}
 function fichaCsv(f){const rows=fichaRows(f),nm='ficha_preco_'+String(f.name).replace(/[^\w]+/g,'_').slice(0,30);
  if(typeof csvDownload==='function')csvDownload(nm+'.csv',rows);}
@@ -3838,7 +3842,7 @@ async function onClick(e){const t=e.target.closest('button');if(!t)return;
   else if(t.dataset.mkPrint)fichaPrint(f);
   else if(t.dataset.mkCsv)fichaCsv(f);
   else if(t.dataset.mkRm){if(!confirm('Eliminar a ficha «'+f.name+'»?'))return;
-   if(String(f.id).startsWith('L')){const l=lsFichas().filter(x=>x.id!==f.id);try{localStorage.setItem(LS_FICHAS,JSON.stringify(l))}catch(_){}}
+   if(String(f.id).startsWith('L')){const l=lsFichas().filter(x=>x.id!==f.id);try{localStorage.setItem(lsk(LS_FICHAS),JSON.stringify(l))}catch(_){}}
    else{const r=await SB.from('av_sim_pricing').delete().eq('id',f.id);if(r.error){toast('Não foi possível eliminar.');return}}
    FICHAS=FICHAS.filter(x=>x.id!==f.id);fichasDraw()}}}
 function onSubmit(e){const f=e.target.closest('[data-mk-form]');if(!f)return;e.preventDefault();exCheck(f.dataset.mkForm,f.elements.a.value,f)}
@@ -3882,7 +3886,7 @@ function view(){ /* junta oportunidade + contacto + tarefas e calcula os alertas
 async function load(){
  if(CT.loading)return;CT.loading=true;CT.err=null;
  try{
-  const q=t=>SB.from(t).select('*').eq('mode',CT.mode);
+  const q=t=>{let x=SB.from(t).select('*').eq('mode',CT.mode);if(USER&&USER.id)x=x.eq('user_id',USER.id);return x};
   let [d,c,t]=await Promise.all([q('av_sim_deals'),q('av_sim_contacts'),q('av_sim_tasks')]);
   const e=d.error||c.error||t.error;if(e)throw e;
   if(CT.mode==='guiado'&&!(d.data||[]).length){const r=await SB.rpc('av_sim_seed',{p_mode:'guiado'});if(r.error)throw r.error;
