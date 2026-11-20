@@ -1079,7 +1079,31 @@ input[type=checkbox],input[type=radio]{width:18px!important;height:18px!importan
 .tr-rtxt{display:flex;flex-direction:column;font-size:12px;flex:1;gap:2px}.tr-rauto{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer}.tr-mascot-read{margin-top:8px}.tr-rbtn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px}
 .rowbtn{flex:none;border:1px solid var(--red);color:var(--red);background:#fff;border-radius:999px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;min-height:38px}.rowbtn:hover,.rowbtn:focus-visible{background:var(--red);color:#fff}
 .calh{margin:18px 0 8px;font-size:14px}.calh:first-child{margin-top:4px}
-#stAulaSearch{width:100%}.aulasearch{padding:12px 14px}.sbox{position:relative;display:flex;align-items:center}.sbox svg{position:absolute;left:13px;color:var(--muted);pointer-events:none}#stAulaSearch{border:1px solid var(--line);border-radius:999px;padding:11px 42px 11px 38px;font-size:14px;background:#fff;-webkit-appearance:none;appearance:none;outline:0}#stAulaSearch:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(200,16,30,.12)}#stAulaSearch::-webkit-search-cancel-button{display:none}.sclear{position:absolute;right:8px;border:0;background:#eceef1;border-radius:50%;width:26px;height:26px;line-height:1;font-size:16px;cursor:pointer;color:var(--ink)}.schips{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.schips button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--ink);cursor:pointer}.schips button.active{background:var(--ink);color:#fff;border-color:var(--ink)}.aulacount{margin:0 2px 8px}
+#stAulaSearch{width:100%}.aulasearch{padding:12px 14px}.sbox{position:relative;display:flex;align-items:center}.sbox svg{position:absolute;left:13px;color:var(--muted);pointer-events:none}#stAulaSearch{border:1px solid var(--line);border-radius:999px;padding:11px 42px 11px 38px;font-size:14px;background:#fff;-webkit-appearance:none;appearance:none;outline:0}#stAulaSearch:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(200,16,30,.12)}#stAulaSearch::-webkit-search-cancel-button{display:none}.sclear{position:absolute;right:8px;border:0;background:#eceef1;border-radius:50%;width:26px;height:26px;line-height:1;font-size:16px;cursor:pointer;color:var(--ink)}.schips{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.schips button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--ink);cursor:pointer}.schips button.active{background:var(--red);color:#fff;border-color:var(--red)}.aulacount{margin:0 2px 8px}
+/* ===== Treino diário: acabamento unificado (tipografia, separadores, cartões, barras) ===== */
+#trStBody .tr-stabs{gap:8px;border-bottom:0;margin:2px 0 16px}
+#trStBody .tr-stabs button{flex:1;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);padding:10px 8px;font-size:13px;font-weight:600;margin:0;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s}
+#trStBody .tr-stabs button.on{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 4px 12px #c8101e33}
+#trStBody .tr-stabs button:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+#trStBody .card{border-radius:var(--r-lg)}
+#trStBody .cardhead h2,#trStBody .tr-big{font-family:var(--f-display);font-weight:800;letter-spacing:-.01em}
+#trStBody .tr-big{font-size:20px}
+#trStBody .tr-mas{border-left:0;border:1px solid #eceef1}
+#trStBody .tr-bub{font-weight:600;font-size:14px;border-width:1px}
+#trStBody .tr-bub::before{border-width:1px}
+#trStBody .tr-inv{font-size:12px;color:var(--muted);font-weight:600}
+#trStBody .tr-today-go{border-radius:999px;font-weight:700;letter-spacing:0;text-transform:none}
+#trStBody .tr-evo-grid>div{background:var(--soft);border:1px solid #eceef1;border-radius:14px;padding:12px 14px}
+#trStBody .tr-evo-grid span{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+#trStBody .tr-evo-grid strong{font-family:var(--f-display);font-size:20px;font-weight:800;letter-spacing:-.01em}
+#trStBody .tr-evo-top strong{font-family:var(--f-display);font-weight:700}
+#trStBody .tr-pbar,#trStBody .tr-pbar-s{height:8px}
+#trStBody .tr-pbar i::after{display:none}
+#trStBody .tr-qi .tr-pbar{height:6px}
+#trStBody .tr-qi b{font-weight:600}
+#trStBody .tr-bdi{background:var(--soft);border:1px solid #eceef1;border-radius:14px;font-weight:600}
+#trStBody .tr-bdi.off{background:#f6f7f8;color:#9aa0a8}
+#trStBody .tag{font-weight:700}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
