@@ -406,7 +406,8 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 .pd-av{width:22px;height:22px;border-radius:50%;background:#d8dbe2;color:#3a3f4b;font-size:10px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex:none}
 .pd-val{font-size:12px;color:#4b4f58;font-weight:700;white-space:nowrap}
 .pd-st{width:22px;height:22px;border-radius:50%;border:0;color:#fff;font-size:12px;font-weight:800;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:none;padding:0}
-.pd-st.ok{background:#1f9d63}.pd-st.late{background:#d4202f}.pd-st.none{background:none;color:#e8a317;font-size:19px}
+.pd-st.ok,.pd-st.late,.pd-st.none{background:none;font-size:17px}
+.pd-emo{font-size:14px;line-height:1;font-style:normal;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif}.pd-ic.sm .pd-emo{font-size:12px}
 .pd-pill{font-size:10px;font-weight:800;letter-spacing:.04em;padding:3px 8px;border-radius:999px}.pd-pill.won{background:#1f9d63;color:#fff}.pd-pill.lost{background:#e3e5ea;color:#4b4f58}
 .pd-pop{position:absolute;left:8px;right:8px;top:calc(100% - 4px);z-index:30;background:#fff;border:1px solid #e3e5ea;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.16);cursor:default;overflow:hidden}
 .pd-pr{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;font-size:12px;border-bottom:1px solid #eef0f3}.pd-pr b{display:block;font-size:13px;color:#1f2430}.pd-pr small{color:#6c7078}.pd-pr small.late{color:#d4202f;font-weight:700}
@@ -550,7 +551,7 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 .pd-tools{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-top:12px;padding-top:10px;border-top:1px solid #eef0f3}.pd-mid{display:flex;gap:4px}
 .pd-ic,.pd-arr{width:30px;height:30px;display:inline-grid;place-items:center;border:1px solid var(--line);background:#fff;color:#4b4f58;cursor:pointer;padding:0;transition:background .15s,color .15s,border-color .15s}
 .pd-ic{border-radius:8px}.pd-arr{border-radius:50%}.pd-ic:hover,.pd-arr:hover{background:#f4f5f7;color:var(--ink)}
-.pd-ic.danger:hover{background:#fdeaea;color:#a60d19;border-color:#f3c6c6}.pd-arr.go{background:var(--red);border-color:var(--red);color:#fff}.pd-arr.go:hover{filter:brightness(.92);background:var(--red);color:#fff}
+.pd-ic.danger:hover{background:#fdeaea;color:#a60d19;border-color:#f3c6c6}.pd-arr.go{background:#fdeaea;border-color:var(--red)}.pd-arr.go:hover{background:#f9d3d3}
 .pd-arr.off{visibility:hidden}
 .pf-head{display:flex;align-items:center;gap:14px;margin:0 0 16px}.pf-head h2{margin:0;font-size:20px}.pf-head p{margin:2px 0 0;color:var(--muted);font-size:13px}.pf-head .pd-chip{margin-left:auto}
 .pf-av{width:48px;height:48px;border-radius:50%;background:#fbeaec;color:var(--red);font-weight:800;display:grid;place-items:center;flex:none}
@@ -1206,7 +1207,7 @@ const CRM_STAGES=[
  {key:'PROPOSTA',label:'Proposta',prob:50,color:'#d9962b'},{key:'GANHO',label:'Ganho',prob:100,color:'#1f9d63'},{key:'PERDIDO',label:'Perdido',prob:0,color:'#3f4450'}
 ];
 const CRM_ALIAS={QUALIFICADO:'CONTACTADO',NEGOCIACAO:'PROPOSTA'},crmEt=k=>CRM_ALIAS[k]||k;
-const PDI=n=>'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+({eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>',trash:'<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/>',x:'<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',prev:'<path d="M15 5l-7 7 7 7"/>',next:'<path d="M9 5l7 7-7 7"/>'}[n]||'')+'</svg>';
+const PDI=n=>{const e={eye:'👁️',edit:'📝',trash:'🗑️',x:'🚫',prev:'⬅️',next:'➡️'}[n];return e?'<span class="pd-emo" aria-hidden="true">'+e+'</span>':''};
 const CRM_LOSS=['Preço / sem orçamento','Sem resposta','Escolheu outra formação','Sem tempo / agora não','Fora do perfil','Outro'];
 const CRM_ORIGINS=['Indicação','WhatsApp','Facebook','Instagram','Telefone','Presencial / Evento','Outro'];
 let CRM_DEALS=[],CRM_EDIT=null,CRM_POP=null,CRM_DRAG=null;
@@ -1257,20 +1258,19 @@ function crmOpenModal(item){CRM_EDIT=item?item.id:null;const x=item||{};const co
   ['nome','Nome completo','text',x.nome||'',true],['profissao','Profissão','text',x.profissao||''],
   ['email','E-mail','email',x.email||''],['telefone','Telefone','tel',x.telefone||''],
   ['origem','Origem','select',x.origem||'WhatsApp'],['turma','Turma','text',x.turma||''],['vendedorResponsavel','Responsável comercial','select',x.vendedorResponsavel||PROFILE?.display_name||''],
-  ['etapa','Etapa','select',x.etapa||'NOVO'],['proximoPasso','Próximo passo','text',x.proximoPasso||''],
-  ['dataProximoContacto','Data do próximo contacto','date',x.dataProximoContacto||''],['valorEstimado','Valor estimado (Kz)','number',x.valorEstimado??''],
-  ['dataPrevistaFecho','Data prevista de fecho','date',x.dataPrevistaFecho||''],['dataCriacao','Data de entrada','date',x.dataCriacao||today()],
+  ['etapa','Etapa','select',x.etapa||'NOVO'],['valorEstimado','Valor estimado (Kz)','number',x.valorEstimado??''],
+  ['dataCriacao','Data de entrada','date',x.dataCriacao||today()],
   ['motivoPerda','Motivo de perda','select',x.motivoPerda||''],['localizacao','Localização (morada, referência ou link do Maps)','text',x.localizacao||''],['observacoes','Observações','textarea',x.observacoes||'']
  ];
  const makeField=f=>{const [key,label,kind,val,required]=f;let el='';if(kind==='select'){const opts=key==='vendedorResponsavel'?[['','Sem responsável'],...crmTeamList(val).map(v=>[v,v])]:key==='origem'?CRM_ORIGINS.map(v=>[v,v]):key==='motivoPerda'?[['','Escolher…'],...CRM_LOSS.map(v=>[v,v])]:CRM_STAGES.map(v=>[v.key,v.label]);el=`<select id="crmF_${key}" ${required?'required':''}>${opts.map(o=>`<option value="${crmEscape(o[0])}" ${String(val)===String(o[0])?'selected':''}>${crmEscape(o[1])}</option>`).join('')}</select>`}else if(kind==='textarea')el=`<textarea id="crmF_${key}" rows="4">${crmEscape(val)}</textarea>`;else el=(key==='turma'?`<datalist id="crmTurmas">${[...new Set(CRM_DEALS.map(d=>d.turma).filter(Boolean))].map(t=>`<option value="${crmEscape(t)}">`).join('')}</datalist>`:'')+`<input ${key==='turma'?'list="crmTurmas" placeholder="Ex.: Turma Sábado 12 Dez" ':''}id="crmF_${key}" type="${kind}" value="${crmEscape(val)}" ${required?'required':''} ${kind==='number'?'min="0" step="any"':''}>`;return `<div class="field ${kind==='textarea'?'full':''}" id="crmW_${key}"><label for="crmF_${key}">${label}${required?' *':''}</label>${el}</div>`};
  const initialStage=crmStage(x.etapa||'NOVO');
  content.innerHTML=`<h2>${item?'Editar interessado':'Novo interessado'}</h2><p class="crm-sub">${item?'Código <b>'+crmEscape(x.codigo||'a atribuir')+'</b>. ':'O código é atribuído automaticamente ao guardar. '}Os campos assinalados com * são obrigatórios.</p><div class="crm-edit-grid"><form id="crmForm"><div class="crm-fields-grid">${fields.map(makeField).join('')}</div><div class="crm-modal-foot"><span class="crm-note">Quando o negócio passa a Ganho, regista-se o formando.</span><div class="actions"><button type="button" class="btn secondary" id="crmCancel">Cancelar</button><button type="submit" class="btn">Guardar</button></div></div></form><aside class="crm-stage-info" id="crmStageInfo"><h3>Informação Geral</h3><h4>${initialStage.label}</h4><p>${({NOVO:'O contacto acabou de chegar. Registe-o e marque o primeiro contacto.',CONTACTADO:'Já falou com a pessoa. Descubra a necessidade e marque a próxima conversa.',QUALIFICADO:'Tem necessidade e interesse. Prepare a proposta adequada.',PROPOSTA:'A proposta foi apresentada. Marque o próximo contacto.',NEGOCIACAO:'O cliente está a avaliar as condições. Acompanhe a decisão.',GANHO:'Ganho = 1.ª parcela paga. Registe o formando e acompanhe o pagamento em Pagamentos.',PERDIDO:'O negócio não avançou. Registe o motivo da perda.'})[initialStage.key]||''}</p><div class="crm-prob">Probabilidade de fecho: <b>${initialStage.prob}%</b></div><small id="crmWeighted">Valor ponderado: ${crmMoney((Number(x.valorEstimado)||0)*initialStage.prob/100)}</small></aside></div>`;
  $('crmModal').classList.add('open');$('crmModal').setAttribute('aria-hidden','false');$('crmCancel').onclick=crmCloseModal;
- const crmSyncFields=()=>{const st=$('crmF_etapa').value,op=crmIsOpen({etapa:st}),stage=crmStage(st),value=Number($('crmF_valorEstimado').value)||0; $('crmW_proximoPasso').style.display=op?'':'none';$('crmW_dataProximoContacto').style.display=op?'':'none';$('crmW_motivoPerda').style.display=st==='PERDIDO'?'':'none';$('crmStageInfo').innerHTML=`<h3>Informação Geral</h3><h4>${stage.label}</h4><p>${({NOVO:'O contacto acabou de chegar. Registe-o e marque o primeiro contacto.',CONTACTADO:'Já falou com a pessoa. Descubra a necessidade e marque a próxima conversa.',QUALIFICADO:'Tem necessidade e interesse. Prepare a proposta adequada.',PROPOSTA:'A proposta foi apresentada. Marque o próximo contacto.',NEGOCIACAO:'O cliente está a avaliar as condições. Acompanhe a decisão.',GANHO:'Ganho = 1.ª parcela paga. Registe o formando e acompanhe o pagamento em Pagamentos.',PERDIDO:'O negócio não avançou. Registe o motivo da perda.'})[st]||''}</p><div class="crm-prob">Probabilidade de fecho: <b>${stage.prob}%</b></div><small>Valor ponderado: ${crmMoney(value*stage.prob/100)}</small>`};
+ const crmSyncFields=()=>{const st=$('crmF_etapa').value,op=crmIsOpen({etapa:st}),stage=crmStage(st),value=Number($('crmF_valorEstimado').value)||0; $('crmW_motivoPerda').style.display=st==='PERDIDO'?'':'none';$('crmStageInfo').innerHTML=`<h3>Informação Geral</h3><h4>${stage.label}</h4><p>${({NOVO:'O contacto acabou de chegar. Registe-o e marque o primeiro contacto.',CONTACTADO:'Já falou com a pessoa. Descubra a necessidade e marque a próxima conversa.',QUALIFICADO:'Tem necessidade e interesse. Prepare a proposta adequada.',PROPOSTA:'A proposta foi apresentada. Marque o próximo contacto.',NEGOCIACAO:'O cliente está a avaliar as condições. Acompanhe a decisão.',GANHO:'Ganho = 1.ª parcela paga. Registe o formando e acompanhe o pagamento em Pagamentos.',PERDIDO:'O negócio não avançou. Registe o motivo da perda.'})[st]||''}</p><div class="crm-prob">Probabilidade de fecho: <b>${stage.prob}%</b></div><small>Valor ponderado: ${crmMoney(value*stage.prob/100)}</small>`};
  $('crmF_etapa').onchange=crmSyncFields;$('crmF_valorEstimado').oninput=crmSyncFields;crmSyncFields();crmLocForm(x);
  $('crmForm').onsubmit=e=>{e.preventDefault();const data={};fields.forEach(f=>{const el=$('crmF_'+f[0]);data[f[0]]=el?el.value.trim():''});const pc=crmLocFinal(data.localizacao);data.lat=pc?pc.lat:null;data.lng=pc?pc.lng:null;if(data.localizacao&&data.localizacao!==(x.localizacao||'')&&!pc&&!crmMapsLink(data.localizacao)){toast('Cole o link da localização enviado pelo WhatsApp ou copiado do Google Maps.');return}
-  data.valorEstimado=Number(data.valorEstimado)||0;
-  if(crmIsOpen(data)){if(!data.proximoPasso||!data.dataProximoContacto){toast('Indique o próximo passo e a data do próximo contacto.');return}data.motivoPerda=''}
+  data.valorEstimado=Number(data.valorEstimado)||0;if(!item){data.dataPrevistaFecho='';data.proximoPasso='';data.dataProximoContacto=''}
+  if(crmIsOpen(data)){data.motivoPerda=''}
   else{if(data.etapa==='PERDIDO'&&!data.motivoPerda){toast('Indique o motivo de perda.');return}if(data.etapa!=='PERDIDO')data.motivoPerda='';data.proximoPasso='';data.dataProximoContacto=''}
   const ds={...(x.datasEtapas||{})};if(!ds[data.etapa]||(item&&item.etapa!==data.etapa))ds[data.etapa]=today();data.datasEtapas=ds;
   let newId=null,prev=item?item.etapa:null;
@@ -1281,7 +1281,7 @@ function crmOpenModal(item){CRM_EDIT=item?item.id:null;const x=item||{};const co
 }
 function crmCloseModal(){$('crmModal').classList.remove('open');$('crmModal').setAttribute('aria-hidden','true');CRM_EDIT=null}
 function crmDelete(id){const item=CRM_DEALS.find(x=>x.id===id);if(!item)return;if(!confirm(`Eliminar «${item.nome||item.codigo}»?`))return;CRM_DEALS=CRM_DEALS.filter(x=>x.id!==id);crmSave();crmRenderAll();toast('Registo eliminado.')}
-function crmMove(id,stage){const cur=CRM_DEALS.find(x=>x.id===id);if(cur&&cur.etapa!==stage){if(stage==='PERDIDO'){crmOpenModal({...cur,etapa:stage});toast('Indique o motivo de perda para concluir.');return}if(crmIsOpen({etapa:stage})&&(!cur.proximoPasso||!cur.dataProximoContacto)){crmOpenModal({...cur,etapa:stage});toast('Indique o próximo passo para mover o negócio.');return}}const prev=(cur||{}).etapa;CRM_DEALS=CRM_DEALS.map(x=>x.id===id?{...x,etapa:stage,datasEtapas:{...(x.datasEtapas||{}),[stage]:today()}}:x);crmSave();crmRenderAll();if(stage==='GANHO'&&prev!=='GANHO')crmWon(id)}
+function crmMove(id,stage){const cur=CRM_DEALS.find(x=>x.id===id);if(cur&&cur.etapa!==stage){if(stage==='PERDIDO'){crmOpenModal({...cur,etapa:stage});toast('Indique o motivo de perda para concluir.');return}}const prev=(cur||{}).etapa;CRM_DEALS=CRM_DEALS.map(x=>x.id===id?{...x,etapa:stage,datasEtapas:{...(x.datasEtapas||{}),[stage]:today()}}:x);crmSave();crmRenderAll();if(stage==='GANHO'&&prev!=='GANHO')crmWon(id)}
 /* Negócio ganho → regista o formando (formulário já preenchido, só a administração). */
 function crmWon(id){const d=CRM_DEALS.find(x=>x.id===id);if(!d)return;
  const st=read(KEYS.staff);if(d.formandoId&&st.some(s=>s.id===d.formandoId))return;
@@ -1301,10 +1301,10 @@ const crmWhen=d=>{if(!d)return '';const n=Math.round((new Date(d+'T12:00:00')-ne
 /* Cartão no modelo Pipedrive: nome, organização, avatar do responsável, valor e ícone de estado da próxima atividade */
 function crmCardHTML(x,isAdmin,staff){const a=crmAlert(x),op=crmIsOpen(x),f=x.formandoId&&staff.find(s=>s.id===x.formandoId),id=crmEscape(x.id),k=a&&(a.k==='late'||a.k==='none')?a.k:'ok',i=CRM_STAGES.findIndex(y=>y.key===x.etapa),
  pv=i>0?(i===4?CRM_STAGES[0]:CRM_STAGES[i-1]):null,nx=i>=0&&i<3?CRM_STAGES[i+1]:null,
- ico=op?`<button type="button" class="pd-st ${k}" data-crm-pop="${id}" aria-label="Atividades" title="${a?a.t:'Próximo passo agendado'}">${k==='none'?'⚠':k==='late'?'!':'➜'}</button>`:(x.etapa==='GANHO'?'<span class="pd-pill won">GANHO</span>':'<span class="pd-pill lost">PERDIDO</span>'),
+ ico=op?`<button type="button" class="pd-st ${k}" data-crm-pop="${id}" aria-label="Atividades" title="${a?a.t:'Próximo passo agendado'}">${k==='none'?'⚠️':k==='late'?'⏰':'🗓️'}</button>`:(x.etapa==='GANHO'?'<span class="pd-pill won">GANHO</span>':'<span class="pd-pill lost">PERDIDO</span>'),
  chips=crmEvChip(x)+crmNChips(x.id)+(a&&a.k==='none'?'<span class="pd-chip bad">Sem próximo passo</span>':'')+(a&&a.k==='late'?`<span class="pd-chip bad">${a.t}</span>`:'')+(a&&a.k==='today'?'<span class="pd-chip ok">Contactar hoje</span>':'')+(x.etapa==='GANHO'&&f?`<span class="pd-chip ok">✓ Formando ${crmEscape(f.number||'')}</span>`:'')+(()=>{const p=crmPay(x);return p&&!(p.k==='bad'&&f)?`<span class="pd-chip ${p.k}">${p.t}</span>`:''})(),
  meta=[x.turma,x.origem].filter(Boolean).map(crmEscape).concat(x.telefone?[crmWaLink(x.telefone)]:[]).concat(crmLocLink(x)).join(' · '),
- pop=CRM_POP===x.id?`<div class="pd-pop"><div class="pd-pr"><span>${op?(x.proximoPasso?`<b>${crmEscape(x.proximoPasso)}</b><small class="${a&&a.k==='late'?'late':''}">${crmWhen(x.dataProximoContacto)}${a&&a.k==='late'?' · atrasado':''}</small>`:'<b>Sem próximo passo</b><small>Agende a próxima atividade</small>'):'<b>Negócio fechado</b>'}</span></div>${op?`<button type="button" class="pd-pa" data-crm-edit="${id}">+ Agendar atividade</button>`:''}</div>`:'';
+ pop=CRM_POP===x.id?`<div class="pd-pop"><div class="pd-pr"><span>${op?(x.proximoPasso?`<b>${crmEscape(x.proximoPasso)}</b><small class="${a&&a.k==='late'?'late':''}">${crmWhen(x.dataProximoContacto)}${a&&a.k==='late'?' · atrasado':''}</small>`:'<b>Sem próximo passo</b><small>Agende a próxima atividade</small>'):'<b>Negócio fechado</b>'}</span></div>${op?`<button type="button" class="pd-pa" data-crm-view="${id}">+ Agendar atividade</button>`:''}</div>`:'';
  return `<article class="pd-card${a&&a.k==='late'?' late':x.etapa==='GANHO'?' won':''}" draggable="true" data-crm-card="${id}"><div class="pd-top"><div style="min-width:0"><h4>${crmEscape(x.nome)}</h4>${x.profissao?`<p class="pd-sub">${crmEscape(x.profissao)}</p>`:''}</div>${ico}</div><div class="pd-vrow"><span class="pd-money">${Number(x.valorEstimado)>0?crmMoney(x.valorEstimado):'—'}</span><span class="pd-av" title="${crmEscape(x.vendedorResponsavel||'Sem responsável')}">${crmEscape(crmIni(x.vendedorResponsavel))}</span></div>${meta?`<div class="pd-meta">${meta}</div>`:''}${op&&x.dataPrevistaFecho?`<div class="pd-meta">Fecho previsto: ${crmDate(x.dataPrevistaFecho)}</div>`:''}${op&&x.proximoPasso?`<div class="pd-next">Próximo: ${crmEscape(x.proximoPasso)} · ${crmWhen(x.dataProximoContacto)}</div>`:''}${x.etapa==='PERDIDO'&&x.motivoPerda?`<div class="pd-next">Motivo: ${crmEscape(x.motivoPerda)}</div>`:''}${chips?`<div class="pd-chips">${chips}</div>`:''}${x.etapa==='GANHO'&&!f&&isAdmin?`<div class="pd-qa"><button type="button" class="pd-qb primary" data-crm-won="${id}">Registar formando</button></div>`:''}<div class="pd-tools">${pv?`<button type="button" class="pd-arr" title="${i===6?'Reabrir em '+pv.label:'Voltar a '+pv.label}" aria-label="Voltar a ${pv.label}" data-crm-go="${id}|${pv.key}">${PDI('prev')}</button>`:'<span class="pd-arr off"></span>'}<span class="pd-mid"><button type="button" class="pd-ic" title="Ver resumo do perfil" aria-label="Ver resumo do perfil" data-crm-view="${id}">${PDI('eye')}</button><button type="button" class="pd-ic" title="Editar" aria-label="Editar" data-crm-edit="${id}">${PDI('edit')}</button>${op?`<button type="button" class="pd-ic" title="Marcar como perdido" aria-label="Marcar como perdido" data-crm-go="${id}|PERDIDO">${PDI('x')}</button>`:''}<button type="button" class="pd-ic danger" title="Eliminar" aria-label="Eliminar" data-crm-del="${id}">${PDI('trash')}</button></span>${nx?`<button type="button" class="pd-arr go" title="Avançar para ${nx.label}" aria-label="Avançar para ${nx.label}" data-crm-go="${id}|${nx.key}">${PDI('next')}</button>`:'<span class="pd-arr off"></span>'}</div>${pop}</article>`}
 function crmView(x){if(!x)return;const f=x.formandoId&&read(KEYS.staff).find(s=>s.id===x.formandoId),c=$('crmModalContent'),st=crmStage(x.etapa),obs=(x.observacoes||'').trim();
  c.innerHTML=`<div class="pf-box"><div class="pf-head"><span class="pf-av">${crmEscape(crmIni(x.nome))}</span><div><h2>${crmEscape(x.nome)}</h2><p>${crmEscape(x.profissao||'Profissão não indicada')}</p></div><span class="pd-chip ${x.etapa==='GANHO'?'ok':x.etapa==='PERDIDO'?'':'info'}">${st.label}</span></div>
@@ -2818,7 +2818,7 @@ function trAdminRender(){
   '<div class="tr-lv">'+TR_LV.map(l=>'<div class="card"><span class="muted smalltext">'+esc(l[1])+'</span><strong>'+cnt[l[0]]+'</strong></div>').join('')+'<div class="card"><span class="muted smalltext">Sem perfil</span><strong>'+none+'</strong></div></div>'
   +(leads?'<p class="muted smalltext" style="margin:-4px 0 14px">'+leads+' formando(s) com a marca «sem registo de leads»: reforçar prospecção e CRM.</p>':'')
   +(sug.length?'<div class="notice"><strong>Sugestão de junção de turmas</strong><ul style="margin:6px 0 0 18px">'+sug.join('')+'</ul><div style="margin-top:6px">A administração confirma a junção ao editar os níveis da turma.</div></div>':'')
-  +'<div class="card"><div class="cardhead"><h2>Turmas</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn small" data-tr-wz="">Preparar o treino</button><button type="button" class="btn secondary small" data-tr-newcoh>+ Nova turma</button><button type="button" class="btn danger small" id="trCohDel" data-tr-cohdel disabled>Eliminar seleccionadas</button></div></div>'+trCohortsHTML(staff)+'</div>'
+  +'<div class="card"><div class="cardhead"><h2>Turmas</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn small" data-tr-wz="">Preparar o treino</button><button type="button" class="btn secondary small" data-tr-newcoh>+ Nova turma</button><button type="button" class="btn danger small" id="trCohDel" data-tr-cohdel disabled>🗑️ Eliminar seleccionadas</button></div></div>'+trCohortsHTML(staff)+'</div>'
   +'<div class="card"><div class="cardhead"><h2>Formandos e níveis</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn secondary small" data-tr-reass>Reavaliar níveis</button></div></div>'
   +'<div class="toolbar"><input id="trSearch" placeholder="Pesquisar formando…"><select id="trLvFilter"><option value="">Todos os níveis</option>'+TR_LV.map(l=>'<option value="'+l[0]+'">'+esc(l[1])+'</option>').join('')+'<option value="_none">Sem perfil</option></select></div>'
   +'<div class="tablewrap"><table class="table"><thead><tr><th>Formando</th><th>Nível</th><th>Turma</th><th>Marca</th><th></th></tr></thead><tbody id="trRows"></tbody></table></div></div>';
@@ -2834,7 +2834,7 @@ function trCohortsHTML(staff){
 function trCohSelUI(){
  const ids=new Set(TR.cohorts.map(c=>c.id));[...TR.cohSel].forEach(i=>{if(!ids.has(i))TR.cohSel.delete(i)});
  const b=$('trCohDel'),a=$('trCohAll'),n=TR.cohSel.size,t=TR.cohorts.length;
- if(b){b.disabled=!n;b.textContent=n?'Eliminar seleccionadas ('+n+')':'Eliminar seleccionadas'}
+ if(b){b.disabled=!n;b.textContent=n?'🗑️ Eliminar seleccionadas ('+n+')':'🗑️ Eliminar seleccionadas'}
  if(a){a.checked=!!t&&n===t;a.indeterminate=n>0&&n<t}}
 function trCohDelete(){
  const ids=[...TR.cohSel];if(!ids.length){alert('Seleccione pelo menos uma turma.');return}
@@ -3356,7 +3356,7 @@ function trBankRender(){
   +'<div class="card"><div class="muted smalltext">Total</div><strong class="tr-sv">'+rows.filter(r=>r.active).length+'</strong><div class="muted smalltext">activas · '+rows.length+' no banco</div></div>';
  const sel=(id,cur,opts)=>'<select id="'+id+'">'+opts.map(o=>'<option value="'+esc(o[0])+'"'+(o[0]===cur?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>';
  box.innerHTML='<div class="tr-lv">'+tiles+'</div>'
-  +'<div class="card"><div class="cardhead"><h2>Banco de treino</h2><div class="tr-tools"><button type="button" class="btn" data-tr-bnew>+ Nova pergunta</button><button type="button" class="btn secondary" data-tr-bcsv>Importar CSV</button><button type="button" class="btn secondary" data-tr-bact>Activar as filtradas</button><button type="button" class="btn danger" id="trbDel" data-tr-bdel disabled>Eliminar seleccionadas</button></div></div>'
+  +'<div class="card"><div class="cardhead"><h2>Banco de treino</h2><div class="tr-tools"><button type="button" class="btn" data-tr-bnew>+ Nova pergunta</button><button type="button" class="btn secondary" data-tr-bcsv>Importar CSV</button><button type="button" class="btn secondary" data-tr-bact>Activar as filtradas</button><button type="button" class="btn danger" id="trbDel" data-tr-bdel disabled>🗑️ Eliminar seleccionadas</button></div></div>'
   +'<details class="clnote-d"><summary>Como obter um lote de perguntas com o Claude</summary>'+claudeBlock('treino','trb')+'</details>'+'<div class="tr-filters"><input id="trbSearch" type="search" placeholder="Pesquisar enunciado ou tema" value="'+esc(f.q)+'">'
   +sel('trbLv',f.lv,[['','Todos os níveis']].concat(TR_LV))
   +sel('trbTh',f.th,[['','Todos os temas']].concat(themes.map(t=>[t,t])))
@@ -3378,7 +3378,7 @@ function trBankRows(){
 function trBankSelUI(shown){
  const ids=new Set(TRB.rows.map(r=>r.id));[...TRB.sel].forEach(i=>{if(!ids.has(i))TRB.sel.delete(i)});
  const b=$('trbDel'),a=$('trbAll'),n=TRB.sel.size;
- if(b){b.disabled=!n;b.textContent=n?'Eliminar seleccionadas ('+n+')':'Eliminar seleccionadas'}
+ if(b){b.disabled=!n;b.textContent=n?'🗑️ Eliminar seleccionadas ('+n+')':'🗑️ Eliminar seleccionadas'}
  if(a){shown=shown||trBankFiltered().slice(0,200);const k=shown.filter(r=>TRB.sel.has(r.id)).length;a.checked=!!shown.length&&k===shown.length;a.indeterminate=k>0&&k<shown.length}}
 function trBankDelete(){
  const ids=[...TRB.sel];if(!ids.length){alert('Seleccione pelo menos uma pergunta.');return}
@@ -3803,12 +3803,12 @@ const g=id=>document.getElementById(id);
 const fnum=(v,d=2)=>{const s=Math.abs(v).toFixed(d),p=s.split('.');return(v<0?'-':'')+p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.')+(d?','+p[1]:'')};
 const kz2=v=>(v==null||!isFinite(v))?'—':fnum(v,2)+' Kz';
 const ICON_CALC='<svg viewBox="0 0 48 48" width="54" height="54" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><rect x="14" y="10" width="20" height="8" rx="1.5"/><path d="M15 25h2M23 25h2M31 25h2M15 31h2M23 31h2M31 31h2M15 37h2M23 37h10"/></svg>';
-const ICON_TRASH='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>';
+const ICON_TRASH='<span class="pd-emo" style="font-size:16px" aria-hidden="true">🗑️</span>';
 const ICON_UP='<svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V4M5 11l7-7 7 7"/></svg>';
 
 /* ---------- Estrutura ---------- */
-const ICON_SAVE='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>';
-const ICON_FOLDER='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
+const ICON_SAVE='<span class="pd-emo" style="font-size:18px" aria-hidden="true">💾</span>';
+const ICON_FOLDER='<span class="pd-emo" style="font-size:18px" aria-hidden="true">📂</span>';
 const TABS=[['sim','Simulador'],['ex','Exercícios']];
 function shell(){
  lsEnsure();root().innerHTML='<div class="mk-tabs" role="tablist">'+TABS.map(t=>'<button type="button" role="tab" data-mk-tab="'+t[0]+'">'+t[1]+'</button>').join('')+'<button type="button" class="mk-flink" data-mk-tab="fichas" aria-label="Fichas guardadas" title="Fichas guardadas">'+ICON_FOLDER+'</button></div>'+
@@ -4336,6 +4336,7 @@ window.prOpen=function(){const r=g('prRoot');if(!r)return;
   clip:'<path d="M21 11.5l-8.6 8.6a5.5 5.5 0 01-7.8-7.8l8.6-8.6a3.7 3.7 0 015.2 5.2l-8.6 8.6a1.8 1.8 0 01-2.6-2.6l7.9-7.9"/>',
   file:'<path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>'
  };
+ const EMO={eye:'👁️',edit:'📝',trash:'🗑️',lock:'🔒',unlock:'🔓',power:'🟢',pause:'⏸️',ban:'🚫',copy:'📋',print:'🖨️',clip:'✉️',file:'🧾'};
  const MAP={'ver':['eye','Ver'],'editar':['edit','Editar'],'eliminar':['trash','Eliminar',1],'apagar':['trash','Apagar',1],'remover':['trash','Remover',1],
   'bloquear':['lock','Bloquear'],'desbloquear':['unlock','Desbloquear'],'activar':['power','Activar'],'desactivar':['pause','Desactivar'],
   'anular':['ban','Anular',1],'copiar':['copy','Copiar'],'imprimir':['print','Imprimir'],'comprovativo':['clip','Comprovativo'],'nota de pagamento':['file','Nota de pagamento']};
@@ -4349,7 +4350,7 @@ window.prOpen=function(){const r=g('prRoot');if(!r)return;
   const sm=b.classList.contains('linkdel'),danger=b.classList.contains('danger')||!!m[2];
   b.dataset.ico='1';b.title=m[1];b.setAttribute('aria-label',m[1]);
   b.className='pd-ic'+(danger?' danger':'')+(sm?' sm':'');
-  b.innerHTML=SV(IC[m[0]]);
+  b.innerHTML='<span class="pd-emo" aria-hidden="true">'+EMO[m[0]]+'</span>';
  }
  const scan=n=>{if(n.nodeType!==1)return;if(n.tagName==='BUTTON')conv(n);n.querySelectorAll&&n.querySelectorAll('button').forEach(conv)};
  new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(scan);if(m.target&&m.target.tagName==='BUTTON')conv(m.target)}}).observe(document.body,{childList:true,subtree:true,characterData:true});
