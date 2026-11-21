@@ -1277,7 +1277,7 @@ function crmOpenModal(item){CRM_EDIT=item?item.id:null;const x=item||{};const co
   if(item)CRM_DEALS=CRM_DEALS.map(a=>a.id===item.id?{...a,...data,id:a.id}:a);
   else{newId=crmId();CRM_DEALS.push({...data,id:newId,codigo:CRM_SYNC.remote===true?'':crmNextCode(),formandoId:null})}
   crmSave();crmCloseModal();crmRenderAll();toast('Interessado guardado.');
-  const did=item?item.id:newId;if(data.etapa==='GANHO'&&prev!=='GANHO')crmWon(did)};
+  const did=item?item.id:newId;crmEvFromForm(did,data);if(data.etapa==='GANHO'&&prev!=='GANHO')crmWon(did)};
 }
 function crmCloseModal(){$('crmModal').classList.remove('open');$('crmModal').setAttribute('aria-hidden','true');CRM_EDIT=null}
 function crmDelete(id){const item=CRM_DEALS.find(x=>x.id===id);if(!item)return;if(!confirm(`Eliminar «${item.nome||item.codigo}»?`))return;CRM_DEALS=CRM_DEALS.filter(x=>x.id!==id);crmSave();crmRenderAll();toast('Registo eliminado.')}
@@ -1302,7 +1302,7 @@ const crmWhen=d=>{if(!d)return '';const n=Math.round((new Date(d+'T12:00:00')-ne
 function crmCardHTML(x,isAdmin,staff){const a=crmAlert(x),op=crmIsOpen(x),f=x.formandoId&&staff.find(s=>s.id===x.formandoId),id=crmEscape(x.id),k=a&&(a.k==='late'||a.k==='none')?a.k:'ok',i=CRM_STAGES.findIndex(y=>y.key===x.etapa),
  pv=i>0?(i===4?CRM_STAGES[0]:CRM_STAGES[i-1]):null,nx=i>=0&&i<3?CRM_STAGES[i+1]:null,
  ico=op?`<button type="button" class="pd-st ${k}" data-crm-pop="${id}" aria-label="Atividades" title="${a?a.t:'Próximo passo agendado'}">${k==='none'?'⚠':k==='late'?'!':'➜'}</button>`:(x.etapa==='GANHO'?'<span class="pd-pill won">GANHO</span>':'<span class="pd-pill lost">PERDIDO</span>'),
- chips=crmNChips(x.id)+(a&&a.k==='none'?'<span class="pd-chip bad">Sem próximo passo</span>':'')+(a&&a.k==='late'?`<span class="pd-chip bad">${a.t}</span>`:'')+(a&&a.k==='today'?'<span class="pd-chip ok">Contactar hoje</span>':'')+(x.etapa==='GANHO'&&f?`<span class="pd-chip ok">✓ Formando ${crmEscape(f.number||'')}</span>`:'')+(()=>{const p=crmPay(x);return p&&!(p.k==='bad'&&f)?`<span class="pd-chip ${p.k}">${p.t}</span>`:''})(),
+ chips=crmEvChip(x)+crmNChips(x.id)+(a&&a.k==='none'?'<span class="pd-chip bad">Sem próximo passo</span>':'')+(a&&a.k==='late'?`<span class="pd-chip bad">${a.t}</span>`:'')+(a&&a.k==='today'?'<span class="pd-chip ok">Contactar hoje</span>':'')+(x.etapa==='GANHO'&&f?`<span class="pd-chip ok">✓ Formando ${crmEscape(f.number||'')}</span>`:'')+(()=>{const p=crmPay(x);return p&&!(p.k==='bad'&&f)?`<span class="pd-chip ${p.k}">${p.t}</span>`:''})(),
  meta=[x.turma,x.origem].filter(Boolean).map(crmEscape).concat(x.telefone?[crmWaLink(x.telefone)]:[]).concat(crmLocLink(x)).join(' · '),
  pop=CRM_POP===x.id?`<div class="pd-pop"><div class="pd-pr"><span>${op?(x.proximoPasso?`<b>${crmEscape(x.proximoPasso)}</b><small class="${a&&a.k==='late'?'late':''}">${crmWhen(x.dataProximoContacto)}${a&&a.k==='late'?' · atrasado':''}</small>`:'<b>Sem próximo passo</b><small>Agende a próxima atividade</small>'):'<b>Negócio fechado</b>'}</span></div>${op?`<button type="button" class="pd-pa" data-crm-edit="${id}">+ Agendar atividade</button>`:''}</div>`:'';
  return `<article class="pd-card${a&&a.k==='late'?' late':x.etapa==='GANHO'?' won':''}" draggable="true" data-crm-card="${id}"><div class="pd-top"><div style="min-width:0"><h4>${crmEscape(x.nome)}</h4>${x.profissao?`<p class="pd-sub">${crmEscape(x.profissao)}</p>`:''}</div>${ico}</div><div class="pd-vrow"><span class="pd-money">${Number(x.valorEstimado)>0?crmMoney(x.valorEstimado):'—'}</span><span class="pd-av" title="${crmEscape(x.vendedorResponsavel||'Sem responsável')}">${crmEscape(crmIni(x.vendedorResponsavel))}</span></div>${meta?`<div class="pd-meta">${meta}</div>`:''}${op&&x.dataPrevistaFecho?`<div class="pd-meta">Fecho previsto: ${crmDate(x.dataPrevistaFecho)}</div>`:''}${op&&x.proximoPasso?`<div class="pd-next">Próximo: ${crmEscape(x.proximoPasso)} · ${crmWhen(x.dataProximoContacto)}</div>`:''}${x.etapa==='PERDIDO'&&x.motivoPerda?`<div class="pd-next">Motivo: ${crmEscape(x.motivoPerda)}</div>`:''}${chips?`<div class="pd-chips">${chips}</div>`:''}${x.etapa==='GANHO'&&!f&&isAdmin?`<div class="pd-qa"><button type="button" class="pd-qb primary" data-crm-won="${id}">Registar formando</button></div>`:''}<div class="pd-tools">${pv?`<button type="button" class="pd-arr" title="${i===6?'Reabrir em '+pv.label:'Voltar a '+pv.label}" aria-label="Voltar a ${pv.label}" data-crm-go="${id}|${pv.key}">${PDI('prev')}</button>`:'<span class="pd-arr off"></span>'}<span class="pd-mid"><button type="button" class="pd-ic" title="Ver resumo do perfil" aria-label="Ver resumo do perfil" data-crm-view="${id}">${PDI('eye')}</button><button type="button" class="pd-ic" title="Editar" aria-label="Editar" data-crm-edit="${id}">${PDI('edit')}</button>${op?`<button type="button" class="pd-ic" title="Marcar como perdido" aria-label="Marcar como perdido" data-crm-go="${id}|PERDIDO">${PDI('x')}</button>`:''}<button type="button" class="pd-ic danger" title="Eliminar" aria-label="Eliminar" data-crm-del="${id}">${PDI('trash')}</button></span>${nx?`<button type="button" class="pd-arr go" title="Avançar para ${nx.label}" aria-label="Avançar para ${nx.label}" data-crm-go="${id}|${nx.key}">${PDI('next')}</button>`:'<span class="pd-arr off"></span>'}</div>${pop}</article>`}
@@ -1312,9 +1312,9 @@ function crmView(x){if(!x)return;const f=x.formandoId&&read(KEYS.staff).find(s=>
  ${crmIsOpen(x)?`<h3 class="pf-h">Próximo passo</h3><p style="margin:0">${x.proximoPasso?crmEscape(x.proximoPasso)+' · '+crmWhen(x.dataProximoContacto):'<span class="muted">Ainda sem próximo passo.</span>'}</p>`:(x.etapa==='PERDIDO'?`<h3 class="pf-h">Motivo de perda</h3><p style="margin:0">${crmEscape(x.motivoPerda||'Sem motivo registado')}</p>`:(f?`<h3 class="pf-h">Formando</h3><p style="margin:0">N.º ${crmEscape(f.number||'')}</p>`:''))}
  <div id="crmLoc"></div>
   <h3 class="pf-h">Resumo da conversa</h3><div class="pf-obs">${obs?crmEscape(obs).replace(/\n/g,'<br>'):'<span class="muted">Sem observações registadas. Use «Editar» para resumir a conversa com o interessado.</span>'}</div>
- <div id="crmNotes"></div>
+ <div id="crmEvents"></div><div id="crmNotes"></div>
   <div class="crm-modal-foot"><span class="crm-note">${crmEscape(x.codigo||'')}</span><div class="actions"><button type="button" class="btn secondary" id="crmCancel">Fechar</button><button type="button" class="btn" id="crmViewEdit">Editar</button></div></div></div>`;
- $('crmModal').classList.add('open');$('crmModal').setAttribute('aria-hidden','false');$('crmCancel').onclick=crmCloseModal;$('crmViewEdit').onclick=()=>{crmCloseModal();crmOpenModal(x)};crmLocDraw(x);crmNotesDraw(x.id)}
+ $('crmModal').classList.add('open');$('crmModal').setAttribute('aria-hidden','false');$('crmCancel').onclick=crmCloseModal;$('crmViewEdit').onclick=()=>{crmCloseModal();crmOpenModal(x)};crmLocDraw(x);crmEvDraw(x.id);crmNotesDraw(x.id)}
 
 /* ===== CRM real: localização e mapa (m535). Sem chave de API: links universais do Google Maps + iframe de pesquisa. ===== */
 let CRM_LOC_OK=null,CRM_LOC={lat:null,lng:null},CRM_LOCX=null;
@@ -1400,6 +1400,62 @@ document.addEventListener('click',async e=>{
  if(t.hasAttribute('data-crm-npin')){const n=find(t.dataset.crmNpin);if(!n)return;const r=await SB.from('av_crm_notes').update({pinned:!n.pinned}).eq('id',n.id).select().single();if(r.error){toast('Não foi possível fixar a nota.');return}Object.assign(n,r.data);crmNotesDraw(d);return}
  if(t.hasAttribute('data-crm-ndel')){const n=find(t.dataset.crmNdel);if(!n||!confirm('Eliminar esta nota?'))return;const r=await SB.from('av_crm_notes').delete().eq('id',n.id);if(r.error){toast('Não foi possível eliminar a nota.');return}CRM_NOTES[d]=(CRM_NOTES[d]||[]).filter(x=>x.id!==n.id);crmNotesDraw(d);crmRenderBoard()}
 });
+/* ===== Agendamentos (m540): partilhado pelo CRM real (ns «crm») e pelo CRM de treino (ns «ct») ===== */
+const EV_KINDS=[['ligacao','Ligação'],['whatsapp','WhatsApp'],['reuniao','Reunião'],['visita','Visita'],['tarefa','Tarefa'],['outro','Outro']];
+const EVX={},EV_TZ='Africa/Luanda';
+const evKind=k=>(EV_KINDS.find(x=>x[0]===k)||EV_KINDS[4])[1];
+const evDay=iso=>{try{return new Intl.DateTimeFormat('en-CA',{timeZone:EV_TZ}).format(new Date(iso))}catch{return String(iso).slice(0,10)}};
+const evHour=iso=>{try{return new Date(iso).toLocaleTimeString('pt-PT',{timeZone:EV_TZ,hour:'2-digit',minute:'2-digit'})}catch{return''}};
+const evRel=iso=>{const t=evDay(new Date().toISOString()),d=evDay(iso),n=Math.round((new Date(d+'T12:00:00')-new Date(t+'T12:00:00'))/864e5);return n===0?'Hoje':n===1?'Amanhã':n===-1?'Ontem':new Date(d+'T12:00:00').toLocaleDateString('pt-PT')};
+const evIso=(d,h)=>d?new Date(d+'T'+(h||'09:00')+':00+01:00').toISOString():null;
+const evFind=(map,id)=>{for(const k in map){const e=map[k].find(x=>x.id===id);if(e)return e}return null};
+const evSort=l=>(l||[]).slice().sort((a,b)=>a.done!==b.done?(a.done?1:-1):(a.done?String(b.starts_at).localeCompare(String(a.starts_at)):String(a.starts_at).localeCompare(String(b.starts_at))));
+function evBlockHTML(ns,dealId,list,ok){
+ const head='<h3 class="pf-h">Agendamentos</h3>';
+ if(ok===false)return head+'<p class="muted smalltext" style="margin:0">Falta executar o ficheiro m540_agendamentos.sql no Supabase.</p>';
+ const now=Date.now(),L=evSort(list),today=evDay(new Date().toISOString());
+ const rows=L.map(e=>{const late=!e.done&&Date.parse(e.starts_at)<now,id=esc(e.id);
+  return '<div class="ev-row'+(e.done?' done':'')+'"><input type="checkbox" data-ev-ns="'+ns+'" data-ev-done="'+id+'"'+(e.done?' checked':'')+' aria-label="Concluído"><div class="ev-b"><strong>'+esc(e.title)+'</strong><div class="muted smalltext">'+esc(evKind(e.kind))+' · '+evRel(e.starts_at)+' '+evHour(e.starts_at)+(late?' · <span class="ev-late">atrasado</span>':'')+'</div></div><button type="button" class="pd-ic danger" data-ev-ns="'+ns+'" data-ev-del="'+id+'" title="Eliminar" aria-label="Eliminar agendamento">'+PDI('trash')+'</button></div>'}).join('');
+ return head+(L.length?'<div class="ev-list">'+rows+'</div>':'<p class="muted smalltext" style="margin:0 0 10px">Sem agendamentos. Marque aqui o próximo contacto.</p>')+
+  '<div class="ev-new"><div class="ev-g"><select id="'+ns+'EvK" aria-label="Tipo">'+EV_KINDS.map(k=>'<option value="'+k[0]+'">'+k[1]+'</option>').join('')+'</select><input id="'+ns+'EvD" type="date" value="'+today+'" aria-label="Data"><input id="'+ns+'EvH" type="time" value="09:00" aria-label="Hora"></div><input id="'+ns+'EvT" maxlength="120" placeholder="O que fazer (ex.: ligar para confirmar a vaga)" aria-label="O que fazer"><button type="button" class="btn small" data-ev-ns="'+ns+'" data-ev-add="'+esc(dealId)+'">Agendar</button></div>'}
+function evRead(ns){const t=($(ns+'EvT').value||'').trim(),d=$(ns+'EvD').value,h=$(ns+'EvH').value||'09:00';
+ if(!t){toast('Diga o que fazer.');return null}if(!d){toast('Escolha a data.');return null}
+ return{kind:$(ns+'EvK').value,title:t,starts_at:evIso(d,h)}}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ev-ns]');if(!b||b.disabled)return;const x=EVX[b.dataset.evNs];if(!x)return;
+ if(b.dataset.evAdd)x.add(b.dataset.evAdd,b);else if(b.dataset.evDel)x.del(b.dataset.evDel)});
+document.addEventListener('change',e=>{const b=e.target;if(b&&b.dataset&&b.dataset.evDone&&b.dataset.evNs){const x=EVX[b.dataset.evNs];if(x)x.done(b.dataset.evDone,b.checked)}});
+document.head.insertAdjacentHTML('beforeend','<style id="ev-style">.ev-list{display:grid;gap:8px;margin:0 0 12px}.ev-row{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff}.ev-row.done{opacity:.6}.ev-row.done strong{text-decoration:line-through}.ev-b{flex:1;min-width:0;font-size:13px}.ev-late{color:#a11c27;font-weight:700}.ev-new{display:grid;gap:8px;border:1px dashed var(--line);border-radius:12px;padding:10px;background:#fff}.ev-g{display:grid;grid-template-columns:1.2fr 1fr .8fr;gap:8px}.ev-new input,.ev-new select{border:1px solid #d9dce1;border-radius:10px;padding:9px 10px;min-height:38px;width:100%;background:#fff;font-size:13px}.ev-new .btn{justify-self:end}@media(max-width:560px){.ev-g{grid-template-columns:1fr 1fr}.ev-g select{grid-column:1/-1}.ev-new input,.ev-new select{font-size:16px}}</style>');
+
+/* --- CRM real: av_crm_events --- */
+let CRM_EV={},CRM_EV_OK=null;
+async function crmEvLoad(){try{const r=await SB.from('av_crm_events').select('*').order('starts_at').limit(5000);if(r.error)throw r.error;CRM_EV={};(r.data||[]).forEach(e=>{(CRM_EV[e.deal_id]=CRM_EV[e.deal_id]||[]).push(e)});CRM_EV_OK=true}catch(e){CRM_EV_OK=false}}
+const crmEvNext=id=>(CRM_EV[id]||[]).filter(e=>!e.done).sort((a,b)=>String(a.starts_at).localeCompare(String(b.starts_at)))[0]||null;
+function crmEvChip(x){const n=crmIsOpen(x)?crmEvNext(x.id):null;if(!n)return '';const late=Date.parse(n.starts_at)<Date.now();return '<span class="pd-chip '+(late?'bad':'info')+'" title="'+crmEscape(n.title)+'">'+crmEscape(evKind(n.kind))+' · '+evRel(n.starts_at)+' '+evHour(n.starts_at)+'</span>'}
+function crmEvDraw(id){const b=$('crmEvents');if(!b)return;b.innerHTML=CRM_SYNC.remote!==true?'<h3 class="pf-h">Agendamentos</h3><p class="muted smalltext" style="margin:0">Os agendamentos precisam de ligação ao servidor.</p>':evBlockHTML('crm',id,CRM_EV[id],CRM_EV_OK)}
+async function crmEvWait(){for(let i=0;i<50&&CRM_SYNC.busy;i++)await new Promise(r=>setTimeout(r,100))}
+/* o servidor recalcula o próximo passo do negócio; aqui só se lê de volta (sem provocar nova gravação) */
+async function crmEvSyncDeal(id){try{const r=await SB.from('av_crm_deals').select('next_step,next_contact_date').eq('id',id).maybeSingle();if(r.error||!r.data)return;CRM_DEALS=CRM_DEALS.map(d=>d.id===id?{...d,proximoPasso:r.data.next_step||'',dataProximoContacto:r.data.next_contact_date||''}:d);const d=CRM_DEALS.find(x=>x.id===id);if(d)CRM_SYNC.snap[id]=JSON.stringify(crmRow(d))}catch(e){}}
+EVX.crm={
+ async add(did,btn){const v=evRead('crm');if(!v)return;btn.disabled=true;
+  try{await crmEvWait();const r=await SB.from('av_crm_events').insert({deal_id:did,kind:v.kind,title:v.title,starts_at:v.starts_at,created_by_name:(PROFILE&&PROFILE.display_name)||null}).select().single();if(r.error)throw r.error;(CRM_EV[did]=CRM_EV[did]||[]).push(r.data);await crmEvSyncDeal(did);crmEvDraw(did);crmRenderBoard();toast('Agendado.')}
+  catch(e){toast('Não foi possível agendar.');btn.disabled=false}},
+ async done(id,on){const e=evFind(CRM_EV,id);if(!e)return;
+  try{const r=await SB.from('av_crm_events').update({done:on}).eq('id',id).select().single();if(r.error)throw r.error;Object.assign(e,r.data);await crmEvSyncDeal(e.deal_id);crmEvDraw(e.deal_id);crmRenderBoard()}
+  catch(er){toast('Não foi possível actualizar.');crmEvDraw(e.deal_id)}},
+ async del(id){const e=evFind(CRM_EV,id);if(!e||!confirm('Eliminar este agendamento?'))return;
+  try{const r=await SB.from('av_crm_events').delete().eq('id',id);if(r.error)throw r.error;CRM_EV[e.deal_id]=CRM_EV[e.deal_id].filter(x=>x.id!==id);await crmEvSyncDeal(e.deal_id);crmEvDraw(e.deal_id);crmRenderBoard()}
+  catch(er){toast('Não foi possível eliminar.')}}};
+/* o «próximo passo» escrito no formulário do negócio passa a ser um agendamento (fonte única da data do próximo contacto) */
+async function crmEvFromForm(did,data){
+ if(CRM_SYNC.remote!==true||CRM_EV_OK!==true)return;
+ if(!crmIsOpen(data)||!data.proximoPasso||!data.dataProximoContacto)return;
+ try{await crmEvWait();const n=crmEvNext(did),t=data.proximoPasso.slice(0,120),d=data.dataProximoContacto;
+  if(n&&n.title===t&&evDay(n.starts_at)===d)return;
+  let r;
+  if(n){r=await SB.from('av_crm_events').update({title:t,starts_at:evIso(d,evHour(n.starts_at))}).eq('id',n.id).select().single();if(r.error)throw r.error;Object.assign(n,r.data)}
+  else{r=await SB.from('av_crm_events').insert({deal_id:did,kind:'tarefa',title:t,starts_at:evIso(d,'09:00'),created_by_name:(PROFILE&&PROFILE.display_name)||null}).select().single();if(r.error)throw r.error;(CRM_EV[did]=CRM_EV[did]||[]).push(r.data)}
+  await crmEvSyncDeal(did);crmRenderBoard()}
+ catch(e){}}
 function crmRenderBoard(){if(!$('crmBoard'))return;const q=($('crmSearch')?.value||'').toLowerCase(),owner=$('crmOwnerFilter')?.value||'',origin=$('crmOriginFilter')?.value||'',al=$('crmAlertFilter')?.value||'';
  const rows=CRM_DEALS.filter(x=>(!q||[x.nome,x.telefone,x.email,x.profissao,x.codigo,x.vendedorResponsavel,x.turma].join(' ').toLowerCase().includes(q))&&(!owner||x.vendedorResponsavel===owner)&&(!origin||x.origem===origin)&&(!al||(al==='any'?!!crmAlert(x):(crmAlert(x)||{}).k===al)));
  const open=CRM_DEALS.filter(crmIsOpen),val=open.reduce((a,x)=>a+(Number(x.valorEstimado)||0),0);
@@ -1471,7 +1527,7 @@ async function crmLoad(){
   if(CRM_SYNC.remote!==true)CRM_SYNC.remote=false;
   if(CRM_SYNC.remote===true)toast('Não foi possível actualizar o CRM a partir do servidor.');
  }
- if(CRM_SYNC.remote===true)await crmNotesLoad();
+ if(CRM_SYNC.remote===true){await crmNotesLoad();await crmEvLoad()}
  crmNote();crmRenderAll();
 }
 function crmOpen(){crmNote();crmRenderAll();crmLoad();if(payIsAdmin()&&!CRM_PAYREADY)payLoad().then(()=>{CRM_PAYREADY=true;crmRenderAll()}).catch(()=>{})}
@@ -3979,7 +4035,7 @@ function view(){ /* junta oportunidade + contacto + tarefas e calcula os alertas
  return CT.deals.map(d=>{const c=byId(CT.contacts,d.contact_id)||{name:'(sem contacto)'},
   pend=CT.tasks.filter(t=>t.deal_id===d.id&&!t.done).sort((a,b)=>a.due<b.due?-1:1),
   p=String(c.phone||'').replace(/\D/g,''),open=OPEN(d.stage),idle=diffDays(todayS(),d.last_activity||todayS());
-  return Object.assign({},d,{c,pend,next:pend[0]||null,open,idle,stalled:open&&idle>14,noTask:open&&!pend.length,dup:!!p&&phones[p].length>1})})}
+  return Object.assign({},d,{c,pend,next:pend[0]||null,open,idle,stalled:open&&idle>14,noTask:open&&!pend.length&&!ctEvNext(d.id),dup:!!p&&phones[p].length>1})})}
 async function load(){
  if(CT.loading)return;CT.loading=true;CT.err=null;
  try{
@@ -3988,7 +4044,7 @@ async function load(){
   const e=d.error||c.error||t.error;if(e)throw e;
   if(CT.mode==='guiado'&&!(d.data||[]).length){const r=await SB.rpc('av_sim_seed',{p_mode:'guiado'});if(r.error)throw r.error;
    [d,c,t]=await Promise.all([q('av_sim_deals'),q('av_sim_contacts'),q('av_sim_tasks')]);const e2=d.error||c.error||t.error;if(e2)throw e2}
-  CT.deals=(d.data||[]).map(x=>({...x,stage:ALIAS[x.stage]||x.stage}));CT.contacts=c.data||[];CT.tasks=t.data||[];await ctNotesLoad();CT.loaded=true}
+  CT.deals=(d.data||[]).map(x=>({...x,stage:ALIAS[x.stage]||x.stage}));CT.contacts=c.data||[];CT.tasks=t.data||[];await ctNotesLoad();await ctEvLoad();CT.loaded=true}
  catch(e){CT.err=String((e&&e.message)||e||'erro');CT.loaded=false}
  CT.loading=false;draw()}
 const fail=(r,msg)=>{if(r&&r.error){toast(msg||'Não foi possível guardar. Tente de novo.');return true}return false};
@@ -4035,6 +4091,22 @@ function ctNotesClick(t,D){
 
 
 /* ---------- Estrutura ---------- */
+/* ---------- Agendamentos (m540): av_sim_events ---------- */
+CT.ev={};CT.evOk=null;
+async function ctEvLoad(){try{const r=await SB.from('av_sim_events').select('*').order('starts_at').limit(2000);if(r.error)throw r.error;const ids=new Set(CT.deals.map(x=>x.id));CT.ev={};(r.data||[]).forEach(e=>{if(ids.has(e.deal_id))(CT.ev[e.deal_id]=CT.ev[e.deal_id]||[]).push(e)});CT.evOk=true}catch(e){CT.evOk=false}}
+function ctEvNext(id){return (CT.ev[id]||[]).filter(e=>!e.done).sort((a,b)=>String(a.starts_at).localeCompare(String(b.starts_at)))[0]||null}
+function ctEvChip(d){const n=d.open?ctEvNext(d.id):null;if(!n)return '';const late=Date.parse(n.starts_at)<Date.now();return '<span class="pd-chip '+(late?'bad':'info')+'" title="'+esc(n.title)+'">'+esc(evKind(n.kind))+' · '+evRel(n.starts_at)+' '+evHour(n.starts_at)+'</span>'}
+function ctEvDraw(id){const b=g('ctEvents');if(b)b.innerHTML=evBlockHTML('ct',id,CT.ev[id],CT.evOk)}
+EVX.ct={
+ async add(did,btn){const v=evRead('ct');if(!v)return;btn.disabled=true;
+  try{const r=await SB.from('av_sim_events').insert({deal_id:did,mode:CT.mode,kind:v.kind,title:v.title,starts_at:v.starts_at}).select().single();if(r.error)throw r.error;(CT.ev[did]=CT.ev[did]||[]).push(r.data);draw();toast('Agendado.')}
+  catch(e){toast('Não foi possível agendar.');btn.disabled=false}},
+ async done(id,on){const e=evFind(CT.ev,id);if(!e)return;
+  try{const r=await SB.from('av_sim_events').update({done:on}).eq('id',id).select().single();if(r.error)throw r.error;Object.assign(e,r.data);if(on){const d=byId(CT.deals,e.deal_id);if(d)d.last_activity=todayS()}draw()}
+  catch(er){toast('Não foi possível actualizar.');draw()}},
+ async del(id){const e=evFind(CT.ev,id);if(!e||!confirm('Eliminar este agendamento?'))return;
+  try{const r=await SB.from('av_sim_events').delete().eq('id',id);if(r.error)throw r.error;CT.ev[e.deal_id]=CT.ev[e.deal_id].filter(x=>x.id!==id);draw()}
+  catch(er){toast('Não foi possível eliminar.')}}};
 const TABS=[['quadro','Quadro'],['tarefas','Tarefas']];
 function shell(){
  root().innerHTML='<div class="ct-top"><div class="sg-seg ct-mode" role="tablist" aria-label="Modo">'+
@@ -4064,7 +4136,7 @@ function cardHTML(d){ /* cartão premium: nome, serviço, valor, contacto, próx
  when=x=>{const n=diffDays(x,t0);return n===0?'Hoje':n===1?'Amanhã':n===-1?'Ontem':fd(x)},
  i=STAGES.findIndex(s=>s.k===d.stage),pv=i>0?(i===4?STAGES[0]:STAGES[i-1]):null,nx=i>=0&&i<3?STAGES[i+1]:null,
  ico=d.open?'<button type="button" class="pd-st '+k+'" data-ct-pop="'+id+'" aria-label="Atividades" title="Atividades">'+(late?'!':warn?'⚠':'➜')+'</button>':(d.stage==='GANHO'?'<span class="pd-pill won">GANHO</span>':'<span class="pd-pill lost">PERDIDO</span>'),
- chips=nChips(d.id)+(d.stalled?'<span class="pd-chip warn">Parado há '+d.idle+' dias</span>':'')+(d.noTask?'<span class="pd-chip bad">Sem follow-up</span>':'')+(late?'<span class="pd-chip bad">Follow-up atrasado</span>':'')+(d.dup?'<span class="pd-chip info">Possível duplicado</span>':''),
+ chips=ctEvChip(d)+nChips(d.id)+(d.stalled?'<span class="pd-chip warn">Parado há '+d.idle+' dias</span>':'')+(d.noTask?'<span class="pd-chip bad">Sem follow-up</span>':'')+(late?'<span class="pd-chip bad">Follow-up atrasado</span>':'')+(d.dup?'<span class="pd-chip info">Possível duplicado</span>':''),
  meta=[d.c.source,d.c.phone].filter(Boolean).map(esc).join(' · '),
  pop=CT.pop===d.id?'<div class="pd-pop">'+(d.pend.length?d.pend.map(t=>'<label class="pd-pr"><input type="checkbox" data-ct-done="'+esc(t.id)+'"><span><b>'+esc(t.title)+'</b><small'+(t.due<t0?' class="late"':'')+'>'+when(t.due)+(t.due<t0?' · atrasado':'')+'</small></span></label>').join(''):'<div class="pd-pr"><span><b>Sem atividades</b><small>Agende o próximo follow-up</small></span></div>')+(d.open?'<button type="button" class="pd-pa" data-ct-task="'+id+'">+ Agendar atividade</button>':'')+'</div>':'';
  return '<div class="pd-card'+(late?' late':d.stage==='GANHO'?' won':'')+'" draggable="true" data-id="'+id+'"><div class="pd-top"><div style="min-width:0"><h4>'+esc(d.c.name)+'</h4><p class="pd-sub">'+esc(d.title||'')+'</p></div>'+ico+'</div><div class="pd-vrow"><span class="pd-money">'+(Number(d.value)>0?kz(d.value):'—')+'</span><span class="pd-av">'+esc(ini(d.c.name))+'</span></div>'+(meta?'<div class="pd-meta">'+meta+'</div>':'')+(d.expected_close&&d.open?'<div class="pd-meta">Fecho previsto: '+fd(d.expected_close)+'</div>':'')+(d.open&&d.next?'<div class="pd-next">Próximo: '+esc(d.next.title)+' · '+when(d.next.due)+'</div>':'')+(d.stage==='PERDIDO'&&d.lost_reason?'<div class="pd-next">Motivo: '+esc(d.lost_reason)+'</div>':'')+(chips?'<div class="pd-chips">'+chips+'</div>':'')+(d.open?'<div class="pd-qa"><button type="button" class="pd-qb primary" data-ct-touch="'+id+'">Contactei</button><button type="button" class="pd-qb" data-ct-task="'+id+'">+ Tarefa</button></div>':'')+
@@ -4127,7 +4199,7 @@ function modalDraw(){const m=CT.modal,h=g('ctModal');if(!h)return;if(!m){h.inner
   '<div class="pf-grid"><div><label>Telefone</label><b>'+esc(d.c.phone||'—')+'</b></div><div><label>Origem</label><b>'+esc(d.c.source||'—')+'</b></div><div><label>Valor em mesa</label><b class="pf-val">'+(Number(d.value)>0?kz(d.value):'—')+'</b></div><div><label>Fecho previsto</label><b>'+(d.expected_close?fd(d.expected_close):'—')+'</b></div></div>'+
   (d.stage==='PERDIDO'?'<h3 class="pf-h">Motivo de perda</h3><p style="margin:0">'+esc(d.lost_reason||'Sem motivo registado')+'</p>':'')+
   '<h3 class="pf-h">Actividades e conversa</h3><div class="pf-obs">'+(d.pend.length?d.pend.map(t=>'<div><b>'+esc(t.title)+'</b> · '+when(t.due)+(t.due<t0?' (atrasado)':'')+'</div>').join(''):'<span class="muted">Sem tarefas pendentes. Último contacto: '+fd(d.last_activity)+'.</span>')+'</div>'+
-  '<div id="ctNotes"></div>'+
+  '<div id="ctEvents"></div><div id="ctNotes"></div>'+
   '<div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Fechar</button><button type="button" class="btn secondary small" data-ct-note="'+esc(d.id)+'">Ficha para notas</button><button type="button" class="btn small" data-ct-edit="'+esc(d.id)+'">Editar</button></div></div>'}
   else if(m.t==='task'){const vs=view().filter(d=>d.open||d.id===m.id),def=addDays(todayS(),2);
   body='<h2>Nova tarefa de follow-up</h2><form data-ct-form="task"><div class="field"><label>Oportunidade</label><select name="d" required>'+vs.map(d=>'<option value="'+esc(d.id)+'"'+(d.id===m.id?' selected':'')+'>'+esc(d.c.name)+' · '+esc(d.title||'')+'</option>').join('')+'</select></div><div class="field"><label>O que fazer</label><input name="t" required maxlength="120" value="Contacto de follow-up"></div><div class="field"><label>Data</label><input name="w" type="date" required value="'+def+'"></div><div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Guardar</button></div></form>'}
@@ -4143,7 +4215,7 @@ function modalDraw(){const m=CT.modal,h=g('ctModal');if(!h)return;if(!m){h.inner
   fl('Fecho previsto','ctF','<div class="sg-in"><input id="ctF" name="f" type="date" value="'+esc(d&&d.expected_close||'')+'"></div>')+'</div>'+
   '<div class="ct-mf"><button type="button" class="btn secondary small" data-ct-close>Cancelar</button><button class="btn small">Registar</button></div></form><aside class="ct-gr" id="ctInfo">'+stgInfo(st0,d?d.value:'')+'</aside></div>'}
  h.innerHTML='<div class="ct-ov" data-ct-close-bg><div class="ct-mbox'+(m.t==='deal'?' wide':'')+'" role="dialog" aria-modal="true">'+body+'</div></div>';
- if(m.t==='view')ctNotesDraw(m.id);const f=h.querySelector('input:not([type=hidden]),select');if(f&&m.t!=='lost')f.focus()}
+ if(m.t==='view'){ctEvDraw(m.id);ctNotesDraw(m.id)}const f=h.querySelector('input:not([type=hidden]),select');if(f&&m.t!=='lost')f.focus()}
 
 /* ---------- Acções ---------- */
 async function patchDeal(id,patch){const r=await SB.from('av_sim_deals').update(Object.assign({updated_at:new Date().toISOString()},patch)).eq('id',id);if(fail(r))return false;
@@ -4181,7 +4253,7 @@ async function onClick(e){
  const D=t.dataset;if(D.ctPop){CT.pop=CT.pop===D.ctPop?null:D.ctPop;draw();return}if(D.ctDone===undefined)CT.pop=null;
  if(t.hasAttribute('data-ct-copy')){copyNote();return}
  if(t.hasAttribute('data-ct-share')){shareNote();return}
- if(ctNotesClick(t,D))return;
+ if(ctNotesClick(t,D))return;if(t.dataset.evNs)return;
   if(D.ctNote!==undefined){CT.modal={t:'note',id:D.ctNote||null};draw();return}
  if(D.ctStg){const f=t.closest('form');f.elements.e.value=D.ctStg;t.parentNode.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));g('ctInfo').innerHTML=stgInfo(D.ctStg,f.elements.v.value);return}
  if(D.ctMode){CT.mode=D.ctMode;CT.tab='quadro';CT.fa=null;CT.q='';CT.loaded=false;CT.deals=CT.contacts=CT.tasks=[];draw();await load();return}
