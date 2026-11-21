@@ -231,7 +231,12 @@ html{scroll-behavior:smooth}body{-webkit-font-smoothing:antialiased;text-renderi
 .tr-chestc{display:flex;gap:14px;align-items:center}.tr-chestc p{margin:0 0 6px;font-size:14px}.tr-chestc.off .tr-chest-ic{opacity:.4}.tr-win{font-weight:800;font-size:18px;color:var(--red)}
 .tr-inv{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.tr-inv span{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700}
 .tr-chestres{margin:14px 0 4px;padding:14px;border:1px solid var(--line);border-radius:14px}
-.tr-mas3d{flex:none;width:132px;height:150px;display:grid;place-items:center;cursor:pointer}.tr-mas-cv{display:block;width:100%;height:100%}
+.tr-mas3d{flex:none;width:132px;height:150px;display:grid;place-items:center;cursor:pointer;perspective:600px}.tr-mas3d .pil{width:100%;height:100%}.tr-rmas .pil{width:100%;height:100%}
+.pil{display:block;overflow:visible}.pl-f1{animation:plFl 3.2s ease-in-out infinite}.pl-f2{animation:plFl 3.8s ease-in-out -1.4s infinite}.pl-ap{transform-origin:122px 46px}.pl-ap.wv{animation:plWv .9s ease-in-out 3}
+.pil.a-hop{animation:plHop .7s ease-out}.pil.a-shake{animation:plShake .6s ease-in-out}.pil.a-spin{animation:plSpin 1.3s ease-in-out}
+@keyframes plFl{50%{transform:translateY(-4px)}}@keyframes plHop{30%{transform:translateY(-14px)}60%{transform:none}78%{transform:translateY(-5px)}}@keyframes plShake{20%,60%{transform:rotate(-3.5deg)}40%,80%{transform:rotate(3.5deg)}}@keyframes plSpin{to{transform:rotateY(360deg)}}@keyframes plWv{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(22deg)}}
+@media(prefers-reduced-motion:reduce){.pil,.pil *{animation:none!important}}
+.ex-mas.talking svg{animation:trTalk .5s ease-in-out infinite alternate}.tr-mascot-read select{max-width:180px;font-size:12px;margin:0 4px;padding:3px 6px;border:1px solid var(--line);border-radius:8px;background:#fff}.ex-mas{flex-wrap:wrap;display:flex;align-items:center;gap:10px;justify-content:center;margin:0 0 14px}.ex-mas.l{justify-content:flex-start}.ex-mas .tr-bub{font-size:13px;padding:7px 12px}.ex-mas svg{flex:none}
 .tr-mas-r{min-width:0;flex:1}.tr-bub{position:relative;display:inline-block;background:#fff;border:1.5px solid #E5E7EB;border-radius:14px;padding:10px 14px;font-weight:700;font-size:14px;line-height:1.35}
 .tr-bub::before{content:"";position:absolute;left:-7px;top:50%;width:10px;height:10px;background:#fff;border-left:1.5px solid #E5E7EB;border-bottom:1.5px solid #E5E7EB;transform:translateY(-50%) rotate(45deg)}
 .tr-resmas{display:flex;align-items:center;gap:10px;justify-content:center;margin:8px 0}.tr-resmas .tr-mas3d{width:110px;height:124px}
@@ -407,7 +412,17 @@ html select.crm-mini:not([multiple]){min-height:30px;border-radius:9px;padding:0
 .pd-val{font-size:12px;color:#4b4f58;font-weight:700;white-space:nowrap}
 .pd-st{width:22px;height:22px;border-radius:50%;border:0;color:#fff;font-size:12px;font-weight:800;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:none;padding:0}
 .pd-st.ok,.pd-st.late,.pd-st.none{background:none;font-size:17px}
-.pd-emo{font-size:14px;line-height:1;font-style:normal;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif}.pd-ic.sm .pd-emo{font-size:12px}
+.pd-emo{display:inline-block;font-size:15px;line-height:1;width:1.2em;height:1.2em;text-align:center;font-style:normal;font-weight:400;vertical-align:middle;font-variant-emoji:emoji;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;transition:transform .12s ease}
+button:hover>.pd-emo{transform:scale(1.15)}button:disabled>.pd-emo{opacity:.45;filter:grayscale(1)}
+.pd-ic>.pd-emo,.pd-arr>.pd-emo{margin:0}.pd-ic.sm .pd-emo{font-size:13px}
+.pd-ic,.pd-arr{line-height:1}.pd-ic:active,.pd-arr:active{transform:scale(.94)}
+.pd-st{line-height:1}.pd-st:hover{transform:scale(1.12)}
+.crm-stick-f{flex-wrap:wrap;row-gap:6px}.crm-stick-f>span:first-child{flex:1 1 auto;min-width:0}
+.crm-stick-a{margin-left:auto;gap:4px;align-items:center}
+.crm-stick-a button{background:#ffffffd9;border:1px solid #0000000f;min-width:28px;height:28px;white-space:nowrap;line-height:1;cursor:pointer;transition:background .15s,box-shadow .15s}
+.crm-stick-a button:hover{background:#fff;box-shadow:0 1px 4px #1018282e}
+.crm-stick-a button>.pd-emo{font-size:14px}
+.btn .pd-emo,.btn.danger{line-height:1.2}
 .pd-pill{font-size:10px;font-weight:800;letter-spacing:.04em;padding:3px 8px;border-radius:999px}.pd-pill.won{background:#1f9d63;color:#fff}.pd-pill.lost{background:#e3e5ea;color:#4b4f58}
 .pd-pop{position:absolute;left:8px;right:8px;top:calc(100% - 4px);z-index:30;background:#fff;border:1px solid #e3e5ea;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.16);cursor:default;overflow:hidden}
 .pd-pr{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;font-size:12px;border-bottom:1px solid #eef0f3}.pd-pr b{display:block;font-size:13px;color:#1f2430}.pd-pr small{color:#6c7078}.pd-pr small.late{color:#d4202f;font-weight:700}
@@ -1376,7 +1391,7 @@ function crmNotesDraw(dealId){
  const admin=PROFILE&&PROFILE.role==='admin',
   list=(CRM_NOTES[dealId]||[]).slice().sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0)||String(b.created_at).localeCompare(String(a.created_at))),
   sticks=list.map(n=>{const mine=admin||(USER&&n.author_id===USER.id),id=crmEscape(n.id);
-   return `<div class="crm-stick${n.pinned?' pin':''}" style="--sc:${CRM_NCOL[n.color]||CRM_NCOL.amarelo}"><div class="crm-stick-t">${crmEscape(n.body).replace(/\n/g,'<br>')}</div><div class="crm-stick-f"><span>${crmEscape(n.author_name||'')}${n.author_name?' · ':''}${crmNWhen(n.created_at)}</span>${mine?`<span class="crm-stick-a"><button type="button" data-crm-npin="${id}" title="${n.pinned?'Desafixar':'Fixar no topo'}">${n.pinned?'Fixada':'Fixar'}</button><button type="button" data-crm-nedit="${id}" title="Editar" aria-label="Editar nota">${PDI('edit')}</button><button type="button" data-crm-ndel="${id}" title="Eliminar" aria-label="Eliminar nota">${PDI('trash')}</button></span>`:''}</div></div>`}).join('');
+   return `<div class="crm-stick${n.pinned?' pin':''}" style="--sc:${CRM_NCOL[n.color]||CRM_NCOL.amarelo}"><div class="crm-stick-t">${crmEscape(n.body).replace(/\n/g,'<br>')}</div><div class="crm-stick-f"><span>${crmEscape(n.author_name||'')}${n.author_name?' · ':''}${crmNWhen(n.created_at)}</span>${mine?`<span class="crm-stick-a"><button type="button" data-crm-npin="${id}" title="${n.pinned?'Desafixar':'Fixar no topo'}">${n.pinned?'📌 Fixada':'📌 Fixar'}</button><button type="button" data-crm-nedit="${id}" title="Editar" aria-label="Editar nota">${PDI('edit')}</button><button type="button" data-crm-ndel="${id}" title="Eliminar" aria-label="Eliminar nota">${PDI('trash')}</button></span>`:''}</div></div>`}).join('');
  box.innerHTML=head+(list.length?`<div class="crm-sticks">${sticks}</div>`:'<p class="muted smalltext" style="margin:0 0 10px">Sem notas. Use as notas para registar factos rápidos sobre o interessado.</p>')+
   `<div class="crm-nnew"><textarea id="crmNText" maxlength="2000" placeholder="Escreva uma nota…"></textarea><div class="crm-nrow"><div class="crm-ncols">${Object.keys(CRM_NCOL).map(k=>`<button type="button" data-crm-ncol="${k}" class="${k===CRM_NCOLOR?'on':''}" style="background:${CRM_NCOL[k]}" title="${k}" aria-label="Cor ${k}"></button>`).join('')}</div><div class="actions" style="display:flex;gap:8px"><button type="button" class="btn secondary small hidden" id="crmNCancel" data-crm-ncancel>Cancelar</button><button type="button" class="btn small" id="crmNSave" data-crm-nsave>Guardar nota</button></div></div></div>`;
 }
@@ -1900,20 +1915,30 @@ return dg+primary+`<div class="card todayrows"><div class="cardhead"><h2>A segui
 const TTS={ok:typeof speechSynthesis!=='undefined'&&typeof SpeechSynthesisUtterance!=='undefined',key:''};
 function ttsAuto(){try{return localStorage.getItem('av_tts_auto')==='1'}catch(e){return false}}
 function ttsSetAuto(v){try{localStorage.setItem('av_tts_auto',v?'1':'0')}catch(e){}}
-function ttsVoice(){const v=speechSynthesis.getVoices();return v.find(x=>/^pt[-_]PT/i.test(x.lang))||v.find(x=>/^pt/i.test(x.lang))||null}
-function ttsTalk(on){const m=document.getElementById('trRmas');if(m)m.classList.toggle('talking',!!on);const b=document.getElementById('trRbub');if(b)b.textContent=on?'A ler…':'Posso ler por ti'}
-function ttsStop(){if(!TTS.ok)return;try{speechSynthesis.cancel()}catch(e){}ttsTalk(false)}
-function ttsSpeak(t){if(!TTS.ok||!t)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t),v=ttsVoice();u.lang=v?v.lang:'pt-PT';if(v)u.voice=v;u.rate=.95;u.onstart=()=>ttsTalk(true);u.onend=u.onerror=()=>ttsTalk(false);speechSynthesis.speak(u)}catch(e){}}
-function ttsItemText(it,fb){const p=[];
-if(!fb){p.push(trPrompt(it));if(it.kind==='case'&&it.context)p.push(it.context);if(it.statement)p.push(it.statement);
-if(it.kind==='vf')p.push('Verdadeiro ou falso?');else if(it.kind==='mc'||it.kind==='case')(it.options||[]).forEach((o,j)=>p.push('Opção '+(j+1)+': '+o));else if(it.kind==='num')p.push('Escreva o valor.');else if(it.kind==='order')p.push('Ordene: '+(TRS.ord||it.options||[]).map((o,j)=>(j+1)+', '+o.t).join('. '))}
-else{const r=fb.res||{};p.push(r.correct?'Certo!':'Resposta correcta: '+trSolText(it,r.solution||{}));if(r.explanation)p.push(r.explanation)}
-return p.join('. ')}
-function ttsBarHTML(){if(!TTS.ok)return '';return '<div class="tr-read"><span class="tr-rmas" id="trRmas">'+trAvatarSVG('00000',46)+'</span><div class="tr-rtxt"><span id="trRbub">Posso ler por ti</span><label class="tr-rauto"><input type="checkbox" data-tts-auto'+(ttsAuto()?' checked':'')+'> Ler sempre</label></div><button type="button" class="tr-rbtn" data-tr-read>🔊 Ouvir</button></div>'}
-function ttsOptHTML(){if(!TTS.ok)return '';return '<label class="tr-rauto tr-mascot-read"><input type="checkbox" data-tts-auto'+(ttsAuto()?' checked':'')+'> A mascote lê as perguntas em voz alta</label>'}
-function ttsAfterDraw(it,fb){if(!TTS.ok)return;const k=TRS.idx+':'+(fb?'a':'q');if(TTS.key!==k){TTS.key=k;if(ttsAuto())ttsSpeak(ttsItemText(it,fb));else{try{speechSynthesis.cancel()}catch(e){}}}ttsTalk(speechSynthesis.speaking)}
-document.addEventListener('click',e=>{if(e.target.closest('[data-tr-read]')){const S=TRS.sess;if(S&&S.items[TRS.idx])ttsSpeak(ttsItemText(S.items[TRS.idx],TRS.fb))}});
-document.addEventListener('change',e=>{const c=e.target.closest&&e.target.closest('[data-tts-auto]');if(!c)return;ttsSetAuto(c.checked);document.querySelectorAll('[data-tts-auto]').forEach(x=>x.checked=c.checked);const S=TRS.sess,L=$('trLesson');if(c.checked&&S&&S.items[TRS.idx]&&L&&L.classList.contains('open'))ttsSpeak(ttsItemText(S.items[TRS.idx],TRS.fb));if(!c.checked)ttsStop()});
+const TTS_P={pilar:{pitch:.8,rate:.9,g:'m',blip:[196,262,'sine'],ola:'Olá! Eu sou o Pilar. Vamos treinar um bocadinho?'},excelsa:{pitch:1.14,rate:1,g:'f',blip:[392,523,'triangle'],ola:'Olá! Eu sou a Excelsa. Lê com calma e escolhe.'}};
+const TTS_M=/duarte|ant[oó]nio|daniel|cristiano|ricardo|felipe|jo[aã]o|diego|\bmale\b|masc/i,TTS_F=/raquel|francisca|fernanda|joana|catarina|luciana|maria|h[eé]lia|\bfemale\b|fem/i;
+const ttsSaved=w=>{try{return localStorage.getItem('av_tts_v_'+w)||''}catch(e){return ''}};
+function ttsScore(v){let n=0;if(/^pt[-_]PT/i.test(v.lang))n+=50;if(/natural|neural|online/i.test(v.name))n+=40;if(/premium|enhanced|melhorad/i.test(v.name))n+=30;if(/google/i.test(v.name))n+=15;if(!v.localService)n+=2;return n}
+function ttsList(){try{return speechSynthesis.getVoices().filter(x=>/^pt/i.test(x.lang)).sort((a,b)=>ttsScore(b)-ttsScore(a))}catch(e){return[]}}
+function ttsPick(w){const l=ttsList(),sv=ttsSaved(w);let v=sv&&l.find(x=>x.voiceURI===sv);if(v)return v;const g=TTS_P[w].g,rx=g==='m'?TTS_M:TTS_F,ox=g==='m'?TTS_F:TTS_M;return l.find(x=>rx.test(x.name))||l.find(x=>!ox.test(x.name))||l[0]||null}
+let TTS_AC;
+function ttsBlip(P){try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;TTS_AC=TTS_AC||new A();const c=TTS_AC;if(c.state==='suspended')c.resume();const t0=c.currentTime,g=c.createGain();g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(.07,t0+.02);g.gain.exponentialRampToValueAtTime(.0001,t0+.3);g.connect(c.destination);[P.blip[0],P.blip[1]].forEach((f,i)=>{const o=c.createOscillator();o.type=P.blip[2];o.frequency.value=f;o.connect(g);o.start(t0+i*.11);o.stop(t0+i*.11+.16)})}catch(e){}}
+function ttsTalk(on){document.querySelectorAll('[data-rmas]').forEach(m=>m.classList.toggle('talking',!!on));const b=document.getElementById('trRbub');if(b)b.textContent=on?'A ler…':'Posso ler por ti'}
+function ttsStop(){if(!TTS.ok)return;TTS.tok=(TTS.tok||0)+1;try{speechSynthesis.cancel()}catch(e){}ttsTalk(false)}
+function ttsSpeak(t,who){if(!TTS.ok||!t)return;who=TTS_P[who]?who:'pilar';try{speechSynthesis.cancel();const P=TTS_P[who],v=ttsPick(who),u=new SpeechSynthesisUtterance(t),k=TTS.tok=(TTS.tok||0)+1;u.lang=v?v.lang:'pt-PT';if(v)u.voice=v;u.pitch=P.pitch;u.rate=P.rate;u.onstart=()=>ttsTalk(true);u.onend=u.onerror=()=>ttsTalk(false);ttsBlip(P);setTimeout(()=>{if(k===TTS.tok)speechSynthesis.speak(u)},260)}catch(e){}}
+/* só a pergunta: sem opções, sem resposta certa, sem explicação */
+function ttsItemText(it){const p=[];if(!it)return '';if(it.kind==='case'&&it.context)p.push(it.context);if(it.statement)p.push(it.statement);return p.join('. ')}
+function ttsSelHTML(w,lab){const l=ttsList(),cur=ttsPick(w);if(!l.length)return '';return '<label class="tr-rauto tr-mascot-read">'+lab+' <select data-tts-v="'+w+'">'+l.map(v=>'<option value="'+esc(v.voiceURI)+'"'+(cur&&cur.voiceURI===v.voiceURI?' selected':'')+'>'+esc(v.name.replace(/^(Microsoft|Google) /,'')+' ('+v.lang+')')+'</option>').join('')+'</select><button type="button" class="tr-rbtn" data-tts-test="'+w+'" aria-label="Ouvir a voz">▶</button></label>'}
+function ttsFillSel(){document.querySelectorAll('[data-tts-vbox]').forEach(b=>{b.innerHTML=ttsSelHTML(b.dataset.ttsVbox,b.dataset.ttsVbox==='pilar'?'Voz do Pilar':'Voz da Excelsa')})}
+if(TTS.ok){try{speechSynthesis.addEventListener('voiceschanged',ttsFillSel)}catch(e){}}
+function ttsBarHTML(){if(!TTS.ok)return '';return '<div class="tr-read"><span class="tr-rmas" id="trRmas" data-rmas>'+pilarSVG('ler',0,0)+'</span><div class="tr-rtxt"><span id="trRbub">Posso ler por ti</span><label class="tr-rauto"><input type="checkbox" data-tts-auto'+(ttsAuto()?' checked':'')+'> Ler sempre</label></div><button type="button" class="tr-rbtn" data-tr-read>🔊 Ouvir</button></div>'}
+function ttsOptHTML(){if(!TTS.ok)return '';return '<label class="tr-rauto tr-mascot-read"><input type="checkbox" data-tts-auto'+(ttsAuto()?' checked':'')+'> Ler só a pergunta em voz alta</label><div data-tts-vbox="pilar">'+ttsSelHTML('pilar','Voz do Pilar')+'</div><div data-tts-vbox="excelsa">'+ttsSelHTML('excelsa','Voz da Excelsa')+'</div>'}
+function ttsAfterDraw(it,fb){if(!TTS.ok)return;const k=TRS.idx+':'+(fb?'a':'q');if(TTS.key!==k){TTS.key=k;if(fb)ttsStop();else if(ttsAuto())ttsSpeak(ttsItemText(it),'pilar');else{try{speechSynthesis.cancel()}catch(e){}}}ttsTalk(speechSynthesis.speaking)}
+document.addEventListener('click',e=>{if(e.target.closest('[data-tr-read]')){const S=TRS.sess;if(S&&S.items[TRS.idx])ttsSpeak(ttsItemText(S.items[TRS.idx]),'pilar')}
+ if(e.target.closest('[data-tq-read]')){const T=TEST_CUR,q=T&&T.data&&T.data.questions&&T.data.questions[T.i||0];if(q)ttsSpeak(q.statement,'excelsa')}
+ const tt=e.target.closest('[data-tts-test]');if(tt)ttsSpeak(TTS_P[tt.dataset.ttsTest].ola,tt.dataset.ttsTest)});
+document.addEventListener('change',e=>{const v=e.target.closest&&e.target.closest('[data-tts-v]');if(!v)return;try{localStorage.setItem('av_tts_v_'+v.dataset.ttsV,v.value)}catch(_){}ttsSpeak(TTS_P[v.dataset.ttsV].ola,v.dataset.ttsV)});
+document.addEventListener('change',e=>{const c=e.target.closest&&e.target.closest('[data-tts-auto]');if(!c)return;ttsSetAuto(c.checked);document.querySelectorAll('[data-tts-auto]').forEach(x=>x.checked=c.checked);const S=TRS.sess,L=$('trLesson');if(c.checked&&S&&S.items[TRS.idx]&&L&&L.classList.contains('open')&&!TRS.fb)ttsSpeak(ttsItemText(S.items[TRS.idx]),'pilar');if(!c.checked)ttsStop()});
 function testRowHTML(m,admin){const dates=[m.opensAt?'Abre: '+fmtDT(m.opensAt):'',m.closesAt?'Fecha: '+fmtDT(m.closesAt):''].filter(Boolean).join(' · '),dl=dates?`<div class="dates">${esc(dates)}</div>`:'',mid=esc(m.id);
 if(admin){const qn=QS.filter(q=>q.materialId===m.id).length,an=ATT.filter(a=>a.materialId===m.id).length,sr=testStatusRows(m),ln=sr.filter(r=>r.k==='left').length,on=sr.filter(r=>r.k==='open').length;return `<div class="matrow"><span class="matico test">TESTE</span><div class="matbody"><strong>${esc(m.title)}</strong> <span class="tag blue">${qn} pergunta(s)</span>${dl}<div class="dates">${an} resposta(s) submetida(s)${ln?` · ${ln} saiu(saíram) sem submeter`:''}${on?` · ${on} abriu(abriram) sem submissão`:''}</div></div><div class="actions"><button type="button" class="btn secondary small" data-test-results="${mid}">Resultados</button><button type="button" class="btn secondary small" data-edit-mat="${mid}">Editar</button><button type="button" class="btn danger small" data-del-mat="${mid}">Remover</button></div></div>`}
 const mine=ATT.find(a=>a.materialId===m.id),st=matState(m),lost=!mine&&STARTS.some(x=>x.material_id===m.id)&&!(TEST_CUR&&TEST_CUR.id===m.id&&TEST_CUR.data&&TEST_CUR.data.questions);let act;
@@ -2205,13 +2230,16 @@ function testTop(){$('testModal').scrollTop=0}
 /* ===== Testes e diagnósticos no mesmo formato do Treino: ecrã inteiro, uma pergunta de cada vez ===== */
 function tqEl(){let e=$('testRun');if(!e){e=document.createElement('div');e.id='testRun';e.className='tr-lesson tq-run';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');e.setAttribute('aria-label','Teste');document.body.appendChild(e)}return e}
 function tqShow(){tqEl().classList.add('open');document.body.classList.add('tr-noscroll')}
-function tqHide(){const e=$('testRun');if(e)e.classList.remove('open');document.body.classList.remove('tr-noscroll')}
+function tqHide(){ttsStop();const e=$('testRun');if(e)e.classList.remove('open');document.body.classList.remove('tr-noscroll')}
+const exMas=(code,t,sz,l)=>'<div class="ex-mas'+(l?' l':'')+'">'+trAvatarSVG(code,sz||64)+'<div class="tr-bub">'+esc(t)+'</div></div>';
+const exMasQ=fb=>'<div class="ex-mas l" data-rmas>'+trAvatarSVG(!fb||fb.neutral||fb.correct?'00000':'00010',48)+'<div class="tr-bub">'+esc(!fb?'Lê com atenção.':fb.neutral?'Resposta registada.':fb.correct?'Boa!':'Segue, vê a correcção no fim.')+'</div>'+(!fb&&TTS.ok?'<button type="button" class="tr-rbtn" data-tq-read>🔊 Ouvir</button><label class="tr-rauto"><input type="checkbox" data-tts-auto'+(ttsAuto()?' checked':'')+'> Ler sempre</label>':'')+'</div>';
+function ttsTestDraw(q,fb,T){if(!TTS.ok||!q)return;const k='t'+T.id+':'+(T.i||0)+(fb?'a':'q');if(TTS.k2!==k){TTS.k2=k;if(fb)ttsStop();else if(ttsAuto())ttsSpeak(q.statement,'excelsa');else{try{speechSynthesis.cancel()}catch(e){}}}ttsTalk(speechSynthesis.speaking)}
 const tqShell=(inner,foot)=>'<div class="tr-lbody"><div class="tr-lin">'+inner+'</div></div>'+(foot||'');
 function tqLoading(){tqShow();tqEl().innerHTML=tqShell('<div class="empty">A carregar…</div>')}
 function tqError(m){tqShow();tqEl().innerHTML=tqShell('<div class="notice">'+esc(m)+'</div>','<div class="tr-lfoot"><div class="tr-lfin"><span></span><button type="button" class="tr-btn go" data-tq-later>Fechar</button></div></div>')}
 function tqIntro(T,d){
  const m=findMat(T.id)||{},diag=d.purpose==='diagnostico',n=d.total||0;
- tqEl().innerHTML=tqShell('<div class="tr-res"><h2>'+esc(m.title||'Teste')+'</h2>'
+ tqEl().innerHTML=tqShell('<div class="tr-res">'+exMas('00000','Boa sorte! Lê com calma.',88)+'<h2>'+esc(m.title||'Teste')+'</h2>'
   +'<div class="tr-rgrid"><div class="a"><small>PERGUNTAS</small><b>'+n+'</b></div><div class="b"><small>TENTATIVAS</small><b>1</b></div><div class="c"><small>AVALIAÇÃO</small><b>'+(diag?'Sem nota':'Com nota')+'</b></div></div>'
   +'<ul class="tq-rules"><li>Só pode <strong>abrir uma vez</strong>. Se sair ou recarregar a página sem submeter, perde a tentativa.</li><li>Responda a uma pergunta de cada vez e use «Voltar» se quiser rever.</li><li>Reserve o tempo necessário e confirme que a ligação à internet está estável.</li></ul></div>',
   '<div class="tr-lfoot"><div class="tr-lfin"><button type="button" class="tr-btn ghost" data-tq-later>Agora não</button><button type="button" class="tr-btn go" data-tq-start>Começar</button></div></div>')}
@@ -2234,8 +2262,8 @@ function tqDraw(){
  else if(needCheck){foot='<div class="tr-lfoot"><div class="tr-lfin"><button type="button" class="tr-btn ghost" data-tq-back'+(T.i===0||T.checking?' disabled':'')+'>Voltar</button><button type="button" class="tr-btn go" data-tq-check'+(!ok||T.checking?' disabled':'')+'>'+(T.checking?'A verificar…':'Verificar')+'</button></div></div>'}
  else{foot='<div class="tr-lfoot"><div class="tr-lfin"><button type="button" class="tr-btn ghost" data-tq-back'+(T.i===0||bz?' disabled':'')+'>Voltar</button><button type="button" class="tr-btn go" data-tq-next'+(!ok||bz?' disabled':'')+'>'+(bz?'A submeter…':nextLbl)+'</button></div></div>'}
  tqEl().innerHTML='<div class="tr-lhead"><button type="button" class="tr-x" data-tq-exit aria-label="Sair do teste">'+TR_IC.x+'</button><div class="tr-pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div><span class="tr-lcount">'+(T.i+1)+'/'+n+'</span></div>'
-  +tqShell('<h2 class="tr-lq">'+esc(prompt)+'</h2><p class="tr-stmt2">'+esc(q.statement)+'</p>'+chs,foot);
- const bd=tqEl().querySelector('.tr-lbody');if(bd)bd.scrollTop=0}
+  +tqShell(exMasQ(fb)+'<h2 class="tr-lq">'+esc(prompt)+'</h2><p class="tr-stmt2">'+esc(q.statement)+'</p>'+chs,foot);
+ ttsTestDraw(q,fb,T);const bd=tqEl().querySelector('.tr-lbody');if(bd)bd.scrollTop=0}
 async function tqCheck(){
  const T=TEST_CUR;if(!T||!T.data||T.checking)return;const q=(T.data.questions||[])[T.i||0];if(!q||T.fb[q.id])return;
  T.checking=true;tqDraw();
@@ -2251,7 +2279,7 @@ function tqResult(){
  const grid=diag?'<div class="a"><small>PERGUNTAS</small><b>'+nq+'</b></div><div class="b"><small>RESPONDIDAS</small><b>'+nq+'</b></div><div class="c"><small>NOTA</small><b>Sem nota</b></div>'
   :'<div class="a"><small>NOTA</small><b>'+fmtNota(d.score)+'/20</b></div><div class="b"><small>CERTAS</small><b>'+c+'/'+t+'</b></div><div class="c"><small>PRECISÃO</small><b>'+(t?Math.round(100*c/t):0)+'%</b></div>';
  const msg=diag?'As suas respostas foram registadas. Veja a seguir o seu diagnóstico.':(d.review?'Veja a seguir a correcção pergunta a pergunta.':'A correcção detalhada fica disponível depois da data de fecho do teste.');
- tqEl().innerHTML=tqShell('<div class="tr-res"><h2>'+(diag?'Diagnóstico concluído!':'Teste concluído!')+'</h2><div class="tr-rgrid">'+grid+'</div><p class="muted">'+msg+'</p></div>',
+ tqEl().innerHTML=tqShell('<div class="tr-res">'+(diag?exMas('00000','As tuas respostas ficaram registadas.',88):Number(d.score)>=10?exMas('00000','Bom trabalho!',88):exMas('00010','Revê a correcção com calma.',88))+'<h2>'+(diag?'Diagnóstico concluído!':'Teste concluído!')+'</h2><div class="tr-rgrid">'+grid+'</div><p class="muted">'+msg+'</p></div>',
   '<div class="tr-lfoot ok"><div class="tr-lfin"><span></span><button type="button" class="tr-btn ok" data-tq-end>'+(diag?'Ver o meu diagnóstico':d.review?'Ver correcção':'Ver resultado')+'</button></div></div>')}
 document.addEventListener('click',e=>{
  const b=e.target.closest&&e.target.closest('[data-tq-sel],[data-tq-next],[data-tq-back],[data-tq-check],[data-tq-exit],[data-tq-start],[data-tq-later],[data-tq-end]');
@@ -3028,81 +3056,24 @@ const trNeed=s=>Number(s&&s.week&&s.week.needed)||3;
 async function trGapAlert(msg){try{const k='trgap:'+new Date().toISOString().slice(0,10)+':'+msg;if(localStorage.getItem(k))return 'dup';if(!USER||!PROFILE||!PROFILE.staff_id)return 'fail';const mid=id(),a=read(KEYS.messages);a.push({id:mid,staffId:PROFILE.staff_id,area:'AR',text:'Alerta de treino: '+msg,createdAt:new Date().toISOString(),senderUserId:USER.id,replies:[]});if(!put(KEYS.messages,a))return 'fail';refreshChats();await queue;if(read(KEYS.messages).some(x=>x.id===mid)){localStorage.setItem(k,'1');return 'ok'}}catch(_){}return 'fail'}
 function trGapHTML(s){let m='';if(!s.cohort)m='ainda não está numa turma';else if(!TRT.units.length)m=TRT.cad?'faltam datas e temas das aulas ('+TRT.ready+' de '+TRT.cad+' definidas)':'falta definir a cadência, as datas e os temas das aulas';if(!m)return '';return '<div class="notice trgap"><strong>O seu treino está incompleto.</strong> O que falta: '+esc(m)+'. Pode treinar já; a jornada completa aparece quando isto estiver definido.<div style="margin-top:8px"><button type="button" class="btn secondary small" data-tr-gap="'+esc(m)+'">Avisar o formador</button></div></div>'}
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-tr-gap]');if(!b||b.disabled)return;b.disabled=true;b.textContent='A enviar…';const r=await trGapAlert(b.dataset.trGap);b.textContent=r==='ok'?'Formador avisado':r==='dup'?'Já avisado hoje':'Não enviado · tentar de novo';b.disabled=r!=='fail'});
-/* mascote 3D do Treino: Three.js r128 só carrega quando o Treino abre; se falhar, fica o símbolo em SVG */
-const TRM={base:'ola',want:'ola'};
-const TRM_MOODS={ola:{e:'dots',m:'smile'},certo:{e:'happy',m:'grin',a:'hop'},errado:{e:'dots',b:1,m:'frown',a:'shake'},combo:{e:'happy',m:'grin',a:'spin',lg:1},xp100:{e:'happy',m:'smile'},cheio:{e:'happy',m:'smile',lg:1},prot:{e:'big',m:'surprise',a:'hop'},dorme:{e:'closed',m:'sleep'}};
-function trMascotLoad(){if(TRM.p)return TRM.p;
- TRM.p=new Promise((ok,no)=>{if(window.THREE)return ok();const e=document.createElement('script');e.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';e.onload=ok;e.onerror=no;document.head.appendChild(e)}).then(trMascotBuild).catch(()=>{TRM.fail=1});
- return TRM.p}
-function trMascotBuild(){
- const T=window.THREE,RM=matchMedia('(prefers-reduced-motion:reduce)').matches;let rd;
- try{rd=new T.WebGLRenderer({antialias:true,alpha:true})}catch(_){TRM.fail=1;return}
- const cv=rd.domElement;cv.className='tr-mas-cv';cv.setAttribute('role','img');cv.setAttribute('aria-label','Mascote do Treino');
- rd.setPixelRatio(Math.min(window.devicePixelRatio||1,2));rd.setClearColor(0x000000,0);
- const sc=new T.Scene(),cam=new T.PerspectiveCamera(35,1,.1,100);
- sc.add(new T.AmbientLight(0xffffff,.62));
- [[.85,4,6,8],[.55,-5,3,-6],[.25,-6,-2,6]].forEach(l=>{const d=new T.DirectionalLight(0xffffff,l[0]);d.position.set(l[1],l[2],l[3]);sc.add(d)});
- const X=a=>(a-32)*.1,Y=a=>(32-a)*.1,V=(a,b)=>new T.Vector3(X(a),Y(b),0),FL=-2.95;
- const mat=(c,r,m)=>new T.MeshStandardMaterial({color:c,roughness:r==null?.5:r,metalness:m==null?.12:m});
- const ext=(p,d,c,b)=>{const h=new T.Shape();p.forEach((q,i)=>i?h.lineTo(X(q[0]),Y(q[1])):h.moveTo(X(q[0]),Y(q[1])));h.closePath();
-  const g=new T.ExtrudeGeometry(h,{depth:d,bevelEnabled:b>0,bevelThickness:b,bevelSize:b,bevelSegments:2,steps:1});g.translate(0,0,-d/2);return new T.Mesh(g,mat(c))};
- const pv=(m,cx,cy)=>{const g=new T.Group();g.position.set(X(cx),Y(cy),0);m.position.x-=X(cx);m.position.y-=Y(cy);g.add(m);return g};
- const sph=(x,y,r,c,z,zs)=>{const m=new T.Mesh(new T.SphereGeometry(1,24,16),mat(c,.35,0));m.scale.set(r,r,r*(zs==null?.35:zs));m.position.set(x,y,z||0);return m};
- const bar=(x,y,len,rad,c,rot)=>{const m=new T.Mesh(new T.CylinderGeometry(rad,rad,len,12),mat(c,.35,0));m.rotation.z=rot==null?Math.PI/2:rot;m.position.set(x,y,0);return m};
- const arc=(a,b,c,rad,col)=>{const g=new T.Group();g.add(new T.Mesh(new T.TubeGeometry(new T.QuadraticBezierCurve3(V(a[0],a[1]),V(b[0],b[1]),V(c[0],c[1])),24,rad,8,false),mat(col,.4,0)));g.add(sph(X(a[0]),Y(a[1]),rad,col,0,1));g.add(sph(X(c[0]),Y(c[1]),rad,col,0,1));return g};
- const ring=new T.Mesh(new T.RingGeometry(2.55,2.62,72),new T.MeshBasicMaterial({color:0xC8101E,side:T.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.y=FL;sc.add(ring);
- const sk=document.createElement('canvas');sk.width=sk.height=128;const sx=sk.getContext('2d'),gr=sx.createRadialGradient(64,64,0,64,64,64);
- gr.addColorStop(0,'rgba(23,25,29,.55)');gr.addColorStop(1,'rgba(23,25,29,0)');sx.fillStyle=gr;sx.fillRect(0,0,128,128);
- const shadow=new T.Mesh(new T.PlaneGeometry(5.4,5.4),new T.MeshBasicMaterial({map:new T.CanvasTexture(sk),transparent:true,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.y=FL+.01;sc.add(shadow);
- /* mascote único: Obsidian + Crimson, igual para todos */
- const PD=1.5,B=.07,front=PD/2+B,INK='#FFFFFF',MC='#E5E7EB',PC='#17191D';
- const root=new T.Group(),inner=new T.Group();inner.position.x=-.3;root.add(inner);
- inner.add(ext([[8,8],[26,8],[26,56],[8,56]],PD,PC,B));
- const apex=pv(ext([[30,8],[56,8],[50,16],[30,16]],.7,'#C8101E',.05),30,12);inner.add(apex);
- const bA=pv(ext([[30,26],[50,26],[45,34],[30,34]],.8,'#2B2E36',.06),38,30);inner.add(bA);
- const bB=pv(ext([[30,46],[54,46],[47,56],[30,56]],.8,'#2B2E36',.06),42,51);inner.add(bB);sc.add(root);
- const E={},M={};
- const grp=y=>{const g=new T.Group();g.position.set(0,y,front+.02);g.visible=false;inner.add(g);return g};
- E.dots=grp(Y(25));E.dots.add(sph(X(13.5),0,.26,INK));E.dots.add(sph(X(20.5),0,.26,INK));
- E.big=grp(Y(25));[13.5,20.5].forEach(a=>{E.big.add(sph(X(a),0,.36,INK));E.big.add(sph(X(a),-.04,.15,PC,.03))});
- E.happy=grp(0);E.happy.add(arc([11,26.5],[13.5,21.5],[16,26.5],.1,INK));E.happy.add(arc([18,26.5],[20.5,21.5],[23,26.5],.1,INK));
- E.closed=grp(Y(25));E.closed.add(bar(X(13.5),0,.5,.1,INK));E.closed.add(bar(X(20.5),0,.5,.1,INK));
- const brows=grp(0);brows.add(bar(X(13.5),Y(20.5),.6,.08,INK,Math.PI/2+.35));brows.add(bar(X(20.5),Y(20.5),.6,.08,INK,Math.PI/2-.35));
- M.smile=grp(0);M.smile.add(arc([13,36],[17,40],[21,36],.1,MC));
- M.grin=grp(0);M.grin.add(arc([12.5,35.5],[17,42],[21.5,35.5],.15,MC));
- M.frown=grp(0);M.frown.add(arc([13,38.5],[17,34.5],[21,38.5],.1,MC));
- M.sleep=grp(0);M.sleep.add(bar(X(17),Y(37),.4,.09,MC));
- M.surprise=grp(0);const tor=new T.Mesh(new T.TorusGeometry(.24,.09,10,24),mat(MC,.4,0));tor.scale.y=1.25;tor.position.set(X(17),Y(37),0);M.surprise.add(tor);
- let lgT=1,act=null,last=0,t=0,blinkAt=2;
- TRM.apply=(k,quiet)=>{const d=TRM_MOODS[k]||TRM_MOODS.ola;TRM.mood=k;
-  Object.keys(E).forEach(n=>{E[n].visible=n===d.e});Object.keys(M).forEach(n=>{M[n].visible=n===d.m});brows.visible=!!d.b;lgT=d.lg?1.23:1;
-  if(d.a&&!quiet&&!RM)act={a:d.a,t0:performance.now()}};
- TRM.fit=h=>{const w=h.clientWidth,hh=h.clientHeight;if(!w||!hh)return;rd.setSize(w,hh,false);cam.aspect=w/hh;
-  const dd=Math.max(10.5,3.5/(.3153*cam.aspect));cam.position.set(0,.2,dd);cam.lookAt(0,-.1,0);cam.updateProjectionMatrix()};
- const ease=c=>c<.5?2*c*c:1-Math.pow(-2*c+2,2)/2;
- function frame(now){
-  if(!cv.isConnected||document.hidden){TRM.run=0;return}
-  const dt=Math.min((now-last)/1000,.05);last=now;t+=dt;const m=RM?0:1,sl=TRM.mood==='dorme'?.4:1;
-  let hop=0,spin=0,rz=0;
-  if(act&&!RM){const dur=act.a==='spin'?1500:700,c=Math.min((now-act.t0)/dur,1);
-   if(act.a==='hop')hop=Math.sin(c*Math.PI)*.7;else if(act.a==='spin'){hop=Math.sin(c*Math.PI)*1.1;spin=ease(c)*Math.PI*2}else rz=Math.sin(c*Math.PI*6)*(1-c)*.12;
-   if(c>=1)act=null}
-  const bob=Math.sin(t*1.6*sl)*.08*m*sl;
-  root.position.y=bob+hop;root.rotation.y=-.38+Math.sin(t*.55)*.32*m*sl+spin;root.rotation.z=rz;
-  bA.position.y=Y(30)+Math.sin(t*1.3)*.07*m*sl;bA.rotation.y=Math.sin(t*1.1)*.18*m*sl;
-  bB.position.y=Y(51)+Math.sin(t*1.1+1.7)*.07*m*sl;bB.rotation.y=Math.sin(t*.9+1.2)*.18*m*sl;
-  apex.scale.x+=(lgT-apex.scale.x)*(1-Math.exp(-dt*6));
-  const d=t-blinkAt;let by=1;if(d>=0&&d<.16)by=1-Math.sin(d/.16*Math.PI)*.9;else if(d>=.16)blinkAt=t+2.2+Math.random()*3;
-  E.dots.scale.y=by;E.big.scale.y=by;
-  const h=bob+hop;shadow.scale.setScalar(Math.max(.55,1-h*.16));shadow.material.opacity=Math.max(.45,1-h*.25);
-  rd.render(sc,cam);requestAnimationFrame(frame)}
- TRM.start=()=>{if(TRM.run)return;TRM.run=1;last=performance.now();requestAnimationFrame(frame)};
- document.addEventListener('visibilitychange',()=>{if(!document.hidden&&cv.isConnected)TRM.start()});
- TRM.cv=cv;TRM.ok=1;TRM.apply('ola',true)}
-function trMascotMood(k,temp){TRM.want=k;if(!TRM.ok)return;TRM.apply(k,false);clearTimeout(TRM.tm);if(temp)TRM.tm=setTimeout(()=>{TRM.apply(TRM.base,true)},2800)}
-function trMascotMount(id,mood,anim){TRM.base=mood||'ola';TRM.want=TRM.base;if(!$(id))return;
- trMascotLoad().then(()=>{if(!TRM.ok)return;const h=$(id);if(!h)return;if(TRM.cv.parentNode!==h){h.textContent='';h.appendChild(TRM.cv)}
-  TRM.fit(h);TRM.apply(TRM.want,!anim);TRM.start()})}
+/* Pilar: mascote do Treino (SVG, sem Three.js). Cores: ápice vermelho, lâmina do meio branca, lâmina de baixo preta */
+const PIL_M={ola:{ey:'o',br:[-4,4,0],mo:'smile',ch:.35,an:'wv'},certo:{ey:'h',br:[-6,6,-3],mo:'grin',ch:.65,an:'hop'},errado:{ey:'o',br:[-16,16,0],mo:'frown',ch:.15,an:'shake'},combo:{ey:'h',br:[-8,8,-4],mo:'grin',ch:.7,an:'spin',cap:1},xp100:{ey:'h',br:[-6,6,-3],mo:'smile',ch:.5,an:'hop'},cheio:{ey:'c',br:[0,0,4],mo:'zz',ch:.3},prot:{ey:'w',br:[-6,6,-5],mo:'o',ch:.3,an:'hop'},dorme:{ey:'c',br:[0,0,4],mo:'zz',ch:.3},ler:{ey:'o',br:[0,0,0],mo:'smile',ch:.25,look:[-3,5]}};
+const PIL_MO={smile:['M55 114Q70 128 85 114','none'],grin:['M53 111Q70 139 87 111Z','#e5e7eb'],frown:['M56 126Q70 110 84 126','none'],zz:['M62 118Q70 125 78 118','none']};
+function pilarSVG(k,x,an){const m=PIL_M[k]||PIL_M.ola,lk=m.look||[0,0],st='fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"';
+ const ey=m.ey==='h'?'<g '+st+'><path d="M43 93Q55 77 67 93"/><path d="M73 93Q85 77 97 93"/></g>':m.ey==='c'?'<g '+st+'><path d="M43 90Q55 96 67 90"/><path d="M73 90Q85 96 97 90"/></g>':'<g'+(m.ey==='w'?' transform="translate(-9.8 -12.3) scale(1.14)"':'')+'><circle cx="55" cy="88" r="13" fill="#fff"/><circle cx="85" cy="88" r="13" fill="#fff"/><circle cx="'+(55+lk[0])+'" cy="'+(88+lk[1])+'" r="6" fill="#17191d"/><circle cx="'+(85+lk[0])+'" cy="'+(88+lk[1])+'" r="6" fill="#17191d"/><circle cx="'+(57.5+lk[0])+'" cy="'+(85.5+lk[1])+'" r="2" fill="#fff"/><circle cx="'+(87.5+lk[0])+'" cy="'+(85.5+lk[1])+'" r="2" fill="#fff"/></g>';
+ const mo=m.mo==='o'?'<ellipse cx="70" cy="119" rx="6" ry="8" fill="none" stroke="#e5e7eb" stroke-width="4"/>':'<path d="'+PIL_MO[m.mo][0]+'" fill="'+PIL_MO[m.mo][1]+'" stroke="#e5e7eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
+ const b=m.br;
+ return '<svg class="pil'+(an&&m.an&&m.an!=='wv'?' a-'+m.an:'')+'" viewBox="0 0 200 215" role="img" aria-label="Pilar, o mascote do Treino"><ellipse cx="70" cy="209" rx="50" ry="6" fill="#17191d" opacity=".16"/><ellipse cx="54" cy="202" rx="17" ry="8" fill="#2b2e36"/><ellipse cx="86" cy="202" rx="17" ry="8" fill="#2b2e36"/><rect x="30" y="34" width="80" height="166" rx="10" fill="#17191d"/><rect x="36" y="42" width="6" height="150" rx="3" fill="#2b2e36"/>'
+ +'<g class="pl-ap'+(an&&m.an==='wv'?' wv':'')+'"><path d="M110 46H124" stroke="#c8101e" stroke-width="6" stroke-linecap="round"/><path d="M124 34H188L172 58H124Z" fill="#c8101e"/></g>'
+ +'<g class="pl-f1"><path d="M110 102H124" stroke="#c9ced6" stroke-width="7.5" stroke-linecap="round"/><path d="M110 102H124" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><path d="M124 92H176L164 114H124Z" fill="#fff" stroke="#c9ced6" stroke-width="1.5" stroke-linejoin="round"/></g>'
+ +'<g class="pl-f2"><path d="M110 158H124" stroke="#17191d" stroke-width="6" stroke-linecap="round"/><path d="M124 144H186L168 172H124Z" fill="#17191d"/></g>'
+ +ey+'<g stroke="#fff" stroke-width="4.5" stroke-linecap="round"><line x1="43" y1="68" x2="67" y2="68" transform="translate(0 '+b[2]+') rotate('+b[0]+' 55 68)"/><line x1="73" y1="68" x2="97" y2="68" transform="translate(0 '+b[2]+') rotate('+b[1]+' 85 68)"/></g>'
+ +'<circle cx="40" cy="112" r="8" fill="#c8101e" opacity="'+m.ch+'"/><circle cx="100" cy="112" r="8" fill="#c8101e" opacity="'+m.ch+'"/>'+mo
+ +(m.cap?'<path d="M18 34L70 12L122 34L70 52Z" fill="#17191d" stroke="#2b2e36" stroke-width="2" stroke-linejoin="round"/><path d="M70 32L112 38V54" fill="none" stroke="#c8101e" stroke-width="3" stroke-linecap="round"/><circle cx="112" cy="56" r="4.5" fill="#c8101e"/>':'')+'</svg>'}
+const TRM={base:'ola',want:'ola',host:null};
+const pilarPut=(h,k,an)=>{h.innerHTML=pilarSVG(k,0,an)};
+function trMascotMood(k,temp){TRM.want=k;const h=TRM.host;if(!h||!h.isConnected)return;pilarPut(h,k,1);clearTimeout(TRM.tm);if(temp)TRM.tm=setTimeout(()=>{if(h.isConnected)pilarPut(h,TRM.base,0)},2800)}
+function trMascotMount(id,mood,anim){const h=$(id);TRM.base=mood||'ola';TRM.want=TRM.base;TRM.host=h||null;if(h)pilarPut(h,TRM.base,anim)}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-tr-stab]');if(b){TRS.stab=b.dataset.trStab;return trStRender(1)}
  if(e.target.closest&&e.target.closest('#trMas3d'))trMascotMood('certo',1)});
 /* baú diário (ficheiro m420_treino_bau_diario.sql): 1 por dia ao concluir a sessão; o prémio é sorteado no servidor */
@@ -3156,11 +3127,11 @@ function trAvatarSVG(code,size,long){const v=trAvNorm(code).split('').map(Number
  const acc=v[4]===1?'<circle cx="13.5" cy="25" r="3.9" fill="none" stroke="'+(light?'#17191D':'#9CA3AF')+'" stroke-width="1.4"/><circle cx="20.5" cy="25" r="3.9" fill="none" stroke="'+(light?'#17191D':'#9CA3AF')+'" stroke-width="1.4"/>':v[4]===2?'<path d="M17 42l-3.2 3.2 2.2 10.8h2l2.2-10.8z" fill="'+ac+'"/>':'';
  const acc2=v[4]===3?'<path d="M8 21Q17 7 26 21" fill="none" stroke="'+ac+'" stroke-width="2.2"/><rect x="5.5" y="21" width="4" height="9" rx="1.5" fill="'+ac+'"/><rect x="24.5" y="21" width="4" height="9" rx="1.5" fill="'+ac+'"/>':v[4]===4?'<path d="M8 18.5H26" stroke="'+ac+'" stroke-width="3"/>':v[4]===5?'<path d="M18.5 43l-5.5 8.5h4L15.5 59l7-10h-4.2z" fill="'+ac+'"/>':'';
  const apex=long?'M30 8H62L55 16H30Z':'M30 8H56L50 16H30Z';
- return '<svg class="tr-av" width="'+size+'" height="'+size+'" viewBox="0 0 64 64" role="img" aria-label="Avatar"><path d="M8 8H26V56H8Z" fill="'+pc+'"'+(light?' stroke="#D1D5DB" stroke-width="1"':'')+'/>'+eyes+mouth+acc+acc2+'<path d="'+apex+'" fill="'+ac+'"'+(v[1]===1?' stroke="#D1D5DB" stroke-width="1"':'')+'/><path d="M30 26H50L45 34H30Z" fill="'+bl+'"/><path d="M30 46H54L47 56H30Z" fill="'+bl+'"/></svg>'}
+ return '<svg class="tr-av" width="'+size+'" height="'+size+'" viewBox="0 0 64 64" role="img" aria-label="Avatar"><path d="M8 8H26V56H8Z" fill="'+pc+'"'+(light?' stroke="#D1D5DB" stroke-width="1"':'')+'/>'+eyes+mouth+acc+acc2+'<path d="'+apex+'" fill="'+ac+'"'+(v[1]===1?' stroke="#D1D5DB" stroke-width="1"':'')+'/><path d="M30 26H50L45 34H30Z" fill="#fff" stroke="#C9CED6" stroke-width=".8"/><path d="M30 46H54L47 56H30Z" fill="#17191D"/></svg>'}
 function trMascotHTML(){const x=TRS.xpMe,st=TRS.state||{},t=x?Number(x.today)||0:0,cap=x?Number(x.cap)||300:300;
  const m=t>=cap?['cheio','Dia cheio! Descansa, voltamos amanhã.']:t>=100?['xp100','Que ritmo! Já passaste dos 100 XP.']:t>0?['ola','Bom arranque. Mais umas perguntas?']:['ola','Olá! Vamos treinar um bocadinho?'];
  TRS.masMood=m[0];
- return '<div class="card tr-mas"><div class="tr-mas3d" id="trMas3d">'+trAvatarSVG('00000',110,m[0]==='cheio')+'</div><div class="tr-mas-r"><div class="tr-bub">'+esc(m[1])+'</div>'
+ return '<div class="card tr-mas"><div class="tr-mas3d" id="trMas3d">'+pilarSVG(m[0],0,0)+'</div><div class="tr-mas-r"><div class="tr-bub">'+esc(m[1])+'</div>'
   +'<div class="tr-inv"><span>Sequência '+(st.streak||0)+' dia(s)</span><span>XP hoje '+t+'/'+cap+'</span></div>'+ttsOptHTML()+'</div></div>'}
 const TRAV={v:null};
 function trAvPickDraw(){let e=document.getElementById('trAvp');if(!e){e=document.createElement('div');e.id='trAvp';e.className='tr-avp';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');e.setAttribute('aria-label','Personalizar avatar');document.body.appendChild(e)}
@@ -3278,7 +3249,7 @@ async function trSessionClose(){ttsStop();
  try{const r=await SB.rpc('av_train_state');if(!r.error&&r.data)TRS.state=r.data}catch(_){}
  await trChestLoad();
  const S=TRS.sess,s=TRS.state||{},n=S.items.length,c=S.correct==null?S.items.filter(x=>x.correct).length:S.correct,p=n?Math.round(100*c/n):0,mk=p===100?'combo':p>=70?'certo':'ola',mt=p===100?'Sessão perfeita! Todas certas.':p>=70?'Boa sessão! Continua assim.':'Errar faz parte. Vais rever estas perguntas.';
- e.innerHTML='<div class="tr-lbody"><div class="tr-lin tr-res"><h2>Sessão concluída!</h2><div class="tr-resmas"><div class="tr-mas3d" id="trMasRes">'+trAvatarSVG('00000',96,p===100)+'</div><div class="tr-bub">'+esc(mt)+'</div></div>'+(TRS.gainSum?'<div class="tr-xpbig">+'+TRS.gainSum+' XP</div><p class="muted" style="margin:0 0 10px">Hoje: '+TRS.xp+' XP</p>':'')
+ e.innerHTML='<div class="tr-lbody"><div class="tr-lin tr-res"><h2>Sessão concluída!</h2><div class="tr-resmas"><div class="tr-mas3d" id="trMasRes">'+pilarSVG(mk,0,0)+'</div><div class="tr-bub">'+esc(mt)+'</div></div>'+(TRS.gainSum?'<div class="tr-xpbig">+'+TRS.gainSum+' XP</div><p class="muted" style="margin:0 0 10px">Hoje: '+TRS.xp+' XP</p>':'')
   +'<div class="tr-rgrid"><div class="a"><small>CERTAS</small><b>'+c+'/'+n+'</b></div><div class="b"><small>PRECISÃO</small><b>'+p+'%</b></div><div class="c"><small>SEQUÊNCIA</small><b>'+(s.streak||0)+' dia(s)</b></div></div>'
   +'<div id="trChestRes" class="tr-chestres">'+trChestResHTML()+'</div>'
   +'<p class="muted">Os erros voltam amanhã e depois ao fim de 3 dias, até acertar duas vezes seguidas.</p></div></div>'
@@ -4066,7 +4037,7 @@ function ctNotesDraw(dealId){
  const admin=PROFILE&&PROFILE.role==='admin',
   list=(CT.notes[dealId]||[]).slice().sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0)||String(b.created_at).localeCompare(String(a.created_at))),
   sticks=list.map(n=>{const mine=admin||(USER&&n.user_id===USER.id),id=esc(n.id);
-   return '<div class="crm-stick'+(n.pinned?' pin':'')+'" style="--sc:'+(CRM_NCOL[n.color]||CRM_NCOL.amarelo)+'"><div class="crm-stick-t">'+esc(n.body).replace(/\n/g,'<br>')+'</div><div class="crm-stick-f"><span>'+esc(n.author_name||'')+(n.author_name?' · ':'')+nWhen(n.created_at)+'</span>'+(mine?'<span class="crm-stick-a"><button type="button" data-ct-npin="'+id+'" title="'+(n.pinned?'Desafixar':'Fixar no topo')+'">'+(n.pinned?'Fixada':'Fixar')+'</button><button type="button" data-ct-nedit="'+id+'" title="Editar" aria-label="Editar nota">'+PDI('edit')+'</button><button type="button" data-ct-ndel="'+id+'" title="Eliminar" aria-label="Eliminar nota">'+PDI('trash')+'</button></span>':'')+'</div></div>'}).join('');
+   return '<div class="crm-stick'+(n.pinned?' pin':'')+'" style="--sc:'+(CRM_NCOL[n.color]||CRM_NCOL.amarelo)+'"><div class="crm-stick-t">'+esc(n.body).replace(/\n/g,'<br>')+'</div><div class="crm-stick-f"><span>'+esc(n.author_name||'')+(n.author_name?' · ':'')+nWhen(n.created_at)+'</span>'+(mine?'<span class="crm-stick-a"><button type="button" data-ct-npin="'+id+'" title="'+(n.pinned?'Desafixar':'Fixar no topo')+'">'+(n.pinned?'📌 Fixada':'📌 Fixar')+'</button><button type="button" data-ct-nedit="'+id+'" title="Editar" aria-label="Editar nota">'+PDI('edit')+'</button><button type="button" data-ct-ndel="'+id+'" title="Eliminar" aria-label="Eliminar nota">'+PDI('trash')+'</button></span>':'')+'</div></div>'}).join('');
  box.innerHTML=head+(list.length?'<div class="crm-sticks">'+sticks+'</div>':'<p class="muted smalltext" style="margin:0 0 10px">Sem notas. Registe aqui factos rápidos sobre o interessado.</p>')+
   '<div class="crm-nnew"><textarea id="ctNText" maxlength="2000" placeholder="Escreva uma nota…"></textarea><div class="crm-nrow"><div class="crm-ncols">'+Object.keys(CRM_NCOL).map(k=>'<button type="button" data-ct-ncol="'+k+'" class="'+(k===CT.nColor?'on':'')+'" style="background:'+CRM_NCOL[k]+'" title="'+k+'" aria-label="Cor '+k+'"></button>').join('')+'</div><div style="display:flex;gap:8px"><button type="button" class="btn secondary small hidden" id="ctNCancel" data-ct-ncancel>Cancelar</button><button type="button" class="btn small" id="ctNSave" data-ct-nsave="'+esc(dealId)+'">Guardar nota</button></div></div></div>';
 }
