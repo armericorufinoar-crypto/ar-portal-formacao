@@ -1268,7 +1268,7 @@ function crmOpenModal(item){CRM_EDIT=item?item.id:null;const x=item||{};const co
  $('crmModal').classList.add('open');$('crmModal').setAttribute('aria-hidden','false');$('crmCancel').onclick=crmCloseModal;
  const crmSyncFields=()=>{const st=$('crmF_etapa').value,op=crmIsOpen({etapa:st}),stage=crmStage(st),value=Number($('crmF_valorEstimado').value)||0; $('crmW_proximoPasso').style.display=op?'':'none';$('crmW_dataProximoContacto').style.display=op?'':'none';$('crmW_motivoPerda').style.display=st==='PERDIDO'?'':'none';$('crmStageInfo').innerHTML=`<h3>Informação Geral</h3><h4>${stage.label}</h4><p>${({NOVO:'O contacto acabou de chegar. Registe-o e marque o primeiro contacto.',CONTACTADO:'Já falou com a pessoa. Descubra a necessidade e marque a próxima conversa.',QUALIFICADO:'Tem necessidade e interesse. Prepare a proposta adequada.',PROPOSTA:'A proposta foi apresentada. Marque o próximo contacto.',NEGOCIACAO:'O cliente está a avaliar as condições. Acompanhe a decisão.',GANHO:'Ganho = 1.ª parcela paga. Registe o formando e acompanhe o pagamento em Pagamentos.',PERDIDO:'O negócio não avançou. Registe o motivo da perda.'})[st]||''}</p><div class="crm-prob">Probabilidade de fecho: <b>${stage.prob}%</b></div><small>Valor ponderado: ${crmMoney(value*stage.prob/100)}</small>`};
  $('crmF_etapa').onchange=crmSyncFields;$('crmF_valorEstimado').oninput=crmSyncFields;crmSyncFields();crmLocForm(x);
- $('crmForm').onsubmit=e=>{e.preventDefault();const data={};fields.forEach(f=>{const el=$('crmF_'+f[0]);data[f[0]]=el?el.value.trim():''});const pc=crmLocFinal(data.localizacao);data.lat=pc?pc.lat:null;data.lng=pc?pc.lng:null;
+ $('crmForm').onsubmit=e=>{e.preventDefault();const data={};fields.forEach(f=>{const el=$('crmF_'+f[0]);data[f[0]]=el?el.value.trim():''});const pc=crmLocFinal(data.localizacao);data.lat=pc?pc.lat:null;data.lng=pc?pc.lng:null;if(pc&&crmMapsLink(data.localizacao))data.localizacao='';
   data.valorEstimado=Number(data.valorEstimado)||0;
   if(crmIsOpen(data)){if(!data.proximoPasso||!data.dataProximoContacto){toast('Indique o próximo passo e a data do próximo contacto.');return}data.motivoPerda=''}
   else{if(data.etapa==='PERDIDO'&&!data.motivoPerda){toast('Indique o motivo de perda.');return}if(data.etapa!=='PERDIDO')data.motivoPerda='';data.proximoPasso='';data.dataProximoContacto=''}
@@ -1335,14 +1335,33 @@ function crmLocFinal(txt){const c=(CRM_LOC.lat!=null&&CRM_LOC.lng!=null)?CRM_LOC
 function crmLocForm(x){
  const w=$('crmW_localizacao');if(!w)return;w.classList.add('full');
  const c0=crmLocCoords(x);CRM_LOC=c0?{lat:c0.lat,lng:c0.lng}:{lat:null,lng:null};
- w.insertAdjacentHTML('beforeend','<div class="crm-locbar"><button type="button" class="btn secondary small" id="crmLocGps">Usar a minha localização</button><span class="muted smalltext" id="crmLocSt"></span></div><div class="muted smalltext" id="crmLocWarn" style="margin-top:6px"></div>');
+ w.insertAdjacentHTML('beforeend',
+  '<div class="crm-locbar"><button type="button" class="btn secondary small" id="crmLocSearch">Pesquisar no Google Maps</button><button type="button" class="btn secondary small" id="crmLocPrevBtn">Ver no mapa</button><button type="button" class="btn secondary small" id="crmLocGps">Usar a minha localização</button></div>'+
+  '<div class="muted smalltext" id="crmLocSt" style="margin-top:8px"></div>'+
+  '<div class="crm-locmap" id="crmLocPrev"></div>'+
+  '<label for="crmF_maplink" style="margin-top:12px;display:block">Link do Google Maps (opcional)</label><input id="crmF_maplink" type="text" placeholder="Cole aqui o link ou o pin copiado do Maps ou do WhatsApp" autocomplete="off">'+
+  '<div class="muted smalltext" style="margin-top:6px">Pesquise o local no Maps, copie o link completo da barra de endereço (ou o pin recebido por WhatsApp) e cole aqui para guardar as coordenadas exactas.</div>'+
+  '<div class="muted smalltext" id="crmLocWarn" style="margin-top:6px"></div>');
+ const mig=(CRM_SYNC.remote===true&&CRM_LOC_OK===false)?'Falta executar o ficheiro m535_crm_localizacao.sql no Supabase: a localização não será guardada no servidor.':'';
+ const msg=h=>{$('crmLocWarn').textContent=[mig,h].filter(Boolean).join(' ')};msg('');
  const st=()=>{$('crmLocSt').innerHTML=CRM_LOC.lat!=null?'Coordenadas: '+CRM_LOC.lat+', '+CRM_LOC.lng+' <button type="button" class="rowbtn" id="crmLocRm">Remover</button>':'';const r=$('crmLocRm');if(r)r.onclick=()=>{CRM_LOC={lat:null,lng:null};st()}};
  st();
- if(CRM_SYNC.remote===true&&CRM_LOC_OK===false)$('crmLocWarn').textContent='Falta executar o ficheiro m535_crm_localizacao.sql no Supabase: a localização não será guardada no servidor.';
+ const txt=()=>$('crmF_localizacao').value.trim(),
+  prevQ=()=>CRM_LOC.lat!=null?CRM_LOC.lat+','+CRM_LOC.lng:(txt()&&!/^https?:\/\//i.test(txt())?txt():'');
  $('crmF_localizacao').addEventListener('input',e=>{const p=crmParseCoords(e.target.value);if(p){CRM_LOC=p;st()}});
+ $('crmF_maplink').addEventListener('input',e=>{const v=e.target.value.trim();if(!v){msg('');return}
+  const p=crmParseCoords(v);
+  if(p){CRM_LOC=p;st();msg('Coordenadas reconhecidas.')}
+  else if(crmMapsLink(v)){if(!txt()){$('crmF_localizacao').value=v;msg('Link curto guardado como localização (não traz coordenadas).')}else msg('Este link curto não traz coordenadas. Abra-o no Maps e copie o link completo da barra de endereço.')}
+  else msg('Link não reconhecido. Cole um link do Google Maps.')});
+ $('crmLocSearch').onclick=()=>{const t=txt(),q=(t&&!/^https?:\/\//i.test(t))?t:(CRM_LOC.lat!=null?CRM_LOC.lat+','+CRM_LOC.lng:'');if(!q){toast('Escreva o local a pesquisar.');return}
+  window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q),'_blank','noopener')};
+ $('crmLocPrevBtn').onclick=()=>{const m=$('crmLocPrev'),b=$('crmLocPrevBtn');if(m.innerHTML){m.innerHTML='';b.textContent='Ver no mapa';return}
+  const q=prevQ();if(!q){toast('Escreva o local ou use o GPS para ver o mapa.');return}
+  m.innerHTML='<iframe title="Mapa" loading="lazy" referrerpolicy="no-referrer" src="https://maps.google.com/maps?q='+encodeURIComponent(q)+'&z=16&output=embed"></iframe>';b.textContent='Ocultar mapa'};
  $('crmLocGps').onclick=()=>{if(!navigator.geolocation){toast('Este navegador não permite obter a localização.');return}
   const b=$('crmLocGps');b.disabled=true;b.textContent='A obter localização…';
-  navigator.geolocation.getCurrentPosition(pos=>{CRM_LOC={lat:+pos.coords.latitude.toFixed(6),lng:+pos.coords.longitude.toFixed(6)};b.disabled=false;b.textContent='Usar a minha localização';st()},
+  navigator.geolocation.getCurrentPosition(pos=>{CRM_LOC={lat:+pos.coords.latitude.toFixed(6),lng:+pos.coords.longitude.toFixed(6)};b.disabled=false;b.textContent='Usar a minha localização';st();msg('')},
    ()=>{b.disabled=false;b.textContent='Usar a minha localização';toast('Não foi possível obter a localização. Verifique a permissão do navegador.')},{enableHighAccuracy:true,timeout:15000,maximumAge:0})}
 }
 function crmLocDraw(x){
