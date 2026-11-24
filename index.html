@@ -1200,6 +1200,8 @@ input[type=checkbox],input[type=radio]{width:18px!important;height:18px!importan
 .ln-big span{display:block;margin-top:8px;font:600 15px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;color:#17191d;opacity:0;animation:lnscIn .5s .7s both}
 @keyframes lnscPop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.ln-fn-i,.ln-big b,.ln-big span{animation:none!important;opacity:1!important;transform:none!important}.ln-vmas.talking svg{animation:none}}
+#trModal .lna-au{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+#trModal .lna-au audio{height:32px;max-width:100%}
 @media(max-width:480px){.ln-vcap{font-size:17px}.ln-vstage{min-height:340px;padding:14px 12px}.ln-big b{font-size:38px}}
 
 /* cena animada (Comparar) nas lições do Pilar */
@@ -3385,29 +3387,46 @@ function lnEndHTML(){const L=LN_USE.find(x=>x.n===LN.l);
 const lnVidOn=()=>{try{return localStorage.getItem('av_ln_vid')!=='0'}catch(e){return true}};
 const lnMuted=()=>{try{return localStorage.getItem('av_ln_mute')==='1'}catch(e){return false}};
 const LNV={tok:0,tm:null,iv:null,wd:null,paused:false};
-function lnVidClear(){LNV.tok++;clearTimeout(LNV.tm);clearTimeout(LNV.wd);clearInterval(LNV.iv);if(TTS.ok){try{speechSynthesis.cancel()}catch(e){}}ttsTalk(false)}
-function lnCapHTML(t){let o=0;return String(t||'').split(/(\s+)/).map(w=>{const s=/^\s+$/.test(w)?esc(w):'<span class="w" data-o="'+o+'">'+esc(w)+'</span>';o+=w.length;return s}).join('')}
-function lnFbText(c){const ok=Array.isArray(c.o)&&LN.pick>=0&&c.o[LN.pick]===c.a;return ok?String(c.f||''):'Não é bem assim. A resposta certa é '+c.a+'. '+String(c.f||'').replace(/^Certo[.:]\s*/,'')}
-function lnNarrate(text,tok,done,hl){
+const LN_SIL='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAABErAAABAAgAZGF0YQAAAAA=';
+function lnHash(t){let h=5381;const s=String(t||'').trim();for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return (h>>>0).toString(36)}
+function lnAuEl(){if(!LNV.el){LNV.el=new Audio();LNV.el.preload='auto'}return LNV.el}
+function lnAuStop(){const a=LNV.el;if(a){a.onplaying=a.onended=a.onerror=a.ontimeupdate=null;try{a.pause()}catch(e){}}}
+document.addEventListener('click',()=>{if(LNV.unl)return;LNV.unl=1;try{const a=lnAuEl();a.src=LN_SIL;const p=a.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}},true);
+function lnVidClear(){LNV.tok++;clearTimeout(LNV.tm);clearTimeout(LNV.wd);clearInterval(LNV.iv);lnAuStop();if(TTS.ok){try{speechSynthesis.cancel()}catch(e){}}ttsTalk(false)}
+function lnNarrate(text,tok,done,hl,au){
  const caps=hl?[...document.querySelectorAll('#lnCap .w')]:[];caps.forEach(s=>s.classList.remove('on'));
  const mark=ci=>caps.forEach(s=>{if(+s.dataset.o<=ci)s.classList.add('on')}),est=Math.max(2200,String(text).length*62);
  let finished=false;
  const fin=()=>{if(finished||tok!==LNV.tok)return;finished=true;clearInterval(LNV.iv);clearTimeout(LNV.wd);caps.forEach(s=>s.classList.add('on'));ttsTalk(false);if(done)done()};
  const timed=callFin=>{const t0=Date.now();clearInterval(LNV.iv);LNV.iv=setInterval(()=>{if(tok!==LNV.tok||finished){clearInterval(LNV.iv);return}const p=(Date.now()-t0)/est,n=String(text).length||1;caps.forEach(s=>{if(+s.dataset.o/n<=p)s.classList.add('on')});if(p>=1&&callFin)fin()},120)};
  const sp=TTS.ok&&UI.voz&&!lnMuted();
- if(!sp||!text){timed(true);return}
- try{const pr=ttsPR('pilar'),v=ttsPick('pilar'),u=new SpeechSynthesisUtterance(text);u.lang=v?v.lang:'pt-PT';if(v)u.voice=v;u.pitch=pr[0];u.rate=pr[1];
-  let gotB=false;
-  u.onstart=()=>{ttsTalk(true);setTimeout(()=>{if(!gotB&&!finished&&tok===LNV.tok)timed(false)},1500)};
-  u.onboundary=ev=>{gotB=true;clearInterval(LNV.iv);mark(ev.charIndex)};
-  u.onend=fin;u.onerror=fin;
-  LNV.wd=setTimeout(fin,est*2+5000);
-  speechSynthesis.cancel();setTimeout(()=>{if(tok===LNV.tok&&!finished)speechSynthesis.speak(u)},200)}catch(e){timed(true)}}
+ const speakTTS=()=>{
+  if(!sp||!text){timed(true);return}
+  try{const pr=ttsPR('pilar'),v=ttsPick('pilar'),u=new SpeechSynthesisUtterance(text);u.lang=v?v.lang:'pt-PT';if(v)u.voice=v;u.pitch=pr[0];u.rate=pr[1];
+   let gotB=false;
+   u.onstart=()=>{ttsTalk(true);setTimeout(()=>{if(!gotB&&!finished&&tok===LNV.tok)timed(false)},1500)};
+   u.onboundary=ev=>{gotB=true;clearInterval(LNV.iv);mark(ev.charIndex)};
+   u.onend=fin;u.onerror=fin;
+   LNV.wd=setTimeout(fin,est*2+5000);
+   speechSynthesis.cancel();setTimeout(()=>{if(tok===LNV.tok&&!finished)speechSynthesis.speak(u)},200)}catch(e){timed(true)}};
+ /* áudio gravado do Pilar (se o cartão tiver e o texto não mudou); se falhar, usa a voz do aparelho */
+ if(au&&UI.voz&&!lnMuted()){const a=lnAuEl();let started=false,bailed=false;
+  const bail=()=>{if(bailed||finished||started||tok!==LNV.tok)return;bailed=true;clearTimeout(LNV.wd);lnAuStop();speakTTS()};
+  a.onplaying=()=>{if(tok!==LNV.tok)return;started=true;clearTimeout(LNV.wd);ttsTalk(true);const d=a.duration;LNV.wd=setTimeout(fin,(isFinite(d)&&d>0?d*1000:est*2)+4000)};
+  a.ontimeupdate=()=>{if(tok!==LNV.tok||!(a.duration>0))return;const p=a.currentTime/a.duration,n=String(text).length||1;caps.forEach(s=>{if(+s.dataset.o/n<=p)s.classList.add('on')})};
+  a.onended=()=>{if(tok===LNV.tok)fin()};
+  a.onerror=bail;
+  LNV.wd=setTimeout(bail,6000);
+  try{a.src=au;const pr=a.play();if(pr&&pr.catch)pr.catch(bail)}catch(e){bail()}
+  return}
+ speakTTS()}
 function lnVidStart(){lnVidClear();LNV.paused=false;if(!LN.l||LN.fin||!lnVidOn())return;
  const L=LN_USE.find(x=>x.n===LN.l),c=L&&L.cards[LN.c];if(!c)return;
- const tok=LNV.tok,picked=c.k==='Verificar'&&LN.pick>=0,last=LN.c===L.cards.length-1;
+ const tok=LNV.tok,picked=c.k==='Verificar'&&LN.pick>=0,last=LN.c===L.cards.length-1,au=(!picked&&c.au&&c.ah===lnHash(c.x))?c.au:'';
  lnNarrate(picked?lnFbText(c):c.x,tok,()=>{const b=$('lnBody');if(!b||!b.offsetParent||c.k==='Verificar'||last)return;
-  LNV.tm=setTimeout(()=>{if(tok!==LNV.tok)return;const n=document.querySelector('[data-ln-next]');if(n&&!n.disabled)n.click()},1000)},!picked)}
+  LNV.tm=setTimeout(()=>{if(tok!==LNV.tok)return;const n=document.querySelector('[data-ln-next]');if(n&&!n.disabled)n.click()},1000)},!picked,au)}
+function lnCapHTML(t){let o=0;return String(t||'').split(/(\s+)/).map(w=>{const s=/^\s+$/.test(w)?esc(w):'<span class="w" data-o="'+o+'">'+esc(w)+'</span>';o+=w.length;return s}).join('')}
+function lnFbText(c){const ok=Array.isArray(c.o)&&LN.pick>=0&&c.o[LN.pick]===c.a;return ok?String(c.f||''):'Não é bem assim. A resposta certa é '+c.a+'. '+String(c.f||'').replace(/^Certo[.:]\s*/,'')}
 function lnVidLayout(L,c,tot,ver,ok,mood,kind,opts,fb,nextBtn){
  const seg=[];for(let i=0;i<tot;i++)seg.push('<i class="'+(i<LN.c?'d':i===LN.c?'a':'')+'"></i>');
  const hero=c.k==='Abertura'||c.k==='Fecho',picked=ver&&LN.pick>=0,vozOn=TTS.ok&&UI.voz;
@@ -3419,7 +3438,7 @@ function lnVidLayout(L,c,tot,ver,ok,mood,kind,opts,fb,nextBtn){
   +'<button type="button" class="ln-vtxt" data-ln-mode>Ver em texto</button></div>'}
 document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-ln-pause],[data-ln-mute],[data-ln-mode]');if(!t)return;
  if(t.dataset.lnPause!==undefined){const st=document.querySelector('.ln-vstage');
-  if(!LNV.paused){LNV.paused=true;LNV.tok++;clearTimeout(LNV.tm);clearTimeout(LNV.wd);clearInterval(LNV.iv);if(TTS.ok){try{speechSynthesis.cancel()}catch(x){}}ttsTalk(false);if(st)st.classList.add('paused');t.textContent='▶';t.setAttribute('aria-label','Continuar')}
+  if(!LNV.paused){LNV.paused=true;LNV.tok++;clearTimeout(LNV.tm);clearTimeout(LNV.wd);clearInterval(LNV.iv);if(TTS.ok){try{speechSynthesis.cancel()}catch(x){}}ttsTalk(false);lnAuStop();if(st)st.classList.add('paused');t.textContent='▶';t.setAttribute('aria-label','Continuar')}
   else{if(st)st.classList.remove('paused');t.textContent='❚❚';t.setAttribute('aria-label','Pausar');lnVidStart()}}
  else if(t.dataset.lnMute!==undefined){try{localStorage.setItem('av_ln_mute',lnMuted()?'0':'1')}catch(x){}lnRender()}
  else if(t.dataset.lnMode!==undefined){try{localStorage.setItem('av_ln_vid',lnVidOn()?'0':'1')}catch(x){}lnRender()}});
@@ -3444,7 +3463,7 @@ async function lnAdminOpen(){
  catch(e){box.innerHTML=trMiss(e)?'<div class="notice">As lições do Pilar ainda não estão instaladas no servidor. Execute o ficheiro <strong>m600_licoes_pilar.sql</strong> no Supabase e abra este separador outra vez. Entretanto os formandos continuam a ver as 7 lições base.</div>':'<div class="notice">Não foi possível carregar as lições: '+esc(e.message||e)+'</div>'}}
 function lnAdminRender(){
  const box=$('trLnBody');if(!box)return;const rows=LNA.rows;
- let h='<div class="card"><div class="cardhead"><h2>Lições do Pilar</h2><div class="tr-tools"><button type="button" class="btn" data-lna-new>+ Nova lição</button><button type="button" class="btn secondary" data-lna-csv>Importar CSV</button>'+(rows.length?'<button type="button" class="btn secondary" data-lna-exp>Exportar CSV</button>':'')+'</div></div>'
+ let h='<div class="card"><div class="cardhead"><h2>Lições do Pilar</h2><div class="tr-tools"><button type="button" class="btn" data-lna-new>+ Nova lição</button><button type="button" class="btn secondary" data-lna-csv>Importar CSV</button>'+(rows.length?'<button type="button" class="btn secondary" data-lna-exp>Exportar CSV</button><button type="button" class="btn secondary" data-lna-aud>Áudios do Pilar</button>':'')+'</div></div>'
  +'<p class="muted smalltext">Cada lição é uma sequência de cartões curtos (Abertura, Ideia, Exemplo, Verificar, Fecho). Os formandos vêem as lições <strong>activas</strong>, pela ordem desta lista. Ligue cada lição ao <strong>tema</strong> das perguntas do Treino diário (o título de uma sessão). Nesta fase: só conceitos, sem cálculos, fórmulas, técnicas nem cases.</p>'
  +'<details class="clnote-d"><summary>Como preparar lições com o Claude</summary>'+claudeBlock('licao','lna')+'</details>'
  +'<details class="clnote-d" open><summary>Gerar perguntas do Treino a partir de uma lição</summary>'+claudeBlock('perg','lnq')+'</details>';
@@ -3473,7 +3492,7 @@ function lnScEdHTML(c,i){const st=c.st||'comparar',opt=(v,l)=>'<option value="'+
 document.addEventListener('change',e=>{const s=e.target.closest&&e.target.closest('[data-lna-st]');if(!s||!LNA.ed)return;lnEdSync();const c=LNA.ed.cards[+s.dataset.lnaSt];if(!c)return;c.st=s.value;
  if(c.st==='etapas'&&!c.se){c.se='Novo\nContactado\nQualificado\nProposta\nGanho';c.sf=5}
  lnEdRedraw()});
-function lnEdFrom(r){return{id:r.id,title:r.title||'',day:r.day_label||'',theme:r.theme||'',sid:r.session_id||'',act:!!r.active,cards:(Array.isArray(r.cards)?r.cards:[]).map(c=>c.k==='Cena'?Object.assign({k:'Cena',x:c.x||''},lnScToEd(c.sc)):c.k==='Verificar'?{k:'Verificar',x:c.x||'',o:(c.o||[]).slice(),c:Math.max(1,(c.o||[]).indexOf(c.a)+1),f:c.f||''}:{k:c.k||'Ideia',x:c.x||''})}}
+function lnEdFrom(r){return{id:r.id,title:r.title||'',day:r.day_label||'',theme:r.theme||'',sid:r.session_id||'',act:!!r.active,cards:(Array.isArray(r.cards)?r.cards:[]).map(c=>lnKeepAu(c,c.k==='Cena'?Object.assign({k:'Cena',x:c.x||''},lnScToEd(c.sc)):c.k==='Verificar'?{k:'Verificar',x:c.x||'',o:(c.o||[]).slice(),c:Math.max(1,(c.o||[]).indexOf(c.a)+1),f:c.f||''}:{k:c.k||'Ideia',x:c.x||''}))}}
 function lnEdHTML(){const e=LNA.ed;
  const th=[...new Set(read(KEYS.sessions).map(x=>(x.title||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt'));if(e.theme&&!th.includes(e.theme))th.unshift(e.theme);
  const sesAll=read(KEYS.sessions).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))),sesOpt=sesAll.map(q=>'<option value="'+esc(q.id)+'"'+(q.id===e.sid?' selected':'')+'>'+esc(q.title||'(sem título)')+(q.date?' · '+esc(new Date(q.date+'T12:00:00').toLocaleDateString('pt-PT')):'')+'</option>').join('');
@@ -3485,7 +3504,7 @@ function lnEdHTML(){const e=LNA.ed;
  h+=e.cards.map((c,i)=>{const v=c.k==='Verificar';
   return '<div class="lna-c" data-kind="'+esc(c.k)+'"><div class="lna-ch"><strong>'+(i+1)+'</strong><select data-lna-k="'+i+'" aria-label="Tipo do cartão">'+LN_KINDS.map(k=>'<option value="'+k[0]+'"'+(k[0]===c.k?' selected':'')+'>'+k[0]+'</option>').join('')+'</select><button type="button" class="btn secondary small" data-lna-cup="'+i+'" aria-label="Subir"'+(i?'':' disabled')+'>↑</button><button type="button" class="btn secondary small" data-lna-cdn="'+i+'" aria-label="Descer"'+(i<e.cards.length-1?'':' disabled')+'>↓</button><button type="button" class="btn danger small" data-lna-crm="'+i+'" aria-label="Remover cartão">✕</button></div>'
   +'<textarea data-lna-x="'+i+'" rows="3" maxlength="600" placeholder="'+(v?'A pergunta de verificação':'Texto curto do cartão')+'">'+esc(c.x)+'</textarea><small class="lna-cnt" data-lna-n="'+i+'">'+(c.x||'').length+' / 600</small>'
-  +(c.k==='Cena'?lnScEdHTML(c,i):'')+(v?'<div class="lna-v"><div class="field"><label>Opções (uma por linha)</label><textarea data-lna-o="'+i+'" rows="3" placeholder="Opção 1&#10;Opção 2&#10;Opção 3">'+esc((c.o||[]).join('\n'))+'</textarea></div><div class="field"><label>N.º da opção certa</label><input type="number" min="1" max="6" data-lna-c="'+i+'" value="'+esc(c.c||1)+'"></div><div class="field"><label>Feedback (comece por «Certo.» e explique o porquê)</label><input data-lna-f="'+i+'" maxlength="300" value="'+esc(c.f||'')+'" placeholder="Certo. Markup parte do custo."></div></div>':'')+'</div>'}).join('');
+  +lnAuEdHTML(c,i)+(c.k==='Cena'?lnScEdHTML(c,i):'')+(v?'<div class="lna-v"><div class="field"><label>Opções (uma por linha)</label><textarea data-lna-o="'+i+'" rows="3" placeholder="Opção 1&#10;Opção 2&#10;Opção 3">'+esc((c.o||[]).join('\n'))+'</textarea></div><div class="field"><label>N.º da opção certa</label><input type="number" min="1" max="6" data-lna-c="'+i+'" value="'+esc(c.c||1)+'"></div><div class="field"><label>Feedback (comece por «Certo.» e explique o porquê)</label><input data-lna-f="'+i+'" maxlength="300" value="'+esc(c.f||'')+'" placeholder="Certo. Markup parte do custo."></div></div>':'')+'</div>'}).join('');
  return h+'<button type="button" class="btn lna-add" data-lna-cadd>+ Acrescentar cartão</button>'}
 function lnEdSync(){const e=LNA.ed;if(!e||!$('lnaT'))return;e.title=$('lnaT').value;e.day=$('lnaD').value;e.theme=$('lnaTh').value;if($('lnaSe'))e.sid=$('lnaSe').value;e.act=$('lnaAct').checked;
  document.querySelectorAll('[data-lna-x]').forEach(t=>{const c=e.cards[+t.dataset.lnaX];if(c)c.x=t.value});
@@ -3504,13 +3523,13 @@ async function lnEdSave(){lnEdSync();const e=LNA.ed,title=e.title.trim();
  const cards=[];
  for(let i=0;i<e.cards.length;i++){const c=e.cards[i],x=c.x.trim();
   if(!x){alert('O cartão '+(i+1)+' está sem texto.');return false}
-  if(c.k==='Cena'){const r=lnEdToSc(c);if(r.err){alert('No cartão '+(i+1)+' (Cena): '+r.err);return false}cards.push({k:'Cena',x,sc:r.sc});continue}
+  if(c.k==='Cena'){const r=lnEdToSc(c);if(r.err){alert('No cartão '+(i+1)+' (Cena): '+r.err);return false}cards.push(lnKeepAu(c,{k:'Cena',x,sc:r.sc}));continue}
   if(c.k==='Verificar'){const o=(c.o||[]).map(t=>t.trim()).filter(Boolean);
    if(o.length<2){alert('O cartão '+(i+1)+' (Verificar) precisa de pelo menos 2 opções, uma por linha.');return false}
    const ci=Math.round(c.c);if(!(ci>=1&&ci<=o.length)){alert('No cartão '+(i+1)+', indique o n.º da opção certa (1 a '+o.length+').');return false}
    const f=(c.f||'').trim();if(!f){alert('No cartão '+(i+1)+', escreva o feedback que aparece depois da resposta.');return false}
-   cards.push({k:'Verificar',x,o,a:o[ci-1],f})}
-  else cards.push({k:c.k,x})}
+   cards.push(lnKeepAu(c,{k:'Verificar',x,o,a:o[ci-1],f}))}
+  else cards.push(lnKeepAu(c,{k:c.k,x}))}
  const ses=e.sid?read(KEYS.sessions).find(q=>q.id===e.sid):null,theme=e.theme||(ses?(ses.title||'').trim():'')||null;
  const p={title,day_label:e.day.trim()||null,theme,session_id:e.sid||null,active:e.act,cards,updated_at:new Date().toISOString()};
  try{const go=async pl=>{if(e.id)return await SB.from('av_lessons').update(pl).eq('id',e.id);return await SB.from('av_lessons').insert(Object.assign({ord:LNA.rows.reduce((m,x)=>Math.max(m,x.ord||0),0)+1},pl))};
@@ -3573,6 +3592,45 @@ async function lnCsvImport(){
 function lnCsvExport(){const rows=[['licao','data','titulo','tema','tipo','texto','opcoes','correta','feedback']];
  LNA.rows.forEach((x,i)=>(x.cards||[]).forEach(c=>{const v=c.k==='Verificar';rows.push([i+1,x.day_label||'',x.title,x.theme||'',lnNorm(c.k),c.x||'',v?(c.o||[]).join('|'):(c.k==='Cena'?JSON.stringify(c.sc||{}):''),v?(c.o||[]).indexOf(c.a)+1:'',v?(c.f||''):''])}));
  csvDownload('licoes_pilar.csv',rows)}
+/* ===== Áudios do Pilar (voz gravada ou gerada): ficheiros no Storage, ligados a cada cartão ===== */
+const LN_BUCKET='av-lesson-audio';
+async function lnAuUpload(file,lessonKey,idx){const ext=((file.name.split('.').pop()||'mp3').toLowerCase().replace(/[^a-z0-9]/g,'')||'mp3').slice(0,5),
+ path=String(lessonKey)+'/'+String(idx+1).padStart(2,'0')+'-'+Date.now().toString(36)+'.'+ext;
+ const up=await SB.storage.from(LN_BUCKET).upload(path,file,{contentType:file.type||'audio/mpeg',upsert:false,cacheControl:'31536000'});if(up.error)throw up.error;
+ return SB.storage.from(LN_BUCKET).getPublicUrl(path).data.publicUrl}
+function lnKeepAu(c,o){if(c.au){o.au=c.au;o.ah=c.ah||''}return o}
+function lnAuEdHTML(c,i){const has=!!c.au,cur=has&&c.ah===lnHash(c.x);
+ return '<div class="lna-au">'+(has?'<span class="tag '+(cur?'good':'warn')+'">'+(cur?'Áudio do Pilar ✓':'O texto mudou: este áudio já não é usado')+'</span><audio controls preload="none" src="'+esc(c.au)+'"></audio><button type="button" class="btn secondary small" data-lna-aurm="'+i+'">Remover áudio</button>':'<span class="muted smalltext">Sem áudio: o Pilar usa a voz do aparelho.</span>')+'<label class="btn secondary small" style="cursor:pointer">'+(has?'Substituir áudio':'Carregar áudio')+'<input type="file" accept="audio/*" data-lna-au="'+i+'" hidden></label></div>'}
+document.addEventListener('change',async e=>{const f=e.target.closest&&e.target.closest('[data-lna-au]');if(!f||!LNA.ed)return;const file=f.files&&f.files[0];if(!file)return;
+ lnEdSync();const c=LNA.ed.cards[+f.dataset.lnaAu];if(!c)return;
+ if(!String(c.x||'').trim()){alert('Escreva primeiro o texto do cartão.');f.value='';return}
+ if(!/^audio\//.test(file.type)&&!/\.(mp3|m4a|wav|ogg|webm|aac)$/i.test(file.name)){alert('Escolha um ficheiro de áudio (mp3, m4a, wav…).');f.value='';return}
+ if(file.size>3*1024*1024){alert('O áudio tem mais de 3 MB. Exporte-o mais curto ou em mp3 a 64 kbps.');f.value='';return}
+ const lab=f.closest('label');if(lab&&lab.firstChild)lab.firstChild.nodeValue='A enviar… ';
+ try{c.au=await lnAuUpload(file,LNA.ed.id||'novo',LNA.ed.cards.indexOf(c));c.ah=lnHash(c.x)}
+ catch(err){alert('Não foi possível enviar o áudio: '+(err.message||err)+'. Confirme que correu o ficheiro m634 no Supabase.')}
+ lnEdRedraw()});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-lna-aurm]');if(!b||!LNA.ed)return;lnEdSync();const c=LNA.ed.cards[+b.dataset.lnaAurm];if(c){delete c.au;delete c.ah}lnEdRedraw()});
+function lnAuRows(){const out=[];LNA.rows.forEach(r=>(Array.isArray(r.cards)?r.cards:[]).forEach((c,i)=>{out.push({code:'L'+r.ord+'_C'+String(i+1).padStart(2,'0'),lesson:r.ord,card:i+1,k:c.k||'',x:c.x||'',st:c.au?(c.ah===lnHash(c.x)?'com áudio':'texto mudou'):'sem áudio'})}));return out}
+function lnAuHTML(){const rows=LNA.rows;
+ return '<p class="muted smalltext" style="margin:0 0 10px">Gere o áudio de cada cartão na ferramenta de voz, com o texto do roteiro, e carregue os ficheiros aqui. Dê a cada ficheiro o nome do cartão, por exemplo <strong>L3_C04.mp3</strong> (lição 3, cartão 4). O cartão passa a tocar essa voz; sem áudio, usa a voz do aparelho. Se mudar o texto de um cartão, o áudio antigo deixa de ser usado até carregar um novo.</p>'
+ +'<div class="tr-tools" style="margin-bottom:10px"><button type="button" class="btn secondary" data-lna-aucsv>Descarregar roteiro (CSV)</button><button type="button" class="btn secondary" data-lna-aucopy>Copiar roteiro</button><label class="btn" style="cursor:pointer">Carregar áudios<input type="file" id="lnaAuFiles" accept="audio/*" multiple hidden></label></div><div id="lnaAuLog" class="smalltext" style="margin:0 0 10px"></div>'
+ +rows.map(r=>{const cs=Array.isArray(r.cards)?r.cards:[],n=cs.filter(c=>c.au&&c.ah===lnHash(c.x)).length;return '<div class="lna-row"><span class="ln-num">'+esc(r.ord)+'</span><div class="lna-i"><strong>'+esc(r.title)+'</strong><small class="muted" style="display:block">'+n+' de '+cs.length+' cartões com áudio</small></div></div>'}).join('')}
+async function lnAuBulk(files){const log=()=>$('lnaAuLog'),say=t=>{const l=log();if(l)l.innerHTML=t};let ok=0;const bad=[],touched={};
+ for(const f of files){const m=/L(\d+)[_\- ]?C(\d+)/i.exec(f.name);if(!m){bad.push(f.name+' (nome inválido; use L3_C04.mp3)');continue}
+  const r=LNA.rows.find(x=>Number(x.ord)===+m[1]),idx=+m[2]-1;if(!r||!Array.isArray(r.cards)||!r.cards[idx]){bad.push(f.name+' (a lição ou o cartão não existe)');continue}
+  if(f.size>3*1024*1024){bad.push(f.name+' (maior que 3 MB)');continue}
+  say('A enviar '+esc(f.name)+'…');
+  try{const url=await lnAuUpload(f,r.id,idx),c=r.cards[idx];c.au=url;c.ah=lnHash(c.x);touched[r.id]=r;ok++}catch(e){bad.push(f.name+' ('+(e.message||e)+')')}}
+ for(const id in touched){const r=touched[id],u=await SB.from('av_lessons').update({cards:r.cards,updated_at:new Date().toISOString()}).eq('id',id);if(u.error)bad.push('Lição '+r.ord+': não foi possível guardar ('+u.error.message+')')}
+ const b=$('trMBody');if(b)b.innerHTML=lnAuHTML();
+ say('<strong>'+ok+'</strong> áudio(s) carregado(s).'+(bad.length?'<br>Não carregados:<br>'+bad.map(esc).join('<br>'):'')+(bad.length&&bad.some(t=>/bucket|not found|row-level|policy/i.test(t))?'<br>Confirme que correu o ficheiro m634 no Supabase.':''));lnAdminRender()}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-lna-aud],[data-lna-aucsv],[data-lna-aucopy]');if(!b)return;
+ if(b.dataset.lnaAud!==undefined)return trOpen('Áudios do Pilar',lnAuHTML(),[{label:'Fechar',cls:'secondary'}]);
+ const rows=lnAuRows();
+ if(b.dataset.lnaAucsv!==undefined)return csvDownload('roteiro-audio-pilar.csv',[['ficheiro','licao','cartao','tipo','texto','estado']].concat(rows.map(r=>[r.code+'.mp3',r.lesson,r.card,r.k,r.x,r.st])));
+ if(b.dataset.lnaAucopy!==undefined){const t=rows.map(r=>r.code+'\t'+r.x).join('\n');navigator.clipboard.writeText(t).then(()=>toast('Roteiro copiado.')).catch(()=>toast('Não foi possível copiar. Use o CSV.'))}});
+document.addEventListener('change',e=>{const f=e.target;if(f&&f.id==='lnaAuFiles'&&f.files&&f.files.length){const fl=[...f.files];f.value='';lnAuBulk(fl)}});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-lna-new],[data-lna-edit],[data-lna-up],[data-lna-dn],[data-lna-act],[data-lna-del],[data-lna-seed],[data-lna-csv],[data-lna-exp],[data-lna-cadd],[data-lna-cup],[data-lna-cdn],[data-lna-crm]');if(!b||b.disabled)return;const d=b.dataset;
  if(d.lnaNew!==undefined){LNA.ed=lnEdNew();return lnEdOpen()}
  if(d.lnaEdit){const r=LNA.rows.find(x=>x.id===d.lnaEdit);if(r){LNA.ed=lnEdFrom(r);lnEdOpen()}return}
