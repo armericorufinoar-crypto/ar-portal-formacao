@@ -2188,9 +2188,9 @@ return dg+primary+`<div class="card todayrows"><div class="cardhead"><h2>A segui
 const TTS={ok:typeof speechSynthesis!=='undefined'&&typeof SpeechSynthesisUtterance!=='undefined',key:''};
 function ttsAuto(){try{return localStorage.getItem('av_tts_auto')==='1'}catch(e){return false}}
 function ttsSetAuto(v){try{localStorage.setItem('av_tts_auto',v?'1':'0')}catch(e){}}
-const TTS_P={pilar:{pitch:.8,rate:.9,g:'m',blip:[196,262,'sine'],ola:'Olá! Eu sou o Pilar. Vamos treinar um bocadinho?'},excelsa:{pitch:1.14,rate:1,g:'f',blip:[392,523,'triangle'],ola:'Olá! Eu sou a Excelsa. Lê com calma e escolhe.'}};
+const TTS_P={pilar:{pitch:.8,rate:.9,g:'m',blip:[196,262,'sine'],ola:'Olá! Eu sou o Pilar. Vamos treinar um bocadinho?'}};
 const TTS_M=/duarte|ant[oó]nio|daniel|cristiano|ricardo|felipe|jo[aã]o|diego|\bmale\b|masc/i,TTS_F=/raquel|francisca|fernanda|joana|catarina|luciana|maria|h[eé]lia|\bfemale\b|fem/i;
-const ttsSaved=w=>{try{return localStorage.getItem('av_tts_v_'+w)||''}catch(e){return ''}};
+const ttsSaved=w=>{try{return isStaffUser()?(localStorage.getItem('av_tts_v_'+w)||''):''}catch(e){return ''}};
 function ttsScore(v){let n=0;if(/^pt[-_]PT/i.test(v.lang))n+=50;if(/natural|neural|online/i.test(v.name))n+=40;if(/premium|enhanced|melhorad/i.test(v.name))n+=30;if(/google/i.test(v.name))n+=15;if(!v.localService)n+=2;return n}
 function ttsList(){try{return speechSynthesis.getVoices().filter(x=>/^pt/i.test(x.lang)).sort((a,b)=>ttsScore(b)-ttsScore(a))}catch(e){return[]}}
 function ttsPick0(w){const l=ttsList(),sv=ttsSaved(w);let v=sv&&l.find(x=>x.voiceURI===sv);if(v)return v;const g=TTS_P[w].g,rx=g==='m'?TTS_M:TTS_F,ox=g==='m'?TTS_F:TTS_M;return l.find(x=>rx.test(x.name))||l.find(x=>!ox.test(x.name))||l[0]||null}
@@ -2234,13 +2234,13 @@ document.addEventListener('input',e=>{const t=e.target;if(t.matches&&t.matches('
 document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('[data-cfg-voz-test]'))cfgVozTest()});
 if(typeof TTS!=='undefined'&&TTS.ok){try{speechSynthesis.addEventListener('voiceschanged',cfgVozFill)}catch(e){}}
 function ttsSelHTML(w,lab){const l=ttsList(),cur=ttsPick(w);if(!l.length)return '';return '<label class="tr-rauto tr-mascot-read">'+lab+' <select data-tts-v="'+w+'">'+l.map(v=>'<option value="'+esc(v.voiceURI)+'"'+(cur&&cur.voiceURI===v.voiceURI?' selected':'')+'>'+esc(v.name.replace(/^(Microsoft|Google) /,'')+' ('+v.lang+')')+'</option>').join('')+'</select><button type="button" class="tr-rbtn" data-tts-test="'+w+'" aria-label="Ouvir a voz">▶</button></label>'}
-function ttsFillSel(){document.querySelectorAll('[data-tts-vbox]').forEach(b=>{b.innerHTML=ttsSelHTML(b.dataset.ttsVbox,b.dataset.ttsVbox==='pilar'?'Voz do Pilar':'Voz da Excelsa')})}
+function ttsFillSel(){document.querySelectorAll('[data-tts-vbox]').forEach(b=>{b.innerHTML=ttsSelHTML('pilar','Voz do Pilar')})}
 if(TTS.ok){try{speechSynthesis.addEventListener('voiceschanged',ttsFillSel)}catch(e){}}
 function ttsBarHTML(){if(!TTS.ok)return '';return '<div class="tr-read"><span class="tr-rmas" id="trRmas" data-rmas>'+pilarSVG('ler',0,0)+'</span><div class="tr-rtxt"><span id="trRbub">Posso ler por ti</span><label class="tr-rauto"><input type="checkbox" data-tts-auto'+(ttsAuto()?' checked':'')+'> Ler sempre</label></div><button type="button" class="tr-rbtn" data-tr-read>'+LI('speaker')+' Ouvir</button></div>'}
-function ttsOptHTML(){if(!TTS.ok)return '';return '<label class="tr-rauto tr-mascot-read"><input type="checkbox" data-tts-auto'+(ttsAuto()?' checked':'')+'> Ler só a pergunta em voz alta</label>'+(UI.voz?(ttsSrv()?'':'<div data-tts-vbox="pilar">'+ttsSelHTML('pilar','Voz do Pilar')+'</div>')+'<div data-tts-vbox="excelsa">'+ttsSelHTML('excelsa','Voz da Excelsa')+'</div>':'')}
+function ttsOptHTML(){if(!TTS.ok)return '';return '<label class="tr-rauto tr-mascot-read"><input type="checkbox" data-tts-auto'+(ttsAuto()?' checked':'')+'> Ler só a pergunta em voz alta</label>'+(UI.voz&&isStaffUser()&&!ttsSrv()?'<div data-tts-vbox="pilar">'+ttsSelHTML('pilar','Voz do Pilar')+'</div>':'')}
 function ttsAfterDraw(it,fb){if(!TTS.ok)return;const k=TRS.idx+':'+(fb?'a':'q');if(TTS.key!==k){TTS.key=k;if(fb)ttsStop();else if(ttsAuto())ttsSpeak(ttsItemText(it),'pilar');else{try{speechSynthesis.cancel()}catch(e){}}}ttsTalk(speechSynthesis.speaking)}
 document.addEventListener('click',e=>{if(e.target.closest('[data-tr-read]')){const S=TRS.sess;if(S&&S.items[TRS.idx])ttsSpeak(ttsItemText(S.items[TRS.idx]),'pilar')}
- if(e.target.closest('[data-tq-read]')){const T=TEST_CUR,q=T&&T.data&&T.data.questions&&T.data.questions[T.i||0];if(q)ttsSpeak(q.statement,'excelsa')}
+ if(e.target.closest('[data-tq-read]')){const T=TEST_CUR,q=T&&T.data&&T.data.questions&&T.data.questions[T.i||0];if(q)ttsSpeak(q.statement,'pilar')}
  const tt=e.target.closest('[data-tts-test]');if(tt)ttsSpeak(TTS_P[tt.dataset.ttsTest].ola,tt.dataset.ttsTest)});
 document.addEventListener('change',e=>{const v=e.target.closest&&e.target.closest('[data-tts-v]');if(!v)return;try{localStorage.setItem('av_tts_v_'+v.dataset.ttsV,v.value)}catch(_){}ttsSpeak(TTS_P[v.dataset.ttsV].ola,v.dataset.ttsV)});
 document.addEventListener('change',e=>{const c=e.target.closest&&e.target.closest('[data-tts-auto]');if(!c)return;ttsSetAuto(c.checked);document.querySelectorAll('[data-tts-auto]').forEach(x=>x.checked=c.checked);const S=TRS.sess,L=$('trLesson');if(c.checked&&S&&S.items[TRS.idx]&&L&&L.classList.contains('open')&&!TRS.fb)ttsSpeak(ttsItemText(S.items[TRS.idx]),'pilar');if(!c.checked)ttsStop()});
@@ -2576,7 +2576,7 @@ function tqShow(){tqEl().classList.add('open');document.body.classList.add('tr-n
 function tqHide(){ttsStop();const e=$('testRun');if(e)e.classList.remove('open');document.body.classList.remove('tr-noscroll')}
 const exMas=(code,t,sz,l)=>'<div class="ex-mas'+(l?' l':'')+'">'+trAvatarSVG(code,sz||64)+'<div class="tr-bub">'+esc(t)+'</div></div>';
 const exMasQ=fb=>'<div class="ex-mas l" data-rmas>'+trAvatarSVG(!fb||fb.neutral||fb.correct?'00000':'00010',48)+'<div class="tr-bub">'+esc(!fb?'Lê com atenção.':fb.neutral?'Resposta registada.':fb.correct?'Boa!':'Segue, vê a correcção no fim.')+'</div>'+(!fb&&TTS.ok?'<button type="button" class="tr-rbtn" data-tq-read>'+LI('speaker')+' Ouvir</button><label class="tr-rauto"><input type="checkbox" data-tts-auto'+(ttsAuto()?' checked':'')+'> Ler sempre</label>':'')+'</div>';
-function ttsTestDraw(q,fb,T){if(!TTS.ok||!q)return;const k='t'+T.id+':'+(T.i||0)+(fb?'a':'q');if(TTS.k2!==k){TTS.k2=k;if(fb)ttsStop();else if(ttsAuto())ttsSpeak(q.statement,'excelsa');else{try{speechSynthesis.cancel()}catch(e){}}}ttsTalk(speechSynthesis.speaking)}
+function ttsTestDraw(q,fb,T){if(!TTS.ok||!q)return;const k='t'+T.id+':'+(T.i||0)+(fb?'a':'q');if(TTS.k2!==k){TTS.k2=k;if(fb)ttsStop();else if(ttsAuto())ttsSpeak(q.statement,'pilar');else{try{speechSynthesis.cancel()}catch(e){}}}ttsTalk(speechSynthesis.speaking)}
 const tqShell=(inner,foot)=>'<div class="tr-lbody"><div class="tr-lin">'+inner+'</div></div>'+(foot||'');
 function tqLoading(){tqShow();tqEl().innerHTML=tqShell('<div class="empty">A carregar…</div>')}
 function tqError(m){tqShow();tqEl().innerHTML=tqShell('<div class="notice">'+esc(m)+'</div>','<div class="tr-lfoot"><div class="tr-lfin"><span></span><button type="button" class="tr-btn go" data-tq-later>Fechar</button></div></div>')}
@@ -3491,13 +3491,13 @@ function lnAuEl(){if(!LNV.el){LNV.el=new Audio();LNV.el.preload='auto'}return LN
 function lnAuStop(){const a=LNV.el;if(a){a.onplaying=a.onended=a.onerror=a.ontimeupdate=null;try{a.pause()}catch(e){}}}
 document.addEventListener('click',()=>{if(LNV.unl)return;LNV.unl=1;try{const a=lnAuEl();a.src=LN_SIL;const p=a.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}},true);
 function lnVidClear(){LNV.tok++;clearTimeout(LNV.tm);clearTimeout(LNV.wd);clearInterval(LNV.iv);lnAuStop();if(TTS.ok){try{speechSynthesis.cancel()}catch(e){}}ttsTalk(false)}
-function lnNarrate(text,tok,done,hl,au){
+function lnNarrate(text,tok,done,hl,au,mute){
  const caps=hl?[...document.querySelectorAll('#lnCap .w')]:[];caps.forEach(s=>s.classList.remove('on'));
  const mark=ci=>caps.forEach(s=>{if(+s.dataset.o<=ci)s.classList.add('on')}),est=Math.max(2200,String(text).length*62);
  let finished=false;
  const fin=()=>{if(finished||tok!==LNV.tok)return;finished=true;clearInterval(LNV.iv);clearTimeout(LNV.wd);caps.forEach(s=>s.classList.add('on'));ttsTalk(false);if(done)done()};
  const timed=callFin=>{const t0=Date.now();clearInterval(LNV.iv);LNV.iv=setInterval(()=>{if(tok!==LNV.tok||finished){clearInterval(LNV.iv);return}const p=(Date.now()-t0)/est,n=String(text).length||1;caps.forEach(s=>{if(+s.dataset.o/n<=p)s.classList.add('on')});if(p>=1&&callFin)fin()},120)};
- const sp=TTS.ok&&UI.voz&&!lnMuted();
+ const sp=TTS.ok&&UI.voz&&!lnMuted()&&!mute;
  const speakTTS=()=>{
   if(!sp||!text){timed(true);return}
   try{const pr=ttsPR('pilar'),v=ttsPick('pilar'),u=new SpeechSynthesisUtterance(text);u.lang=v?v.lang:'pt-PT';if(v)u.voice=v;u.pitch=pr[0];u.rate=pr[1];
@@ -3520,10 +3520,12 @@ function lnNarrate(text,tok,done,hl,au){
  speakTTS()}
 function lnVidStart(){lnVidClear();LNV.paused=false;if(!LN.l||LN.fin||!lnVidOn())return;
  const L=LN_USE.find(x=>x.n===LN.l),c=L&&L.cards[LN.c];if(!c)return;
- const tok=LNV.tok,picked=c.k==='Verificar'&&LN.pick>=0,last=LN.c===L.cards.length-1,au=(!picked&&c.au&&c.ah===lnHash(c.x))?c.au:'';
+ const tok=LNV.tok,picked=c.k==='Verificar'&&LN.pick>=0,last=LN.c===L.cards.length-1,fk=picked?(lnFbOk(c)?'afo':'afe'):'',fbT=picked?lnFbTexts(c)[fk]:'',au=picked?((c[fk]&&c[fk+'h']===lnHash(fbT))?c[fk]:''):((c.au&&c.ah===lnHash(c.x))?c.au:'');
  lnNarrate(picked?lnFbText(c):c.x,tok,()=>{const b=$('lnBody');if(!b||!b.offsetParent||c.k==='Verificar'||last)return;
-  LNV.tm=setTimeout(()=>{if(tok!==LNV.tok)return;const n=document.querySelector('[data-ln-next]');if(n&&!n.disabled)n.click()},1000)},!picked,au)}
+  LNV.tm=setTimeout(()=>{if(tok!==LNV.tok)return;const n=document.querySelector('[data-ln-next]');if(n&&!n.disabled)n.click()},1000)},!picked,au,picked&&!au&&!!c.au)}
 function lnCapHTML(t){let o=0;return String(t||'').split(/(\s+)/).map(w=>{const s=/^\s+$/.test(w)?esc(w):'<span class="w" data-o="'+o+'">'+esc(w)+'</span>';o+=w.length;return s}).join('')}
+function lnFbOk(c){return Array.isArray(c.o)&&LN.pick>=0&&c.o[LN.pick]===c.a}
+function lnFbTexts(c){return{afo:String(c.f||''),afe:'Não é bem assim. A resposta certa é '+c.a+'. '+String(c.f||'').replace(/^Certo[.:]\s*/,'')}}
 function lnFbText(c){const ok=Array.isArray(c.o)&&LN.pick>=0&&c.o[LN.pick]===c.a;return ok?String(c.f||''):'Não é bem assim. A resposta certa é '+c.a+'. '+String(c.f||'').replace(/^Certo[.:]\s*/,'')}
 function lnVidLayout(L,c,tot,ver,ok,mood,kind,opts,fb,nextBtn){
  const seg=[];for(let i=0;i<tot;i++)seg.push('<i class="'+(i<LN.c?'d':i===LN.c?'a':'')+'"></i>');
@@ -3696,9 +3698,11 @@ async function lnAuUpload(file,lessonKey,idx){const ext=((file.name.split('.').p
  path=String(lessonKey)+'/'+String(idx+1).padStart(2,'0')+'-'+Date.now().toString(36)+'.'+ext;
  const up=await SB.storage.from(LN_BUCKET).upload(path,file,{contentType:file.type||'audio/mpeg',upsert:false,cacheControl:'31536000'});if(up.error)throw up.error;
  return SB.storage.from(LN_BUCKET).getPublicUrl(path).data.publicUrl}
-function lnKeepAu(c,o){if(c.au){o.au=c.au;o.ah=c.ah||''}return o}
+function lnKeepAu(c,o){if(c.au){o.au=c.au;o.ah=c.ah||''}['afo','afe'].forEach(k=>{if(c[k]){o[k]=c[k];o[k+'h']=c[k+'h']||''}});return o}
+function lnFbTextsEd(c){const o=(c.o||[]).map(t=>String(t).trim()).filter(Boolean),a=c.a!==undefined&&c.c===undefined?c.a:o[Math.round(c.c)-1],f=String(c.f||'').trim();return{afo:f,afe:'Não é bem assim. A resposta certa é '+a+'. '+f.replace(/^Certo[.:]\s*/,'')}}
 function lnAuEdHTML(c,i){const has=!!c.au,cur=has&&c.ah===lnHash(c.x);
- return '<div class="lna-au">'+(has?'<span class="tag '+(cur?'good':'warn')+'">'+(cur?'Áudio do Pilar ✓':'O texto mudou: este áudio já não é usado')+'</span><audio controls preload="none" src="'+esc(c.au)+'"></audio><button type="button" class="btn secondary small" data-lna-aurm="'+i+'">Remover áudio</button>':'<span class="muted smalltext">Sem áudio: o Pilar usa a voz do aparelho.</span>')+'<label class="btn secondary small" style="cursor:pointer">'+(has?'Substituir áudio':'Carregar áudio')+'<input type="file" accept="audio/*" data-lna-au="'+i+'" hidden></label></div>'}
+ const fbx=c.k==='Verificar'?['afo','afe'].map(k=>{const T=lnFbTextsEd(c)[k],h=!!c[k],ok=h&&c[k+'h']===lnHash(T);return '<div class="lna-au"><strong class="smalltext">'+(k==='afo'?'Feedback · acertou':'Feedback · errou')+'</strong> '+(h?'<span class="tag '+(ok?'good':'warn')+'">'+(ok?'Áudio ✓':'Texto mudou')+'</span><audio controls preload="none" src="'+esc(c[k])+'"></audio><button type="button" class="btn secondary small" data-lna-aurm2="'+i+':'+k+'">Remover</button>':'<span class="muted smalltext">Sem áudio: o Pilar fica em silêncio nesta resposta.</span>')+'<label class="btn secondary small" style="cursor:pointer">'+(h?'Substituir':'Carregar')+'<input type="file" accept="audio/*" data-lna-au2="'+i+':'+k+'" hidden></label></div>'}).join(''):'';
+ return fbx+'<div class="lna-au">'+(has?'<span class="tag '+(cur?'good':'warn')+'">'+(cur?'Áudio do Pilar ✓':'O texto mudou: este áudio já não é usado')+'</span><audio controls preload="none" src="'+esc(c.au)+'"></audio><button type="button" class="btn secondary small" data-lna-aurm="'+i+'">Remover áudio</button>':'<span class="muted smalltext">Sem áudio: o Pilar usa a voz do aparelho.</span>')+'<label class="btn secondary small" style="cursor:pointer">'+(has?'Substituir áudio':'Carregar áudio')+'<input type="file" accept="audio/*" data-lna-au="'+i+'" hidden></label></div>'}
 document.addEventListener('change',async e=>{const f=e.target.closest&&e.target.closest('[data-lna-au]');if(!f||!LNA.ed)return;const file=f.files&&f.files[0];if(!file)return;
  lnEdSync();const c=LNA.ed.cards[+f.dataset.lnaAu];if(!c)return;
  if(!String(c.x||'').trim()){alert('Escreva primeiro o texto do cartão.');f.value='';return}
@@ -3708,18 +3712,27 @@ document.addEventListener('change',async e=>{const f=e.target.closest&&e.target.
  try{c.au=await lnAuUpload(file,LNA.ed.id||'novo',LNA.ed.cards.indexOf(c));c.ah=lnHash(c.x)}
  catch(err){alert('Não foi possível enviar o áudio: '+(err.message||err)+'. Confirme que correu o ficheiro m634 no Supabase.')}
  lnEdRedraw()});
+document.addEventListener('change',async e=>{const f=e.target.closest&&e.target.closest('[data-lna-au2]');if(!f||!LNA.ed)return;const file=f.files&&f.files[0];if(!file)return;
+ lnEdSync();const [ix,k]=f.dataset.lnaAu2.split(':'),c=LNA.ed.cards[+ix];if(!c)return;
+ const T=lnFbTextsEd(c)[k];if(!String(T||'').replace(/^Não é bem assim\. A resposta certa é undefined\.\s*/,'').trim()){alert('Preencha primeiro as opções, a opção certa e o feedback deste cartão.');f.value='';return}
+ if(file.size>3*1024*1024){alert('O áudio tem mais de 3 MB.');f.value='';return}
+ try{c[k]=await lnAuUpload(file,(LNA.ed.id||'novo')+'/fb',+ix*2+(k==='afe'?1:0));c[k+'h']=lnHash(T)}
+ catch(err){alert('Não foi possível enviar o áudio: '+(err.message||err))}
+ lnEdRedraw()});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-lna-aurm2]');if(!b||!LNA.ed)return;lnEdSync();const [ix,k]=b.dataset.lnaAurm2.split(':'),c=LNA.ed.cards[+ix];if(c){delete c[k];delete c[k+'h']}lnEdRedraw()});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-lna-aurm]');if(!b||!LNA.ed)return;lnEdSync();const c=LNA.ed.cards[+b.dataset.lnaAurm];if(c){delete c.au;delete c.ah}lnEdRedraw()});
-function lnAuRows(){const out=[];LNA.rows.forEach(r=>(Array.isArray(r.cards)?r.cards:[]).forEach((c,i)=>{out.push({code:'L'+r.ord+'_C'+String(i+1).padStart(2,'0'),lesson:r.ord,card:i+1,k:c.k||'',x:c.x||'',st:c.au?(c.ah===lnHash(c.x)?'com áudio':'texto mudou'):'sem áudio'})}));return out}
+function lnAuRows(){const out=[];LNA.rows.forEach(r=>(Array.isArray(r.cards)?r.cards:[]).forEach((c,i)=>{const code='L'+r.ord+'_C'+String(i+1).padStart(2,'0');out.push({code,lesson:r.ord,card:i+1,k:c.k||'',x:c.x||'',st:c.au?(c.ah===lnHash(c.x)?'com áudio':'texto mudou'):'sem áudio'});
+ if(c.k==='Verificar'&&c.a){const T=lnFbTexts(c);[['afo','_OK','Feedback acertou'],['afe','_ERRO','Feedback errou']].forEach(q=>out.push({code:code+q[1],lesson:r.ord,card:i+1,k:q[2],x:T[q[0]],st:c[q[0]]?(c[q[0]+'h']===lnHash(T[q[0]])?'com áudio':'texto mudou'):'sem áudio'}))}}));return out}
 function lnAuHTML(){const rows=LNA.rows;
- return '<p class="muted smalltext" style="margin:0 0 10px">Gere o áudio de cada cartão na ferramenta de voz, com o texto do roteiro, e carregue os ficheiros aqui. Dê a cada ficheiro o nome do cartão, por exemplo <strong>L3_C04.mp3</strong> (lição 3, cartão 4). O cartão passa a tocar essa voz; sem áudio, usa a voz do aparelho. Se mudar o texto de um cartão, o áudio antigo deixa de ser usado até carregar um novo.</p>'
+ return '<p class="muted smalltext" style="margin:0 0 10px">Gere o áudio de cada cartão na ferramenta de voz, com o texto do roteiro, e carregue os ficheiros aqui. Dê a cada ficheiro o nome do cartão, por exemplo <strong>L3_C04.mp3</strong> (lição 3, cartão 4). O cartão passa a tocar essa voz; sem áudio, usa a voz do aparelho. Nos cartões Verificar, grave também o feedback de quem acerta (<strong>L3_C04_OK.mp3</strong>) e de quem erra (<strong>L3_C04_ERRO.mp3</strong>); sem esses áudios, o Pilar fica em silêncio depois da resposta, para a voz não mudar. Se mudar o texto de um cartão, o áudio antigo deixa de ser usado até carregar um novo.</p>'
  +'<div class="tr-tools" style="margin-bottom:10px"><button type="button" class="btn secondary" data-lna-aucsv>Descarregar roteiro (CSV)</button><button type="button" class="btn secondary" data-lna-aucopy>Copiar roteiro</button><label class="btn" style="cursor:pointer">Carregar áudios<input type="file" id="lnaAuFiles" accept="audio/*" multiple hidden></label></div><div id="lnaAuLog" class="smalltext" style="margin:0 0 10px"></div>'
  +rows.map(r=>{const cs=Array.isArray(r.cards)?r.cards:[],n=cs.filter(c=>c.au&&c.ah===lnHash(c.x)).length;return '<div class="lna-row"><span class="ln-num">'+esc(r.ord)+'</span><div class="lna-i"><strong>'+esc(r.title)+'</strong><small class="muted" style="display:block">'+n+' de '+cs.length+' cartões com áudio</small></div></div>'}).join('')}
 async function lnAuBulk(files){const log=()=>$('lnaAuLog'),say=t=>{const l=log();if(l)l.innerHTML=t};let ok=0;const bad=[],touched={};
- for(const f of files){const m=/L(\d+)[_\- ]?C(\d+)/i.exec(f.name);if(!m){bad.push(f.name+' (nome inválido; use L3_C04.mp3)');continue}
+ for(const f of files){const m=/L(\d+)[_\- ]?C(\d+)(?:[_\- ]?(OK|ERRO))?/i.exec(f.name);if(!m){bad.push(f.name+' (nome inválido; use L3_C04.mp3)');continue}
   const r=LNA.rows.find(x=>Number(x.ord)===+m[1]),idx=+m[2]-1;if(!r||!Array.isArray(r.cards)||!r.cards[idx]){bad.push(f.name+' (a lição ou o cartão não existe)');continue}
   if(f.size>3*1024*1024){bad.push(f.name+' (maior que 3 MB)');continue}
   say('A enviar '+esc(f.name)+'…');
-  try{const url=await lnAuUpload(f,r.id,idx),c=r.cards[idx];c.au=url;c.ah=lnHash(c.x);touched[r.id]=r;ok++}catch(e){bad.push(f.name+' ('+(e.message||e)+')')}}
+  try{const c=r.cards[idx],sfx=(m[3]||'').toUpperCase();if(sfx&&c.k!=='Verificar'){bad.push(f.name+' (só os cartões Verificar têm feedback)');continue}const url=await lnAuUpload(f,r.id+(sfx?'/fb':''),idx*2+(sfx==='ERRO'?1:0));if(sfx){const k=sfx==='OK'?'afo':'afe';c[k]=url;c[k+'h']=lnHash(lnFbTexts(c)[k])}else{c.au=url;c.ah=lnHash(c.x)}touched[r.id]=r;ok++}catch(e){bad.push(f.name+' ('+(e.message||e)+')')}}
  for(const id in touched){const r=touched[id],u=await SB.from('av_lessons').update({cards:r.cards,updated_at:new Date().toISOString()}).eq('id',id);if(u.error)bad.push('Lição '+r.ord+': não foi possível guardar ('+u.error.message+')')}
  const b=$('trMBody');if(b)b.innerHTML=lnAuHTML();
  say('<strong>'+ok+'</strong> áudio(s) carregado(s).'+(bad.length?'<br>Não carregados:<br>'+bad.map(esc).join('<br>'):'')+(bad.length&&bad.some(t=>/bucket|not found|row-level|policy/i.test(t))?'<br>Confirme que correu o ficheiro m634 no Supabase.':''));lnAdminRender()}
