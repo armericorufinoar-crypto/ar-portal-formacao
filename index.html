@@ -3273,7 +3273,7 @@ async function lnProgress(){LN.last={};
  }catch(e){}}
 function lnSync(x,card,pick,done){if(!x||!x.id||typeof PROFILE==='undefined'||!PROFILE||!PROFILE.staff_id)return;
  try{Promise.resolve(SB.rpc('av_lesson_progress_save',{p_lesson:x.id,p_card:card,p_pick:pick==null?null:pick,p_done:!!done})).then(r=>{if(r&&r.error)console.warn('Aprender: progresso não gravado',r.error.message)}).catch(()=>{})}catch(e){}}
-const lnKey=()=>'av_ln1_'+((typeof USER!=='undefined'&&USER&&USER.id)||'x');
+const lnKey=()=>'av_ln2_'+((typeof USER!=='undefined'&&USER&&USER.id)||'x');
 function lnLoad(){try{return JSON.parse(localStorage.getItem(lnKey())||'{}')||{}}catch(e){return{}}}
 function lnSave(){try{localStorage.setItem(lnKey(),JSON.stringify({done:LN.done}))}catch(e){}}
 function lnOpen(){LN.l=0;LN.c=0;LN.pick=-1;LN.fin=false;LN.done=lnLoad().done||{};lnRender();lnRemote().then(ok=>{if(ok&&!LN.l)lnRender()})}
