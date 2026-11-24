@@ -917,7 +917,7 @@ input,select,textarea,.chatform input,.fbcform input[data-cinput],.composer text
 <div class="grid area-grid" id="areaCards"></div><div class="grid two"><div class="card"><div class="cardhead"><h2>Próximas sessões</h2><button class="btn secondary small" data-page="sessions">Gerir sessões</button></div><div id="upcomingSessions"></div></div><div class="card"><div class="cardhead"><h2>Desempenho médio por área</h2></div><div class="bar-chart" id="areaPerformance"></div></div></div>
 <div class="card"><div class="cardhead"><h2>Actividade recente</h2><span class="muted smalltext">Últimas 3 · presenças e avaliações</span></div><div id="recentActivity"></div></div></section>
 <section class="page hidden" id="page-crm-pipeline">
- <div class="pagehead"><div><h1>Pipeline</h1></div><div class="actions pd-bar"><span class="pd-tot" id="crmTot"></span><button class="btn secondary" id="crmExport">Exportar CSV</button><button class="btn pd-btn" id="crmAdd">+ Negócio</button></div></div>
+ <div class="pagehead"><div><h1>Pipeline</h1></div><div class="actions pd-bar"><span class="pd-tot" id="crmTot"></span><button class="btn secondary" id="crmImport">Importar CSV</button><button class="btn secondary" id="crmExport">Exportar CSV</button><button class="btn pd-btn" id="crmAdd">+ Negócio</button></div></div>
  <div class="crm-sum"><div><span>Em aberto</span><strong id="crmStOpen">0</strong></div><div><span>Valor em aberto</span><strong id="crmStValue">0 Kz</strong></div><div><span>Ganhos</span><strong id="crmStWon">0</strong></div><div><span>Com alerta</span><strong id="crmStAlert">0</strong></div></div>
  <div class="crm-note-box crm-slim"></div>
  <div class="card"><div class="toolbar"><input id="crmSearch" placeholder="Pesquisar nome, código, telefone ou e-mail"><select id="crmOwnerFilter"><option value="">Todos os responsáveis</option></select><select id="crmOriginFilter"><option value="">Todas as origens</option></select><select id="crmAlertFilter"><option value="">Todos os alertas</option><option value="any">Com alerta</option><option value="none">Sem próximo passo</option><option value="late">Atrasados</option><option value="today">Para hoje</option></select></div><div id="crmBoard" class="pd-board"></div></div>
@@ -1274,7 +1274,7 @@ function crmOpenModal(item){CRM_EDIT=item?item.id:null;const x=item||{};const co
   ['email','E-mail','email',x.email||''],['telefone','Telefone','tel',x.telefone||''],
   ['origem','Origem','select',x.origem||'WhatsApp'],['turma','Turma','text',x.turma||''],['vendedorResponsavel','Responsável comercial','select',x.vendedorResponsavel||PROFILE?.display_name||''],
   ['etapa','Etapa','select',x.etapa||'NOVO'],['valorEstimado','Valor estimado (Kz)','number',x.valorEstimado??''],
-  ['dataCriacao','Data de entrada','date',x.dataCriacao||today()],
+  ['dataPrevistaFecho','Data prevista de fecho','date',x.dataPrevistaFecho||''],['dataCriacao','Data de entrada','date',x.dataCriacao||today()],
   ['motivoPerda','Motivo de perda','select',x.motivoPerda||''],['localizacao','Localização (morada, referência ou link do Maps)','text',x.localizacao||''],['observacoes','Observações','textarea',x.observacoes||'']
  ];
  const makeField=f=>{const [key,label,kind,val,required]=f;let el='';if(kind==='select'){const opts=key==='vendedorResponsavel'?[['','Sem responsável'],...crmTeamList(val).map(v=>[v,v])]:key==='origem'?CRM_ORIGINS.map(v=>[v,v]):key==='motivoPerda'?[['','Escolher…'],...CRM_LOSS.map(v=>[v,v])]:CRM_STAGES.map(v=>[v.key,v.label]);el=`<select id="crmF_${key}" ${required?'required':''}>${opts.map(o=>`<option value="${crmEscape(o[0])}" ${String(val)===String(o[0])?'selected':''}>${crmEscape(o[1])}</option>`).join('')}</select>`}else if(kind==='textarea')el=`<textarea id="crmF_${key}" rows="4">${crmEscape(val)}</textarea>`;else el=(key==='turma'?`<datalist id="crmTurmas">${[...new Set(CRM_DEALS.map(d=>d.turma).filter(Boolean))].map(t=>`<option value="${crmEscape(t)}">`).join('')}</datalist>`:'')+`<input ${key==='turma'?'list="crmTurmas" placeholder="Ex.: Turma Sábado 12 Dez" ':''}id="crmF_${key}" type="${kind}" value="${crmEscape(val)}" ${required?'required':''} ${kind==='number'?'min="0" step="any"':''}>`;return `<div class="field ${kind==='textarea'?'full':''}" id="crmW_${key}"><label for="crmF_${key}">${label}${required?' *':''}</label>${el}</div>`};
@@ -1292,7 +1292,7 @@ function crmOpenModal(item){CRM_EDIT=item?item.id:null;const x=item||{};const co
   if(item)CRM_DEALS=CRM_DEALS.map(a=>a.id===item.id?{...a,...data,id:a.id}:a);
   else{newId=crmId();CRM_DEALS.push({...data,id:newId,codigo:CRM_SYNC.remote===true?'':crmNextCode(),formandoId:null})}
   crmSave();crmCloseModal();crmRenderAll();toast('Interessado guardado.');
-  const did=item?item.id:newId;crmEvFromForm(did,data);if(data.etapa==='GANHO'&&prev!=='GANHO')crmWon(did)};
+  const did=item?item.id:newId;if(data.etapa==='GANHO'&&prev!=='GANHO')crmWon(did)};
 }
 function crmCloseModal(){$('crmModal').classList.remove('open');$('crmModal').setAttribute('aria-hidden','true');CRM_EDIT=null}
 function crmDelete(id){const item=CRM_DEALS.find(x=>x.id===id);if(!item)return;if(!confirm(`Eliminar «${item.nome||item.codigo}»?`))return;CRM_DEALS=CRM_DEALS.filter(x=>x.id!==id);crmSave();crmRenderAll();toast('Registo eliminado.')}
@@ -1305,6 +1305,75 @@ function crmWon(id){const d=CRM_DEALS.find(x=>x.id===id);if(!d)return;
  if(ex){CRM_DEALS=CRM_DEALS.map(x=>x.id===id?{...x,formandoId:ex.id}:x);crmSave();crmRenderAll();toast('Já existe o formando «'+ex.name+'»: ficou associado a este negócio.');return}
  openStaff(null,{name:d.nome,department:d.profissao||'',email:d.email,phone:d.telefone},s=>{CRM_DEALS=CRM_DEALS.map(x=>x.id===id?{...x,formandoId:s.id}:x);crmSave();crmRenderAll()});
 }
+/* ===== Importar leads por CSV (folha «CRM Pilar» do Google Sheets, separador Leads) ===== */
+const CRM_IMP={rows:[],map:{}};
+function crmCsvParse(t){t=String(t||'').replace(/^﻿/,'');const f=t.split(/\r?\n/)[0]||'';let q=false,c={';':0,',':0,'\t':0};for(const ch of f){if(ch==='"')q=!q;else if(!q&&c[ch]!==undefined)c[ch]++}
+ const d=Object.keys(c).sort((a,b)=>c[b]-c[a])[0],out=[];let row=[],cur='',inq=false;
+ for(let i=0;i<t.length;i++){const ch=t[i];
+  if(inq){if(ch==='"'){if(t[i+1]==='"'){cur+='"';i++}else inq=false}else cur+=ch}
+  else if(ch==='"')inq=true;
+  else if(ch===d){row.push(cur);cur=''}
+  else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&t[i+1]==='\n')i++;row.push(cur);cur='';out.push(row);row=[]}
+  else cur+=ch}
+ if(cur!==''||row.length){row.push(cur);out.push(row)}
+ return out.filter(r=>r.some(v=>String(v).trim()!==''))}
+const crmNorm=v=>String(v==null?'':v).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+function crmImpMap(head){const H=head.map(crmNorm),m={};
+ const find=fn=>{const i=H.findIndex(fn);return i<0?undefined:i};
+ m.id=find(h=>h==='id');
+ m.nome=find(h=>h==='nome'||h==='nome completo');
+ m.telefone=find(h=>!/contactad/.test(h)&&/whatsapp|telefone|telemovel|telem|celular/.test(h));
+ m.email=find(h=>/^e ?mail$/.test(h));
+ m.profissao=find(h=>/profissao|negocio|actividade|atividade/.test(h));
+ m.dor=find(h=>/dificuldade/.test(h));
+ m.etapa=find(h=>/^fase|^etapa/.test(h));
+ m.nivel=find(h=>/^nivel/.test(h));
+ m.horario=find(h=>/^horario/.test(h));
+ m.atend=find(h=>h==='atendimento');
+ m.resp=find(h=>/^responsavel|^vendedor/.test(h));
+ m.registo=find(h=>/registo|data de entrada|^data$/.test(h));
+ m.resumo=find(h=>/^resumo/.test(h));
+ m.origem=find(h=>h==='origem');
+ m.valor=find(h=>/^valor/.test(h));
+ m.obs=find(h=>/^observac/.test(h));
+ m.turma=find(h=>h==='turma');
+ return m}
+function crmImpStage(v){const n=crmNorm(v);if(!n)return'NOVO';if(/ganho/.test(n))return'GANHO';if(/perdid/.test(n))return'PERDIDO';if(/proposta|negociac|aguard|pagamento/.test(n))return'PROPOSTA';if(/contactad|qualific/.test(n))return'CONTACTADO';return'NOVO'}
+function crmImpPhone(v){let t=String(v==null?'':v).trim();if(!t)return'';if(/^\d+([.,]\d+)?e\+?\d+$/i.test(t.replace(',','.'))){const n=Number(t.replace(',','.'));if(isFinite(n))t=n.toFixed(0)}
+ t=t.replace(/^(\d+)[.,]0+$/,'$1');return t.replace(/[^\d+]/g,'')}
+function crmImpDate(v){const t=String(v==null?'':v).trim();let m=t.match(/^(\d{4})-(\d{2})-(\d{2})/);if(m)return m[1]+'-'+m[2]+'-'+m[3];m=t.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})/);if(m)return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');return today()}
+const crmImpKey=(tel,nome)=>{const d=String(tel||'').replace(/\D/g,'');return d.length>=7?'t'+d.slice(-9):'n'+crmNorm(nome)};
+function crmImportPick(){const inp=document.createElement('input');inp.type='file';inp.accept='.csv,.txt,text/csv,text/plain';
+ inp.onchange=async()=>{const f=inp.files&&inp.files[0];if(!f)return;if(/\.xlsx?$/i.test(f.name)){toast('Exporte a folha «Leads» em CSV (Ficheiro › Transferir › Valores separados por vírgulas) e importe esse ficheiro.');return}
+  try{crmImportOpen(await f.text(),f.name)}catch(e){toast('Não foi possível ler o ficheiro.')}};inp.click()}
+function crmImportOpen(text,fname){
+ const rows=crmCsvParse(text);if(rows.length<2){toast('O ficheiro não tem linhas para importar.');return}
+ const m=crmImpMap(rows[0]);if(m.nome===undefined){toast('Não encontrei a coluna «Nome». Importe o separador «Leads» da folha CRM Pilar.');return}
+ if(rows.length>2001){toast('Máximo de 2000 linhas por importação.');return}
+ const seen=new Set(CRM_DEALS.map(d=>crmImpKey(d.telefone,d.nome))),g=(r,k)=>m[k]===undefined?'':String(r[m[k]]==null?'':r[m[k]]).trim();
+ const add=[],dup=[],semNome=[];
+ rows.slice(1).forEach(r=>{const nome=g(r,'nome');if(!nome){semNome.push(r);return}
+  const tel=crmImpPhone(g(r,'telefone')),k=crmImpKey(tel,nome);if(seen.has(k)){dup.push({nome,tel});return}seen.add(k);
+  const etapa=crmImpStage(g(r,'etapa')),ob=[];
+  if(g(r,'dor'))ob.push('Dificuldade: '+g(r,'dor'));if(g(r,'resumo'))ob.push('Resumo: '+g(r,'resumo'));if(g(r,'nivel'))ob.push('Nível: '+g(r,'nivel'));
+  if(g(r,'atend'))ob.push('Atendimento: '+g(r,'atend'));if(g(r,'horario'))ob.push('Horário preferido: '+g(r,'horario'));if(g(r,'obs'))ob.push(g(r,'obs'));if(g(r,'id'))ob.push('ID Pilar: '+g(r,'id'));
+  const o=g(r,'origem');
+  add.push({nome,telefone:tel,email:g(r,'email'),profissao:g(r,'profissao'),origem:CRM_ORIGINS.includes(o)?o:'WhatsApp',turma:g(r,'turma'),vendedorResponsavel:g(r,'resp'),etapa,
+   valorEstimado:Number(String(g(r,'valor')).replace(/\s/g,'').replace(',','.'))||0,dataPrevistaFecho:'',dataCriacao:crmImpDate(g(r,'registo')),
+   motivoPerda:etapa==='PERDIDO'?'Outro':'',observacoes:ob.join('\n'),proximoPasso:'',dataProximoContacto:''})});
+ add.sort((a,b)=>a.dataCriacao<b.dataCriacao?-1:a.dataCriacao>b.dataCriacao?1:0);
+ CRM_IMP.rows=add;
+ const found=Object.keys(m).filter(k=>m[k]!==undefined).length,ganhos=add.filter(x=>x.etapa==='GANHO').length;
+ const list=add.slice(0,6).map(x=>'<div class="ev-row"><div class="ev-b"><strong>'+crmEscape(x.nome)+'</strong><div class="muted smalltext">'+crmEscape(x.telefone||'sem telefone')+' · '+crmEscape(crmStage(x.etapa).label)+' · '+crmEscape(x.dataCriacao)+'</div></div></div>').join('');
+ $('crmModalContent').innerHTML='<h2>Importar leads</h2><p class="crm-sub">Ficheiro <b>'+crmEscape(fname||'CSV')+'</b> · '+found+' colunas reconhecidas.</p>'+
+  '<div class="crm-fields-grid"><div class="field full"><b>'+add.length+'</b> para importar · <b>'+dup.length+'</b> já existentes (mesmo telefone, ignorados)'+(semNome.length?' · <b>'+semNome.length+'</b> sem nome (ignoradas)':'')+'</div></div>'+
+  (ganhos?'<p class="crm-sub">'+ganhos+' lead(s) em GANHO: ficam com «Formando por registar» até serem registados.</p>':'')+
+  (add.length?'<h3 class="pf-h">Pré-visualização</h3><div class="ev-list">'+list+(add.length>6?'<div class="muted smalltext">… e mais '+(add.length-6)+'.</div>':'')+'</div>':'<p class="crm-sub">Não há leads novos neste ficheiro.</p>')+
+  '<div class="crm-modal-foot"><span class="crm-note">Origem: WhatsApp. A dificuldade, o resumo e o nível do Pilar vão para as observações.</span><div class="actions"><button type="button" class="btn secondary" id="crmImpCancel">Cancelar</button>'+(add.length?'<button type="button" class="btn" id="crmImpGo">Importar '+add.length+'</button>':'')+'</div></div>';
+ $('crmModal').classList.add('open');$('crmModal').setAttribute('aria-hidden','false');$('crmImpCancel').onclick=crmCloseModal;
+ const go=$('crmImpGo');if(go)go.onclick=()=>{go.disabled=true;const st={...(CRM_IMP.rows[0]&&{})};
+  CRM_IMP.rows.forEach(x=>{const ds={};ds[x.etapa]=x.dataCriacao;CRM_DEALS.push({...x,id:crmId(),codigo:CRM_SYNC.remote===true?'':crmNextCode(),formandoId:null,datasEtapas:ds})});
+  const n=CRM_IMP.rows.length;CRM_IMP.rows=[];crmSave();crmCloseModal();crmRenderAll();toast(n+' leads importados.')}}
 function crmExport(){if(!CRM_DEALS.length){toast('Não existem registos para exportar.');return}const keys=['codigo','nome','profissao','telefone','email','origem','vendedorResponsavel','etapa','proximoPasso','dataProximoContacto','motivoPerda','valorEstimado','dataPrevistaFecho','dataCriacao','turma','observacoes'];const csv=[keys.join(';'),...CRM_DEALS.map(r=>keys.map(k=>'"'+String(r[k]??'').replace(/"/g,'""')+'"').join(';'))].join('\r\n');const blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='crm-pipeline.csv';a.click();URL.revokeObjectURL(url)}
 let CRM_PAYREADY=false;
 /* Ganho = 1.ª parcela paga: lê as parcelas (proformas) do formando ligado ao negócio */
@@ -1460,17 +1529,6 @@ EVX.crm={
  async del(id){const e=evFind(CRM_EV,id);if(!e||!confirm('Eliminar este agendamento?'))return;
   try{const r=await SB.from('av_crm_events').delete().eq('id',id);if(r.error)throw r.error;CRM_EV[e.deal_id]=CRM_EV[e.deal_id].filter(x=>x.id!==id);await crmEvSyncDeal(e.deal_id);crmEvDraw(e.deal_id);crmRenderBoard()}
   catch(er){toast('Não foi possível eliminar.')}}};
-/* o «próximo passo» escrito no formulário do negócio passa a ser um agendamento (fonte única da data do próximo contacto) */
-async function crmEvFromForm(did,data){
- if(CRM_SYNC.remote!==true||CRM_EV_OK!==true)return;
- if(!crmIsOpen(data)||!data.proximoPasso||!data.dataProximoContacto)return;
- try{await crmEvWait();const n=crmEvNext(did),t=data.proximoPasso.slice(0,120),d=data.dataProximoContacto;
-  if(n&&n.title===t&&evDay(n.starts_at)===d)return;
-  let r;
-  if(n){r=await SB.from('av_crm_events').update({title:t,starts_at:evIso(d,evHour(n.starts_at))}).eq('id',n.id).select().single();if(r.error)throw r.error;Object.assign(n,r.data)}
-  else{r=await SB.from('av_crm_events').insert({deal_id:did,kind:'tarefa',title:t,starts_at:evIso(d,'09:00'),created_by_name:(PROFILE&&PROFILE.display_name)||null}).select().single();if(r.error)throw r.error;(CRM_EV[did]=CRM_EV[did]||[]).push(r.data)}
-  await crmEvSyncDeal(did);crmRenderBoard()}
- catch(e){}}
 function crmRenderBoard(){if(!$('crmBoard'))return;const q=($('crmSearch')?.value||'').toLowerCase(),owner=$('crmOwnerFilter')?.value||'',origin=$('crmOriginFilter')?.value||'',al=$('crmAlertFilter')?.value||'';
  const rows=CRM_DEALS.filter(x=>(!q||[x.nome,x.telefone,x.email,x.profissao,x.codigo,x.vendedorResponsavel,x.turma].join(' ').toLowerCase().includes(q))&&(!owner||x.vendedorResponsavel===owner)&&(!origin||x.origem===origin)&&(!al||(al==='any'?!!crmAlert(x):(crmAlert(x)||{}).k===al)));
  const open=CRM_DEALS.filter(crmIsOpen),val=open.reduce((a,x)=>a+(Number(x.valorEstimado)||0),0);
@@ -1481,7 +1539,7 @@ function crmRenderBoard(){if(!$('crmBoard'))return;const q=($('crmSearch')?.valu
  $('crmBoard').innerHTML=CRM_STAGES.map(st=>{const items=rows.filter(x=>crmEt(x.etapa)===st.key),tot=items.reduce((a,x)=>a+(Number(x.valorEstimado)||0),0);return `<div class="pd-col" data-crm-col="${st.key}" data-ct-col="${st.key}" style="--c:${st.color}"><div class="pd-colh"><b>${st.label}</b><span>${crmMoney(tot)} · ${items.length} ${items.length===1?'negócio':'negócios'}</span></div>${items.length?items.map(x=>crmCardHTML(x,isAdmin,staff)).join(''):'<div class="pd-empty">Sem registos</div>'}</div>`}).join('');
  if($('crmTot')){const o=rows.filter(crmIsOpen);$('crmTot').textContent=crmMoney(o.reduce((a,x)=>a+(Number(x.valorEstimado)||0),0))+' · '+o.length+(o.length===1?' negócio':' negócios')}}
 function crmRenderAll(){crmRenderBoard()}
-function crmWire(){$('crmAdd').onclick=()=>crmOpenModal();$('crmExport').onclick=()=>crmExport();['crmSearch','crmOwnerFilter','crmOriginFilter','crmAlertFilter'].forEach(id=>$(id).addEventListener('input',crmRenderBoard));$('crmModal').addEventListener('click',e=>{if(e.target===$('crmModal'))crmCloseModal()});
+function crmWire(){$('crmAdd').onclick=()=>crmOpenModal();$('crmExport').onclick=()=>crmExport();$('crmImport').onclick=()=>crmImportPick();['crmSearch','crmOwnerFilter','crmOriginFilter','crmAlertFilter'].forEach(id=>$(id).addEventListener('input',crmRenderBoard));$('crmModal').addEventListener('click',e=>{if(e.target===$('crmModal'))crmCloseModal()});
  document.addEventListener('click',e=>{const pp=e.target.closest&&e.target.closest('[data-crm-pop]');if(pp){CRM_POP=CRM_POP===pp.dataset.crmPop?null:pp.dataset.crmPop;crmRenderBoard();return}
  const b=e.target.closest&&e.target.closest('[data-crm-edit],[data-crm-del],[data-crm-won],[data-crm-go],[data-crm-view]');
  if(!b){if(e.target.closest&&e.target.closest('.pd-pop'))return;const cd=e.target.closest&&e.target.closest('[data-crm-card]');if(cd){CRM_POP=null;if(!cd.classList.contains('is-expanded')){document.querySelectorAll('#crmBoard .pd-card.is-expanded').forEach(n=>n.classList.remove('is-expanded'));cd.classList.add('is-expanded')}else{crmOpenModal(CRM_DEALS.find(x=>x.id===cd.dataset.crmCard))}return}if(CRM_POP){CRM_POP=null;crmRenderBoard()}return}CRM_POP=null;if(b.dataset.crmView){crmView(CRM_DEALS.find(x=>x.id===b.dataset.crmView));return}if(b.dataset.crmGo){const [gi,gs]=b.dataset.crmGo.split('|');crmMove(gi,gs);return}if(b.dataset.crmEdit)crmOpenModal(CRM_DEALS.find(x=>x.id===b.dataset.crmEdit));if(b.dataset.crmDel)crmDelete(b.dataset.crmDel);if(b.dataset.crmWon)crmWon(b.dataset.crmWon)});
