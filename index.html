@@ -357,7 +357,7 @@ body.tr-noscroll{overflow:hidden}
 .tr-exp{color:var(--ink);opacity:.8;margin-top:4px;font-size:14px;line-height:1.45}
 .tr-btn{border:0;border-bottom:4px solid transparent;border-radius:12px;padding:12px 24px;min-width:150px;font-weight:600;letter-spacing:0;text-transform:none;font-size:14px;font-family:inherit;color:#fff}
 .tr-btn:active:not(:disabled){transform:translateY(3px);border-bottom-width:1px}
-.tr-btn.go,.tr-btn.ok{background:var(--green);border-bottom-color:#0f5a3a}
+.tr-btn.go,.tr-btn.ok{background:var(--green);border-bottom-color:#0f5a3a}.tr-btn.alt{background:#fff;color:var(--green);border:2px solid var(--green);border-bottom-width:4px}
 .tr-btn.bad{background:var(--red);border-bottom-color:var(--red2)}
 .tr-btn.ghost{background:#fff;color:var(--muted);border:2px solid var(--line);border-bottom-width:4px}
 .tr-btn.link{background:none;color:var(--red);border:0;min-width:0}
@@ -3102,8 +3102,8 @@ function trTodayHTML(s){
   else if(prox)aula='Próxima aula: <strong>Aula '+prox.no+' · '+trDow(prox.date)+' '+trDm(prox.date)+'</strong>, '+esc(prox.theme||'tema por definir')+'. Treine já para chegar preparado.'}
  else if(s.theme)aula='Tema da semana: <strong>'+esc(s.theme)+'</strong>';
  let head,sub,btn='',cls='';
- if(s.rest){head='Hoje não há treino';cls=' tr-today-rest';sub='Sábado é dia de aula presencial. Próximo treino: <strong>'+nextDay+'</strong>.'}
- else if(se.completed){head='Treino de hoje concluído ✓';cls=' tr-today-done';sub='Acertou '+se.correct+' de '+se.total+'. Próximo treino: <strong>'+nextDay+'</strong>.'}
+ if(s.rest){head='Hoje não há treino';cls=' tr-today-rest';sub='Sábado é dia de aula presencial. Próximo treino: <strong>'+nextDay+'</strong>.';btn='<button type="button" class="btn secondary tr-today-go" data-tr-extra>Treinar mais</button>'}
+ else if(se.completed){head='Treino de hoje concluído ✓';cls=' tr-today-done';sub='Acertou '+se.correct+' de '+se.total+'. Próximo treino: <strong>'+nextDay+'</strong>. Quer treinar mais? Sem limite.';btn='<button type="button" class="btn tr-today-go" data-tr-extra>Treinar mais</button>'}
  else{head='Treino de hoje · '+(se.minutes||3)+' min';sub=(se.total||5)+' perguntas'+(er.due?' · '+er.due+' erro(s) por rever':'')+(se.started?' · já começou':'')+'.';
   btn='<button type="button" class="btn tr-today-go" data-tr-start>'+(se.started?'Continuar treino':'Começar treino')+'</button>'}
  return '<div class="card tr-today'+cls+'"><div class="tr-today-row"><div class="tr-today-txt"><span class="tr-kind">Treino diário · sem nota</span><h2 class="tr-big">'+head+'</h2><p class="muted smalltext" style="margin:2px 0 0">'+sub+'</p></div>'+btn+'</div><p class="muted smalltext tr-notest">Não conta para a pauta. Os testes com nota estão em Evolução › Avaliação.</p>'
@@ -3240,10 +3240,11 @@ function trStRender(noload){
 /* --- lição em ecrã inteiro --- */
 function trLessonEl(){let e=$('trLesson');if(!e){e=document.createElement('div');e.id='trLesson';e.className='tr-lesson';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');e.setAttribute('aria-label','Sessão de treino');document.body.appendChild(e)}return e}
 function trLessonClose(){ttsStop();TTS.key='';const e=$('trLesson');if(e)e.classList.remove('open');document.body.classList.remove('tr-noscroll');TRS.sel=null;TRS.exit=false;TRS.result=false}
-async function trSessionStart(){
+async function trSessionStart(extra){
  if(TRS.busy)return;TRS.busy=true;
- try{const r=await SB.rpc('av_train_session');if(r.error)throw r.error;const d=r.data||{};
-  if(d.rest){toast('Hoje é sábado: não há sessão.');await trStudentOpen();return}
+ try{const r=await SB.rpc(extra?'av_train_session_extra':'av_train_session');if(r.error)throw r.error;const d=r.data||{};
+  if(!extra&&d.rest){toast('Hoje é sábado: não há sessão.');await trStudentOpen();return}
+  if(extra&&(d.empty||!(d.items||[]).length)){alert('Já fez todas as perguntas disponíveis para o seu nível hoje. Volte amanhã: os erros e as perguntas novas voltam a aparecer.');await trStudentOpen();return}
   if(d.empty||!(d.items||[]).length){trGapAlert('não há perguntas para o seu nível');alert('Ainda não há perguntas para o seu nível. O formador foi avisado.');return}
   TRS.sess=d;TRS.fb=null;TRS.ord=null;TRS.sel=null;TRS.defer=[];TRS.exit=false;TRS.result=false;TRS.xp=0;TRS.combo=0;TRS.gainSum=0;TRS.fx=null;TRS.idx=trPick();
   if(TRS.idx<0){await trStudentOpen();return}
@@ -3292,8 +3293,8 @@ function trCheck(){const it=TRS.sess&&TRS.sess.items[TRS.idx];if(!it||!trCanChec
 function trSkip(){const S=TRS.sess;if(!S||TRS.fb||TRS.busy)return;if(S.items.filter(x=>!x.answered).length<2)return;(TRS.defer=TRS.defer||[]).push(S.items[TRS.idx].id);TRS.ord=null;TRS.sel=null;TRS.numRaw='';TRS.idx=trPick();trSessionDraw()}
 async function trAnswer(val){
  if(TRS.busy||TRS.fb)return;const it=TRS.sess.items[TRS.idx];TRS.busy=true;trSessionDraw();
- try{let r=await SB.rpc('av_train_answer_xp',{p_question:it.id,p_answer:val});
-  if(r.error&&/av_train_answer_xp|schema cache|does not exist/i.test(r.error.message||''))r=await SB.rpc('av_train_answer',{p_question:it.id,p_answer:val});
+ try{const ex=!!(TRS.sess&&TRS.sess.extra);let r=await SB.rpc(ex?'av_train_answer_extra_xp':'av_train_answer_xp',{p_question:it.id,p_answer:val});
+  if(!ex&&r.error&&/av_train_answer_xp|schema cache|does not exist/i.test(r.error.message||''))r=await SB.rpc('av_train_answer',{p_question:it.id,p_answer:val});
   if(r.error)throw r.error;const d=r.data||{};
   if(d.xp_review)toast('+5 XP por rever um erro');if(d.xp_today!=null){TRS.xp=d.xp_today;TRS.combo=d.combo||0;TRS.gainSum+=(d.xp_gain||0)+(d.xp_bonus||0);TRS.fx='xp'}
   else TRS.fx=null;
@@ -3307,11 +3308,11 @@ async function trSessionClose(){ttsStop();
  try{const r=await SB.rpc('av_train_state');if(!r.error&&r.data)TRS.state=r.data}catch(_){}
  await trChestLoad();
  const S=TRS.sess,s=TRS.state||{},n=S.items.length,c=S.correct==null?S.items.filter(x=>x.correct).length:S.correct,p=n?Math.round(100*c/n):0,mk=p===100?'combo':p>=70?'certo':'ola',mt=p===100?'Sessão perfeita! Todas certas.':p>=70?'Boa sessão! Continua assim.':'Errar faz parte. Vais rever estas perguntas.';
- e.innerHTML='<div class="tr-lbody"><div class="tr-lin tr-res"><h2>Sessão concluída</h2><div class="tr-resmas"><div class="tr-mas3d" id="trMasRes">'+pilarSVG(mk,0,0)+'</div><div class="tr-bub">'+esc(mt)+'</div></div>'+(TRS.gainSum?'<div class="tr-xpbig">+'+TRS.gainSum+' XP</div><p class="muted" style="margin:0 0 10px">Hoje: '+TRS.xp+' XP</p>':'')
+ e.innerHTML='<div class="tr-lbody"><div class="tr-lin tr-res"><h2>'+(S.extra?'Sessão extra concluída':'Sessão concluída')+'</h2><div class="tr-resmas"><div class="tr-mas3d" id="trMasRes">'+pilarSVG(mk,0,0)+'</div><div class="tr-bub">'+esc(mt)+'</div></div>'+(TRS.gainSum?'<div class="tr-xpbig">+'+TRS.gainSum+' XP</div><p class="muted" style="margin:0 0 10px">Hoje: '+TRS.xp+' XP</p>':'')
   +'<div class="tr-rgrid"><div class="a"><small>CERTAS</small><b>'+c+'/'+n+'</b></div><div class="b"><small>PRECISÃO</small><b>'+p+'%</b></div><div class="c"><small>SEQUÊNCIA</small><b>'+(s.streak||0)+' dia(s)</b></div></div>'
   +'<div id="trChestRes" class="tr-chestres">'+trChestResHTML()+'</div>'
   +'<p class="muted">Os erros voltam amanhã e depois ao fim de 3 dias, até acertar duas vezes seguidas.</p></div></div>'
-  +'<div class="tr-lfoot ok"><div class="tr-lfin"><span></span><button type="button" class="tr-btn ok" data-tr-end>Continuar</button></div></div>';trMascotMount('trMasRes',mk,1)}
+  +'<div class="tr-lfoot ok"><div class="tr-lfin"><span></span><button type="button" class="tr-btn alt" data-tr-extra>Treinar mais</button><button type="button" class="tr-btn ok" data-tr-end>Continuar</button></div></div>';trMascotMount('trMasRes',mk,1)}
 
 /* eventos da trilha e da lição (o clique em Continuar/Ver resumo/Fechar usa os atributos já existentes) */
 document.addEventListener('click',e=>{
@@ -3591,9 +3592,10 @@ function trCsvPreview(txt){
 
 /* --- eventos da fase 2 --- */
 document.addEventListener('click',async e=>{
- const b=e.target.closest&&e.target.closest('[data-tr-start],[data-tr-ans],[data-tr-numgo],[data-tr-ordmv],[data-tr-ordgo],[data-tr-next],[data-tr-end],[data-tr-tab],[data-tr-bnew],[data-tr-bedit],[data-tr-bimp],[data-tr-bcsv],[data-tr-bact],[data-tr-bdel],[data-trq-oadd],[data-trq-orm]');
+ const b=e.target.closest&&e.target.closest('[data-tr-start],[data-tr-extra],[data-tr-ans],[data-tr-numgo],[data-tr-ordmv],[data-tr-ordgo],[data-tr-next],[data-tr-end],[data-tr-tab],[data-tr-bnew],[data-tr-bedit],[data-tr-bimp],[data-tr-bcsv],[data-tr-bact],[data-tr-bdel],[data-trq-oadd],[data-trq-orm]');
  if(!b)return;
  if(b.hasAttribute('data-tr-start'))return trSessionStart();
+ if(b.hasAttribute('data-tr-extra'))return trSessionStart(true);
  if(b.hasAttribute('data-tr-ans')){const it=TRS.sess&&TRS.sess.items[TRS.idx];if(!it)return;const v=b.dataset.trAns;return trAnswer(it.kind==='vf'?v==='true':Number(v))}
  if(b.hasAttribute('data-tr-numgo')){const n=trNum($('trNum').value);if(!Number.isFinite(n)){alert('Escreva um número (ex.: 1250,50).');return}return trAnswer(n)}
  if(b.dataset.trOrdmv){const p=b.dataset.trOrdmv.split(':'),j=Number(p[0]),d=Number(p[1]),k=j+d,o=TRS.ord;if(!o||k<0||k>=o.length)return;const t=o[j];o[j]=o[k];o[k]=t;return trSessionDraw()}
