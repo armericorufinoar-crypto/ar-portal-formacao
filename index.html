@@ -4032,7 +4032,7 @@ function trBankRender(){
   +'<div class="card"><div class="muted smalltext">Total</div><strong class="tr-sv">'+rows.filter(r=>r.active).length+'</strong><div class="muted smalltext">activas · '+rows.length+' no banco</div></div>';
  const sel=(id,cur,opts)=>'<select id="'+id+'">'+opts.map(o=>'<option value="'+esc(o[0])+'"'+(o[0]===cur?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>';
  box.innerHTML='<div class="tr-lv">'+tiles+'</div>'
-  +'<div class="card"><div class="cardhead"><h2>Banco de treino</h2><div class="tr-tools"><button type="button" class="btn" data-tr-bnew>+ Nova pergunta</button><button type="button" class="btn secondary" data-tr-bcsv>Importar CSV</button><button type="button" class="btn secondary" data-tr-bact>Activar as filtradas</button><button type="button" class="btn danger" id="trbDel" data-tr-bdel disabled>Eliminar seleccionadas</button></div></div>'
+  +'<div class="card"><div class="cardhead"><h2>Banco de treino</h2><div class="tr-tools"><button type="button" class="btn" data-tr-bnew>+ Nova pergunta</button><button type="button" class="btn secondary" data-tr-bcsv>Importar CSV</button><button type="button" class="btn secondary" data-tr-bact>Activar as filtradas</button><button type="button" class="btn secondary" data-tr-diag>Diagnosticar treino</button><button type="button" class="btn danger" id="trbDel" data-tr-bdel disabled>Eliminar seleccionadas</button></div></div>'
   +'<details class="clnote-d"><summary>Como obter um lote de perguntas com o Claude</summary>'+claudeBlock('treino','trb')+'</details>'+'<div class="tr-filters"><input id="trbSearch" type="search" placeholder="Pesquisar enunciado ou tema" value="'+esc(f.q)+'">'
   +sel('trbLv',f.lv,[['','Todos os níveis']].concat(TR_LV))
   +sel('trbTh',f.th,[['','Todos os temas']].concat(themes.map(t=>[t,t])))
@@ -4215,6 +4215,25 @@ function trCsvAnalyse(text,forceTheme){
   if(tst.has(trNorm(x.row.statement))){dupT++;return}
   const key=x.row.kind+'|'+trNorm(x.row.statement)+'|'+trNorm(x.row.case_context||'');if(seen.has(key)){dup++;return}seen.add(key);ok.push(x.row)});
  return{ok:ok,errs:errs,dup:dup,dupT:dupT}}
+
+/* Diagnóstico: porque é que um formando não recebe perguntas no treino diário */
+async function trDiag(){
+ trOpen('Diagnóstico do treino','<p class="muted">A verificar…</p>',[{label:'Fechar',cls:'secondary'}]);
+ try{const R=await Promise.all([SB.from('av_train_questions').select('active,levels').limit(5000),SB.from('av_student_profile').select('staff_id,level,level_final').limit(5000),SB.from('av_staff').select('id,cohort_id').limit(5000),SB.from('av_cohorts').select('id,name,active').limit(500)]);
+  R.forEach(r=>{if(r.error)throw r.error});
+  const Q=R[0].data||[],P=R[1].data||[],S=R[2].data||[],C=R[3].data||[],act=Q.filter(q=>q.active),lvN=l=>act.filter(q=>(q.levels||[]).includes(l)).length;
+  const head='<p><strong>'+Q.length+'</strong> perguntas no banco · <strong>'+act.length+'</strong> activas · <strong>'+(Q.length-act.length)+'</strong> em rascunho.</p>'
+   +'<table class="table"><thead><tr><th>Nível</th><th>Perguntas activas</th></tr></thead><tbody>'+TR_LV.map(l=>'<tr><td>'+esc(l[1])+'</td><td>'+lvN(l[0])+(lvN(l[0])?'':' ⚠')+'</td></tr>').join('')+'</tbody></table>';
+  const rows=read(KEYS.staff).filter(x=>x.status==='Activo').map(st=>{const pr=P.find(x=>x.staff_id===st.id)||{},lv=pr.level_final||pr.level||'',sr=S.find(x=>x.id===st.id)||{},co=C.find(x=>x.id===sr.cohort_id);let pb=[];
+   if(!lv)pb.push('sem nível');else if(!lvN(lv))pb.push('sem perguntas activas para o nível '+(TR_LV.find(l=>l[0]===lv)||[lv,lv])[1]);
+   if(!sr.cohort_id)pb.push('sem turma');else if(co&&co.active===false)pb.push('turma inactiva');
+   return '<tr><td>'+esc(st.name||'')+'</td><td>'+esc(lv?(TR_LV.find(l=>l[0]===lv)||[0,lv])[1]:'—')+'</td><td>'+esc(co?co.name:'—')+'</td><td>'+(pb.length?'<span class="tag warn">'+esc(pb.join(' · '))+'</span>':'<span class="tag good">ok</span>')+'</td></tr>'}).join('');
+  const b=document.querySelector('#trMBody')||document.querySelector('.tr-modal-body');
+  const html=head+'<h4 style="margin:14px 0 6px">Formandos activos</h4><table class="table"><thead><tr><th>Formando</th><th>Nível</th><th>Turma</th><th>Estado</th></tr></thead><tbody>'+(rows||'<tr><td colspan="4">Sem formandos activos.</td></tr>')+'</tbody></table>';
+  trOpen('Diagnóstico do treino',html,[{label:'Fechar',cls:'secondary'}])}
+ catch(e){trOpen('Diagnóstico do treino','<div class="notice">Não foi possível verificar: '+esc(e.message||e)+'</div>',[{label:'Fechar',cls:'secondary'}])}}
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('[data-tr-diag]'))trDiag()});
+
 function trCsvOpen(prev){
  trOpen('Importar CSV',
   claudeBlock('treino','trm')+'<p class="muted smalltext">Colunas: <strong>tipo; nivel; area; tema; profundidade; enunciado; contexto; opcoes; correta; tolerancia; explicacao</strong> (profundidade 1 a 4; é opcional em ficheiros antigos). Opções separadas por <strong>|</strong>; em «ordenar», os passos pela ordem certa. Todas entram como <strong>rascunho</strong>.</p>'
